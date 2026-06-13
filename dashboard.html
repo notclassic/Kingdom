@@ -47,9 +47,14 @@ h2{font-size:1rem; font-weight:600; margin:0 0 10px; display:flex; align-items:c
   padding:8px 12px; font-size:.75rem; color:var(--muted); flex:1; min-width:90px; text-align:center;
 }
 .totalbox b{display:block; font-size:1.2rem; color:var(--text); font-weight:700;}
+.header-action-icon{ display:none; }
 @media(max-width:560px){
   .totals{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
   .totalbox{ min-width:0; }
+  h1{ font-size:1.3rem; }
+  .header-action-btn .header-action-text{ display:none; }
+  .header-action-btn .header-action-icon{ display:inline; }
+  .header-action-btn{ padding:8px 10px !important; font-size:1rem !important; }
 }
 
 section{
@@ -365,15 +370,16 @@ input, select, textarea{
 </head>
 <body>
 
-<div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
-  <div>
-    <h1>Kingdom</h1>
-    <div class="subtitle">Vista macro · CRM · Enfoque diario</div>
-  </div>
-  <div style="display:flex; gap:8px; flex-shrink:0;">
+<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+  <h1 style="margin-bottom:0;">Kingdom</h1>
+  <div style="display:flex; gap:6px; flex-shrink:0;">
     <button class="btn-toggle" style="margin-top:0; font-size:.8rem; padding:8px 12px;" onclick="toggleTheme()" id="themeToggleBtn" title="Cambiar tema claro/oscuro">🌙</button>
-    <button class="btn-primary" style="font-size:.8rem; padding:8px 14px; background:var(--green);" onclick="openProjectModal()">➕ Nuevo proyecto</button>
-    <button class="btn-primary" style="font-size:.8rem; padding:8px 14px;" onclick="openTaskModal()">➕ Nueva tarea</button>
+    <button class="btn-primary header-action-btn" style="font-size:.8rem; padding:8px 14px; background:var(--green);" onclick="openProjectModal()" title="Nuevo proyecto">
+      <span class="header-action-icon">➕📁</span><span class="header-action-text">➕ Nuevo proyecto</span>
+    </button>
+    <button class="btn-primary header-action-btn" style="font-size:.8rem; padding:8px 14px;" onclick="openTaskModal()" title="Nueva tarea">
+      <span class="header-action-icon">➕✅</span><span class="header-action-text">➕ Nueva tarea</span>
+    </button>
   </div>
 </div>
 
@@ -383,8 +389,6 @@ input, select, textarea{
   <div class="tab" onclick="setTab('leads')">🎯 Leads</div>
   <div class="tab" onclick="setTab('settings')">⚙️ Configuración</div>
 </div>
-
-<div class="config-banner" id="emailConfigBanner"></div>
 
 <div id="tab-main">
 <!-- PORTAFOLIO -->
@@ -494,6 +498,7 @@ input, select, textarea{
 </div>
 
 <div id="tab-settings" style="display:none;">
+<div class="config-banner" id="emailConfigBanner"></div>
 <section>
   <h2>🚧 Próximos módulos (pendiente)</h2>
   <div class="row-desc" style="margin-bottom:10px;">

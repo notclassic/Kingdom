@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard de Portafolio</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#007aff">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Portafolio">
+<style>
+:root{
+  --bg:#f5f5f7; --panel:#ffffff; --panel2:#f5f5f7; --border:#e3e3e6;
+  --text:#1d1d1f; --muted:#86868b; --accent:#007aff;
+  --green:#34c759; --yellow:#ff9f0a; --red:#ff3b30;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg); color:var(--text); padding:12px; padding-bottom:60px;
+}
+@media(min-width:900px){
+  body{ max-width:1100px; margin:0 auto; padding:24px; }
+  .cal-cell{ min-height:90px; }
+}
+h1{font-size:1.3rem; font-weight:600; margin-bottom:4px;}
+h2{font-size:1rem; font-weight:600; margin:0 0 10px; display:flex; align-items:center; gap:8px;}
+.subtitle{color:var(--muted); font-size:.8rem; margin-bottom:16px;}
+
+.totals{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+.totalbox{
+  background:var(--panel); border:1px solid var(--border); border-radius:10px;
+  padding:8px 12px; font-size:.75rem; color:var(--muted); flex:1; min-width:90px; text-align:center;
+}
+.totalbox b{display:block; font-size:1.2rem; color:var(--text); font-weight:700;}
+
+section{
+  background:var(--panel); border:1px solid var(--border); border-radius:14px;
+  padding:14px; margin-bottom:16px;
+}
+
+/* FILTROS */
+.filters{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;}
+.filters .chip{ flex:1; text-align:center; }
+.chip{
+  font-size:.72rem; padding:8px 10px; border-radius:999px; border:1px solid var(--border);
+  background:var(--panel2); color:var(--muted); cursor:pointer; white-space:nowrap;
+}
+.chip.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+
+/* PORTAFOLIO */
+.cards{display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+.row{
+  display:grid; grid-template-columns:24px 1fr 170px 100px 170px;
+  align-items:center; gap:12px; padding:10px 14px;
+  border-bottom:1px solid var(--border); background:var(--panel2);
+  border-left:3px solid var(--accent-color, var(--accent));
+  transition:background .12s;
+}
+.row:last-child{ border-bottom:none; }
+.row:hover{ background:#f0f0f5; }
+.row.row-late{ background:#ff3b300d; }
+.row.row-late:hover{ background:#ff3b3018; }
+.row.paused{ opacity:.4; }
+.row-head{
+  display:grid; grid-template-columns:24px 1fr 170px 100px 170px; gap:12px; padding:8px 14px;
+  font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted);
+  background:var(--panel); border-bottom:1px solid var(--border); border-left:3px solid transparent;
+}
+.row-name{ font-weight:600; font-size:.85rem; line-height:1.3; border-radius:6px; padding:2px 4px; margin:-2px -4px; }
+.row-name:hover{ background:rgba(0,0,0,0.04); }
+.row-name:focus{ outline:2px solid var(--accent); background:var(--panel); }
+.row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; }
+.row-desc:hover{ background:rgba(0,0,0,0.04); }
+.row-desc:focus{ outline:2px solid var(--accent); background:var(--panel); color:var(--text); white-space:normal; }
+.area-tag{
+  font-size:.6rem; padding:4px 9px; border-radius:8px; font-weight:700;
+  text-transform:uppercase; letter-spacing:.03em; display:inline-block; justify-self:start;
+  white-space:normal; line-height:1.3; max-width:100%;
+}
+.status-pill{
+  font-size:.66rem; padding:4px 10px; border-radius:6px; font-weight:700; white-space:nowrap;
+  display:inline-block; justify-self:start;
+}
+.status-todo{ background:#ff8a5c22; color:var(--accent); }
+.status-progress{ background:#f2c94c22; color:var(--yellow); }
+.status-done{ background:#6fcf9722; color:var(--green); }
+.status-late{ background:#eb575722; color:var(--red); }
+.row-actions{ display:flex; gap:4px; justify-content:flex-end; flex-wrap:nowrap; }
+.row-actions button{
+  font-size:.68rem; padding:5px 7px; border-radius:7px; border:1px solid var(--border);
+  background:var(--panel); color:var(--muted); cursor:pointer; font-weight:600;
+}
+.row-actions button:hover{ border-color:var(--accent); color:var(--accent); }
+.row-actions button.danger:hover{ border-color:var(--red); color:var(--red); }
+.row-actions button.go:hover{ border-color:var(--green); color:var(--green); }
+.row-actions button.lead-on{ background:#ff8a5c22; border-color:var(--accent); color:var(--accent); }
+.row-actions button.drive-on{ background:#34c75922; border-color:var(--green); color:var(--green); }
+.drag-handle{ cursor:grab; color:var(--muted); font-size:.9rem; padding:2px 4px; user-select:none; }
+.row.dragging{ opacity:.35; }
+.row.drag-over{ border-top:2px solid var(--accent); }
+.row-detail{
+  border-left:3px solid var(--accent-color, var(--accent));
+  background:var(--panel); padding:10px 14px 14px 14px; border-bottom:1px solid var(--border);
+}
+.row-detail .task{ background:var(--panel2); }
+@media(max-width:760px){
+  .row, .row-head{ grid-template-columns:1fr; gap:6px; }
+  .row-head{ display:none; }
+  .row{ border-left:3px solid var(--accent-color, var(--accent)); }
+  .row-actions{ justify-content:flex-start; }
+}
+
+/* FORM */
+.addbox{
+  display:flex; flex-direction:column; gap:6px; margin-top:12px;
+  border-top:1px dashed var(--border); padding-top:12px;
+}
+.addbox.collapsed{display:none;}
+input, select, textarea{
+  background:var(--bg); border:1px solid var(--border); color:var(--text);
+  border-radius:8px; padding:8px 10px; font-size:.82rem; width:100%; font-family:inherit;
+}
+.row2{display:flex; gap:6px;}
+.row2>*{flex:1;}
+.btn-primary{
+  background:var(--accent); color:#fff; border:none; border-radius:8px; padding:9px 12px;
+  font-size:.82rem; font-weight:600; cursor:pointer;
+}
+.btn-toggle{
+  background:none; border:1px solid var(--border); color:var(--accent);
+  border-radius:8px; padding:8px 10px; font-size:.78rem; cursor:pointer; margin-top:10px;
+}
+
+/* KANBAN */
+.kanban{display:flex; gap:12px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch;}
+.kanban-col{
+  min-width:78%; max-width:78%; background:var(--panel2); border:1px solid var(--border);
+  border-radius:14px; padding:0; flex-shrink:0; transition:background .12s, border-color .12s;
+  overflow:hidden;
+}
+@media(min-width:700px){ .kanban-col{min-width:240px; max-width:240px;} }
+.kanban-col.drag-over{ background:#007aff14; border-color:var(--accent); }
+.kanban-col h3{
+  font-size:.74rem; margin:0; color:var(--text); display:flex; justify-content:space-between;
+  padding:12px; border-bottom:1px solid var(--border); font-weight:700;
+  border-top:4px solid var(--stage-color, var(--accent));
+}
+.kanban-col h3 span{background:var(--panel); padding:1px 8px; border-radius:999px; font-size:.68rem; color:var(--muted); font-weight:700;}
+.kanban-col-body{ padding:10px; display:flex; flex-direction:column; gap:8px; min-height:60px; }
+.lead{
+  background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px;
+  font-size:.8rem; cursor:grab; box-shadow:0 1px 2px rgba(0,0,0,0.03);
+}
+.lead.dragging{ opacity:.35; }
+.lead .lead-name{font-weight:700;}
+.lead .lead-project{font-size:.68rem; color:var(--muted); margin:3px 0 8px;}
+.lead select{font-size:.7rem; padding:5px 8px;}
+.lead .lead-del{
+  font-size:.7rem; color:var(--red); background:none; border:none; cursor:pointer;
+  float:right; padding:0; margin-top:-2px; opacity:.5;
+}
+.lead .lead-del:hover{ opacity:1; }
+
+/* MODAL */
+.modal-overlay{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.35);
+  z-index:100; align-items:center; justify-content:center; padding:16px;
+}
+.modal-overlay.open{ display:flex; }
+.modal{
+  background:var(--panel); border-radius:16px; padding:20px; width:100%; max-width:420px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.modal-header{ display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.modal-close{
+  background:var(--panel2); border:1px solid var(--border); border-radius:8px;
+  width:30px; height:30px; cursor:pointer; color:var(--muted); font-size:.9rem;
+}
+
+/* TASKS */
+.task-filters{display:flex; gap:6px; margin-bottom:10px; flex-wrap:wrap;}
+.task-filters .chip{ flex:1; text-align:center; }
+.task-list{display:flex; flex-direction:column; gap:6px;}
+.task{
+  display:flex; align-items:flex-start; gap:8px; background:var(--panel2);
+  border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:.82rem;
+}
+.task[draggable="true"]{ cursor:grab; }
+.task.dragging{ opacity:.35; }
+.task.drag-over-task{ border-top:2px solid var(--accent); }
+.task .drag-handle{ margin-top:2px; }
+.task-drive{
+  background:var(--panel); border:1px solid var(--border); border-radius:7px;
+  width:28px; height:28px; cursor:pointer; color:var(--muted); font-size:.8rem; flex-shrink:0;
+}
+.task-drive.drive-on{ background:#34c75922; border-color:var(--green); color:var(--green); }
+.task.done{opacity:.4;}
+.task.done .task-text{text-decoration:line-through;}
+.task input[type=checkbox]{width:18px; height:18px; margin-top:2px; flex-shrink:0; accent-color:var(--green);}
+.proj-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.task-body{flex:1;}
+.task-project{font-size:.65rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:.03em;}
+.task-text{margin-top:1px;}
+.task-del{background:none; border:none; color:var(--red); font-size:.7rem; cursor:pointer; flex-shrink:0;}
+.due-badge{
+  display:inline-block; font-size:.65rem; padding:1px 7px; border-radius:6px; margin-top:3px;
+  font-weight:600;
+}
+.due-overdue{background:#eb5757; color:#fff; font-weight:700;}
+.due-today{background:#f2c94c22; color:var(--yellow);}
+.due-upcoming{background:#3a3f4b; color:var(--muted);}
+.checkrow{display:flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted);}
+.checkrow input{width:auto;}
+.config-banner{
+  background:var(--panel2); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px; margin-bottom:14px; font-size:.75rem; color:var(--muted);
+}
+.config-banner.ok{border-color:var(--green); color:var(--green);}
+
+/* LIQUID GLASS DROPDOWN */
+.glass-dropdown{ position:relative; margin-bottom:12px; display:inline-block; max-width:100%; }
+.glass-trigger{
+  display:flex; align-items:center; gap:10px; justify-content:space-between;
+  min-width:240px; max-width:100%; padding:10px 16px;
+  background:rgba(255,255,255,0.55);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:16px;
+  backdrop-filter:blur(20px) saturate(160%);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);
+  color:var(--text); font-size:.82rem; font-weight:600; cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+  transition:background .15s, border-color .15s;
+}
+.glass-trigger:hover{ background:rgba(255,255,255,0.8); border-color:rgba(0,0,0,0.1); }
+.glass-chevron{ color:var(--muted); font-size:.75rem; transition:transform .2s; }
+.glass-dropdown.open .glass-chevron{ transform:rotate(180deg); }
+.glass-panel{
+  display:none; position:absolute; top:calc(100% + 6px); left:0; z-index:30;
+  min-width:280px; max-width:90vw; max-height:280px; overflow-y:auto;
+  background:rgba(255,255,255,0.75);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:16px;
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 12px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+  padding:6px;
+}
+.glass-dropdown.open .glass-panel{ display:block; }
+.glass-option{
+  display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:11px;
+  font-size:.8rem; cursor:pointer; color:var(--text); transition:background .12s;
+}
+.glass-option:hover{ background:rgba(0,0,0,0.04); }
+.glass-option.selected{ background:rgba(0,122,255,0.12); color:var(--accent); }
+.glass-option input{ width:15px; height:15px; accent-color:var(--accent); pointer-events:none; }
+.glass-divider{ height:1px; background:rgba(0,0,0,0.08); margin:4px 6px; }
+
+/* TABS */
+.tabs{ display:flex; gap:8px; margin-bottom:14px; }
+.tab{
+  flex:1; text-align:center;
+  padding:10px 16px; border-radius:10px; font-size:.82rem; font-weight:600;
+  background:var(--panel); border:1px solid var(--border); color:var(--muted); cursor:pointer;
+}
+.tab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+#overdueBadge:not(:empty){
+  display:inline-block; background:var(--red); color:#fff; font-size:.65rem; font-weight:700;
+  border-radius:999px; padding:1px 6px; margin-left:6px; vertical-align:middle;
+}
+
+/* CALENDARIO */
+.cal-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+.cal-header .cal-title{font-weight:600; font-size:.9rem; text-transform:capitalize;}
+.cal-nav{display:flex; gap:6px;}
+.cal-nav button{
+  background:var(--panel2); border:1px solid var(--border); color:var(--text);
+  border-radius:8px; padding:5px 10px; font-size:.85rem; cursor:pointer;
+}
+.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px;}
+.cal-dow{font-size:.62rem; color:var(--muted); text-align:center; padding-bottom:4px; text-transform:uppercase;}
+.cal-cell{
+  background:var(--panel2); border:1px solid var(--border); border-radius:8px;
+  min-height:54px; padding:4px; font-size:.65rem; position:relative; overflow:hidden; cursor:pointer;
+}
+.cal-cell:hover{ border-color:var(--accent); }
+.cal-nav-btn{
+  background:none; border:none; color:var(--accent); font-size:.78rem; font-weight:600;
+  cursor:pointer; padding:0;
+}
+.cal-cell.empty{background:transparent; border:none;}
+.cal-cell.today{border-color:var(--accent);}
+.cal-daynum{font-weight:600; font-size:.7rem; color:var(--muted);}
+.cal-cell.today .cal-daynum{color:var(--accent);}
+.cal-task{
+  margin-top:3px; padding:2px 4px 2px 6px; border-radius:4px; font-size:.6rem;
+  background:#ff8a5c22; color:var(--text); overflow:hidden; text-overflow:ellipsis;
+  white-space:nowrap; border-left:3px solid var(--proj-color, var(--accent));
+}
+.cal-task.overdue{background:#eb575722; color:var(--red); border-left:3px solid var(--red); font-weight:700;}
+.cal-task.done{background:#6fcf9722; color:var(--green); text-decoration:line-through;}
+.cal-more{font-size:.6rem; color:var(--muted); margin-top:2px;}
+
+.empty{color:var(--muted); font-size:.8rem; text-align:center; padding:14px 0;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+<h1>Dashboard de Portafolio</h1>
+<div class="subtitle">Vista macro · CRM · Enfoque diario</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="setTab('main')">📁 Portafolio & CRM</div>
+  <div class="tab" onclick="setTab('tasks')">📅 Calendario y Tareas<span id="overdueBadge"></span></div>
+  <div class="tab" onclick="setTab('leads')">🎯 Leads</div>
+  <div class="tab" onclick="setTab('settings')">⚙️ Configuración</div>
+</div>
+
+<div class="config-banner" id="emailConfigBanner"></div>
+
+<div id="tab-main">
+<!-- PORTAFOLIO -->
+<section>
+  <h2>📁 Portafolio</h2>
+  <div class="filters" id="areaFilters"></div>
+  <div class="glass-dropdown" id="projectDropdown">
+    <button class="glass-trigger" onclick="toggleProjectDropdown()">
+      <span id="projectDropdownLabel">Todos los proyectos</span>
+      <span class="glass-chevron">▾</span>
+    </button>
+    <div class="glass-panel" id="projectDropdownPanel"></div>
+  </div>
+  <div class="totals" id="totals"></div>
+  <div class="cards" id="projectCards"></div>
+  <button class="btn-toggle" onclick="toggle('addProjectBox')">+ Agregar proyecto</button>
+  <div class="addbox collapsed" id="addProjectBox">
+    <input type="text" id="np-name" placeholder="Nombre del proyecto">
+    <select id="np-area"></select>
+    <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
+    <button class="btn-primary" onclick="addProject()">Guardar proyecto</button>
+  </div>
+</section>
+</div>
+
+<div id="tab-leads" style="display:none;">
+<!-- CRM -->
+<section>
+  <h2>🎯 Embudo de Leads</h2>
+  <div class="glass-dropdown" id="leadsProjectDropdown">
+    <button class="glass-trigger" onclick="toggleLeadsDropdown()">
+      <span id="leadsDropdownLabel">Todos los proyectos</span>
+      <span class="glass-chevron">▾</span>
+    </button>
+    <div class="glass-panel" id="leadsDropdownPanel"></div>
+  </div>
+  <div class="cards" id="leadProjectCards" style="margin-bottom:14px;"></div>
+  <div class="kanban" id="kanban"></div>
+  <button class="btn-toggle" onclick="toggle('addLeadBox')">+ Agregar lead</button>
+  <div class="addbox collapsed" id="addLeadBox">
+    <input type="text" id="nl-name" placeholder="Nombre del lead / cliente">
+    <select id="nl-project"><option value="">Sin proyecto vinculado</option></select>
+    <select id="nl-stage"></select>
+    <button class="btn-primary" onclick="addLead()">Guardar lead</button>
+  </div>
+</section>
+</div>
+
+<div id="tab-tasks" style="display:none;">
+<!-- TASKS -->
+<section>
+  <h2>✅ Consola de Enfoque Diario</h2>
+  <div class="glass-dropdown" id="projectDropdown2">
+    <button class="glass-trigger" onclick="toggleProjectDropdown2()">
+      <span id="projectDropdownLabel2">Todos los proyectos</span>
+      <span class="glass-chevron">▾</span>
+    </button>
+    <div class="glass-panel" id="projectDropdownPanel2"></div>
+  </div>
+  <div class="task-filters">
+    <div class="chip active" data-tf="pending" onclick="setTaskFilter('pending')">Pendientes</div>
+    <div class="chip" data-tf="all" onclick="setTaskFilter('all')">Todas</div>
+    <div class="chip" data-tf="done" onclick="setTaskFilter('done')">Completadas</div>
+    <input type="date" class="chip" id="dayPicker" onchange="openDayView(this.value)" style="text-align:center;">
+    <div class="chip" onclick="toggleView()" id="viewToggle">📋 Ver detalle</div>
+  </div>
+  <div class="task-list" id="taskList" style="display:none;"></div>
+  <div id="calendarView"></div>
+  <div id="dayView" style="display:none;"></div>
+  <button class="btn-primary" onclick="openTaskModal()" style="width:100%;">➕ Nueva tarea</button>
+</section>
+</div>
+
+<!-- MODAL NUEVA TAREA -->
+<div class="modal-overlay" id="taskModalOverlay" onclick="if(event.target===this) closeTaskModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">➕ Nueva tarea</h2>
+      <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <select id="nt-project"></select>
+      <input type="text" id="nt-text" placeholder="Descripción de la tarea">
+      <div class="row2">
+        <input type="date" id="nt-due">
+        <input type="time" id="nt-time">
+      </div>
+      <label class="checkrow"><input type="checkbox" id="nt-alert"> Avisarme por correo si vence</label>
+      <button class="btn-primary" onclick="addTask()">Guardar tarea</button>
+    </div>
+  </div>
+</div>
+
+<div id="tab-settings" style="display:none;">
+<section>
+  <h2>🚧 Próximos módulos (pendiente)</h2>
+  <div class="row-desc" style="margin-bottom:10px;">
+    Estos botones son recordatorios de funciones planeadas. No están activos todavía
+    (requieren hosting https y configuración aparte, ver MANUAL_ARQUITECTURA.md).
+  </div>
+  <div class="addbox" style="border-top:none; padding-top:0;">
+    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">📧 Conectar Gmail (pendiente)</button>
+    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">📅 Conectar Calendar con notificaciones (pendiente)</button>
+    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">🎤 Configurar envío de audios (pendiente)</button>
+  </div>
+</section>
+<section>
+  <h2>🔗 Google Drive</h2>
+  <div class="config-banner" id="googleConfigBanner"></div>
+  <div id="googleDriveStatus"></div>
+</section>
+<section>
+  <h2>💾 Respaldo de datos</h2>
+  <div class="row-desc" style="margin-bottom:10px;">
+    Exportá todo (proyectos, tareas, leads, configuración) a un archivo .json para guardarlo como respaldo,
+    o importalo para restaurar/transferir a otro navegador o dispositivo.
+  </div>
+  <div class="row2">
+    <button class="btn-primary" onclick="exportData()">⬇️ Exportar datos (.json)</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importFile').click()">⬆️ Importar datos</button>
+  </div>
+  <input type="file" id="importFile" accept="application/json" style="display:none;" onchange="importData(event)">
+</section>
+<section>
+  <h2>⚙️ Configuración de categorías (áreas)</h2>
+  <div id="areaSettings"></div>
+</section>
+<section>
+  <h2>🎨 Proyectos: color y contactos</h2>
+  <div id="projectColorSettings"></div>
+</section>
+</div>
+
+<script>
+/* ====== CONFIGURACIÓN DE ÁREAS ====== */
+function renderAreaSettings(){
+  renderGoogleSection();
+  const cont = document.getElementById('areaSettings');
+  cont.innerHTML = data.areas.map(a=>{
+    const count = data.projects.filter(p=>p.area===a.id).length;
+    return `
+    <div class="row" style="--accent-color:${a.color}; grid-template-columns:24px 1fr 60px;">
+      <div></div>
+      <div>
+        <input type="text" value="${a.name}" style="font-weight:600; margin-bottom:4px;"
+               onblur="editAreaName('${a.id}', this.value)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}">
+        <div class="row-desc" style="margin-top:4px;">${count} proyecto${count===1?'':'s'} en esta área</div>
+      </div>
+      <input type="color" value="${a.color}" style="height:36px; padding:2px; cursor:pointer;"
+             onchange="editAreaColor('${a.id}', this.value)">
+    </div>`;
+  }).join('');
+  cont.innerHTML += `<button class="btn-toggle" onclick="addArea()">+ Nueva categoría</button>`;
+
+  // proyectos: color + contactos en una sola fila
+  const projCont = document.getElementById('projectColorSettings');
+  projCont.innerHTML = data.projects.map(p=>{
+    const area = areaInfo(p.area);
+    const contacts = p.contacts.map((c,i)=>`
+      <div class="checkrow" style="justify-content:space-between; padding:4px 0;">
+        <span style="color:var(--text);">${c.name ? c.name+' · ' : ''}${c.email}</span>
+        <button class="task-del" onclick="removeContact('${p.id}', ${i})">✕</button>
+      </div>`).join('') || '<div class="empty" style="padding:4px 0; text-align:left;">Sin contactos vinculados.</div>';
+    return `
+    <div class="row" style="--accent-color:${p.color}; grid-template-columns:24px 1fr 60px; align-items:start;">
+      <div></div>
+      <div>
+        <div class="row-name" style="margin-bottom:2px;">${p.name}</div>
+        <div class="area-tag" style="background:${area.color}22; color:${area.color}; margin-bottom:6px;">${area.name}</div>
+        ${contacts}
+        <div class="row2" style="margin-top:8px;">
+          <input type="text" placeholder="Nombre (opcional)" id="cname-${p.id}">
+          <input type="email" placeholder="email@ejemplo.com" id="cemail-${p.id}">
+          <button class="btn-toggle" style="margin-top:0;" onclick="addContact('${p.id}')">+ Agregar</button>
+        </div>
+        <input type="text" placeholder="Carpeta de Drive (ID, opcional)" value="${p.driveFolderId}"
+               style="margin-top:6px;" onblur="editDriveFolder('${p.id}', this.value)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}">
+      </div>
+      <input type="color" value="${p.color}" style="height:36px; padding:2px; cursor:pointer;"
+             onchange="editProjectColor('${p.id}', this.value)">
+    </div>`;
+  }).join('');
+}
+function addArea(){
+  const name = prompt('Nombre de la nueva categoría:');
+  if(!name || !name.trim()) return;
+  const colors = ['#007aff','#34c759','#af52de','#ff9f0a','#ff3b30','#5856d6','#00c7be','#ff2d55','#8e8e93'];
+  const color = colors[data.areas.length % colors.length];
+  data.areas.push({id:uid('a'), name:name.trim(), color});
+  save(); renderAll(); renderAreaSettings();
+}
+function editProjectColor(id, newColor){
+  const p = projectInfo(id);
+  p.color = newColor;
+  save(); renderAll(); renderAreaSettings();
+}
+function editAreaName(id, newName){
+  const name = newName.trim();
+  if(!name) { renderAreaSettings(); return; }
+  const area = data.areas.find(a=>a.id===id);
+  area.name = name;
+  save(); renderAll(); renderAreaSettings();
+}
+function editAreaColor(id, newColor){
+  const area = data.areas.find(a=>a.id===id);
+  area.color = newColor;
+  save(); renderAll(); renderAreaSettings();
+}
+
+/* ====== CONTACTOS POR PROYECTO ====== */
+function addContact(projectId){
+  const name = document.getElementById(`cname-${projectId}`).value.trim();
+  const email = document.getElementById(`cemail-${projectId}`).value.trim();
+  if(!email){ alert('Falta el email del contacto'); return; }
+  const p = projectInfo(projectId);
+  p.contacts.push({name, email});
+  save(); renderAreaSettings();
+}
+function removeContact(projectId, idx){
+  const p = projectInfo(projectId);
+  p.contacts.splice(idx, 1);
+  save(); renderAreaSettings();
+}
+function editDriveFolder(projectId, value){
+  const p = projectInfo(projectId);
+  p.driveFolderId = value.trim();
+  save();
+}
+
+/* ====== TABS ====== */
+function setTab(tab){
+  document.getElementById('tab-main').style.display = tab==='main' ? '' : 'none';
+  document.getElementById('tab-leads').style.display = tab==='leads' ? '' : 'none';
+  document.getElementById('tab-tasks').style.display = tab==='tasks' ? '' : 'none';
+  document.getElementById('tab-settings').style.display = tab==='settings' ? '' : 'none';
+  document.querySelectorAll('.tab').forEach((el,i)=>{
+    el.classList.toggle('active', (i===0 && tab==='main') || (i===1 && tab==='tasks') || (i===2 && tab==='leads') || (i===3 && tab==='settings'));
+  });
+  if(tab==='leads') renderLeadProjects();
+  if(tab==='tasks' && calView) renderCalendar();
+  if(tab==='settings') renderAreaSettings();
+}
+
+/* ====== DATOS INICIALES ====== */
+const DEFAULT_AREAS = [
+  {id:'a1', name:'Inteligencia & Software', color:'#007aff'},
+  {id:'a2', name:'Operaciones Comerciales & Trading', color:'#34c759'},
+  {id:'a3', name:'Clientes & Agencia', color:'#af52de'}
+];
+
+const DEFAULT_DATA = {
+  areas: JSON.parse(JSON.stringify(DEFAULT_AREAS)),
+  projects: [
+    {id:'p1', color:'#007aff', name:'Chileautos Databot', area:'a1', desc:'Analítica interna con potencial SaaS futuro.', status:'active', hasLeads:false},
+    {id:'p2', color:'#5856d6', name:'Chatbot IA', area:'a1', desc:'Desarrollo y prospección por rubro.', status:'active', hasLeads:true},
+    {id:'p3', color:'#34c759', name:'Aprendizaje Claude', area:'a1', desc:'I+D y capacitación continua en automatizaciones.', status:'active', hasLeads:false},
+    {id:'p4', color:'#ff9f0a', name:'Compra y Venta de Autos', area:'a2', desc:'Operación de trading alimentada por el Databot.', status:'active', hasLeads:false},
+    {id:'p5', color:'#ff3b30', name:'Pintura a Domicilio', area:'a2', desc:'Servicio presencial / alianza con taller.', status:'active', hasLeads:false},
+    {id:'p6', color:'#00c7be', name:'Venta Ecommerce', area:'a2', desc:'Operación general de venta online.', status:'active', hasLeads:false},
+    {id:'p7', color:'#a2845e', name:'Mankeleathers', area:'a2', desc:'E-commerce de bolsos de cuero, reactivación.', status:'active', hasLeads:false},
+    {id:'p8', color:'#ff2d55', name:'Jibplaza', area:'a2', desc:'Módulos de snowpark, web y catálogo.', status:'active', hasLeads:false},
+    {id:'p9', color:'#af52de', name:'Grupo Arte', area:'a3', desc:'Cliente NotClassic: PPT, Ads, cobros.', status:'active', hasLeads:true},
+    {id:'p10', color:'#8e8e93', name:'NotClassic', area:'a3', desc:'Optimización del sitio principal.', status:'active', hasLeads:false}
+  ],
+  tasks: [
+    {id:'t1', projectId:'p1', text:'Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)', done:false, dueDate:'2026-06-16', emailAlert:false, alertSent:false},
+    {id:'t2', projectId:'p1', text:'Configurar alertas de información de la industria', done:false, dueDate:'2026-06-18', emailAlert:false, alertSent:false},
+    {id:'t3', projectId:'p2', text:'Generar email de salida', done:false, dueDate:'2026-06-15', emailAlert:false, alertSent:false},
+    {id:'t4', projectId:'p2', text:'Armar listado de rubros', done:false, dueDate:'2026-06-15', emailAlert:false, alertSent:false},
+    {id:'t5', projectId:'p2', text:'Buscar leads por rubro', done:false, dueDate:'2026-06-17', emailAlert:false, alertSent:false},
+    {id:'t6', projectId:'p2', text:'Preparar bot por rubro', done:false, dueDate:'2026-06-19', emailAlert:false, alertSent:false},
+    {id:'t7', projectId:'p3', text:'Pruebas e investigación de automatizaciones con Claude', done:false, dueDate:'2026-06-20', emailAlert:false, alertSent:false},
+    {id:'t8', projectId:'p4', text:'Evaluar alertas de oportunidades', done:false, dueDate:'2026-06-16', emailAlert:false, alertSent:false},
+    {id:'t9', projectId:'p4', text:'Gestionar capital y ofertas de compra', done:false, dueDate:'2026-06-22', emailAlert:false, alertSent:false},
+    {id:'t10', projectId:'p4', text:'Preparación y venta de vehículos', done:false, dueDate:'2026-06-25', emailAlert:false, alertSent:false},
+    {id:'t11', projectId:'p5', text:'Redactar plan de negocio de pintura', done:false, dueDate:'2026-06-17', emailAlert:false, alertSent:false},
+    {id:'t12', projectId:'p5', text:'Agendar reunión con dueño del taller', done:false, dueDate:'2026-06-19', emailAlert:false, alertSent:false},
+    {id:'t13', projectId:'p5', text:'Proponer modelo de negocio', done:false, dueDate:'2026-06-23', emailAlert:false, alertSent:false},
+    {id:'t14', projectId:'p6', text:'Crear/optimizar publicaciones', done:false, dueDate:'2026-06-15', emailAlert:false, alertSent:false},
+    {id:'t15', projectId:'p6', text:'Web scrapping de competidores', done:false, dueDate:'2026-06-18', emailAlert:false, alertSent:false},
+    {id:'t16', projectId:'p6', text:'Captación de leads', done:false, dueDate:'2026-06-21', emailAlert:false, alertSent:false},
+    {id:'t17', projectId:'p7', text:'Reactivar web y plataforma ecommerce', done:false, dueDate:'2026-06-24', emailAlert:false, alertSent:false},
+    {id:'t18', projectId:'p7', text:'Estrategia de marketing para liquidar stock', done:false, dueDate:'2026-06-26', emailAlert:false, alertSent:false},
+    {id:'t19', projectId:'p8', text:'Crear página web desde cero', done:false, dueDate:'2026-06-20', emailAlert:false, alertSent:false},
+    {id:'t20', projectId:'p8', text:'Actualizar catálogo de productos', done:false, dueDate:'2026-06-22', emailAlert:false, alertSent:false},
+    {id:'t21', projectId:'p8', text:'Prospección de clientes potenciales', done:false, dueDate:'2026-06-27', emailAlert:false, alertSent:false},
+    {id:'t22', projectId:'p9', text:'Diseñar presentaciones (PPT)', done:false, dueDate:'2026-06-16', emailAlert:false, alertSent:false},
+    {id:'t23', projectId:'p9', text:'Gestionar campañas de Google Ads', done:false, dueDate:'2026-06-19', emailAlert:false, alertSent:false},
+    {id:'t24', projectId:'p9', text:'Control y seguimiento de cobros', done:false, dueDate:'2026-06-30', emailAlert:false, alertSent:false},
+    {id:'t25', projectId:'p10', text:'Arreglar y optimizar el sitio notclassic.com', done:false, dueDate:'2026-06-23', emailAlert:false, alertSent:false}
+  ],
+  leads: [
+    {id:'l1', name:'Bodega Mar y Tierra', projectId:'p2', stage:'contactados'},
+    {id:'l2', name:'California', projectId:'p2', stage:'contactados'},
+    {id:'l3', name:'Grupo Arte', projectId:'p9', stage:'ganados'}
+  ]
+};
+
+const STAGES = [
+  {id:'descubiertos', name:'Descubiertos / Scrapping', color:'#8e8e93'},
+  {id:'contactados', name:'Contactados', color:'#007aff'},
+  {id:'negociacion', name:'En Negociación', color:'#ff9f0a'},
+  {id:'ganados', name:'Cerrados / Ganados', color:'#34c759'}
+];
+
+/* ====== CONFIGURACIÓN EMAILJS ====== */
+/* Para activar el envío de correos por tarea vencida:
+   1. Creá una cuenta gratuita en https://www.emailjs.com
+   2. Configurá un Email Service (ej. Gmail) y copiá el SERVICE_ID
+   3. Creá un Template con variables {{task_text}}, {{project_name}}, {{due_date}}, {{to_email}}
+      y copiá el TEMPLATE_ID
+   4. En Account > General copiá tu PUBLIC_KEY
+   5. Pegá los 3 valores abajo y tu email de destino en TO_EMAIL */
+const EMAILJS_CONFIG = {
+  SERVICE_ID: '',
+  TEMPLATE_ID: '',
+  PUBLIC_KEY: '',
+  TO_EMAIL: ''
+};
+const EMAILJS_READY = EMAILJS_CONFIG.SERVICE_ID && EMAILJS_CONFIG.TEMPLATE_ID && EMAILJS_CONFIG.PUBLIC_KEY && EMAILJS_CONFIG.TO_EMAIL;
+
+/* ====== CONFIGURACIÓN GOOGLE DRIVE ====== */
+/* Para activar "Conectar Google Drive":
+   1. console.cloud.google.com -> proyecto nuevo -> habilitar "Google Drive API"
+   2. Credenciales -> crear OAuth Client ID (tipo "Aplicación web")
+   3. En "Orígenes de JavaScript autorizados" agregar la URL donde hosteás este dashboard
+      (https://, no file://)
+   4. Pegar el Client ID acá abajo (termina en .apps.googleusercontent.com)
+   5. La cuenta contacto@notclassic.com debe ser la que uses para iniciar sesión
+      cuando aparezca el popup de Google */
+const GOOGLE_CONFIG = {
+  CLIENT_ID: '',
+  SCOPES: 'https://www.googleapis.com/auth/drive.readonly'
+};
+const GOOGLE_READY = !!GOOGLE_CONFIG.CLIENT_ID;
+let googleToken = null;
+if(EMAILJS_READY && typeof emailjs !== 'undefined'){ emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); }
+
+/* ====== ESTADO ====== */
+const STORAGE_KEY = 'dashboard_portafolio_v1';
+let data = load();
+let activeArea = 'all';
+let activeProjects = new Set();
+let expandedProjects = new Set();
+let activeLeadsProjects = new Set();
+let taskFilter = 'pending';
+
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
+      parsed.projects.forEach(p=>{
+        if(!p.color){
+          const a = parsed.areas.find(a=>a.id===p.area);
+          p.color = a ? a.color : '#007aff';
+        }
+        if(p.driveUrl===undefined) p.driveUrl='';
+        if(!p.contacts) p.contacts=[];
+        if(p.driveFolderId===undefined) p.driveFolderId='';
+      });
+      assignDefaultTimes(parsed.tasks);
+      return parsed;
+    }
+  }catch(e){}
+  const def = JSON.parse(JSON.stringify(DEFAULT_DATA));
+  assignDefaultTimes(def.tasks);
+  return def;
+}
+function assignDefaultTimes(tasks){
+  const byDate = {};
+  tasks.forEach(t=>{
+    if(t.dueTime===undefined) t.dueTime='';
+    if(t.driveUrl===undefined) t.driveUrl='';
+    if(t.dueTime || !t.dueDate) return;
+    if(!byDate[t.dueDate]) byDate[t.dueDate] = [];
+    byDate[t.dueDate].push(t);
+  });
+  Object.values(byDate).forEach(group=>{
+    group.forEach((t, i)=>{
+      const hour = 12 + i;
+      t.dueTime = String(hour).padStart(2,'0') + ':00';
+    });
+  });
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+function save(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+/* ====== RESPALDO: EXPORTAR / IMPORTAR ====== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+  a.href = url;
+  a.download = `dashboard_backup_${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function importData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(!parsed.projects || !parsed.tasks){
+        alert('El archivo no parece un respaldo válido de este dashboard.');
+        return;
+      }
+      if(!confirm('Esto va a reemplazar TODOS los datos actuales (proyectos, tareas, leads, configuración) por los del archivo importado. ¿Continuar?')) return;
+      if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
+      parsed.projects.forEach(p=>{
+        if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
+        if(p.driveUrl===undefined) p.driveUrl='';
+        if(!p.contacts) p.contacts=[];
+        if(p.hasLeads===undefined) p.hasLeads=false;
+      });
+      assignDefaultTimes(parsed.tasks);
+      data = parsed;
+      save();
+      activeProjects.clear(); activeLeadsProjects.clear(); expandedProjects.clear();
+      activeArea='all';
+      renderAll();
+      alert('Datos importados correctamente.');
+    }catch(err){
+      alert('No se pudo leer el archivo: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+function areaInfo(id){ return data.areas.find(a=>a.id===id); }
+function projectInfo(id){ return data.projects.find(p=>p.id===id); }
+function uid(prefix){ return prefix + Date.now() + Math.floor(Math.random()*1000); }
+function openTaskModal(projectId){
+  populateSelects();
+  if(projectId) document.getElementById('nt-project').value = projectId;
+  document.getElementById('taskModalOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('nt-text').focus(), 50);
+}
+function closeTaskModal(){
+  document.getElementById('taskModalOverlay').classList.remove('open');
+}
+function openDrive(id){
+  const p = projectInfo(id);
+  if(p.driveUrl){
+    window.open(p.driveUrl, '_blank');
+  }else{
+    const url = prompt('Pegá el link de la carpeta de Google Drive de este proyecto:');
+    if(url && url.trim()){
+      p.driveUrl = url.trim();
+      save(); renderAll();
+    }
+  }
+}
+function openTaskDrive(taskId){
+  const t = data.tasks.find(t=>t.id===taskId);
+  if(t.driveUrl){
+    window.open(t.driveUrl, '_blank');
+  }else{
+    const url = prompt('Pegá el link de la carpeta o documento de Google Drive para esta tarea:');
+    if(url && url.trim()){
+      t.driveUrl = url.trim();
+      save(); renderAll();
+    }
+  }
+}
+function quickAddTask(projectId){
+  openTaskModal(projectId);
+}
+function toggle(id){ document.getElementById(id).classList.toggle('collapsed'); }
+
+/* ====== GOOGLE DRIVE: CONEXIÓN Y LISTADO ====== */
+function renderGoogleSection(){
+  const banner = document.getElementById('googleConfigBanner');
+  const status = document.getElementById('googleDriveStatus');
+  if(!banner || !status) return;
+
+  if(!GOOGLE_READY){
+    banner.className = 'config-banner';
+    banner.textContent = '⚠ Google Drive sin configurar. Completá GOOGLE_CONFIG.CLIENT_ID en el código (ver instrucciones arriba en GOOGLE_CONFIG) y asegurate de estar accediendo por https://, no file://.';
+    status.innerHTML = '';
+    return;
+  }
+  if(location.protocol === 'file:'){
+    banner.className = 'config-banner';
+    banner.textContent = '⚠ Google bloquea el login desde archivos locales (file://). Subí este dashboard a un hosting https:// para poder conectar.';
+    status.innerHTML = '';
+    return;
+  }
+  if(!googleToken){
+    banner.className = 'config-banner';
+    banner.textContent = 'Google Drive configurado. Conectate con la cuenta contacto@notclassic.com para listar archivos por proyecto.';
+    status.innerHTML = `<button class="btn-primary" onclick="connectGoogleDrive()">🔗 Conectar Google Drive</button>`;
+  }else{
+    banner.className = 'config-banner ok';
+    banner.textContent = '✓ Google Drive conectado.';
+    status.innerHTML = `<button class="btn-toggle" onclick="disconnectGoogleDrive()">Desconectar</button>
+      <div class="row-desc" style="margin-top:10px;">
+        Para listar archivos de un proyecto, abrí su carpeta de Drive (botón 📁 en Portafolio), copiá el ID de la carpeta
+        desde la URL (la parte después de /folders/) y pegalo en "Carpeta (ID de Drive)" en Configuración › Proyectos.
+      </div>`;
+  }
+}
+function connectGoogleDrive(){
+  if(typeof google === 'undefined' || !google.accounts){
+    alert('No se pudo cargar el SDK de Google. Verificá tu conexión a internet.');
+    return;
+  }
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: GOOGLE_CONFIG.CLIENT_ID,
+    scope: GOOGLE_CONFIG.SCOPES,
+    hint: 'contacto@notclassic.com',
+    callback: (resp)=>{
+      if(resp.access_token){
+        googleToken = resp.access_token;
+        renderGoogleSection();
+        renderAreaSettings();
+      }
+    }
+  });
+  tokenClient.requestAccessToken();
+}
+function disconnectGoogleDrive(){
+  if(googleToken && google.accounts.oauth2.revoke){
+    google.accounts.oauth2.revoke(googleToken, ()=>{});
+  }
+  googleToken = null;
+  renderGoogleSection();
+  renderAreaSettings();
+}
+async function listDriveFiles(projectId){
+  const p = projectInfo(projectId);
+  const cont = document.getElementById('drivefiles-'+projectId);
+  if(!googleToken){ cont.innerHTML = '<div class="empty">Conectá Google Drive primero en la pestaña Configuración.</div>'; return; }
+  if(!p.driveFolderId){ cont.innerHTML = '<div class="empty">Falta el ID de carpeta de Drive (Configuración › Proyectos).</div>'; return; }
+  cont.innerHTML = '<div class="empty">Cargando archivos…</div>';
+  try{
+    const url = `https://www.googleapis.com/drive/v3/files?q='${p.driveFolderId}'+in+parents&fields=files(id,name,mimeType,webViewLink,iconLink)`;
+    const res = await fetch(url, {headers:{Authorization:'Bearer '+googleToken}});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    if(!data.files || data.files.length===0){ cont.innerHTML = '<div class="empty">Carpeta vacía o sin acceso.</div>'; return; }
+    cont.innerHTML = data.files.map(f=>`
+      <div class="checkrow" style="justify-content:space-between; padding:4px 0;">
+        <a href="${f.webViewLink}" target="_blank" style="color:var(--accent); text-decoration:none;">📄 ${f.name}</a>
+      </div>`).join('');
+  }catch(err){
+    cont.innerHTML = `<div class="empty">Error al listar archivos: ${err.message}</div>`;
+  }
+}
+
+/* ====== RENDER TOTALES ====== */
+function renderTotals(){
+  let active = data.projects.filter(p=>p.status==='active');
+  if(activeArea!=='all') active = active.filter(p=>p.area===activeArea);
+  if(activeProjects.size>0) active = active.filter(p=>activeProjects.has(p.id));
+  const activeIds = active.map(p=>p.id);
+  const pendingTasks = data.tasks.filter(t=>!t.done && activeIds.includes(t.projectId)).length;
+  const leads = data.leads.filter(l=>activeIds.includes(l.projectId));
+  const openLeads = leads.filter(l=>l.stage!=='ganados').length;
+  const wonLeads = leads.filter(l=>l.stage==='ganados').length;
+  document.getElementById('totals').innerHTML = `
+    <div class="totalbox"><b>${active.length}</b>Proyectos activos</div>
+    <div class="totalbox"><b>${pendingTasks}</b>Tareas pendientes</div>
+    <div class="totalbox"><b>${openLeads}</b>Leads en curso</div>
+    <div class="totalbox"><b>${wonLeads}</b>Leads ganados</div>
+  `;
+}
+
+/* ====== RENDER FILTROS DE ÁREA ====== */
+function renderAreaFilters(){
+  let html = `<div class="chip ${activeArea==='all'?'active':''}" onclick="setArea('all')">Todas</div>`;
+  data.areas.forEach(a=>{
+    html += `<div class="chip ${activeArea===a.id?'active':''}" onclick="setArea('${a.id}')">${a.name}</div>`;
+  });
+  document.getElementById('areaFilters').innerHTML = html;
+}
+function setArea(id){ activeArea = id; activeProjects.clear(); renderAll(); }
+
+function renderProjectFilters(){
+  const trigger = document.getElementById('projectDropdownLabel');
+  const panel = document.getElementById('projectDropdownPanel');
+  const projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
+
+  // limpiar selecciones que ya no aplican al área filtrada
+  if(activeArea!=='all'){
+    [...activeProjects].forEach(id=>{ if(!projects.some(p=>p.id===id)) activeProjects.delete(id); });
+  }
+
+  if(activeProjects.size===0) trigger.textContent = 'Todos los proyectos';
+  else if(activeProjects.size===1) trigger.textContent = projectInfo([...activeProjects][0]).name;
+  else trigger.textContent = `${activeProjects.size} proyectos seleccionados`;
+
+  let html = `<div class="glass-option ${activeProjects.size===0?'selected':''}" onclick="clearProjectFilter()">
+    <input type="checkbox" ${activeProjects.size===0?'checked':''}><span>Todos los proyectos</span></div>
+    <div class="glass-divider"></div>`;
+  html += projects.map(p=>`
+    <div class="glass-option ${activeProjects.has(p.id)?'selected':''}" onclick="toggleProjectFilter('${p.id}')">
+      <input type="checkbox" ${activeProjects.has(p.id)?'checked':''}><span>${p.name}</span>
+    </div>`).join('');
+  panel.innerHTML = html;
+
+  // espejo para el dropdown de la pestaña Calendario y Tareas
+  const trigger2 = document.getElementById('projectDropdownLabel2');
+  const panel2 = document.getElementById('projectDropdownPanel2');
+  if(trigger2 && panel2){
+    trigger2.textContent = trigger.textContent;
+    panel2.innerHTML = html;
+  }
+}
+function toggleProjectDropdown(){
+  document.getElementById('projectDropdown').classList.toggle('open');
+}
+function toggleProjectDropdown2(){
+  document.getElementById('projectDropdown2').classList.toggle('open');
+}
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('projectDropdown');
+  if(dd && !dd.contains(e.target)) dd.classList.remove('open');
+  const dd2 = document.getElementById('projectDropdown2');
+  if(dd2 && !dd2.contains(e.target)) dd2.classList.remove('open');
+});
+function toggleProjectFilter(id){
+  if(activeProjects.has(id)) activeProjects.delete(id);
+  else activeProjects.add(id);
+  renderAll();
+}
+function clearProjectFilter(){
+  activeProjects.clear();
+  renderAll();
+}
+
+/* ====== RENDER TARJETAS PROYECTO ====== */
+function renderProjectCards(){
+  const cont = document.getElementById('projectCards');
+  let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
+  if(activeProjects.size>0) projects = projects.filter(p=>activeProjects.has(p.id));
+
+  if(projects.length===0){
+    cont.innerHTML = '<div class="empty">No hay proyectos en esta área.</div>';
+    return;
+  }
+
+  cont.innerHTML = `<div class="row-head"><div></div><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>` +
+  projects.map(p=>{
+    const area = areaInfo(p.area);
+    const tasks = data.tasks.filter(t=>t.projectId===p.id);
+    const done = tasks.filter(t=>t.done).length;
+    const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+    let statusCls='status-todo', statusLabel='Sin tareas';
+    let hasOverdue = false;
+    if(tasks.length){
+      const today = new Date(); today.setHours(0,0,0,0);
+      const pending = tasks.filter(t=>!t.done);
+      if(pending.length===0){
+        statusCls='status-done'; statusLabel='Completado';
+      }else{
+        hasOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
+        if(hasOverdue){ statusCls='status-late'; statusLabel='Atrasado'; }
+        else{ statusCls='status-progress'; statusLabel='A tiempo'; }
+      }
+    }
+    const pending = tasks.filter(t=>!t.done);
+    const expanded = expandedProjects.has(p.id);
+    const today = new Date(); today.setHours(0,0,0,0);
+    const taskItems = pending.length ? pending.map(t=>{
+      const overdue = t.dueDate && new Date(t.dueDate+'T00:00:00') <= today;
+      const due = t.dueDate ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}">${overdue?'Vencida · ':''}${formatDate(t.dueDate)}</span>` : '';
+      return `<div class="task" draggable="true" data-task-id="${t.id}"
+                   ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
+                   ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
+        <span class="drag-handle">⠿</span>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text">${t.text}</div>${due}</div>
+        <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
+      </div>`;
+    }).join('') : '<div class="empty" style="padding:6px 0;">No hay tareas pendientes 🎉</div>';
+
+    return `
+    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''}" style="--accent-color:${hasOverdue?'#ff3b30':p.color}"
+         draggable="true" data-id="${p.id}"
+         ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
+         ondrop="dragDrop(event)" ondragend="dragEnd(event)">
+      <div class="drag-handle">⠿</div>
+      <div>
+        <div class="row-name" contenteditable="true" spellcheck="false" draggable="false"
+             onblur="renameProject('${p.id}', this.textContent)"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+             title="Click para editar el nombre">${p.name}</div>
+        <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false"
+             onblur="editDesc('${p.id}', this.textContent)"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+             title="Click para editar la descripción">${p.desc}</div>
+      </div>
+      <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
+      <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
+      <div class="row-actions">
+        <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
+        <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
+        <button onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
+        <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
+        ${p.status==='active'
+          ? `<button onclick="toggleStatus('${p.id}')">⏸</button>`
+          : `<button class="go" onclick="toggleStatus('${p.id}')">▶</button>`}
+        <button class="danger" onclick="deleteProject('${p.id}')">🗑</button>
+      </div>
+    </div>
+    ${expanded ? `<div class="row-detail" style="--accent-color:${p.color}">
+      <div class="task-list">${taskItems}</div>
+      ${p.driveFolderId ? `
+      <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+        <button class="btn-toggle" style="margin-top:0;" onclick="listDriveFiles('${p.id}')">📁 Cargar archivos de Drive</button>
+        <div id="drivefiles-${p.id}" style="margin-top:8px;"></div>
+      </div>` : ''}
+    </div>` : ''}`;
+  }).join('');
+}
+/* ====== REORDENAR PROYECTOS (DRAG & DROP) ====== */
+let draggedProjectId = null;
+function dragStart(e){
+  draggedProjectId = e.currentTarget.dataset.id;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function dragOver(e){
+  e.preventDefault();
+  if(e.currentTarget.dataset.id !== draggedProjectId) e.currentTarget.classList.add('drag-over');
+}
+function dragLeave(e){
+  e.currentTarget.classList.remove('drag-over');
+}
+function dragDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const targetId = e.currentTarget.dataset.id;
+  if(!draggedProjectId || draggedProjectId === targetId) return;
+  const fromIdx = data.projects.findIndex(p=>p.id===draggedProjectId);
+  const toIdx = data.projects.findIndex(p=>p.id===targetId);
+  const [moved] = data.projects.splice(fromIdx, 1);
+  data.projects.splice(toIdx, 0, moved);
+  save(); renderAll();
+}
+function dragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.row.drag-over').forEach(r=>r.classList.remove('drag-over'));
+  draggedProjectId = null;
+}
+
+/* ====== REORDENAR TAREAS DENTRO DEL PROYECTO ====== */
+let draggedTaskId = null;
+function taskDragStart(e){
+  draggedTaskId = e.currentTarget.dataset.taskId;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function taskDragOver(e){
+  e.preventDefault();
+  if(e.currentTarget.dataset.taskId !== draggedTaskId) e.currentTarget.classList.add('drag-over-task');
+}
+function taskDragLeave(e){
+  e.currentTarget.classList.remove('drag-over-task');
+}
+function taskDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over-task');
+  const targetId = e.currentTarget.dataset.taskId;
+  if(!draggedTaskId || draggedTaskId === targetId) return;
+  const fromIdx = data.tasks.findIndex(t=>t.id===draggedTaskId);
+  const toIdx = data.tasks.findIndex(t=>t.id===targetId);
+  const [moved] = data.tasks.splice(fromIdx, 1);
+  data.tasks.splice(toIdx, 0, moved);
+  save(); renderAll();
+}
+function taskDragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.task.drag-over-task').forEach(t=>t.classList.remove('drag-over-task'));
+  draggedTaskId = null;
+}
+
+function editDesc(id, newDesc){
+  const desc = newDesc.trim();
+  const p = projectInfo(id);
+  if(desc===p.desc) return;
+  p.desc = desc;
+  save(); renderAll();
+}
+function renameProject(id, newName){
+  const name = newName.trim();
+  const p = projectInfo(id);
+  if(!name || name===p.name){ renderProjectCards(); return; }
+  p.name = name;
+  save(); renderAll();
+}
+function toggleExpand(id){
+  if(expandedProjects.has(id)) expandedProjects.delete(id);
+  else expandedProjects.add(id);
+  renderProjectCards();
+}
+function toggleHasLeads(id){
+  const p = projectInfo(id);
+  p.hasLeads = !p.hasLeads;
+  save(); renderAll();
+}
+function toggleStatus(id){
+  const p = projectInfo(id);
+  p.status = p.status==='active' ? 'paused' : 'active';
+  save(); renderAll();
+}
+function deleteProject(id){
+  if(!confirm('¿Eliminar este proyecto y sus tareas asociadas? Esta acción no se puede deshacer.')) return;
+  data.projects = data.projects.filter(p=>p.id!==id);
+  data.tasks = data.tasks.filter(t=>t.projectId!==id);
+  data.leads.forEach(l=>{ if(l.projectId===id) l.projectId=''; });
+  save(); renderAll();
+}
+function addProject(){
+  const name = document.getElementById('np-name').value.trim();
+  const area = document.getElementById('np-area').value;
+  const desc = document.getElementById('np-desc').value.trim();
+  if(!name){ alert('Falta el nombre del proyecto'); return; }
+  const color = areaInfo(area).color;
+  data.projects.push({id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, driveUrl:'', driveFolderId:'', contacts:[]});
+  document.getElementById('np-name').value='';
+  document.getElementById('np-desc').value='';
+  document.getElementById('addProjectBox').classList.add('collapsed');
+  save(); renderAll();
+}
+
+/* ====== RENDER PROYECTOS CON LEADS ====== */
+function renderLeadsDropdown(){
+  const trigger = document.getElementById('leadsDropdownLabel');
+  const panel = document.getElementById('leadsDropdownPanel');
+  const projects = data.projects.filter(p=>p.hasLeads);
+
+  [...activeLeadsProjects].forEach(id=>{ if(!projects.some(p=>p.id===id)) activeLeadsProjects.delete(id); });
+
+  if(activeLeadsProjects.size===0) trigger.textContent = 'Todos los proyectos';
+  else if(activeLeadsProjects.size===1) trigger.textContent = projectInfo([...activeLeadsProjects][0]).name;
+  else trigger.textContent = `${activeLeadsProjects.size} proyectos seleccionados`;
+
+  let html = `<div class="glass-option ${activeLeadsProjects.size===0?'selected':''}" onclick="clearLeadsFilter()">
+    <input type="checkbox" ${activeLeadsProjects.size===0?'checked':''}><span>Todos los proyectos</span></div>
+    <div class="glass-divider"></div>`;
+  html += projects.map(p=>`
+    <div class="glass-option ${activeLeadsProjects.has(p.id)?'selected':''}" onclick="toggleLeadsFilter('${p.id}')">
+      <input type="checkbox" ${activeLeadsProjects.has(p.id)?'checked':''}><span>${p.name}</span>
+    </div>`).join('');
+  panel.innerHTML = html || '<div class="empty">No hay proyectos marcados con leads.</div>';
+}
+function toggleLeadsDropdown(){
+  document.getElementById('leadsProjectDropdown').classList.toggle('open');
+}
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('leadsProjectDropdown');
+  if(dd && !dd.contains(e.target)) dd.classList.remove('open');
+});
+function toggleLeadsFilter(id){
+  if(activeLeadsProjects.has(id)) activeLeadsProjects.delete(id);
+  else activeLeadsProjects.add(id);
+  renderLeadProjects(); renderKanban(); populateSelects();
+}
+function clearLeadsFilter(){
+  activeLeadsProjects.clear();
+  renderLeadProjects(); renderKanban(); populateSelects();
+}
+function renderLeadProjects(){
+  renderLeadsDropdown();
+  const cont = document.getElementById('leadProjectCards');
+  let projects = data.projects.filter(p=>p.hasLeads);
+  if(activeLeadsProjects.size>0) projects = projects.filter(p=>activeLeadsProjects.has(p.id));
+  if(projects.length===0){
+    cont.innerHTML = '<div class="empty">Ningún proyecto está marcado con leads. Marcalo con el botón 🎯 en la pestaña Portafolio.</div>';
+    return;
+  }
+  cont.innerHTML = `<div class="row-head"><div></div><div>Proyecto</div><div>Área</div><div>Leads</div><div></div></div>` +
+  projects.map(p=>{
+    const area = areaInfo(p.area);
+    const count = data.leads.filter(l=>l.projectId===p.id).length;
+    return `
+    <div class="row" style="--accent-color:${p.color}">
+      <div></div>
+      <div class="row-name">${p.name}</div>
+      <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
+      <div style="font-size:.8rem; font-weight:700;">${count}</div>
+      <div></div>
+    </div>`;
+  }).join('');
+}
+
+/* ====== RENDER KANBAN ====== */
+function renderKanban(){
+  const cont = document.getElementById('kanban');
+  cont.innerHTML = STAGES.map(stage=>{
+    const leads = data.leads.filter(l=>l.stage===stage.id && (activeLeadsProjects.size===0 || activeLeadsProjects.has(l.projectId)));
+    const cards = leads.length ? leads.map(l=>{
+      const proj = l.projectId ? projectInfo(l.projectId) : null;
+      const stageOptions = STAGES.map(s=>`<option value="${s.id}" ${s.id===stage.id?'selected':''}>${s.name}</option>`).join('');
+      return `
+      <div class="lead" draggable="true" data-lead-id="${l.id}"
+           ondragstart="leadDragStart(event)" ondragend="leadDragEnd(event)"
+           style="border-left:3px solid ${proj?proj.color:'var(--border)'}">
+        <button class="lead-del" onclick="deleteLead('${l.id}')">✕</button>
+        <div class="lead-name">${l.name}</div>
+        ${proj ? `<div class="lead-project">${proj.name}</div>` : `<div class="lead-project">Sin proyecto</div>`}
+        <select onchange="moveLead('${l.id}', this.value)">${stageOptions}</select>
+      </div>`;
+    }).join('') : '<div class="empty" style="padding:6px 0;">Sin leads</div>';
+
+    return `
+    <div class="kanban-col" data-stage="${stage.id}" style="--stage-color:${stage.color}"
+         ondragover="leadDragOver(event)" ondragleave="leadDragLeave(event)" ondrop="leadDrop(event)">
+      <h3>${stage.name} <span>${leads.length}</span></h3>
+      <div class="kanban-col-body">${cards}</div>
+    </div>`;
+  }).join('');
+}
+/* ====== DRAG & DROP DE LEADS ====== */
+let draggedLeadId = null;
+function leadDragStart(e){
+  draggedLeadId = e.currentTarget.dataset.leadId;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function leadDragEnd(e){
+  e.currentTarget.classList.remove('dragging');
+  document.querySelectorAll('.kanban-col.drag-over').forEach(c=>c.classList.remove('drag-over'));
+  draggedLeadId = null;
+}
+function leadDragOver(e){
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+function leadDragLeave(e){
+  e.currentTarget.classList.remove('drag-over');
+}
+function leadDrop(e){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  const stage = e.currentTarget.dataset.stage;
+  if(!draggedLeadId) return;
+  moveLead(draggedLeadId, stage);
+}
+function moveLead(id, stage){
+  const lead = data.leads.find(l=>l.id===id);
+  lead.stage = stage;
+  save(); renderAll();
+}
+function deleteLead(id){
+  data.leads = data.leads.filter(l=>l.id!==id);
+  save(); renderAll();
+}
+function addLead(){
+  const name = document.getElementById('nl-name').value.trim();
+  const projectId = document.getElementById('nl-project').value;
+  const stage = document.getElementById('nl-stage').value;
+  if(!name){ alert('Falta el nombre del lead'); return; }
+  data.leads.push({id:uid('l'), name, projectId, stage});
+  document.getElementById('nl-name').value='';
+  document.getElementById('addLeadBox').classList.add('collapsed');
+  save(); renderAll();
+}
+
+/* ====== RENDER TAREAS ====== */
+function setTaskFilter(f){
+  taskFilter = f;
+  document.querySelectorAll('.task-filters .chip').forEach(c=>c.classList.toggle('active', c.dataset.tf===f));
+  renderTasks();
+  if(calView) renderCalendar();
+  if(document.getElementById('dayView').style.display !== 'none' && currentDayIso) renderDayView(currentDayIso);
+}
+function renderTasks(){
+  const cont = document.getElementById('taskList');
+  const activeProjectIds = data.projects.filter(p=>p.status==='active').map(p=>p.id);
+  let tasks = data.tasks.filter(t=> activeArea==='all' || activeProjectIds.includes(t.projectId) && projectInfo(t.projectId).area===activeArea);
+  // si no hay filtro de área, igual restringimos a proyectos activos por defecto en pendientes
+  if(activeArea==='all'){
+    tasks = data.tasks.filter(t=> activeProjectIds.includes(t.projectId) || taskFilter!=='pending');
+  }
+  if(taskFilter==='pending') tasks = tasks.filter(t=>!t.done);
+  if(taskFilter==='done') tasks = tasks.filter(t=>t.done);
+  if(activeProjects.size>0) tasks = tasks.filter(t=>activeProjects.has(t.projectId));
+
+  if(tasks.length===0){
+    cont.innerHTML = '<div class="empty">No hay tareas en esta vista.</div>';
+    return;
+  }
+
+  cont.innerHTML = tasks.map(t=>{
+    const proj = projectInfo(t.projectId);
+    let badge = '';
+    if(t.dueDate){
+      const today = new Date(); today.setHours(0,0,0,0);
+      const due = new Date(t.dueDate + 'T00:00:00');
+      const diffDays = Math.round((due-today)/86400000);
+      let cls='due-upcoming', label=formatDate(t.dueDate);
+      if(diffDays < 0 && !t.done){ cls='due-overdue'; label='Vencida · '+formatDate(t.dueDate); }
+      else if(diffDays === 0 && !t.done){ cls='due-today'; label='Vence hoy'; }
+      badge = `<span class="due-badge ${cls}">${label}</span>`;
+    }
+    return `
+    <div class="task ${t.done?'done':''}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}')">
+      <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
+      <div class="task-body">
+        <div class="task-project">${proj ? proj.name : '—'}</div>
+        <div class="task-text">${t.text}</div>
+        ${badge}
+      </div>
+      <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+function toggleTask(id){
+  const t = data.tasks.find(t=>t.id===id);
+  t.done = !t.done;
+  save(); renderAll();
+}
+function deleteTask(id){
+  data.tasks = data.tasks.filter(t=>t.id!==id);
+  save(); renderAll();
+}
+function formatDate(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+function addTask(){
+  const projectId = document.getElementById('nt-project').value;
+  const text = document.getElementById('nt-text').value.trim();
+  const dueDate = document.getElementById('nt-due').value;
+  const dueTime = document.getElementById('nt-time').value;
+  const emailAlert = document.getElementById('nt-alert').checked;
+  if(!projectId){ alert('Elegí un proyecto'); return; }
+  if(!text){ alert('Falta la descripción de la tarea'); return; }
+  data.tasks.push({id:uid('t'), projectId, text, done:false, dueDate, dueTime, emailAlert, alertSent:false, driveUrl:''});
+  document.getElementById('nt-text').value='';
+  document.getElementById('nt-due').value='';
+  document.getElementById('nt-time').value='';
+  document.getElementById('nt-alert').checked=false;
+  closeTaskModal();
+  save(); renderAll();
+}
+
+/* ====== SELECTS AUXILIARES ====== */
+function populateSelects(){
+  const areaSel = document.getElementById('np-area');
+  areaSel.innerHTML = data.areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+
+  const stageSel = document.getElementById('nl-stage');
+  stageSel.innerHTML = STAGES.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+
+  const projOptions = data.projects.filter(p=>p.status==='active')
+    .map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  document.getElementById('nl-project').innerHTML = '<option value="">Sin proyecto vinculado</option>' + projOptions;
+  document.getElementById('nt-project').innerHTML = projOptions;
+}
+
+/* ====== EMAIL: BANNER Y CHEQUEO DE VENCIDAS ====== */
+function renderEmailBanner(){
+  const el = document.getElementById('emailConfigBanner');
+  if(EMAILJS_READY){
+    el.className = 'config-banner ok';
+    el.textContent = '✓ Alertas por correo configuradas. Se revisan tareas vencidas con "Avisarme por correo" al abrir este dashboard.';
+  }else{
+    el.className = 'config-banner';
+    el.textContent = '⚠ Alertas por correo sin configurar. Completá EMAILJS_CONFIG en el código (Service ID, Template ID, Public Key, email de destino) para activarlas. Mientras tanto, los vencimientos se muestran igual de forma visual.';
+  }
+}
+
+function checkOverdueAlerts(){
+  if(!EMAILJS_READY || typeof emailjs === 'undefined') return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let changed = false;
+  data.tasks.forEach(t=>{
+    if(!t.emailAlert || t.done || !t.dueDate || t.alertSent) return;
+    const due = new Date(t.dueDate + 'T00:00:00');
+    if(due <= today){
+      const proj = projectInfo(t.projectId);
+      emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.TEMPLATE_ID, {
+        to_email: EMAILJS_CONFIG.TO_EMAIL,
+        task_text: t.text,
+        project_name: proj ? proj.name : '—',
+        due_date: formatDate(t.dueDate)
+      }).then(()=>{
+        t.alertSent = true;
+        save();
+      }).catch(err=>{ console.error('Error enviando alerta de correo:', err); });
+    }
+  });
+}
+
+/* ====== VISTA CALENDARIO ====== */
+let calView = true;
+let calDate = new Date(); calDate.setDate(1);
+const DOW = ['LUN','MAR','MIÉ','JUE','VIE','SÁB','DOM'];
+const MONTH_NAMES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+function toggleView(){
+  calView = !calView;
+  document.getElementById('taskList').style.display = calView ? 'none' : '';
+  document.getElementById('calendarView').style.display = calView ? '' : 'none';
+  document.getElementById('dayView').style.display = 'none';
+  document.getElementById('viewToggle').textContent = calView ? '📋 Ver detalle' : '📅 Ver calendario';
+  if(calView) renderCalendar();
+}
+function calNav(dir){
+  calDate.setMonth(calDate.getMonth()+dir);
+  renderCalendar();
+}
+function renderCalendar(){
+  const cont = document.getElementById('calendarView');
+  const year = calDate.getFullYear();
+  const month = calDate.getMonth();
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // lunes=0
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  let html = `
+    <div class="cal-header">
+      <div class="cal-title">${MONTH_NAMES[month]} ${year}</div>
+      <div class="cal-nav">
+        <button onclick="calNav(-1)">‹</button>
+        <button onclick="calNav(1)">›</button>
+      </div>
+    </div>
+    <div class="cal-grid">`;
+  DOW.forEach(d=> html += `<div class="cal-dow">${d}</div>`);
+  for(let i=0;i<firstDow;i++) html += `<div class="cal-cell empty"></div>`;
+
+  for(let day=1; day<=daysInMonth; day++){
+    const cellDate = new Date(year, month, day);
+    const iso = cellDate.toISOString().slice(0,10);
+    const isToday = cellDate.getTime() === today.getTime();
+    let dayTasks = data.tasks.filter(t=>t.dueDate===iso && (activeProjects.size===0 || activeProjects.has(t.projectId)));
+    if(taskFilter==='pending') dayTasks = dayTasks.filter(t=>!t.done);
+    if(taskFilter==='done') dayTasks = dayTasks.filter(t=>t.done);
+    let tasksHtml = dayTasks.slice(0,3).map(t=>{
+      const overdue = !t.done && cellDate <= today;
+      const cls = t.done ? 'done' : (overdue ? 'overdue' : '');
+      const proj = projectInfo(t.projectId);
+      const projColor = proj ? proj.color : 'var(--muted)';
+      return `<div class="cal-task ${cls}" style="--proj-color:${projColor}">${t.text}</div>`;
+    }).join('');
+    if(dayTasks.length>3) tasksHtml += `<div class="cal-more">+${dayTasks.length-3} más</div>`;
+    html += `<div class="cal-cell ${isToday?'today':''}" onclick="openDayView('${iso}')"><div class="cal-daynum">${day}</div>${tasksHtml}</div>`;
+  }
+  cont.innerHTML = html;
+}
+
+function openDayView(iso){
+  document.getElementById('calendarView').style.display = 'none';
+  document.getElementById('taskList').style.display = 'none';
+  document.getElementById('dayView').style.display = '';
+  renderDayView(iso);
+}
+function closeDayView(){
+  document.getElementById('dayView').style.display = 'none';
+  document.getElementById('calendarView').style.display = calView ? '' : 'none';
+  document.getElementById('taskList').style.display = calView ? 'none' : '';
+  if(calView) renderCalendar();
+}
+function dayNav(iso, dir){
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate()+dir);
+  renderDayView(d.toISOString().slice(0,10));
+}
+let currentDayIso = null;
+function renderDayView(iso){
+  currentDayIso = iso;
+  const cont = document.getElementById('dayView');
+  const d = new Date(iso + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const isToday = d.getTime() === today.getTime();
+  const dayName = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'][d.getDay()];
+  const label = `${dayName} ${d.getDate()} de ${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;
+
+  let tasks = data.tasks.filter(t=>t.dueDate===iso && (activeProjects.size===0 || activeProjects.has(t.projectId)));
+  if(taskFilter==='pending') tasks = tasks.filter(t=>!t.done);
+  if(taskFilter==='done') tasks = tasks.filter(t=>t.done);
+  tasks = tasks.slice().sort((a,b)=> (a.dueTime||'99:99').localeCompare(b.dueTime||'99:99'));
+
+  const items = tasks.length ? tasks.map(t=>{
+    const proj = projectInfo(t.projectId);
+    const overdue = !t.done && d < today;
+    return `
+    <div class="task ${t.done?'done':''}">
+      <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask('${t.id}')">
+      <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
+      <div class="task-body">
+        <div class="task-project">${proj?proj.name:'—'}</div>
+        <div class="task-text">${t.text}</div>
+        ${t.dueTime ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}">🕒 ${t.dueTime}</span>` : (overdue?'<span class="due-badge due-overdue">Vencida</span>':'')}
+      </div>
+      <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
+    </div>`;
+  }).join('') : '<div class="empty">No hay tareas con vencimiento este día.</div>';
+
+  cont.innerHTML = `
+    <div class="cal-header">
+      <button class="cal-nav-btn" onclick="closeDayView()">‹ Volver</button>
+      <div class="cal-title" style="text-transform:capitalize;">${label}${isToday?' · Hoy':''}</div>
+      <div class="cal-nav">
+        <button onclick="dayNav('${iso}', -1)">‹</button>
+        <button onclick="dayNav('${iso}', 1)">›</button>
+      </div>
+    </div>
+    <div class="task-list">${items}</div>`;
+}
+
+/* ====== RENDER GENERAL ====== */
+function renderAll(){
+  renderTotals();
+  renderAreaFilters();
+  renderProjectFilters();
+  renderProjectCards();
+  renderKanban();
+  populateSelects();
+  renderTasks();
+  if(calView) renderCalendar();
+  renderEmailBanner();
+  renderOverdueBadge();
+}
+function renderOverdueBadge(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const count = data.tasks.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') <= today).length;
+  document.getElementById('overdueBadge').textContent = count>0 ? count : '';
+}
+renderAll();
+checkOverdueAlerts();
+
+/* ====== PWA: registro de service worker (solo funciona en https) ====== */
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+}
+
+</script>
+</body>
+</html>

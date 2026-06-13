@@ -5,17 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kingdom</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#007aff">
+<meta name="theme-color" content="#1d4ed8">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Portafolio">
 <style>
 :root{
-  --bg:#f5f5f7; --panel:#ffffff; --panel2:#f5f5f7; --border:#e3e3e6;
-  --text:#1d1d1f; --muted:#86868b; --accent:#007aff;
-  --green:#34c759; --yellow:#ff9f0a; --red:#ff3b30;
+  --bg:#f0f3f5; --panel:#ffffff; --panel2:#f0f3f5; --border:#d4d9de;
+  --text:#0c0c0b; --muted:#8a919e; --accent:#1d4ed8;
+  --green:#2a9d8f; --yellow:#efa217; --red:#e63946;
+  --gold:#f5ac2f;
 }
+[data-theme="dark"]{
+  --bg:#0c0c0b; --panel:#1c1c1e; --panel2:#262628; --border:#3a3a3c;
+  --text:#f5f5f7; --muted:#9b9ba1; --accent:#3b6fed;
+  --green:#3dbdb0; --yellow:#f5ac2f; --red:#ff5a5f;
+  --gold:#f5ac2f;
+}
+body{ transition:background .2s, color .2s; }
 *{box-sizing:border-box; margin:0; padding:0;}
 body{
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -25,7 +33,11 @@ body{
   body{ max-width:1100px; margin:0 auto; padding:24px; }
   .cal-cell{ min-height:90px; }
 }
-h1{font-size:1.3rem; font-weight:600; margin-bottom:4px;}
+h1{
+  font-family:"Arial Black","Helvetica Neue",Arial,sans-serif; font-weight:900;
+  font-size:1.6rem; letter-spacing:-0.5px; margin-bottom:4px; text-transform:uppercase;
+  color:var(--gold);
+}
 h2{font-size:1rem; font-weight:600; margin:0 0 10px; display:flex; align-items:center; gap:8px;}
 .subtitle{color:var(--muted); font-size:.8rem; margin-bottom:16px;}
 
@@ -57,25 +69,33 @@ section{
 /* PORTAFOLIO */
 .cards{display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden;}
 .row{
-  display:grid; grid-template-columns:24px 1fr 170px 100px 170px;
+  display:grid; grid-template-columns:1fr 170px 100px 170px;
   align-items:center; gap:12px; padding:10px 14px;
   border-bottom:1px solid var(--border); background:var(--panel2);
   border-left:3px solid var(--accent-color, var(--accent));
   transition:background .12s;
 }
 .row:last-child{ border-bottom:none; }
-.row:hover{ background:#f0f0f5; }
-.row.row-late{ background:#ff3b300d; }
-.row.row-late:hover{ background:#ff3b3018; }
+.row:hover{ background:var(--panel); }
+.row.row-late{ background:#e639460d; }
+.row.row-late:hover{ background:#e6394618; }
 .row.paused{ opacity:.4; }
 .row-head{
-  display:grid; grid-template-columns:24px 1fr 170px 100px 170px; gap:12px; padding:8px 14px;
+  display:grid; grid-template-columns:1fr 170px 100px 170px; gap:12px; padding:8px 14px;
   font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted);
   background:var(--panel); border-bottom:1px solid var(--border); border-left:3px solid transparent;
 }
 .row-name{ font-weight:600; font-size:.85rem; line-height:1.3; border-radius:6px; padding:2px 4px; margin:-2px -4px; }
 .row-name:hover{ background:rgba(0,0,0,0.04); }
 .row-name:focus{ outline:2px solid var(--accent); background:var(--panel); }
+.expand-pill{
+  flex-shrink:0; background:var(--panel); border:1px solid var(--border); border-radius:999px;
+  padding:5px 12px; font-size:.74rem; font-weight:700; color:var(--muted); cursor:pointer;
+}
+.expand-pill:hover{ border-color:var(--accent); color:var(--accent); }
+@media(max-width:760px){
+  .expand-pill{ padding:7px 14px; font-size:.85rem; }
+}
 .row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; }
 .row-desc:hover{ background:rgba(0,0,0,0.04); }
 .row-desc:focus{ outline:2px solid var(--accent); background:var(--panel); color:var(--text); white-space:normal; }
@@ -89,9 +109,9 @@ section{
   display:inline-block; justify-self:start;
 }
 .status-todo{ background:#ff8a5c22; color:var(--accent); }
-.status-progress{ background:#f2c94c22; color:var(--yellow); }
-.status-done{ background:#6fcf9722; color:var(--green); }
-.status-late{ background:#eb575722; color:var(--red); }
+.status-progress{ background:#efa21722; color:var(--yellow); }
+.status-done{ background:#2a9d8f22; color:var(--green); }
+.status-late{ background:#e6394622; color:var(--red); }
 .row-actions{ display:flex; gap:4px; justify-content:flex-end; flex-wrap:nowrap; }
 .row-actions button{
   font-size:.68rem; padding:5px 7px; border-radius:7px; border:1px solid var(--border);
@@ -101,8 +121,13 @@ section{
 .row-actions button.danger:hover{ border-color:var(--red); color:var(--red); }
 .row-actions button.go:hover{ border-color:var(--green); color:var(--green); }
 .row-actions button.lead-on{ background:#ff8a5c22; border-color:var(--accent); color:var(--accent); }
-.row-actions button.drive-on{ background:#34c75922; border-color:var(--green); color:var(--green); }
+.row-actions button.drive-on{ background:#2a9d8f22; border-color:var(--green); color:var(--green); }
 .drag-handle{ cursor:grab; color:var(--muted); font-size:.9rem; padding:2px 4px; user-select:none; }
+.project-avatar{
+  width:26px; height:26px; border-radius:8px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-weight:800; font-size:.78rem; cursor:pointer;
+}
 .row.dragging{ opacity:.35; }
 .row.drag-over{ border-top:2px solid var(--accent); }
 .row-detail{
@@ -117,7 +142,7 @@ section{
   .row-name{ margin:0; padding:0; }
   .row-desc{ margin-left:0; }
   .row-actions{
-    display:grid; grid-template-columns:repeat(6,1fr); gap:4px;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(40px, 1fr)); gap:4px;
     justify-content:stretch;
   }
   .row-actions button{
@@ -155,7 +180,7 @@ input, select, textarea{
   overflow:hidden;
 }
 @media(min-width:700px){ .kanban-col{min-width:240px; max-width:240px;} }
-.kanban-col.drag-over{ background:#007aff14; border-color:var(--accent); }
+.kanban-col.drag-over{ background:#1d4ed814; border-color:var(--accent); }
 .kanban-col h3{
   font-size:.74rem; margin:0; color:var(--text); display:flex; justify-content:space-between;
   padding:12px; border-bottom:1px solid var(--border); font-weight:700;
@@ -209,7 +234,7 @@ input, select, textarea{
   background:var(--panel); border:1px solid var(--border); border-radius:7px;
   width:28px; height:28px; cursor:pointer; color:var(--muted); font-size:.8rem; flex-shrink:0;
 }
-.task-drive.drive-on{ background:#34c75922; border-color:var(--green); color:var(--green); }
+.task-drive.drive-on{ background:#2a9d8f22; border-color:var(--green); color:var(--green); }
 .task.done{opacity:.4;}
 .task.done .task-text{text-decoration:line-through;}
 .task input[type=checkbox]{width:18px; height:18px; margin-top:2px; flex-shrink:0; accent-color:var(--green);}
@@ -222,8 +247,8 @@ input, select, textarea{
   display:inline-block; font-size:.65rem; padding:1px 7px; border-radius:6px; margin-top:3px;
   font-weight:600;
 }
-.due-overdue{background:#eb5757; color:#fff; font-weight:700;}
-.due-today{background:#f2c94c22; color:var(--yellow);}
+.due-overdue{background:var(--red); color:#fff; font-weight:700;}
+.due-today{background:#efa21722; color:var(--yellow);}
 .due-upcoming{background:#3a3f4b; color:var(--muted);}
 .checkrow{display:flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted);}
 .checkrow input{width:auto;}
@@ -248,6 +273,19 @@ input, select, textarea{
   transition:background .15s, border-color .15s;
 }
 .glass-trigger:hover{ background:rgba(255,255,255,0.8); border-color:rgba(0,0,0,0.1); }
+
+/* BOTÓN GLASS (liquid glass, acento verde) */
+.btn-glass{
+  display:flex; align-items:center; gap:8px; justify-content:center;
+  padding:10px 16px; border-radius:16px; border:1px solid rgba(52,199,89,0.35);
+  background:rgba(52,199,89,0.16);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  color:var(--green); font-size:.8rem; font-weight:700; cursor:pointer;
+  box-shadow:0 4px 16px rgba(52,199,89,0.12), inset 0 1px 0 rgba(255,255,255,0.5);
+  transition:background .15s, border-color .15s;
+}
+.btn-glass:hover{ background:rgba(52,199,89,0.26); border-color:rgba(52,199,89,0.5); }
 .glass-chevron{ color:var(--muted); font-size:.75rem; transition:transform .2s; }
 .glass-dropdown.open .glass-chevron{ transform:rotate(180deg); }
 .glass-panel{
@@ -316,8 +354,8 @@ input, select, textarea{
   background:#ff8a5c22; color:var(--text); overflow:hidden; text-overflow:ellipsis;
   white-space:nowrap; border-left:3px solid var(--proj-color, var(--accent));
 }
-.cal-task.overdue{background:#eb575722; color:var(--red); border-left:3px solid var(--red); font-weight:700;}
-.cal-task.done{background:#6fcf9722; color:var(--green); text-decoration:line-through;}
+.cal-task.overdue{background:#e6394622; color:var(--red); border-left:3px solid var(--red); font-weight:700;}
+.cal-task.done{background:#2a9d8f22; color:var(--green); text-decoration:line-through;}
 .cal-more{font-size:.6rem; color:var(--muted); margin-top:2px;}
 
 .empty{color:var(--muted); font-size:.8rem; text-align:center; padding:14px 0;}
@@ -332,7 +370,11 @@ input, select, textarea{
     <h1>Kingdom</h1>
     <div class="subtitle">Vista macro · CRM · Enfoque diario</div>
   </div>
-  <button class="btn-primary" style="font-size:.8rem; padding:8px 14px; flex-shrink:0;" onclick="openTaskModal()">➕ Nueva tarea</button>
+  <div style="display:flex; gap:8px; flex-shrink:0;">
+    <button class="btn-toggle" style="margin-top:0; font-size:.8rem; padding:8px 12px;" onclick="toggleTheme()" id="themeToggleBtn" title="Cambiar tema claro/oscuro">🌙</button>
+    <button class="btn-primary" style="font-size:.8rem; padding:8px 14px; background:var(--green);" onclick="openProjectModal()">➕ Nuevo proyecto</button>
+    <button class="btn-primary" style="font-size:.8rem; padding:8px 14px;" onclick="openTaskModal()">➕ Nueva tarea</button>
+  </div>
 </div>
 
 <div class="tabs">
@@ -347,24 +389,19 @@ input, select, textarea{
 <div id="tab-main">
 <!-- PORTAFOLIO -->
 <section>
-  <h2>📁 Portafolio</h2>
+  <h2 style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+    <span>📁 Portafolio</span>
+    <div class="glass-dropdown" id="projectDropdown" style="margin-bottom:0;">
+      <button class="glass-trigger" onclick="toggleProjectDropdown()">
+        <span id="projectDropdownLabel">Todos los proyectos</span>
+        <span class="glass-chevron">▾</span>
+      </button>
+      <div class="glass-panel" id="projectDropdownPanel"></div>
+    </div>
+  </h2>
   <div class="filters" id="areaFilters"></div>
-  <div class="glass-dropdown" id="projectDropdown">
-    <button class="glass-trigger" onclick="toggleProjectDropdown()">
-      <span id="projectDropdownLabel">Todos los proyectos</span>
-      <span class="glass-chevron">▾</span>
-    </button>
-    <div class="glass-panel" id="projectDropdownPanel"></div>
-  </div>
   <div class="totals" id="totals"></div>
   <div class="cards" id="projectCards"></div>
-  <button class="btn-toggle" onclick="toggle('addProjectBox')">+ Agregar proyecto</button>
-  <div class="addbox collapsed" id="addProjectBox">
-    <input type="text" id="np-name" placeholder="Nombre del proyecto">
-    <select id="np-area"></select>
-    <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
-    <button class="btn-primary" onclick="addProject()">Guardar proyecto</button>
-  </div>
 </section>
 </div>
 
@@ -432,6 +469,26 @@ input, select, textarea{
       </div>
       <label class="checkrow"><input type="checkbox" id="nt-alert"> Avisarme por correo si vence</label>
       <button class="btn-primary" onclick="addTask()">Guardar tarea</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVO PROYECTO -->
+<div class="modal-overlay" id="projectModalOverlay" onclick="if(event.target===this) closeProjectModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">➕ Nuevo proyecto</h2>
+      <button class="modal-close" onclick="closeProjectModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="text" id="np-name" placeholder="Nombre del proyecto">
+      <select id="np-area"></select>
+      <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
+      <label class="checkrow" style="flex-direction:column; align-items:flex-start; gap:6px;">
+        Ícono / foto del proyecto (opcional)
+        <input type="file" id="np-icon" accept="image/*">
+      </label>
+      <button class="btn-primary" onclick="addProject()">Guardar proyecto</button>
     </div>
   </div>
 </div>
@@ -749,6 +806,7 @@ function load(){
           p.color = a ? a.color : '#007aff';
         }
         if(p.driveUrl===undefined) p.driveUrl='';
+        if(p.icon===undefined) p.icon='';
         if(!p.contacts) p.contacts=[];
         if(p.driveFolderId===undefined) p.driveFolderId='';
       });
@@ -795,9 +853,10 @@ function applyImportedData(parsed, skipAutoPush){
   parsed.projects.forEach(p=>{
     if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
     if(p.driveUrl===undefined) p.driveUrl='';
-    if(p.driveFolderId===undefined) p.driveFolderId='';
+    if(p.icon===undefined) p.icon='';
     if(!p.contacts) p.contacts=[];
     if(p.hasLeads===undefined) p.hasLeads=false;
+    if(p.driveFolderId===undefined) p.driveFolderId='';
   });
   assignDefaultTimes(parsed.tasks);
   data = parsed;
@@ -913,6 +972,14 @@ function importData(event){
 function areaInfo(id){ return data.areas.find(a=>a.id===id); }
 function projectInfo(id){ return data.projects.find(p=>p.id===id); }
 function uid(prefix){ return prefix + Date.now() + Math.floor(Math.random()*1000); }
+function openProjectModal(){
+  populateSelects();
+  document.getElementById('projectModalOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('np-name').focus(), 50);
+}
+function closeProjectModal(){
+  document.getElementById('projectModalOverlay').classList.remove('open');
+}
 function openTaskModal(projectId){
   populateSelects();
   if(projectId) document.getElementById('nt-project').value = projectId;
@@ -922,29 +989,71 @@ function openTaskModal(projectId){
 function closeTaskModal(){
   document.getElementById('taskModalOverlay').classList.remove('open');
 }
+function readIconFile(file, cb){
+  const img = new Image();
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    img.onload = ()=>{
+      const size=96;
+      const canvas = document.createElement('canvas');
+      canvas.width=size; canvas.height=size;
+      const ctx = canvas.getContext('2d');
+      const scale = Math.max(size/img.width, size/img.height);
+      const w=img.width*scale, h=img.height*scale;
+      ctx.drawImage(img, (size-w)/2, (size-h)/2, w, h);
+      cb(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function setProjectIcon(id){
+  const p = projectInfo(id);
+  const choice = prompt('Ícono del proyecto:\n- Escribí un EMOJI (ej. 🚀)\n- Escribí "foto" para subir una imagen desde tu dispositivo\n- Dejalo vacío para volver a la inicial con color', p.icon&&!p.icon.startsWith('data:')&&!p.icon.startsWith('http')?p.icon:'');
+  if(choice===null) return;
+  if(choice.trim().toLowerCase()==='foto'){
+    const input = document.createElement('input');
+    input.type='file'; input.accept='image/*';
+    input.onchange = e=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      readIconFile(file, dataUrl=>{ p.icon = dataUrl; save(); renderAll(); });
+    };
+    input.click();
+    return;
+  }
+  p.icon = choice.trim();
+  save(); renderAll();
+}
 function openDrive(id){
   const p = projectInfo(id);
   if(p.driveUrl){
     window.open(p.driveUrl, '_blank');
   }else{
-    const url = prompt('Pegá el link de la carpeta de Google Drive de este proyecto:');
-    if(url && url.trim()){
-      p.driveUrl = url.trim();
-      save(); renderAll();
-    }
+    promptDriveUrl(p);
   }
+}
+function editDrive(id){
+  const p = projectInfo(id);
+  promptDriveUrl(p);
+}
+function promptDriveUrl(obj){
+  const url = prompt('Pegá el link de la carpeta o documento de Google Drive (dejalo vacío para quitar el vínculo):', obj.driveUrl||'');
+  if(url===null) return;
+  obj.driveUrl = url.trim();
+  save(); renderAll();
 }
 function openTaskDrive(taskId){
   const t = data.tasks.find(t=>t.id===taskId);
   if(t.driveUrl){
     window.open(t.driveUrl, '_blank');
   }else{
-    const url = prompt('Pegá el link de la carpeta o documento de Google Drive para esta tarea:');
-    if(url && url.trim()){
-      t.driveUrl = url.trim();
-      save(); renderAll();
-    }
+    promptDriveUrl(t);
   }
+}
+function editTaskDrive(taskId){
+  const t = data.tasks.find(t=>t.id===taskId);
+  promptDriveUrl(t);
 }
 function quickAddTask(projectId){
   openTaskModal(projectId);
@@ -1154,31 +1263,45 @@ function renderProjectCards(){
         <span class="drag-handle">⠿</span>
         <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text">${t.text}</div>${due}</div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
+        ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
       </div>`;
     }).join('') : '<div class="empty" style="padding:6px 0;">No hay tareas pendientes 🎉</div>';
 
     return `
-    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''}" style="--accent-color:${hasOverdue?'#ff3b30':p.color}"
+    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''}" style="--accent-color:${hasOverdue?'#e63946':p.color}"
          draggable="true" data-id="${p.id}"
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
-      <div class="drag-handle">⠿</div>
-      <div>
-        <div class="row-name" contenteditable="true" spellcheck="false" draggable="false"
-             onblur="renameProject('${p.id}', this.textContent)"
-             onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
-             title="Click para editar el nombre">${p.name}</div>
-        <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false"
-             onblur="editDesc('${p.id}', this.textContent)"
-             onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
-             title="Click para editar la descripción">${p.desc}</div>
+      <div style="display:flex; align-items:flex-start; gap:8px; min-width:0;">
+        <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; padding-top:2px;">
+          <span class="drag-handle">⠿</span>
+          <span class="project-avatar" style="background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
+                onclick="setProjectIcon('${p.id}')" title="Tocar para cambiar el ícono">${
+            p.icon
+              ? ((p.icon.startsWith('http')||p.icon.startsWith('data:')) ? `<img src="${p.icon}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">` : p.icon)
+              : (p.name||'?').trim().charAt(0).toUpperCase()
+          }</span>
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+            <div class="row-name" contenteditable="true" spellcheck="false" draggable="false"
+                 onblur="renameProject('${p.id}', this.textContent)"
+                 onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+                 title="Click para editar el nombre">${p.name}</div>
+            <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
+          </div>
+          <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false"
+               onblur="editDesc('${p.id}', this.textContent)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+               title="Click para editar la descripción">${p.desc}</div>
+        </div>
       </div>
       <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
-        <button onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
+        ${p.driveUrl ? `<button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
         ${p.status==='active'
           ? `<button onclick="toggleStatus('${p.id}')">⏸</button>`
@@ -1300,11 +1423,18 @@ function addProject(){
   const desc = document.getElementById('np-desc').value.trim();
   if(!name){ alert('Falta el nombre del proyecto'); return; }
   const color = areaInfo(area).color;
-  data.projects.push({id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, driveUrl:'', driveFolderId:'', contacts:[]});
+  const proj = {id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, icon:'', driveUrl:'', driveFolderId:'', contacts:[]};
+  data.projects.push(proj);
+  const iconInput = document.getElementById('np-icon');
+  const file = iconInput.files[0];
+  iconInput.value='';
   document.getElementById('np-name').value='';
   document.getElementById('np-desc').value='';
-  document.getElementById('addProjectBox').classList.add('collapsed');
+  closeProjectModal();
   save(); renderAll();
+  if(file){
+    readIconFile(file, dataUrl=>{ proj.icon = dataUrl; save(); renderAll(); });
+  }
 }
 
 /* ====== RENDER PROYECTOS CON LEADS ====== */
@@ -1706,6 +1836,24 @@ function renderOverdueBadge(){
   const count = data.tasks.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') <= today).length;
   document.getElementById('overdueBadge').textContent = count>0 ? count : '';
 }
+/* ====== TEMA CLARO/OSCURO ====== */
+function applyTheme(theme){
+  if(theme==='dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('themeToggleBtn').textContent = '☀️';
+  }else{
+    document.documentElement.removeAttribute('data-theme');
+    document.getElementById('themeToggleBtn').textContent = '🌙';
+  }
+}
+function toggleTheme(){
+  const current = document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light';
+  const next = current==='dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+}
+applyTheme(localStorage.getItem('theme') || 'light');
+
 renderAll();
 checkOverdueAlerts();
 autoPullOnLoad();

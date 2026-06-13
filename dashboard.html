@@ -70,55 +70,72 @@ section{
 
 /* FILTRO PROYECTOS — BOTÓN DISPARADOR */
 .proj-sheet-trigger{
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
-  width:100%; padding:10px 14px; border-radius:12px;
-  background:var(--panel); border:1.5px solid var(--border);
-  color:var(--text); font-size:.82rem; font-weight:600; cursor:pointer;
-  transition:border-color .15s;
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 12px; border-radius:8px;
+  background:var(--panel); border:1px solid var(--border);
+  color:var(--text); font-size:.78rem; font-weight:500; cursor:pointer;
+  transition:background .12s; position:relative;
+  margin-bottom:12px;
 }
-.proj-sheet-trigger:hover{ border-color:var(--accent); }
+.proj-sheet-trigger:hover{ background:var(--panel2); }
 
-/* iOS ACTION SHEET */
+/* POPOVER ESTILO macOS */
 .sheet-overlay{
   display:none; position:fixed; inset:0; z-index:500;
-  background:rgba(0,0,0,0.35); backdrop-filter:blur(4px);
-  -webkit-backdrop-filter:blur(4px); align-items:flex-end;
 }
-.sheet-overlay.open{ display:flex; }
+.sheet-overlay.open{ display:block; }
 .sheet{
-  width:100%; background:var(--panel); border-radius:20px 20px 0 0;
-  padding:0 0 env(safe-area-inset-bottom,16px);
-  box-shadow:0 -4px 40px rgba(0,0,0,0.18);
-  animation:slideUp .25s ease;
-  max-height:70vh; display:flex; flex-direction:column;
+  position:absolute;
+  min-width:240px; max-width:320px;
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.08);
+  box-shadow:0 4px 32px rgba(0,0,0,0.14), 0 1px 4px rgba(0,0,0,0.06);
+  animation:fadeScaleIn .15s cubic-bezier(.32,1,.23,1);
+  max-height:320px; display:flex; flex-direction:column;
+  overflow:hidden;
+  padding:4px 0;
 }
-@keyframes slideUp{ from{transform:translateY(100%)} to{transform:translateY(0)} }
-.sheet-handle{
-  width:36px; height:4px; border-radius:2px; background:var(--border);
-  margin:12px auto 4px;
+[data-theme="dark"] .sheet{
+  background:rgba(40,40,42,0.92);
+  border-color:rgba(255,255,255,0.08);
 }
+@keyframes fadeScaleIn{
+  from{opacity:0; transform:scale(.96) translateY(-4px)}
+  to{opacity:1; transform:scale(1) translateY(0)}
+}
+.sheet-handle{ display:none; }
 .sheet-title{
-  text-align:center; font-size:.75rem; font-weight:600; color:var(--muted);
-  padding:8px 16px 4px; letter-spacing:.02em; text-transform:uppercase;
+  font-size:.65rem; font-weight:600; color:var(--muted);
+  padding:8px 12px 4px; letter-spacing:.05em; text-transform:uppercase;
 }
 .sheet-list{ overflow-y:auto; flex:1; }
 .sheet-option{
   display:flex; align-items:center; justify-content:space-between;
-  padding:15px 20px; font-size:.95rem; cursor:pointer;
-  border-top:1px solid var(--border); color:var(--text);
-  transition:background .1s;
+  padding:9px 12px; font-size:.84rem; cursor:pointer;
+  color:var(--text); gap:8px;
 }
-.sheet-option:first-child{ border-top:none; }
-.sheet-option:active{ background:var(--panel2); }
-.sheet-option .sheet-left{ display:flex; align-items:center; gap:10px; }
-.sheet-option .dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-.sheet-option .sheet-check{ color:var(--accent); font-size:1.1rem; font-weight:700; }
-.sheet-cancel{
-  width:calc(100% - 32px); margin:8px 16px 8px;
-  padding:15px; border-radius:14px; border:none;
-  background:var(--panel2); color:var(--accent);
-  font-size:.95rem; font-weight:700; cursor:pointer;
+.sheet-option:hover{ background:rgba(0,0,0,0.04); }
+[data-theme="dark"] .sheet-option:hover{ background:rgba(255,255,255,0.05); }
+.sheet-option:active{ background:rgba(0,0,0,0.08); }
+.sheet-option .sheet-left{ display:flex; align-items:center; gap:8px; flex:1; }
+.sheet-option .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.sheet-option .sheet-check{
+  width:16px; height:16px; border-radius:50%;
+  background:var(--accent); flex-shrink:0;
 }
+.sheet-option .sheet-check-empty{
+  width:16px; height:16px; border-radius:50%; flex-shrink:0;
+  border:1.5px solid rgba(0,0,0,0.15);
+}
+[data-theme="dark"] .sheet-option .sheet-check-empty{
+  border-color:rgba(255,255,255,0.2);
+}
+.sheet-divider{ height:1px; background:rgba(0,0,0,0.06); margin:3px 0; }
+[data-theme="dark"] .sheet-divider{ background:rgba(255,255,255,0.06); }
+.sheet-cancel{ display:none; }
 .chip{
   font-size:.72rem; padding:8px 10px; border-radius:999px; border:1px solid var(--border);
   background:var(--panel2); color:var(--muted); cursor:pointer; white-space:nowrap;
@@ -425,7 +442,10 @@ input, select, textarea{
 <body>
 
 <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-  <h1 style="margin-bottom:0;">Kingdom</h1>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAIJUlEQVR42u2YeVCU5x3Hf8977MWyp7vLciwCiiigRjC2HqykOiDxRkyqUqx4Rhqr1bHWadY1WsexSjqamFTFWsUDQ6PGoCQq4hGPQMxICBJpFQRxwT3Yg+V9333fp3+ImZjpH9WI4AyfP9+Z931/3+d3P4AxpgEAMMYIXh7QD/ZWVFTQ0Ev38JJFTS89E/J5V4fObxI/eU78j2c9p6R1Gv3EYSAEkJ7eT5yUlPRElbMAELgoi3yeP39uzE7vpzhf5RjvZ2AQx2MJSSJaRpG0iAIcALgTG2soOneu2gaAAWNACAHuTgEIAHBUVJSBBP+Yh15W5nLwcQptUEPqYOXt2SkK11CTzPWJLbll9eotnFQuz4gxKnP2LzdRQxM1xWhMSQG2YAJZQehOAWjQIJ3+1t3A9jgjOWDXsujzI8fopMAJHHACH3BzGBOgJAnRA9WUstWedkb/aryhsOTdBK9YRH8XPPH02qKiLHLmzKP8CxeAAECwAIGsIODSsW83t7qnGQfq93x5jaueta0e6use+M9uSdSPGhap4hlPGOtvy1ZNz81A5LJ0QDIXLh0wt96hWNN35qd3fk44PVNlwABIKDNTaD0h2I+O3gtUwLT8AJqPRlxXZaz9eirr96ftWWm6EmeSrMJc+3Qfy2u+s9E77x/a9XelSsbSFBsCWlEt8J7oztRGL9QDuPPk7cWpVo2O51HKzW/0IWiyUSUp+k8L787P0WbkvtGPdtgpVgiwQJNs3zUF90i31z+E48F34pq3umr7AGO/uTkzEFrUgQCEZ81m4umNtxAw6SPSVZRs0agDU4YsbpL36SMM1mnlm5xeNo1h2TSJTGJsc3ANfnnIbsDtwzlMNXyQF330QPGYXx1ZE+7bltu3YuTK2jaEVsQAAMY/o0c81YsYY4SsVqHyfq0yOEg8YH9JC8X6PVirVRY8fOjdLJZKj2C/yzo750ge2+7OkdqrCkl56CaJ4I2759FUo+Aap9uvWrxktjptwev983f9IcaK8be0xWLujiaHAGTqvwFAUEiI9uCIhChDqEG5EWiD9a1JEedaDidd9ZzJNdgOvZpnL4xvxCWvnLXkxP8DKEXlsszoNoyxFJem/NP9Wdp8AAD8URL9onKAAgDeFKZeIBJRjnaGVyCEbSwLia1eZQ0+aRzodPhXqZPzw8C5fvrhj+/vuHYbv5+fZ1Ai86W3B8fpJ95uYkcKmLjX9HVeIVSdO8mBeK8x88zex7nV1VVIAADM8kSip52tFInoGD+DkhRB0gD+InQCkPwmTEiX3q+0msHHTf11vnteWXVHA2AUWlc8VX/zlu0kEfD+6ez60HeoqjMW7fQL5hANnoavTJoDVsAYW4iuFIAAQDDp9dEIwz0RKUppb2fnUeIgW92+gSmeFuZNh1tbSMl0HhnZkQejs+e+kSJzMf6OBBig3qEF26eukvFv1hcOPzRqfNjyL28Lrf0jdSWm7Cp2wV9qliBAGCHrU4fD0wrmOTKwAiFiIC/wUS0tKBt/FTPM3ky4r9Zp/zwy1oMETryQALocoUXt+Kx5/sR36iKQ8fgO3LhkRlvljX0iLDSgxNOHAQBCQvrclIv4z2LDFQUAGMxmIMrL//8weloP8ACACILeL5FQWz0MPohx8dUOG/OLpQXMxnn5VcHqIeEXpRQ7OUDKLntKxycwHZw3eVz6tKzXTBdQ+E6/MlK9QSwRNyIAEFMADx48vDhhhLZq1W8NbQAA59d1fSdGTU22ayLADZ42/gFc3zBWIiErjxy7QolwxyIUffQG5/PeAqZtiMDwEW0+unpdZuuEmWO0FylRcNnOgy76cg0b1deky4w26RfLlardchGhAYPyIAAAjLUIXRlCPwinaCQBgSCAFRRAIztJBkWKJaJLfbTyXPmMxWNaPi4sFtPiahliLrQ3+BN9gmwvISImvLu/bmpQkPzQnWakAs5Xt3vzpBOp4fbtKPJIxaM9wvpCqpAQrpR/DzQytnsEVvBzoQJJTJ6TQCyQSUTxUvmq1/QzUrNxwPkbDhMEB7R/WF+Ko0iiwedi9sz8pXQ7rk0ehGsyVHOGOmeEqthGDBjhMjPVpZ34x6vo6et1bqWccMx/v1nHMmRikBQn7r0R+F1DY+sKo06SjtC2eHmMKpsMeLYIQiA1cbi2UeB5mSlUQu/6vO1DodYR7bxlm8v4vJkuauDGR+FTzr8oAQIAELEGtuDQWWfcvy7aY25ujSpoaOJboiJ11jt3W+aJg+iU/O31CxUm4wHOZ+8HXEDf4Q3cFQhIaLX5mwlVcK2LCV6rnH7FbEz7sAUB4GcZqZ9VAAYA+OqWxy6nhJ0bjjtrjUZFNu54/XJ9M+foH2NYx/gca45ddUomrfz353qdcp+/2XkweYguyeYIjBs+XH8bvGwcElP1AAJgS/ct/IjoHEbuHU8f/PBYyjcYL4kGUfDvo6ONywA0Cm2I4T1cOvYDfCNrYf6imA4AciquSFtqLx61AQDgWeL+eXjgB08IGFCZxUxFTDl9E4l1s+2ffHsCM9knXS4mLFiNE0b1l0bedwkS9MrR4xFawo5rJhqcDd4Mt2bcBmwBAlLLeegJlHWeZPOpzHjfqfGH38oyh2g0qi3xsca//nH+6FiSVq4vf2/YeebU6NKaS5uDH43n0LPuNrHl0SA2KMsiwhgjo1G7zhim+0Jn0G5Vq9WzMP5e/HgA7nHG/3jdfHzJZTT2yTXoNUxkuH7Wk4sR9PhbZQQAEBoaGhEebkh4nG8vg+FdVSy61RMvrfG99NJLL7300ksvPZ3/AvxoiLwJkkpXAAAAAElFTkSuQmCC" alt="Kingdom logo" style="height:40px; width:40px; object-fit:contain; flex-shrink:0;">
+    <h1 style="margin-bottom:0;">Kingdom</h1>
+  </div>
   <div style="display:flex; gap:6px; flex-shrink:0;">
     <button class="btn-toggle" style="margin-top:0; font-size:.8rem; padding:8px 12px;" onclick="toggleTheme()" id="themeToggleBtn" title="Cambiar tema claro/oscuro">🌙</button>
     <button class="btn-primary header-action-btn" style="font-size:.8rem; padding:8px 14px; background:var(--green);" onclick="openProjectModal()" title="Nuevo proyecto">
@@ -1235,26 +1255,44 @@ function toggleMsDropdown(){}
 function toggleProjectDropdown(){}
 function toggleProjectDropdown2(){}
 
-function openProjectSheet(){
+function openProjectSheet(triggerId){
   const projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
-  let html = `<div class="sheet-option" onclick="clearProjectFilter()">
+  let html = `<div class="sheet-divider" style="display:none"></div>
+  <div class="sheet-option" onclick="clearProjectFilter()">
     <div class="sheet-left"><span>Todos los proyectos</span></div>
-    ${activeProjects.size===0?'<span class="sheet-check">✓</span>':''}
-  </div>`;
+    ${activeProjects.size===0?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
+  </div><div class="sheet-divider"></div>`;
   html += projects.map(p=>`
     <div class="sheet-option" onclick="toggleProjectFilter('${p.id}')">
       <div class="sheet-left">
         <span class="dot" style="background:${p.color}"></span>
         <span>${p.name}</span>
       </div>
-      ${activeProjects.has(p.id)?'<span class="sheet-check">✓</span>':''}
+      ${activeProjects.has(p.id)?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
     </div>`).join('');
   document.getElementById('projectSheetList').innerHTML = html;
-  document.getElementById('projectSheetOverlay').classList.add('open');
+  const overlay = document.getElementById('projectSheetOverlay');
+  overlay.classList.add('open');
+  // posicionar popover debajo del botón disparador
+  const trigger = document.getElementById(triggerId||'projectSheetTrigger');
+  const sheet = overlay.querySelector('.sheet');
+  if(trigger && sheet){
+    const r = trigger.getBoundingClientRect();
+    sheet.style.top = (r.bottom + 6) + 'px';
+    sheet.style.left = r.left + 'px';
+  }
 }
 function closeProjectSheet(){
   document.getElementById('projectSheetOverlay').classList.remove('open');
 }
+document.addEventListener('click', e=>{
+  const overlay = document.getElementById('projectSheetOverlay');
+  if(overlay && overlay.classList.contains('open')){
+    if(!e.target.closest('.sheet') && !e.target.closest('.proj-sheet-trigger')){
+      closeProjectSheet();
+    }
+  }
+});
 function updateSheetLabels(){
   const label = activeProjects.size===0 ? 'Todos los proyectos'
     : activeProjects.size===1 ? projectInfo([...activeProjects][0]).name
@@ -1268,13 +1306,17 @@ function renderProjectFilters(){ updateSheetLabels(); }
 function toggleProjectFilter(id){
   if(activeProjects.has(id)) activeProjects.delete(id);
   else activeProjects.add(id);
-  openProjectSheet(); // refresh sheet sin cerrar
+  const overlay = document.getElementById('projectSheetOverlay');
+  const wasOpen = overlay.classList.contains('open');
   renderAll();
+  if(wasOpen) openProjectSheet();
 }
 function clearProjectFilter(){
   activeProjects.clear();
-  openProjectSheet();
+  const overlay = document.getElementById('projectSheetOverlay');
+  const wasOpen = overlay.classList.contains('open');
   renderAll();
+  if(wasOpen) openProjectSheet();
 }
 
 /* ====== RENDER TARJETAS PROYECTO ====== */

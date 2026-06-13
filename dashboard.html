@@ -768,7 +768,7 @@ function saveGithubToken(){
   document.getElementById('githubSyncStatus').textContent = 'Token guardado en este navegador.';
 }
 /* ====== SINCRONIZACIÓN CON GITHUB (data.json en el repo) ====== */
-function applyImportedData(parsed){
+function applyImportedData(parsed, skipAutoPush){
   if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
   parsed.projects.forEach(p=>{
     if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
@@ -779,7 +779,8 @@ function applyImportedData(parsed){
   });
   assignDefaultTimes(parsed.tasks);
   data = parsed;
-  save();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  if(!skipAutoPush) scheduleAutoPush();
   activeProjects.clear(); activeLeadsProjects.clear(); expandedProjects.clear();
   activeArea='all';
   renderAll();
@@ -802,7 +803,7 @@ async function pullFromGitHub(silent){
     const content = b64DecodeUnicode(json.content.replace(/\n/g,''));
     const parsed = JSON.parse(content);
     if(!silent && !confirm('Esto va a reemplazar los datos locales por los del repo (última versión subida). ¿Continuar?')) { banner.textContent=''; return; }
-    applyImportedData(parsed);
+    applyImportedData(parsed, true);
     if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub al abrir.' : '✓ Datos actualizados desde GitHub.';
   }catch(err){
     if(banner) banner.textContent = (silent?'Auto-sync: ':'Error al descargar: ')+err.message;

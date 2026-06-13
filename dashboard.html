@@ -433,6 +433,23 @@ input, select, textarea{
   <div id="googleDriveStatus"></div>
 </section>
 <section>
+  <h2>🔄 Sincronización con GitHub (Kingdom)</h2>
+  <div class="row-desc" style="margin-bottom:10px;">
+    Guardá tus datos (proyectos, tareas, leads) en el archivo <code>data.json</code> del repo
+    <code>${'notclassic'}/${'Kingdom'}</code>, para que estén disponibles desde cualquier dispositivo
+    que abra <code>dashboard.html</code> con este mismo token configurado.
+  </div>
+  <div class="row2">
+    <input type="password" id="githubTokenInput" placeholder="Pegá tu Personal Access Token (github_pat_...)">
+    <button class="btn-toggle" style="margin-top:0;" onclick="saveGithubToken()">Guardar token</button>
+  </div>
+  <div class="row2" style="margin-top:8px;">
+    <button class="btn-primary" onclick="pushToGitHub()">⬆️ Subir datos ahora</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="pullFromGitHub()">⬇️ Descargar última versión</button>
+  </div>
+  <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
+</section>
+<section>
   <h2>💾 Respaldo de datos</h2>
   <div class="row-desc" style="margin-bottom:10px;">
     Exportá todo (proyectos, tareas, leads, configuración) a un archivo .json para guardarlo como respaldo,
@@ -458,6 +475,9 @@ input, select, textarea{
 /* ====== CONFIGURACIÓN DE ÁREAS ====== */
 function renderAreaSettings(){
   renderGoogleSection();
+  if(getGithubToken()){
+    document.getElementById('githubTokenInput').placeholder = '✓ Token guardado (oculto)';
+  }
   const cont = document.getElementById('areaSettings');
   cont.innerHTML = data.areas.map(a=>{
     const count = data.projects.filter(p=>p.area===a.id).length;
@@ -661,6 +681,26 @@ const GOOGLE_READY = !!GOOGLE_CONFIG.CLIENT_ID;
 let googleToken = null;
 if(EMAILJS_READY && typeof emailjs !== 'undefined'){ emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY); }
 
+/* ====== CONFIGURACIÓN SINCRONIZACIÓN CON GITHUB ====== */
+/* Repo donde se guarda data.json. El token NO se guarda en este archivo,
+   se ingresa una vez y queda en localStorage de ese navegador (GITHUB_TOKEN_KEY). */
+const GITHUB_CONFIG = {
+  OWNER: 'notclassic',
+  REPO: 'Kingdom',
+  PATH: 'data.json',
+  BRANCH: 'main'
+};
+const GITHUB_TOKEN_KEY = 'github_pat_dashboard';
+function getGithubToken(){ return localStorage.getItem(GITHUB_TOKEN_KEY) || ''; }
+function setGithubToken(t){ localStorage.setItem(GITHUB_TOKEN_KEY, t); }
+function ghApiUrl(){ return `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.PATH}`; }
+function b64EncodeUnicode(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function b64DecodeUnicode(str){
+  return decodeURIComponent(escape(atob(str)));
+}
+
 /* ====== ESTADO ====== */
 const STORAGE_KEY = 'dashboard_portafolio_v1';
 let data = load();
@@ -713,6 +753,90 @@ function assignDefaultTimes(tasks){
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 }
+function saveGithubToken(){
+  const val = document.getElementById('githubTokenInput').value.trim();
+  if(!val){ alert('Pegá el token primero.'); return; }
+  setGithubToken(val);
+  document.getElementById('githubTokenInput').value = '';
+  document.getElementById('githubTokenInput').placeholder = '✓ Token guardado (oculto)';
+  document.getElementById('githubSyncStatus').textContent = 'Token guardado en este navegador.';
+}
+/* ====== SINCRONIZACIÓN CON GITHUB (data.json en el repo) ====== */
+function applyImportedData(parsed){
+  if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
+  parsed.projects.forEach(p=>{
+    if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
+    if(p.driveUrl===undefined) p.driveUrl='';
+    if(p.driveFolderId===undefined) p.driveFolderId='';
+    if(!p.contacts) p.contacts=[];
+    if(p.hasLeads===undefined) p.hasLeads=false;
+  });
+  assignDefaultTimes(parsed.tasks);
+  data = parsed;
+  save();
+  activeProjects.clear(); activeLeadsProjects.clear(); expandedProjects.clear();
+  activeArea='all';
+  renderAll();
+}
+async function pullFromGitHub(){
+  const token = getGithubToken();
+  const banner = document.getElementById('githubSyncStatus');
+  if(!token){ alert('Primero guardá tu token de GitHub.'); return; }
+  banner.textContent = 'Descargando desde GitHub…';
+  try{
+    const res = await fetch(ghApiUrl()+`?ref=${GITHUB_CONFIG.BRANCH}`, {
+      headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json'}
+    });
+    if(res.status===404){
+      banner.textContent = 'Todavía no existe data.json en el repo. Usá "Subir datos ahora" para crearlo con lo que tenés acá.';
+      return;
+    }
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json = await res.json();
+    const content = b64DecodeUnicode(json.content.replace(/\n/g,''));
+    const parsed = JSON.parse(content);
+    if(!confirm('Esto va a reemplazar los datos locales por los del repo (última versión subida). ¿Continuar?')) { banner.textContent=''; return; }
+    applyImportedData(parsed);
+    banner.textContent = '✓ Datos actualizados desde GitHub.';
+  }catch(err){
+    banner.textContent = 'Error al descargar: '+err.message;
+  }
+}
+async function pushToGitHub(){
+  const token = getGithubToken();
+  const banner = document.getElementById('githubSyncStatus');
+  if(!token){ alert('Primero guardá tu token de GitHub.'); return; }
+  banner.textContent = 'Subiendo a GitHub…';
+  try{
+    // obtener sha actual del archivo si existe
+    let sha = undefined;
+    const getRes = await fetch(ghApiUrl()+`?ref=${GITHUB_CONFIG.BRANCH}`, {
+      headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json'}
+    });
+    if(getRes.ok){ sha = (await getRes.json()).sha; }
+
+    const body = {
+      message: 'Actualizar data.json desde el dashboard',
+      content: b64EncodeUnicode(JSON.stringify(data, null, 2)),
+      branch: GITHUB_CONFIG.BRANCH
+    };
+    if(sha) body.sha = sha;
+
+    const putRes = await fetch(ghApiUrl(), {
+      method:'PUT',
+      headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json', 'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    if(!putRes.ok){
+      const errJson = await putRes.json().catch(()=>({}));
+      throw new Error(putRes.status+' '+(errJson.message||''));
+    }
+    banner.textContent = '✓ Datos subidos a GitHub correctamente.';
+  }catch(err){
+    banner.textContent = 'Error al subir: '+err.message;
+  }
+}
+
 /* ====== RESPALDO: EXPORTAR / IMPORTAR ====== */
 function exportData(){
   const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
@@ -738,19 +862,7 @@ function importData(event){
         return;
       }
       if(!confirm('Esto va a reemplazar TODOS los datos actuales (proyectos, tareas, leads, configuración) por los del archivo importado. ¿Continuar?')) return;
-      if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
-      parsed.projects.forEach(p=>{
-        if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
-        if(p.driveUrl===undefined) p.driveUrl='';
-        if(!p.contacts) p.contacts=[];
-        if(p.hasLeads===undefined) p.hasLeads=false;
-      });
-      assignDefaultTimes(parsed.tasks);
-      data = parsed;
-      save();
-      activeProjects.clear(); activeLeadsProjects.clear(); expandedProjects.clear();
-      activeArea='all';
-      renderAll();
+      applyImportedData(parsed);
       alert('Datos importados correctamente.');
     }catch(err){
       alert('No se pudo leer el archivo: ' + err.message);

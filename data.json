@@ -24,10 +24,7 @@
       "area": "a1",
       "desc": "Analítica interna con potencial SaaS futuro.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p2",
@@ -36,10 +33,7 @@
       "area": "a1",
       "desc": "Desarrollo y prospección por rubro.",
       "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": true
     },
     {
       "id": "p3",
@@ -48,10 +42,7 @@
       "area": "a1",
       "desc": "I+D y capacitación continua en automatizaciones.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p4",
@@ -60,10 +51,7 @@
       "area": "a2",
       "desc": "Operación de trading alimentada por el Databot.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p5",
@@ -72,10 +60,7 @@
       "area": "a2",
       "desc": "Servicio presencial / alianza con taller.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p6",
@@ -84,10 +69,7 @@
       "area": "a2",
       "desc": "Operación general de venta online.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p7",
@@ -96,10 +78,7 @@
       "area": "a2",
       "desc": "E-commerce de bolsos de cuero, reactivación.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p8",
@@ -108,10 +87,7 @@
       "area": "a2",
       "desc": "Módulos de snowpark, web y catálogo.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     },
     {
       "id": "p9",
@@ -120,10 +96,7 @@
       "area": "a3",
       "desc": "Cliente NotClassic: PPT, Ads, cobros.",
       "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": true
     },
     {
       "id": "p10",
@@ -132,10 +105,7 @@
       "area": "a3",
       "desc": "Optimización del sitio principal.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": []
+      "hasLeads": false
     }
   ],
   "tasks": [

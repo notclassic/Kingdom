@@ -436,7 +436,7 @@ input, select, textarea{
   <h2>🔄 Sincronización con GitHub (Kingdom)</h2>
   <div class="row-desc" style="margin-bottom:10px;">
     Guardá tus datos (proyectos, tareas, leads) en el archivo <code>data.json</code> del repo
-    <code>${'notclassic'}/${'Kingdom'}</code>, para que estén disponibles desde cualquier dispositivo
+    <code>notclassic/Kingdom</code>, para que estén disponibles desde cualquier dispositivo
     que abra <code>dashboard.html</code> con este mismo token configurado.
   </div>
   <div class="row2">
@@ -447,6 +447,7 @@ input, select, textarea{
     <button class="btn-primary" onclick="pushToGitHub()">⬆️ Subir datos ahora</button>
     <button class="btn-toggle" style="margin-top:0;" onclick="pullFromGitHub()">⬇️ Descargar última versión</button>
   </div>
+  <div class="row-desc" id="githubAutoSyncInfo" style="margin-top:8px;"></div>
   <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
 </section>
 <section>
@@ -475,8 +476,12 @@ input, select, textarea{
 /* ====== CONFIGURACIÓN DE ÁREAS ====== */
 function renderAreaSettings(){
   renderGoogleSection();
+  const autoInfo = document.getElementById('githubAutoSyncInfo');
   if(getGithubToken()){
     document.getElementById('githubTokenInput').placeholder = '✓ Token guardado (oculto)';
+    if(autoInfo) autoInfo.textContent = '🔄 Auto-sync activo: descarga al abrir, sube ~4s después de cada cambio.';
+  }else if(autoInfo){
+    autoInfo.textContent = '';
   }
   const cont = document.getElementById('areaSettings');
   cont.innerHTML = data.areas.map(a=>{
@@ -752,6 +757,7 @@ function assignDefaultTimes(tasks){
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  scheduleAutoPush();
 }
 function saveGithubToken(){
   const val = document.getElementById('githubTokenInput').value.trim();
@@ -778,35 +784,39 @@ function applyImportedData(parsed){
   activeArea='all';
   renderAll();
 }
-async function pullFromGitHub(){
+async function pullFromGitHub(silent){
   const token = getGithubToken();
   const banner = document.getElementById('githubSyncStatus');
-  if(!token){ alert('Primero guardá tu token de GitHub.'); return; }
-  banner.textContent = 'Descargando desde GitHub…';
+  if(!token){ if(!silent) alert('Primero guardá tu token de GitHub.'); return; }
+  if(banner) banner.textContent = 'Descargando desde GitHub…';
   try{
     const res = await fetch(ghApiUrl()+`?ref=${GITHUB_CONFIG.BRANCH}`, {
       headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json'}
     });
     if(res.status===404){
-      banner.textContent = 'Todavía no existe data.json en el repo. Usá "Subir datos ahora" para crearlo con lo que tenés acá.';
+      if(banner) banner.textContent = silent ? '' : 'Todavía no existe data.json en el repo. Usá "Subir datos ahora" para crearlo con lo que tenés acá.';
       return;
     }
     if(!res.ok) throw new Error('HTTP '+res.status);
     const json = await res.json();
     const content = b64DecodeUnicode(json.content.replace(/\n/g,''));
     const parsed = JSON.parse(content);
-    if(!confirm('Esto va a reemplazar los datos locales por los del repo (última versión subida). ¿Continuar?')) { banner.textContent=''; return; }
+    if(!silent && !confirm('Esto va a reemplazar los datos locales por los del repo (última versión subida). ¿Continuar?')) { banner.textContent=''; return; }
     applyImportedData(parsed);
-    banner.textContent = '✓ Datos actualizados desde GitHub.';
+    if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub al abrir.' : '✓ Datos actualizados desde GitHub.';
   }catch(err){
-    banner.textContent = 'Error al descargar: '+err.message;
+    if(banner) banner.textContent = (silent?'Auto-sync: ':'Error al descargar: ')+err.message;
   }
 }
-async function pushToGitHub(){
+async function autoPullOnLoad(){
+  if(!getGithubToken()) return;
+  await pullFromGitHub(true);
+}
+async function pushToGitHub(silent){
   const token = getGithubToken();
   const banner = document.getElementById('githubSyncStatus');
-  if(!token){ alert('Primero guardá tu token de GitHub.'); return; }
-  banner.textContent = 'Subiendo a GitHub…';
+  if(!token){ if(!silent) alert('Primero guardá tu token de GitHub.'); return; }
+  if(banner) banner.textContent = silent ? 'Sincronizando…' : 'Subiendo a GitHub…';
   try{
     // obtener sha actual del archivo si existe
     let sha = undefined;
@@ -831,10 +841,16 @@ async function pushToGitHub(){
       const errJson = await putRes.json().catch(()=>({}));
       throw new Error(putRes.status+' '+(errJson.message||''));
     }
-    banner.textContent = '✓ Datos subidos a GitHub correctamente.';
+    if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub.' : '✓ Datos subidos a GitHub correctamente.';
   }catch(err){
-    banner.textContent = 'Error al subir: '+err.message;
+    if(banner) banner.textContent = (silent?'Error de auto-sync: ':'Error al subir: ')+err.message;
   }
+}
+let autoPushTimer = null;
+function scheduleAutoPush(){
+  if(!getGithubToken()) return;
+  if(autoPushTimer) clearTimeout(autoPushTimer);
+  autoPushTimer = setTimeout(()=>{ pushToGitHub(true); }, 4000);
 }
 
 /* ====== RESPALDO: EXPORTAR / IMPORTAR ====== */
@@ -1669,6 +1685,7 @@ function renderOverdueBadge(){
 }
 renderAll();
 checkOverdueAlerts();
+autoPullOnLoad();
 
 /* ====== PWA: registro de service worker (solo funciona en https) ====== */
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){

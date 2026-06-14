@@ -1,0 +1,516 @@
+{
+  "areas": [
+    {
+      "id": "a1",
+      "name": "Inteligencia & Software",
+      "color": "#007aff",
+      "context": "profesional"
+    },
+    {
+      "id": "a2",
+      "name": "Operaciones Comerciales & Trading",
+      "color": "#34c759",
+      "context": "profesional"
+    },
+    {
+      "id": "a3",
+      "name": "Clientes & Agencia",
+      "color": "#af52de",
+      "context": "profesional"
+    },
+    {
+      "id": "pa1",
+      "name": "👨‍👩‍👧 Familia",
+      "color": "#ff6b6b",
+      "context": "personal"
+    },
+    {
+      "id": "pa2",
+      "name": "🏥 Salud",
+      "color": "#2a9d8f",
+      "context": "personal"
+    },
+    {
+      "id": "pa3",
+      "name": "🏠 Hogar",
+      "color": "#f5ac2f",
+      "context": "personal"
+    },
+    {
+      "id": "pa4",
+      "name": "💰 Finanzas Personales",
+      "color": "#1d4ed8",
+      "context": "personal"
+    },
+    {
+      "id": "pa5",
+      "name": "✈️ Viajes",
+      "color": "#af52de",
+      "context": "personal"
+    }
+  ],
+  "projects": [
+    {
+      "id": "p1",
+      "color": "#007aff",
+      "name": "Chileautos Databot",
+      "area": "a1",
+      "desc": "Analítica interna con potencial SaaS futuro.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p2",
+      "color": "#5856d6",
+      "name": "Chatbot IA",
+      "area": "a1",
+      "desc": "Desarrollo y prospección por rubro.",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p3",
+      "color": "#34c759",
+      "name": "Aprendizaje Claude",
+      "area": "a1",
+      "desc": "I+D y capacitación continua en automatizaciones.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p4",
+      "color": "#ff9f0a",
+      "name": "Compra y Venta de Autos",
+      "area": "a2",
+      "desc": "Operación de trading alimentada por el Databot.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p5",
+      "color": "#ff3b30",
+      "name": "Pintura a Domicilio",
+      "area": "a2",
+      "desc": "Servicio presencial / alianza con taller.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p6",
+      "color": "#00c7be",
+      "name": "Venta Ecommerce",
+      "area": "a2",
+      "desc": "Operación general de venta online.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p7",
+      "color": "#a2845e",
+      "name": "Mankeleathers",
+      "area": "a2",
+      "desc": "E-commerce de bolsos de cuero, reactivación.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p8",
+      "color": "#ff2d55",
+      "name": "Jibplaza",
+      "area": "a2",
+      "desc": "Módulos de snowpark, web y catálogo.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p9",
+      "color": "#af52de",
+      "name": "Grupo Arte",
+      "area": "a3",
+      "desc": "Cliente NotClassic: PPT, Ads, cobros.",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    },
+    {
+      "id": "p10",
+      "color": "#8e8e93",
+      "name": "NotClassic",
+      "area": "a3",
+      "desc": "Optimización del sitio principal.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "t1",
+      "projectId": "p1",
+      "text": "Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t2",
+      "projectId": "p1",
+      "text": "Configurar alertas de información de la industria",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t3",
+      "projectId": "p2",
+      "text": "Generar email de salida",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t4",
+      "projectId": "p2",
+      "text": "Armar listado de rubros",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t5",
+      "projectId": "p2",
+      "text": "Buscar leads por rubro",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t6",
+      "projectId": "p2",
+      "text": "Preparar bot por rubro",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t7",
+      "projectId": "p3",
+      "text": "Pruebas e investigación de automatizaciones con Claude",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t8",
+      "projectId": "p4",
+      "text": "Evaluar alertas de oportunidades",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t9",
+      "projectId": "p4",
+      "text": "Gestionar capital y ofertas de compra",
+      "done": false,
+      "dueDate": "2026-06-22",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t10",
+      "projectId": "p4",
+      "text": "Preparación y venta de vehículos",
+      "done": false,
+      "dueDate": "2026-06-25",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t11",
+      "projectId": "p5",
+      "text": "Redactar plan de negocio de pintura",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t12",
+      "projectId": "p5",
+      "text": "Agendar reunión con dueño del taller",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t13",
+      "projectId": "p5",
+      "text": "Proponer modelo de negocio",
+      "done": false,
+      "dueDate": "2026-06-23",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t14",
+      "projectId": "p6",
+      "text": "Crear/optimizar publicaciones",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "14:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t15",
+      "projectId": "p6",
+      "text": "Web scrapping de competidores",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t16",
+      "projectId": "p6",
+      "text": "Captación de leads",
+      "done": false,
+      "dueDate": "2026-06-21",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t17",
+      "projectId": "p7",
+      "text": "Reactivar web y plataforma ecommerce",
+      "done": false,
+      "dueDate": "2026-06-24",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t18",
+      "projectId": "p7",
+      "text": "Estrategia de marketing para liquidar stock",
+      "done": false,
+      "dueDate": "2026-06-26",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t19",
+      "projectId": "p8",
+      "text": "Crear página web desde cero",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t20",
+      "projectId": "p8",
+      "text": "Actualizar catálogo de productos",
+      "done": false,
+      "dueDate": "2026-06-22",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t21",
+      "projectId": "p8",
+      "text": "Prospección de clientes potenciales",
+      "done": false,
+      "dueDate": "2026-06-27",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t22",
+      "projectId": "p9",
+      "text": "Diseñar presentaciones (PPT)",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "14:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t23",
+      "projectId": "p9",
+      "text": "Gestionar campañas de Google Ads",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "14:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t24",
+      "projectId": "p9",
+      "text": "Control y seguimiento de cobros",
+      "done": false,
+      "dueDate": "2026-06-30",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t25",
+      "projectId": "p10",
+      "text": "Arreglar y optimizar el sitio notclassic.com",
+      "done": false,
+      "dueDate": "2026-06-23",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    }
+  ],
+  "leads": [
+    {
+      "id": "l1",
+      "name": "Bodega Mar y Tierra",
+      "projectId": "p2",
+      "stage": "contactados"
+    },
+    {
+      "id": "l2",
+      "name": "California",
+      "projectId": "p2",
+      "stage": "contactados"
+    },
+    {
+      "id": "l3",
+      "name": "Grupo Arte",
+      "projectId": "p9",
+      "stage": "ganados"
+    }
+  ]
+}

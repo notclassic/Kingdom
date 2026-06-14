@@ -148,22 +148,50 @@ async function handleAudio(message){
   if(!result){ await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '❌ No pude leer los datos de Kingdom.' }); return; }
   const { data, sha } = result;
 
-  // detectar proyecto mencionado
-  let projectId = data.projects[0]?.id;
-  const lower = transcription.toLowerCase();
-  data.projects.forEach(p => {
-    if(lower.includes(p.name.toLowerCase().slice(0,5))) projectId = p.id;
-  });
+  // detectar proyecto mencionado — busca coincidencias parciales en el nombre completo
+  let projectId = null;
+  const lower = transcription.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // quitar tildes
+  
+  // primero busca coincidencia exacta de cualquier palabra del nombre del proyecto
+  for(const p of data.projects){
+    const pName = p.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const words = pName.split(/\s+/).filter(w=>w.length>3);
+    if(words.some(w => lower.includes(w))){
+      projectId = p.id;
+      break;
+    }
+  }
+  // si no encontró, usa el primer proyecto activo
+  if(!projectId) projectId = data.projects.find(p=>p.status==='active')?.id || data.projects[0]?.id;
 
-  // fecha: mañana 12:00
-  const due = new Date(Date.now() + 86400000).toISOString().slice(0,10);
+  // detectar fecha mencionada en el audio
+  let due = new Date(Date.now() + 86400000).toISOString().slice(0,10); // default: mañana
+  let dueTime = '12:00';
+  const dateMatch = transcription.match(/(\d{1,2})\s*de\s*(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i);
+  if(dateMatch){
+    const months = {enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12};
+    const day = parseInt(dateMatch[1]);
+    const month = months[dateMatch[2].toLowerCase()];
+    const year = new Date().getFullYear();
+    due = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+  }
+  const timeMatch = transcription.match(/(\d{1,2})\s*(de la mañana|am|de la tarde|pm|del mediodía|del medio día)/i);
+  if(timeMatch){
+    let hour = parseInt(timeMatch[1]);
+    const period = timeMatch[2].toLowerCase();
+    if(period.includes('tarde') || period.includes('pm')) hour = hour < 12 ? hour+12 : hour;
+    if(period.includes('mañana') || period.includes('am')) hour = hour === 12 ? 0 : hour;
+    if(period.includes('medio')) hour = 12;
+    dueTime = `${String(hour).padStart(2,'0')}:00`;
+  }
   const newTask = {
     id: 't' + Date.now(),
     projectId,
     text: transcription,
     done: false,
     dueDate: due,
-    dueTime: '12:00',
+    dueTime: dueTime,
     priority: 'medium',
     emailAlert: false,
     alertSent: false,

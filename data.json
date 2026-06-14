@@ -533,6 +533,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781464859038",
+      "projectId": "p1",
+      "text": "llamar al doctor",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

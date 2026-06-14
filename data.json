@@ -3,17 +3,50 @@
     {
       "id": "a1",
       "name": "Inteligencia & Software",
-      "color": "#007aff"
+      "color": "#007aff",
+      "context": "profesional"
     },
     {
       "id": "a2",
       "name": "Operaciones Comerciales & Trading",
-      "color": "#34c759"
+      "color": "#34c759",
+      "context": "profesional"
     },
     {
       "id": "a3",
       "name": "Clientes & Agencia",
-      "color": "#af52de"
+      "color": "#af52de",
+      "context": "profesional"
+    },
+    {
+      "id": "pa1",
+      "name": "👨‍👩‍👧 Familia",
+      "color": "#ff6b6b",
+      "context": "personal"
+    },
+    {
+      "id": "pa2",
+      "name": "🏥 Salud",
+      "color": "#2a9d8f",
+      "context": "personal"
+    },
+    {
+      "id": "pa3",
+      "name": "🏠 Hogar",
+      "color": "#f5ac2f",
+      "context": "personal"
+    },
+    {
+      "id": "pa4",
+      "name": "💰 Finanzas Personales",
+      "color": "#1d4ed8",
+      "context": "personal"
+    },
+    {
+      "id": "pa5",
+      "name": "✈️ Viajes",
+      "color": "#af52de",
+      "context": "personal"
     }
   ],
   "projects": [
@@ -27,7 +60,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p2",
@@ -39,7 +74,9 @@
       "hasLeads": true,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p3",
@@ -51,7 +88,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p4",
@@ -63,7 +102,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p5",
@@ -75,7 +116,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p6",
@@ -87,7 +130,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p7",
@@ -99,7 +144,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p8",
@@ -111,7 +158,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p9",
@@ -123,7 +172,9 @@
       "hasLeads": true,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p10",
@@ -135,7 +186,9 @@
       "hasLeads": false,
       "driveUrl": "",
       "driveFolderId": "",
-      "contacts": []
+      "contacts": [],
+      "icon": "",
+      "context": "profesional"
     },
     {
       "id": "p1781467794444",
@@ -168,17 +221,6 @@
   ],
   "tasks": [
     {
-      "id": "t1",
-      "projectId": "p1",
-      "text": "Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "emailAlert": false,
-      "alertSent": false,
-      "dueTime": "12:00",
-      "driveUrl": ""
-    },
-    {
       "id": "t2",
       "projectId": "p1",
       "text": "Configurar alertas de información de la industria",
@@ -187,7 +229,20 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
+      "id": "t1",
+      "projectId": "p1",
+      "text": "Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "12:00",
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t3",
@@ -198,7 +253,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t4",
@@ -209,7 +265,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t5",
@@ -220,7 +277,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t6",
@@ -231,7 +289,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t7",
@@ -242,7 +301,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t8",
@@ -253,7 +313,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t9",
@@ -264,7 +325,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t10",
@@ -275,7 +337,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t11",
@@ -286,7 +349,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t12",
@@ -297,7 +361,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t13",
@@ -308,7 +373,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t14",
@@ -319,7 +385,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t15",
@@ -330,7 +397,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t16",
@@ -341,7 +409,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t17",
@@ -352,7 +421,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t18",
@@ -363,7 +433,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t19",
@@ -374,7 +445,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t20",
@@ -385,7 +457,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t21",
@@ -396,7 +469,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t22",
@@ -407,7 +481,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t23",
@@ -418,7 +493,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t24",
@@ -429,7 +505,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t25",
@@ -440,7 +517,8 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
-      "driveUrl": ""
+      "driveUrl": "",
+      "priority": "medium"
     },
     {
       "id": "t1781461086048",
@@ -642,5 +720,7 @@
       "projectId": "p9",
       "stage": "ganados"
     }
-  ]
+  ],
+  "deletedTaskIds": [],
+  "deletedProjectIds": []
 }

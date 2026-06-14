@@ -150,6 +150,20 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
+    },
+    {
+      "id": "p1781468789928",
+      "name": "Dentista",
+      "area": "",
+      "context": "personal",
+      "color": "#007aff",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -590,6 +604,18 @@
       "text": "Crea una tarea personal, crea",
       "done": false,
       "dueDate": "2026-06-15",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781468789928",
+      "projectId": "p1781468789928",
+      "text": "llamar al dentista",
+      "done": false,
+      "dueDate": "2026-06-20",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,

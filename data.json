@@ -473,6 +473,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781464171002",
+      "projectId": "p4",
+      "text": "Crea una tarea en Chile Autos Data Bot de llamar a Fernando el día 20 de junio a las 12 del día.",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

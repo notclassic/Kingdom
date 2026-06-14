@@ -509,6 +509,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781464847304",
+      "projectId": "p1",
+      "text": "llamar a Fernando",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

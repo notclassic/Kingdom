@@ -17,36 +17,6 @@
       "name": "Clientes & Agencia",
       "color": "#af52de",
       "context": "profesional"
-    },
-    {
-      "id": "pa1",
-      "name": "👨‍👩‍👧 Familia",
-      "color": "#ff6b6b",
-      "context": "personal"
-    },
-    {
-      "id": "pa2",
-      "name": "🏥 Salud",
-      "color": "#2a9d8f",
-      "context": "personal"
-    },
-    {
-      "id": "pa3",
-      "name": "🏠 Hogar",
-      "color": "#f5ac2f",
-      "context": "personal"
-    },
-    {
-      "id": "pa4",
-      "name": "💰 Finanzas Personales",
-      "color": "#1d4ed8",
-      "context": "personal"
-    },
-    {
-      "id": "pa5",
-      "name": "✈️ Viajes",
-      "color": "#af52de",
-      "context": "personal"
     }
   ],
   "projects": [
@@ -57,12 +27,7 @@
       "area": "a1",
       "desc": "Analítica interna con potencial SaaS futuro.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p2",
@@ -71,12 +36,7 @@
       "area": "a1",
       "desc": "Desarrollo y prospección por rubro.",
       "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": true
     },
     {
       "id": "p3",
@@ -85,12 +45,7 @@
       "area": "a1",
       "desc": "I+D y capacitación continua en automatizaciones.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p4",
@@ -99,12 +54,7 @@
       "area": "a2",
       "desc": "Operación de trading alimentada por el Databot.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p5",
@@ -113,12 +63,7 @@
       "area": "a2",
       "desc": "Servicio presencial / alianza con taller.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p6",
@@ -127,12 +72,7 @@
       "area": "a2",
       "desc": "Operación general de venta online.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p7",
@@ -141,12 +81,7 @@
       "area": "a2",
       "desc": "E-commerce de bolsos de cuero, reactivación.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p8",
@@ -155,12 +90,7 @@
       "area": "a2",
       "desc": "Módulos de snowpark, web y catálogo.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": false
     },
     {
       "id": "p9",
@@ -169,12 +99,7 @@
       "area": "a3",
       "desc": "Cliente NotClassic: PPT, Ads, cobros.",
       "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
+      "hasLeads": true
     },
     {
       "id": "p10",
@@ -183,26 +108,7 @@
       "area": "a3",
       "desc": "Optimización del sitio principal.",
       "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "icon": "",
-      "context": "profesional"
-    },
-    {
-      "id": "p1781401440348783",
-      "name": "Leon",
-      "area": "pa1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#ff6b6b",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal"
+      "hasLeads": false
     }
   ],
   "tasks": [

@@ -497,6 +497,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781464182774",
+      "projectId": "p1",
+      "text": "Crea una tarea en familia en el Proyecto León de llamar al doctor el día 16 de junio a las 12 del día. 16 de junio llamar al doctor.",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

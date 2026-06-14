@@ -165,12 +165,14 @@ section{
 .row-name:hover{ background:rgba(0,0,0,0.04); }
 .row-name:focus{ outline:2px solid var(--accent); background:var(--panel); }
 .expand-pill{
-  flex-shrink:0; background:var(--panel); border:1px solid var(--border); border-radius:999px;
-  padding:5px 12px; font-size:.74rem; font-weight:700; color:var(--muted); cursor:pointer;
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  background:var(--panel2); border:1.5px solid var(--border); border-radius:8px;
+  padding:4px 8px; font-size:.72rem; font-weight:700; color:var(--muted); cursor:pointer;
+  min-width:36px; gap:3px; line-height:1;
 }
 .expand-pill:hover{ border-color:var(--accent); color:var(--accent); }
 @media(max-width:760px){
-  .expand-pill{ padding:7px 14px; font-size:.85rem; }
+  .expand-pill{ padding:6px 10px; font-size:.8rem; }
 }
 .row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; }
 .row-desc:hover{ background:rgba(0,0,0,0.04); }
@@ -328,6 +330,18 @@ input, select, textarea{
 .due-upcoming{background:#3a3f4b; color:var(--muted);}
 .checkrow{display:flex; align-items:center; gap:6px; font-size:.78rem; color:var(--muted);}
 .checkrow input{width:auto;}
+.priority-selector{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+.priority-btn{
+  flex:1; min-width:0; padding:8px 6px; border-radius:10px; border:1.5px solid var(--border);
+  background:var(--panel2); color:var(--muted); font-size:.75rem; font-weight:600;
+  cursor:pointer; text-align:center; transition:all .12s; white-space:nowrap;
+}
+.priority-btn:hover{ border-color:var(--accent); color:var(--text); }
+.priority-btn.active[data-priority="high"]  { background:#ff453a22; border-color:#ff453a; color:#ff453a; }
+.priority-btn.active[data-priority="medium"]{ background:#f5ac2f22; border-color:#f5ac2f; color:#c17e00; }
+.priority-btn.active[data-priority="low"]   { background:#2a9d8f22; border-color:#2a9d8f; color:#2a9d8f; }
+.priority-btn.active[data-ctx="profesional"]{ background:#1d4ed822; border-color:#1d4ed8; color:#1d4ed8; }
+.priority-btn.active[data-ctx="personal"]   { background:#2a9d8f22; border-color:#2a9d8f; color:#2a9d8f; }
 .config-banner{
   background:var(--panel2); border:1px solid var(--border); border-radius:10px;
   padding:10px 12px; margin-bottom:14px; font-size:.75rem; color:var(--muted);
@@ -467,6 +481,11 @@ input, select, textarea{
 <div id="tab-main">
 <!-- PORTAFOLIO -->
 <section>
+  <div class="filters context-filters" id="contextFilters">
+    <div class="chip active" data-ctx="all"          onclick="setContext('all')">Vida</div>
+    <div class="chip"        data-ctx="profesional"  onclick="setContext('profesional')">Profesional</div>
+    <div class="chip"        data-ctx="personal"     onclick="setContext('personal')">Personal</div>
+  </div>
   <h2>📁 Portafolio</h2>
   <div class="filters" id="areaFilters"></div>
   <div style="margin-bottom:12px;">
@@ -517,6 +536,7 @@ input, select, textarea{
     <div class="chip" data-tf="done" onclick="setTaskFilter('done')">Completadas</div>
     <input type="date" class="chip" id="dayPicker" onchange="openDayView(this.value)" style="text-align:center;">
     <div class="chip" onclick="toggleView()" id="viewToggle">📋 Ver detalle</div>
+    <div class="chip" onclick="toggleTaskSort()" id="sortToggle" title="Ordenar">📅 Fecha</div>
   </div>
   <div class="task-list" id="taskList" style="display:none;"></div>
   <div id="calendarView"></div>
@@ -544,12 +564,17 @@ input, select, textarea{
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
       <select id="nt-project"></select>
-      <input type="text" id="nt-text" placeholder="Descripción de la tarea">
+      <div class="priority-selector" id="nt-priority-group">
+        <button type="button" class="priority-btn active" data-priority="high"   onclick="selectPriority('high')">:( Quedó la caga</button>
+        <button type="button" class="priority-btn"        data-priority="medium" onclick="selectPriority('medium')">:/ Pa mañana</button>
+        <button type="button" class="priority-btn"        data-priority="low"    onclick="selectPriority('low')">:) No pasa nada</button>
+      </div>
+      <textarea id="nt-text" placeholder="Descripción de la tarea" rows="3" style="resize:vertical; min-height:72px;"></textarea>
       <div class="row2">
         <input type="date" id="nt-due">
         <input type="time" id="nt-time">
       </div>
-      <label class="checkrow"><input type="checkbox" id="nt-alert"> Avisarme por correo si vence</label>
+      <input type="checkbox" id="nt-alert" style="display:none">
       <button class="btn-primary" onclick="addTask()">Guardar tarea</button>
     </div>
   </div>
@@ -563,6 +588,11 @@ input, select, textarea{
       <button class="modal-close" onclick="closeProjectModal()">✕</button>
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
+      <div class="priority-selector" style="margin-bottom:8px;">
+        <button type="button" class="priority-btn active" data-ctx="profesional" onclick="selectProjectContext('profesional')" style="flex:1;">💼 Profesional</button>
+        <button type="button" class="priority-btn" data-ctx="personal" onclick="selectProjectContext('personal')" style="flex:1;">🏠 Personal</button>
+      </div>
+      <input type="hidden" id="np-context" value="profesional">
       <input type="text" id="np-name" placeholder="Nombre del proyecto">
       <select id="np-area"></select>
       <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
@@ -755,9 +785,16 @@ function setTab(tab){
 
 /* ====== DATOS INICIALES ====== */
 const DEFAULT_AREAS = [
-  {id:'a1', name:'Inteligencia & Software', color:'#007aff'},
-  {id:'a2', name:'Operaciones Comerciales & Trading', color:'#34c759'},
-  {id:'a3', name:'Clientes & Agencia', color:'#af52de'}
+  {id:'a1', name:'Inteligencia & Software', color:'#007aff', context:'profesional'},
+  {id:'a2', name:'Operaciones Comerciales & Trading', color:'#34c759', context:'profesional'},
+  {id:'a3', name:'Clientes & Agencia', color:'#af52de', context:'profesional'}
+];
+const PERSONAL_AREAS = [
+  {id:'pa1', name:'👨‍👩‍👧 Familia', color:'#ff6b6b', context:'personal'},
+  {id:'pa2', name:'🏥 Salud', color:'#2a9d8f', context:'personal'},
+  {id:'pa3', name:'🏠 Hogar', color:'#f5ac2f', context:'personal'},
+  {id:'pa4', name:'💰 Finanzas Personales', color:'#1d4ed8', context:'personal'},
+  {id:'pa5', name:'✈️ Viajes', color:'#af52de', context:'personal'}
 ];
 
 const DEFAULT_DATA = {
@@ -872,6 +909,7 @@ function b64DecodeUnicode(str){
 const STORAGE_KEY = 'dashboard_portafolio_v1';
 let data = load();
 let activeArea = 'all';
+let activeContext = 'all';
 let activeProjects = new Set();
 let expandedProjects = new Set();
 let activeLeadsProjects = new Set();
@@ -883,6 +921,10 @@ function load(){
     if(raw){
       const parsed = JSON.parse(raw);
       if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
+      // migrate personal areas if not present
+      PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
+      // tag existing areas as profesional if missing context
+      parsed.areas.forEach(a=>{ if(!a.context) a.context='profesional'; });
       parsed.projects.forEach(p=>{
         if(!p.color){
           const a = parsed.areas.find(a=>a.id===p.area);
@@ -892,6 +934,7 @@ function load(){
         if(p.icon===undefined) p.icon='';
         if(!p.contacts) p.contacts=[];
         if(p.driveFolderId===undefined) p.driveFolderId='';
+        if(!p.context) p.context='profesional';
       });
       assignDefaultTimes(parsed.tasks);
       return parsed;
@@ -906,6 +949,7 @@ function assignDefaultTimes(tasks){
   tasks.forEach(t=>{
     if(t.dueTime===undefined) t.dueTime='';
     if(t.driveUrl===undefined) t.driveUrl='';
+    if(t.priority===undefined) t.priority='medium';
     if(t.dueTime || !t.dueDate) return;
     if(!byDate[t.dueDate]) byDate[t.dueDate] = [];
     byDate[t.dueDate].push(t);
@@ -933,6 +977,8 @@ function saveGithubToken(){
 /* ====== SINCRONIZACIÓN CON GITHUB (data.json en el repo) ====== */
 function applyImportedData(parsed, skipAutoPush){
   if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
+  PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
+  parsed.areas.forEach(a=>{ if(!a.context) a.context="profesional"; });
   parsed.projects.forEach(p=>{
     if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
     if(p.driveUrl===undefined) p.driveUrl='';
@@ -940,13 +986,14 @@ function applyImportedData(parsed, skipAutoPush){
     if(!p.contacts) p.contacts=[];
     if(p.hasLeads===undefined) p.hasLeads=false;
     if(p.driveFolderId===undefined) p.driveFolderId='';
+    if(!p.context) p.context='profesional';
   });
   assignDefaultTimes(parsed.tasks);
   data = parsed;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   if(!skipAutoPush) scheduleAutoPush();
   activeProjects.clear(); activeLeadsProjects.clear(); expandedProjects.clear();
-  activeArea='all';
+  activeArea='all'; activeContext='all';
   renderAll();
 }
 async function pullFromGitHub(silent){
@@ -1052,11 +1099,63 @@ function importData(event){
   reader.readAsText(file);
   event.target.value = '';
 }
-function areaInfo(id){ return data.areas.find(a=>a.id===id); }
+function areaInfo(id){ return data.areas.find(a=>a.id===id) || PERSONAL_AREAS.find(a=>a.id===id) || {name:'—', color:'#8a919e', context:'profesional'}; }
 function projectInfo(id){ return data.projects.find(p=>p.id===id); }
 function uid(prefix){ return prefix + Date.now() + Math.floor(Math.random()*1000); }
+function selectPriority(p){
+  document.querySelectorAll('.priority-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.priority===p);
+  });
+  // auto-calcular fecha/hora según importancia
+  const now = new Date();
+  let date, time;
+  if(p==='high'){
+    // quedó la caga: +2 horas
+    const d = new Date(now.getTime() + 2*60*60*1000);
+    date = d.toISOString().slice(0,10);
+    time = `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  } else if(p==='medium'){
+    // pa mañana: si son después de las 18:00, pasado mañana a las 9:00; si no, mañana misma hora
+    const hour = now.getHours();
+    if(hour >= 18){
+      const d = new Date(now.getTime() + 2*24*60*60*1000);
+      date = d.toISOString().slice(0,10);
+      time = '09:00';
+    } else {
+      const d = new Date(now.getTime() + 24*60*60*1000);
+      date = d.toISOString().slice(0,10);
+      time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    }
+  } else {
+    // no pasa nada: +3 días, 12:00
+    const d = new Date(now.getTime() + 3*24*60*60*1000);
+    date = d.toISOString().slice(0,10);
+    time = '12:00';
+  }
+  document.getElementById('nt-due').value = date;
+  document.getElementById('nt-time').value = time;
+}
+function getSelectedPriority(){
+  const btn = document.querySelector('.priority-btn.active');
+  return btn ? btn.dataset.priority : 'medium';
+}
+const PRIORITY_EMOJI = { high:':(', medium:':/', low:':)' };
+function selectProjectContext(ctx){
+  document.querySelectorAll('[data-ctx]').forEach(b=>b.classList.toggle('active', b.dataset.ctx===ctx));
+  document.getElementById('np-context').value = ctx;
+  const areaSel = document.getElementById('np-area');
+  if(areaSel){
+    const areas = ctx==='personal'
+      ? PERSONAL_AREAS
+      : data.areas.filter(a=>(a.context||'profesional')==='profesional');
+    areaSel.innerHTML = areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+  }
+}
 function openProjectModal(){
   populateSelects();
+  // pre-seleccionar según el contexto activo
+  const ctx = (activeContext === 'all') ? 'profesional' : activeContext;
+  selectProjectContext(ctx);
   document.getElementById('projectModalOverlay').classList.add('open');
   setTimeout(()=>document.getElementById('np-name').focus(), 50);
 }
@@ -1066,6 +1165,7 @@ function closeProjectModal(){
 function openTaskModal(projectId){
   populateSelects();
   if(projectId) document.getElementById('nt-project').value = projectId;
+  selectPriority('high'); // default: urgente → +2 horas
   document.getElementById('taskModalOverlay').classList.add('open');
   setTimeout(()=>document.getElementById('nt-text').focus(), 50);
 }
@@ -1227,6 +1327,7 @@ async function listDriveFiles(projectId){
 function renderTotals(){
   let active = data.projects.filter(p=>p.status==='active');
   if(activeArea!=='all') active = active.filter(p=>p.area===activeArea);
+  if(activeContext!=='all') active = active.filter(p=>(p.context||'profesional')===activeContext);
   if(activeProjects.size>0) active = active.filter(p=>activeProjects.has(p.id));
   const activeIds = active.map(p=>p.id);
   const pendingTasks = data.tasks.filter(t=>!t.done && activeIds.includes(t.projectId)).length;
@@ -1242,10 +1343,21 @@ function renderTotals(){
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */
+function setContext(ctx){
+  activeContext = ctx;
+  document.querySelectorAll('.context-filters .chip').forEach(c=>
+    c.classList.toggle('active', c.dataset.ctx===ctx)
+  );
+  renderAll();
+}
 function renderAreaFilters(){
+  // solo mostrar áreas que tienen proyectos en el contexto activo
+  const ctxProjects = activeContext==='all' ? data.projects : data.projects.filter(p=>(p.context||'profesional')===activeContext);
+  const usedAreas = new Set(ctxProjects.map(p=>p.area));
   let html = `<div class="chip ${activeArea==='all'?'active':''}" onclick="setArea('all')">Todas</div>`;
   data.areas.forEach(a=>{
-    html += `<div class="chip ${activeArea===a.id?'active':''}" onclick="setArea('${a.id}')">${a.name}</div>`;
+    if(usedAreas.has(a.id))
+      html += `<div class="chip ${activeArea===a.id?'active':''}" onclick="setArea('${a.id}')">${a.name}</div>`;
   });
   document.getElementById('areaFilters').innerHTML = html;
 }
@@ -1256,7 +1368,8 @@ function toggleProjectDropdown(){}
 function toggleProjectDropdown2(){}
 
 function openProjectSheet(triggerId){
-  const projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
+  let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
+  if(activeContext!=='all') projects = projects.filter(p=>(p.context||'profesional')===activeContext);
   let html = `<div class="sheet-divider" style="display:none"></div>
   <div class="sheet-option" onclick="clearProjectFilter()">
     <div class="sheet-left"><span>Todos los proyectos</span></div>
@@ -1323,6 +1436,7 @@ function clearProjectFilter(){
 function renderProjectCards(){
   const cont = document.getElementById('projectCards');
   let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
+  if(activeContext !== 'all') projects = projects.filter(p=> (p.context||'profesional') === activeContext);
   if(activeProjects.size>0) projects = projects.filter(p=>activeProjects.has(p.id));
 
   if(projects.length===0){
@@ -1330,7 +1444,7 @@ function renderProjectCards(){
     return;
   }
 
-  cont.innerHTML = `<div class="row-head"><div></div><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>` +
+  cont.innerHTML = `<div class="row-head"><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>` +
   projects.map(p=>{
     const area = areaInfo(p.area);
     const tasks = data.tasks.filter(t=>t.projectId===p.id);
@@ -1354,12 +1468,14 @@ function renderProjectCards(){
     const today = new Date(); today.setHours(0,0,0,0);
     const taskItems = pending.length ? pending.map(t=>{
       const overdue = t.dueDate && new Date(t.dueDate+'T00:00:00') <= today;
-      const due = t.dueDate ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}">${overdue?'Vencida · ':''}${formatDate(t.dueDate)}</span>` : '';
+      const due = t.dueDate
+        ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Tocar para cambiar fecha">${overdue?'Vencida · ':''}${formatDate(t.dueDate)}</span>`
+        : `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);" title="Agregar fecha">+ fecha</span>`;
       return `<div class="task" draggable="true" data-task-id="${t.id}"
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text">${t.text}</div>${due}</div>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>${due}</div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
       </div>`;
@@ -1370,24 +1486,20 @@ function renderProjectCards(){
          draggable="true" data-id="${p.id}"
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
-      <div style="display:flex; align-items:flex-start; gap:8px; min-width:0;">
-        <div style="display:flex; align-items:center; gap:6px; flex-shrink:0; padding-top:2px;">
-          <span class="drag-handle">⠿</span>
-          <span class="project-avatar" style="background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
-                onclick="setProjectIcon('${p.id}')" title="Tocar para cambiar el ícono">${
-            p.icon
-              ? ((p.icon.startsWith('http')||p.icon.startsWith('data:')) ? `<img src="${p.icon}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">` : p.icon)
-              : (p.name||'?').trim().charAt(0).toUpperCase()
-          }</span>
-        </div>
-        <div style="flex:1; min-width:0;">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-            <div class="row-name" contenteditable="true" spellcheck="false" draggable="false"
-                 onblur="renameProject('${p.id}', this.textContent)"
-                 onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
-                 title="Click para editar el nombre">${p.name}</div>
-            <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
-          </div>
+      <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+        <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
+        <span class="drag-handle" style="flex-shrink:0;">⠿</span>
+        <span class="project-avatar" style="flex-shrink:0; background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
+              onclick="setProjectIcon('${p.id}')" title="Tocar para cambiar el ícono">${
+          p.icon
+            ? ((p.icon.startsWith('http')||p.icon.startsWith('data:')) ? `<img src="${p.icon}" alt="" style="width:100%; height:100%; object-fit:cover; border-radius:8px;">` : p.icon)
+            : (p.name||'?').trim().charAt(0).toUpperCase()
+        }</span>
+        <div style="min-width:0; flex:1;">
+          <div class="row-name" contenteditable="true" spellcheck="false" draggable="false"
+               onblur="renameProject('${p.id}', this.textContent)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
+               title="Click para editar el nombre">${p.name}</div>
           <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false"
                onblur="editDesc('${p.id}', this.textContent)"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
@@ -1399,7 +1511,7 @@ function renderProjectCards(){
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
-        ${p.driveUrl ? `<button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
+        <button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>
         <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
         ${p.status==='active'
           ? `<button onclick="toggleStatus('${p.id}')">⏸</button>`
@@ -1521,7 +1633,8 @@ function addProject(){
   const desc = document.getElementById('np-desc').value.trim();
   if(!name){ alert('Falta el nombre del proyecto'); return; }
   const color = areaInfo(area).color;
-  const proj = {id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, icon:'', driveUrl:'', driveFolderId:'', contacts:[]};
+  const context = document.getElementById('np-context').value;
+  const proj = {id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, icon:'', driveUrl:'', driveFolderId:'', contacts:[], context};
   data.projects.push(proj);
   const iconInput = document.getElementById('np-icon');
   const file = iconInput.files[0];
@@ -1581,7 +1694,7 @@ function renderLeadProjects(){
     cont.innerHTML = '<div class="empty">Ningún proyecto está marcado con leads. Marcalo con el botón 🎯 en la pestaña Portafolio.</div>';
     return;
   }
-  cont.innerHTML = `<div class="row-head"><div></div><div>Proyecto</div><div>Área</div><div>Leads</div><div></div></div>` +
+  cont.innerHTML = `<div class="row-head"><div>Proyecto</div><div>Área</div><div>Leads</div><div></div></div>` +
   projects.map(p=>{
     const area = areaInfo(p.area);
     const count = data.leads.filter(l=>l.projectId===p.id).length;
@@ -1670,6 +1783,14 @@ function addLead(){
 }
 
 /* ====== RENDER TAREAS ====== */
+let taskSort = 'date'; // 'date' | 'priority'
+function toggleTaskSort(){
+  taskSort = taskSort==='date' ? 'priority' : 'date';
+  const btn = document.getElementById('sortToggle');
+  if(btn) btn.textContent = taskSort==='date' ? '📅 Fecha' : '😢 Importancia';
+  renderAll();
+}
+const PRIORITY_ORDER = { high:0, medium:1, low:2 };
 function setTaskFilter(f){
   taskFilter = f;
   document.querySelectorAll('.task-filters .chip').forEach(c=>c.classList.toggle('active', c.dataset.tf===f));
@@ -1689,6 +1810,12 @@ function renderTasks(){
   if(taskFilter==='done') tasks = tasks.filter(t=>t.done);
   if(activeProjects.size>0) tasks = tasks.filter(t=>activeProjects.has(t.projectId));
 
+  if(taskSort==='priority'){
+    tasks = tasks.slice().sort((a,b)=> (PRIORITY_ORDER[a.priority||'medium']||1) - (PRIORITY_ORDER[b.priority||'medium']||1));
+  } else {
+    tasks = tasks.slice().sort((a,b)=> (a.dueDate||'9999') < (b.dueDate||'9999') ? -1 : 1);
+  }
+
   if(tasks.length===0){
     cont.innerHTML = '<div class="empty">No hay tareas en esta vista.</div>';
     return;
@@ -1704,7 +1831,9 @@ function renderTasks(){
       let cls='due-upcoming', label=formatDate(t.dueDate);
       if(diffDays < 0 && !t.done){ cls='due-overdue'; label='Vencida · '+formatDate(t.dueDate); }
       else if(diffDays === 0 && !t.done){ cls='due-today'; label='Vence hoy'; }
-      badge = `<span class="due-badge ${cls}">${label}</span>`;
+      badge = `<span class="due-badge ${cls}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Tocar para cambiar fecha">${label}</span>`;
+    } else {
+      badge = `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);" title="Agregar fecha">+ fecha</span>`;
     }
     return `
     <div class="task ${t.done?'done':''}">
@@ -1712,12 +1841,48 @@ function renderTasks(){
       <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
       <div class="task-body">
         <div class="task-project">${proj ? proj.name : '—'}</div>
-        <div class="task-text">${t.text}</div>
+        <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
         ${badge}
       </div>
       <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
     </div>`;
   }).join('');
+}
+function editTaskDate(id, el){
+  // remove any existing popover
+  const existing = document.getElementById('datepopover');
+  if(existing){ existing.remove(); if(existing.dataset.tid===id) return; }
+
+  const t = data.tasks.find(t=>t.id===id);
+  const pop = document.createElement('div');
+  pop.id = 'datepopover';
+  pop.dataset.tid = id;
+  pop.style.cssText = 'position:fixed;z-index:900;background:var(--panel);border:1.5px solid var(--accent);border-radius:10px;padding:8px 10px;box-shadow:0 4px 20px rgba(0,0,0,0.18);display:flex;align-items:center;gap:8px;';
+
+  const inp = document.createElement('input');
+  inp.type = 'date';
+  inp.value = t.dueDate || '';
+  inp.style.cssText = 'font-size:.85rem;border:none;background:transparent;color:var(--text);outline:none;';
+  inp.onchange = e=>{ t.dueDate = e.target.value; save(); renderAll(); pop.remove(); };
+
+  const btn = document.createElement('button');
+  btn.textContent = '✕';
+  btn.style.cssText = 'border:none;background:none;color:var(--muted);cursor:pointer;font-size:.8rem;padding:0;';
+  btn.onclick = ()=>pop.remove();
+
+  pop.appendChild(inp);
+  pop.appendChild(btn);
+  document.body.appendChild(pop);
+
+  // position near clicked element
+  const r = el ? el.getBoundingClientRect() : {bottom:100,left:100};
+  const top = Math.min(r.bottom + 6, window.innerHeight - 80);
+  const left = Math.min(r.left, window.innerWidth - 220);
+  pop.style.top = top + 'px';
+  pop.style.left = left + 'px';
+
+  setTimeout(()=>inp.focus(), 30);
+  setTimeout(()=>inp.showPicker && inp.showPicker(), 60);
 }
 function toggleTask(id){
   const t = data.tasks.find(t=>t.id===id);
@@ -1741,19 +1906,23 @@ function addTask(){
   const emailAlert = document.getElementById('nt-alert').checked;
   if(!projectId){ alert('Elegí un proyecto'); return; }
   if(!text){ alert('Falta la descripción de la tarea'); return; }
-  data.tasks.push({id:uid('t'), projectId, text, done:false, dueDate, dueTime, emailAlert, alertSent:false, driveUrl:''});
+  const priority = getSelectedPriority();
+  data.tasks.push({id:uid('t'), projectId, text, done:false, dueDate, dueTime, priority, emailAlert, alertSent:false, driveUrl:''});
   document.getElementById('nt-text').value='';
   document.getElementById('nt-due').value='';
   document.getElementById('nt-time').value='';
   document.getElementById('nt-alert').checked=false;
+  selectPriority('high'); // reset to default
   closeTaskModal();
   save(); renderAll();
 }
 
 /* ====== SELECTS AUXILIARES ====== */
 function populateSelects(){
+  const ctx = document.getElementById('np-context') ? document.getElementById('np-context').value : 'profesional';
   const areaSel = document.getElementById('np-area');
-  areaSel.innerHTML = data.areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+  const filteredAreas = data.areas.filter(a=> (a.context||'profesional') === ctx);
+  areaSel.innerHTML = filteredAreas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
 
   const stageSel = document.getElementById('nl-stage');
   stageSel.innerHTML = STAGES.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
@@ -1897,8 +2066,8 @@ function renderDayView(iso){
       <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
       <div class="task-body">
         <div class="task-project">${proj?proj.name:'—'}</div>
-        <div class="task-text">${t.text}</div>
-        ${t.dueTime ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}">🕒 ${t.dueTime}</span>` : (overdue?'<span class="due-badge due-overdue">Vencida</span>':'')}
+        <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
+        ${t.dueTime ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Cambiar fecha">🕒 ${t.dueTime}</span>` : (overdue?`<span class="due-badge due-overdue" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;">Vencida</span>`:`<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);">+ fecha</span>`)}
       </div>
       <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
     </div>`;

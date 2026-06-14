@@ -10,6 +10,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_OWNER = process.env.GITHUB_OWNER;
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const DATA_PATH = 'data.json';
+const OFFSET_PATH = 'tg_offset.txt';
 
 // Modelo de Groq. Si algun dia falla con "model not found", revisa
 // console.groq.com/docs/models y reemplaza este nombre por uno vigente.
@@ -57,6 +58,29 @@ async function saveDataJson(data, sha){
     throw new Error(`PUT data.json ${res.status}: ${errText.slice(0,200)}`);
   }
   return res.json();
+}
+
+// El offset de Telegram (marca de "hasta aca ya lei") se guarda en el repo,
+// no en /tmp, porque el runner de GitHub Actions borra /tmp entre corridas.
+async function getOffsetFromRepo(){
+  const res = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${OFFSET_PATH}?ref=main`,
+    { headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json' } }
+  ).catch(()=>null);
+  if(!res || res.status === 404 || !res.ok) return { offset: 0, sha: null };
+  const json = await res.json();
+  const content = Buffer.from(json.content.replace(/\n/g,''), 'base64').toString('utf8').trim();
+  return { offset: parseInt(content) || 0, sha: json.sha };
+}
+
+async function saveOffsetToRepo(offset, sha){
+  const content = Buffer.from(String(offset)).toString('base64');
+  const body = { message:'Bot: actualizar offset Telegram', content, branch:'main' };
+  if(sha) body.sha = sha;
+  await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${OFFSET_PATH}`,
+    { method:'PUT', headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) }
+  ).catch(e=>console.error('saveOffset error:', e.message));
 }
 
 function formatDate(d){
@@ -313,14 +337,22 @@ async function handleAudio(message){
 
 // ====== PROCESAR MENSAJES ENTRANTES ======
 async function processUpdates(){
-  let offset = 0;
-  if(fs.existsSync('/tmp/tg_offset.txt')) offset = parseInt(fs.readFileSync('/tmp/tg_offset.txt','utf8')) || 0;
+  const { offset: startOffset, sha } = await getOffsetFromRepo();
+  // Si el archivo de offset no existe todavia (sha null), es la primera corrida
+  // con este codigo: vaciamos la cola vieja SIN procesar, para no duplicar.
+  const firstTime = (sha === null);
 
-  const updates = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates?offset=${offset}&timeout=5`).then(r=>r.json());
-  if(!updates.result?.length) return;
+  const updates = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates?offset=${startOffset}&timeout=5`).then(r=>r.json());
 
+  if(!updates.result?.length){
+    if(firstTime) await saveOffsetToRepo(startOffset, sha); // crea el marcador la primera vez
+    return;
+  }
+
+  let newOffset = startOffset;
   for(const upd of updates.result){
-    offset = upd.update_id + 1;
+    newOffset = upd.update_id + 1;
+    if(firstTime) continue; // primera corrida: solo avanzamos el offset, no creamos nada
     const msg = upd.message;
     if(!msg) continue;
     if(msg.voice || msg.audio) await handleAudio(msg);
@@ -332,10 +364,15 @@ async function processUpdates(){
       });
     }
   }
-  fs.writeFileSync('/tmp/tg_offset.txt', String(offset));
 
-  // confirmar a Telegram que ya procesamos estos updates (evita duplicados en la proxima corrida)
-  await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates?offset=${offset}&timeout=1`).catch(()=>{});
+  await saveOffsetToRepo(newOffset, sha);
+
+  if(firstTime){
+    await tg('sendMessage', {
+      chat_id: TELEGRAM_CHAT_ID,
+      text: '\u{1F9F9} Cola de audios viejos vaciada. A partir de ahora solo proceso audios nuevos.'
+    });
+  }
 }
 
 // ====== MAIN ======

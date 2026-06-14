@@ -580,6 +580,38 @@ input, select, textarea{
   </div>
 </div>
 
+<!-- MODAL EDITAR TAREA -->
+<div class="modal-overlay" id="editTaskModalOverlay" onclick="if(event.target===this) closeEditTaskModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">✎ Editar tarea</h2>
+      <button class="modal-close" onclick="closeEditTaskModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="et-id">
+      <input type="hidden" id="et-priority" value="medium">
+      <label class="row-desc" style="margin-bottom:-2px;">Proyecto</label>
+      <select id="et-project"></select>
+      <label class="row-desc" style="margin:6px 0 -2px;">Importancia</label>
+      <div class="priority-selector" id="et-priority-group">
+        <button type="button" class="priority-btn" data-priority="high"   onclick="selectEditPriority('high')">:( Quedó la caga</button>
+        <button type="button" class="priority-btn" data-priority="medium" onclick="selectEditPriority('medium')">:/ Pa mañana</button>
+        <button type="button" class="priority-btn" data-priority="low"    onclick="selectEditPriority('low')">:) No pasa nada</button>
+      </div>
+      <label class="row-desc" style="margin:6px 0 -2px;">Descripción</label>
+      <textarea id="et-text" placeholder="Descripción de la tarea" rows="3" style="resize:vertical; min-height:72px;"></textarea>
+      <div class="row2">
+        <input type="date" id="et-due">
+        <input type="time" id="et-time">
+      </div>
+      <div class="row2" style="margin-top:6px;">
+        <button class="btn-primary" onclick="saveEditTask()">Guardar cambios</button>
+        <button class="btn-toggle" style="margin-top:0; border-color:var(--red); color:var(--red); flex:0 0 auto;" onclick="deleteTaskFromModal()" title="Eliminar tarea">🗑</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL NUEVO PROYECTO -->
 <div class="modal-overlay" id="projectModalOverlay" onclick="if(event.target===this) closeProjectModal()">
   <div class="modal">
@@ -970,11 +1002,15 @@ function load(){
         if(!p.context) p.context='profesional';
       });
       assignDefaultTimes(parsed.tasks);
+      if(!parsed.deletedTaskIds) parsed.deletedTaskIds = [];
+      if(!parsed.deletedProjectIds) parsed.deletedProjectIds = [];
       return parsed;
     }
   }catch(e){}
   const def = JSON.parse(JSON.stringify(DEFAULT_DATA));
   assignDefaultTimes(def.tasks);
+  def.deletedTaskIds = [];
+  def.deletedProjectIds = [];
   return def;
 }
 function assignDefaultTimes(tasks){
@@ -997,8 +1033,8 @@ function assignDefaultTimes(tasks){
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  // auto-push deshabilitado para no sobreescribir cambios del bot
-  // scheduleAutoPush();
+  // auto-push con fusión: conserva lo que escribió el bot (ver pushToGitHub)
+  scheduleAutoPush();
 }
 function saveGithubToken(){
   const val = document.getElementById('githubTokenInput').value.trim();
@@ -1023,6 +1059,8 @@ function applyImportedData(parsed, skipAutoPush){
     if(!p.context) p.context='profesional';
   });
   assignDefaultTimes(parsed.tasks);
+  if(!parsed.deletedTaskIds) parsed.deletedTaskIds = [];
+  if(!parsed.deletedProjectIds) parsed.deletedProjectIds = [];
   data = parsed;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   if(!skipAutoPush) scheduleAutoPush();
@@ -1064,16 +1102,35 @@ async function pushToGitHub(silent){
   if(!token){ if(!silent) alert('Primero guardá tu token de GitHub.'); return; }
   if(banner) banner.textContent = silent ? 'Sincronizando…' : 'Subiendo a GitHub…';
   try{
-    // obtener sha actual del archivo si existe
+    // 1. leer la versión actual del repo (para sha y para fusionar)
     let sha = undefined;
+    let repoData = null;
     const getRes = await fetch(ghApiUrl()+`?ref=${GITHUB_CONFIG.BRANCH}`, {
       headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json'}
     });
-    if(getRes.ok){ sha = (await getRes.json()).sha; }
+    if(getRes.ok){
+      const gj = await getRes.json();
+      sha = gj.sha;
+      try{ repoData = JSON.parse(b64DecodeUnicode(gj.content.replace(/\n/g,''))); }catch(e){ repoData = null; }
+    } else if(getRes.status !== 404){
+      throw new Error('no pude leer la versión del repo (HTTP '+getRes.status+'); no subí para no pisar datos');
+    }
+
+    // 2. fusionar: sumar lo que el bot agregó al repo y que no tengo local ni borré
+    let payload = data;
+    if(repoData && Array.isArray(repoData.tasks)){
+      const localTaskIds = new Set(data.tasks.map(t=>t.id));
+      const localProjIds = new Set(data.projects.map(p=>p.id));
+      const delTasks = new Set(data.deletedTaskIds||[]);
+      const delProjs = new Set(data.deletedProjectIds||[]);
+      const botTasks = repoData.tasks.filter(t=> !localTaskIds.has(t.id) && !delTasks.has(t.id));
+      const botProjects = (repoData.projects||[]).filter(p=> !localProjIds.has(p.id) && !delProjs.has(p.id));
+      payload = { ...data, tasks: [...data.tasks, ...botTasks], projects: [...data.projects, ...botProjects] };
+    }
 
     const body = {
       message: 'Actualizar data.json desde el dashboard',
-      content: b64EncodeUnicode(JSON.stringify(data, null, 2)),
+      content: b64EncodeUnicode(JSON.stringify(payload, null, 2)),
       branch: GITHUB_CONFIG.BRANCH
     };
     if(sha) body.sha = sha;
@@ -1086,6 +1143,12 @@ async function pushToGitHub(silent){
     if(!putRes.ok){
       const errJson = await putRes.json().catch(()=>({}));
       throw new Error(putRes.status+' '+(errJson.message||''));
+    }
+    // 3. adoptar el resultado fusionado como estado local (así se ven las tareas del bot)
+    if(payload !== data){
+      data = payload;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      renderAll();
     }
     if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub.' : '✓ Datos subidos a GitHub correctamente.';
   }catch(err){
@@ -1512,6 +1575,7 @@ function renderProjectCards(){
         <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>${due}</div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
+        <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (texto, importancia, fecha, hora, proyecto, eliminar)">⋯</button>
       </div>`;
     }).join('') : '<div class="empty" style="padding:6px 0;">No hay tareas pendientes 🎉</div>';
 
@@ -1656,6 +1720,10 @@ function toggleStatus(id){
 }
 function deleteProject(id){
   if(!confirm('¿Eliminar este proyecto y sus tareas asociadas? Esta acción no se puede deshacer.')) return;
+  data.deletedProjectIds = data.deletedProjectIds || [];
+  data.deletedTaskIds = data.deletedTaskIds || [];
+  if(!data.deletedProjectIds.includes(id)) data.deletedProjectIds.push(id);
+  data.tasks.filter(t=>t.projectId===id).forEach(t=>{ if(!data.deletedTaskIds.includes(t.id)) data.deletedTaskIds.push(t.id); });
   data.projects = data.projects.filter(p=>p.id!==id);
   data.tasks = data.tasks.filter(t=>t.projectId!==id);
   data.leads.forEach(l=>{ if(l.projectId===id) l.projectId=''; });
@@ -1878,6 +1946,7 @@ function renderTasks(){
         <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
         ${badge}
       </div>
+      <button class="task-del" style="color:var(--muted);" onclick="openEditTask('${t.id}')" title="Editar">⋯</button>
       <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
     </div>`;
   }).join('');
@@ -1897,7 +1966,13 @@ function editTaskDate(id, el){
   inp.type = 'date';
   inp.value = t.dueDate || '';
   inp.style.cssText = 'font-size:.85rem;border:none;background:transparent;color:var(--text);outline:none;';
-  inp.onchange = e=>{ t.dueDate = e.target.value; save(); renderAll(); pop.remove(); };
+  inp.onchange = e=>{ t.dueDate = e.target.value; save(); renderAll(); };
+
+  const inpTime = document.createElement('input');
+  inpTime.type = 'time';
+  inpTime.value = t.dueTime || '';
+  inpTime.style.cssText = 'font-size:.85rem;border:none;background:transparent;color:var(--text);outline:none;border-left:1px solid var(--border);padding-left:8px;';
+  inpTime.onchange = e=>{ t.dueTime = e.target.value; save(); renderAll(); };
 
   const btn = document.createElement('button');
   btn.textContent = '✕';
@@ -1905,13 +1980,14 @@ function editTaskDate(id, el){
   btn.onclick = ()=>pop.remove();
 
   pop.appendChild(inp);
+  pop.appendChild(inpTime);
   pop.appendChild(btn);
   document.body.appendChild(pop);
 
   // position near clicked element
   const r = el ? el.getBoundingClientRect() : {bottom:100,left:100};
   const top = Math.min(r.bottom + 6, window.innerHeight - 80);
-  const left = Math.min(r.left, window.innerWidth - 220);
+  const left = Math.min(r.left, window.innerWidth - 260);
   pop.style.top = top + 'px';
   pop.style.left = left + 'px';
 
@@ -1924,6 +2000,8 @@ function toggleTask(id){
   save(); renderAll();
 }
 function deleteTask(id){
+  data.deletedTaskIds = data.deletedTaskIds || [];
+  if(!data.deletedTaskIds.includes(id)) data.deletedTaskIds.push(id);
   data.tasks = data.tasks.filter(t=>t.id!==id);
   save(); renderAll();
 }
@@ -1949,6 +2027,57 @@ function addTask(){
   selectPriority('high'); // reset to default
   closeTaskModal();
   save(); renderAll();
+}
+
+/* ====== EDITAR TAREA (MODAL) ====== */
+function fillEditProjectSelect(selectedId){
+  const sel = document.getElementById('et-project');
+  const per = data.projects.filter(p=>(p.context||'profesional')==='personal');
+  const pro = data.projects.filter(p=>(p.context||'profesional')!=='personal');
+  let html='';
+  if(pro.length) html += `<optgroup label="💼 Profesional">`+pro.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')+`</optgroup>`;
+  if(per.length) html += `<optgroup label="🏠 Personal">`+per.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')+`</optgroup>`;
+  sel.innerHTML = html;
+  if(selectedId) sel.value = selectedId;
+}
+function selectEditPriority(p){
+  document.querySelectorAll('#et-priority-group .priority-btn').forEach(b=>b.classList.toggle('active', b.dataset.priority===p));
+  document.getElementById('et-priority').value = p;
+}
+function openEditTask(id){
+  const t = data.tasks.find(t=>t.id===id);
+  if(!t) return;
+  document.getElementById('et-id').value = id;
+  fillEditProjectSelect(t.projectId);
+  document.getElementById('et-text').value = t.text || '';
+  document.getElementById('et-due').value = t.dueDate || '';
+  document.getElementById('et-time').value = t.dueTime || '';
+  selectEditPriority(t.priority || 'medium');
+  document.getElementById('editTaskModalOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('et-text').focus(), 50);
+}
+function closeEditTaskModal(){
+  document.getElementById('editTaskModalOverlay').classList.remove('open');
+}
+function saveEditTask(){
+  const id = document.getElementById('et-id').value;
+  const t = data.tasks.find(t=>t.id===id);
+  if(!t) return;
+  const text = document.getElementById('et-text').value.trim();
+  if(!text){ alert('La tarea no puede quedar sin descripción'); return; }
+  t.projectId = document.getElementById('et-project').value || t.projectId;
+  t.text = text;
+  t.dueDate = document.getElementById('et-due').value;
+  t.dueTime = document.getElementById('et-time').value;
+  t.priority = document.getElementById('et-priority').value || 'medium';
+  closeEditTaskModal();
+  save(); renderAll();
+}
+function deleteTaskFromModal(){
+  const id = document.getElementById('et-id').value;
+  if(!confirm('¿Eliminar esta tarea?')) return;
+  closeEditTaskModal();
+  deleteTask(id);
 }
 
 /* ====== SELECTS AUXILIARES ====== */
@@ -2103,6 +2232,7 @@ function renderDayView(iso){
         <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
         ${t.dueTime ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Cambiar fecha">🕒 ${t.dueTime}</span>` : (overdue?`<span class="due-badge due-overdue" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;">Vencida</span>`:`<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);">+ fecha</span>`)}
       </div>
+      <button class="task-del" style="color:var(--muted);" onclick="openEditTask('${t.id}')" title="Editar">⋯</button>
       <button class="task-del" onclick="deleteTask('${t.id}')">✕</button>
     </div>`;
   }).join('') : '<div class="empty">No hay tareas con vencimiento este día.</div>';

@@ -676,22 +676,42 @@ function renderAreaSettings(){
     autoInfo.textContent = '';
   }
   const cont = document.getElementById('areaSettings');
-  cont.innerHTML = data.areas.map(a=>{
+  // separar por contexto
+  const proAreas = data.areas.filter(a=>(a.context||'profesional')==='profesional');
+  const perAreas = data.areas.filter(a=>a.context==='personal');
+
+  const renderArea = a => {
     const count = data.projects.filter(p=>p.area===a.id).length;
+    const isPro = (a.context||'profesional')==='profesional';
     return `
-    <div class="row" style="--accent-color:${a.color}; grid-template-columns:24px 1fr 60px;">
-      <div></div>
+    <div class="row" style="--accent-color:${a.color}; grid-template-columns:1fr auto 60px; gap:10px; align-items:center;">
       <div>
-        <input type="text" value="${a.name}" style="font-weight:600; margin-bottom:4px;"
+        <input type="text" value="${a.name}" style="font-weight:600; margin-bottom:4px; width:100%;"
                onblur="editAreaName('${a.id}', this.value)"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}">
-        <div class="row-desc" style="margin-top:4px;">${count} proyecto${count===1?'':'s'} en esta área</div>
+        <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-top:4px;">
+          <div class="row-desc">${count} proyecto${count===1?'':'s'}</div>
+          <button class="priority-btn ${isPro?'active':''}" data-area-ctx="profesional"
+            onclick="editAreaContext('${a.id}','profesional')"
+            style="padding:2px 8px; font-size:.65rem; min-width:0;">💼 Prof.</button>
+          <button class="priority-btn ${!isPro?'active':''}" data-area-ctx="personal"
+            onclick="editAreaContext('${a.id}','personal')"
+            style="padding:2px 8px; font-size:.65rem; min-width:0;">🏠 Pers.</button>
+          <button class="danger" onclick="deleteArea('${a.id}')"
+            style="padding:2px 8px; font-size:.65rem; border-radius:6px; border:1px solid var(--red); background:transparent; color:var(--red); cursor:pointer;">🗑</button>
+        </div>
       </div>
-      <input type="color" value="${a.color}" style="height:36px; padding:2px; cursor:pointer;"
+      <input type="color" value="${a.color}" style="height:36px; width:48px; padding:2px; cursor:pointer;"
              onchange="editAreaColor('${a.id}', this.value)">
     </div>`;
-  }).join('');
-  cont.innerHTML += `<button class="btn-toggle" onclick="addArea()">+ Nueva categoría</button>`;
+  };
+
+  cont.innerHTML =
+    `<div class="row-desc" style="font-weight:700; margin-bottom:6px;">💼 Profesional</div>` +
+    proAreas.map(renderArea).join('') +
+    `<div class="row-desc" style="font-weight:700; margin:14px 0 6px;">🏠 Personal</div>` +
+    perAreas.map(renderArea).join('') +
+    `<button class="btn-toggle" onclick="addArea()">+ Nueva categoría</button>`;
 
   // proyectos: color + contactos en una sola fila
   const projCont = document.getElementById('projectColorSettings');
@@ -746,6 +766,19 @@ function editAreaName(id, newName){
 function editAreaColor(id, newColor){
   const area = data.areas.find(a=>a.id===id);
   area.color = newColor;
+  save(); renderAll(); renderAreaSettings();
+}
+function editAreaContext(id, ctx){
+  const area = data.areas.find(a=>a.id===id);
+  if(!area) return;
+  area.context = ctx;
+  save(); renderAll(); renderAreaSettings();
+}
+function deleteArea(id){
+  const count = data.projects.filter(p=>p.area===id).length;
+  if(count > 0){ alert(`No se puede eliminar: tiene ${count} proyecto${count===1?'':'s'} asignado${count===1?'':'s'}. Movelos a otra área primero.`); return; }
+  if(!confirm('¿Eliminar esta categoría?')) return;
+  data.areas = data.areas.filter(a=>a.id!==id);
   save(); renderAll(); renderAreaSettings();
 }
 

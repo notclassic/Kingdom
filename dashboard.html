@@ -997,7 +997,8 @@ function assignDefaultTimes(tasks){
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  scheduleAutoPush();
+  // auto-push deshabilitado para no sobreescribir cambios del bot
+  // scheduleAutoPush();
 }
 function saveGithubToken(){
   const val = document.getElementById('githubTokenInput').value.trim();

@@ -19,12 +19,20 @@ function tg(method, body){
   }).then(r=>r.json());
 }
 
+// quita tildes y pasa a minúsculas (para comparar texto de forma robusta)
+function norm(s){
+  return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 async function getDataJson(){
   const res = await fetch(
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}`,
     { headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json' } }
   );
-  if(!res.ok) return null;
+  if(!res.ok){
+    console.error('getDataJson falló:', res.status, await res.text().catch(()=>''));
+    return null;
+  }
   const json = await res.json();
   const content = Buffer.from(json.content.replace(/\n/g,''), 'base64').toString('utf8');
   return { data: JSON.parse(content), sha: json.sha };
@@ -32,7 +40,7 @@ async function getDataJson(){
 
 async function saveDataJson(data, sha){
   const content = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
-  await fetch(
+  const res = await fetch(
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${DATA_PATH}`,
     {
       method: 'PUT',
@@ -40,6 +48,12 @@ async function saveDataJson(data, sha){
       body: JSON.stringify({ message:'Bot: actualizar tareas', content, sha, branch:'main' })
     }
   );
+  // CAMBIO CLAVE: antes no se chequeaba res.ok y el error se tragaba en silencio.
+  if(!res.ok){
+    const errText = await res.text().catch(()=> '');
+    throw new Error(`PUT data.json ${res.status}: ${errText.slice(0,200)}`);
+  }
+  return res.json();
 }
 
 function formatDate(d){
@@ -99,6 +113,10 @@ async function transcribeAudio(fileUrl){
     headers: { authorization: ASSEMBLYAI_KEY, 'content-type': 'application/octet-stream' },
     body: audioBuffer
   });
+  if(!uploadRes.ok){
+    console.error('AssemblyAI upload falló:', uploadRes.status, await uploadRes.text().catch(()=>''));
+    return null;
+  }
   const { upload_url } = await uploadRes.json();
 
   // 2. solicitar transcripción en español
@@ -117,14 +135,67 @@ async function transcribeAudio(fileUrl){
       headers: { authorization: ASSEMBLYAI_KEY }
     }).then(r=>r.json());
     if(poll.status === 'completed'){ text = poll.text; break; }
-    if(poll.status === 'error'){ break; }
+    if(poll.status === 'error'){ console.error('AssemblyAI error:', poll.error); break; }
   }
   return text;
 }
 
-function parseTask(text){
-  // busca proyecto mencionado (nombre parcial, insensible a mayúsculas/tildes)
-  return text;
+// Detecta el proyecto mencionado. Devuelve { projectId, detected }.
+// Compara contra el texto normal Y contra una versión sin espacios,
+// para que "chile autos data bot" matchee con "chileautos databot".
+function detectProject(transcription, projects){
+  const normText = norm(transcription);
+  const collapsed = normText.replace(/\s+/g, ''); // "chile autos" -> "chileautos"
+
+  let projectId = null;
+  let bestScore = 0;
+
+  for(const p of projects){
+    const words = norm(p.name).split(/\s+/).filter(w => w.length > 3);
+    let score = 0;
+    for(const w of words){
+      if(normText.includes(w) || collapsed.includes(w)) score++;
+    }
+    if(score > bestScore){ bestScore = score; projectId = p.id; }
+  }
+
+  const detected = bestScore > 0;
+  if(!projectId){
+    projectId = projects.find(p => p.status === 'active')?.id || projects[0]?.id;
+  }
+  return { projectId, detected };
+}
+
+// Detecta fecha y hora mencionadas en el texto.
+function detectDateTime(transcription){
+  let due = new Date(Date.now() + 86400000).toISOString().slice(0,10); // default: mañana
+  let dueTime = '12:00';
+
+  const dateMatch = transcription.match(/(\d{1,2})\s*de\s*(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i);
+  if(dateMatch){
+    const months = {enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12};
+    const day = parseInt(dateMatch[1]);
+    const month = months[dateMatch[2].toLowerCase()];
+    const year = new Date().getFullYear();
+    due = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+  }
+
+  // hora: comparamos sobre texto sin tildes
+  const timeMatch = norm(transcription).match(/(\d{1,2})\s*(de la manana|am|de la tarde|pm|de la noche|del mediodia|del medio dia|del dia)/);
+  if(timeMatch){
+    let hour = parseInt(timeMatch[1]);
+    const period = timeMatch[2];
+    if(period.includes('tarde') || period.includes('noche') || period === 'pm'){
+      hour = hour < 12 ? hour + 12 : hour;
+    } else if(period.includes('manana') || period === 'am'){
+      hour = (hour === 12 ? 0 : hour);
+    } else if(period.includes('medio') || period.includes('dia')){
+      hour = 12;
+    }
+    dueTime = `${String(hour).padStart(2,'0')}:00`;
+  }
+
+  return { due, dueTime };
 }
 
 async function handleAudio(message){
@@ -143,48 +214,14 @@ async function handleAudio(message){
     return;
   }
 
-  // crear tarea con el texto transcripto
+  // leer datos
   const result = await getDataJson();
   if(!result){ await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '❌ No pude leer los datos de Kingdom.' }); return; }
   const { data, sha } = result;
 
-  // detectar proyecto mencionado — busca coincidencias parciales en el nombre completo
-  let projectId = null;
-  const lower = transcription.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // quitar tildes
-  
-  // primero busca coincidencia exacta de cualquier palabra del nombre del proyecto
-  for(const p of data.projects){
-    const pName = p.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    const words = pName.split(/\s+/).filter(w=>w.length>3);
-    if(words.some(w => lower.includes(w))){
-      projectId = p.id;
-      break;
-    }
-  }
-  // si no encontró, usa el primer proyecto activo
-  if(!projectId) projectId = data.projects.find(p=>p.status==='active')?.id || data.projects[0]?.id;
+  const { projectId, detected } = detectProject(transcription, data.projects);
+  const { due, dueTime } = detectDateTime(transcription);
 
-  // detectar fecha mencionada en el audio
-  let due = new Date(Date.now() + 86400000).toISOString().slice(0,10); // default: mañana
-  let dueTime = '12:00';
-  const dateMatch = transcription.match(/(\d{1,2})\s*de\s*(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i);
-  if(dateMatch){
-    const months = {enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12};
-    const day = parseInt(dateMatch[1]);
-    const month = months[dateMatch[2].toLowerCase()];
-    const year = new Date().getFullYear();
-    due = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-  }
-  const timeMatch = transcription.match(/(\d{1,2})\s*(de la mañana|am|de la tarde|pm|del mediodía|del medio día)/i);
-  if(timeMatch){
-    let hour = parseInt(timeMatch[1]);
-    const period = timeMatch[2].toLowerCase();
-    if(period.includes('tarde') || period.includes('pm')) hour = hour < 12 ? hour+12 : hour;
-    if(period.includes('mañana') || period.includes('am')) hour = hour === 12 ? 0 : hour;
-    if(period.includes('medio')) hour = 12;
-    dueTime = `${String(hour).padStart(2,'0')}:00`;
-  }
   const newTask = {
     id: 't' + Date.now(),
     projectId,
@@ -198,19 +235,33 @@ async function handleAudio(message){
     driveUrl: ''
   };
   data.tasks.push(newTask);
-  await saveDataJson(data, sha);
+
+  // CAMBIO CLAVE: si el guardado falla, avisamos en vez de mentir con un "✅".
+  try {
+    await saveDataJson(data, sha);
+  } catch(err){
+    console.error('Error guardando tarea:', err.message);
+    await tg('sendMessage', {
+      chat_id: TELEGRAM_CHAT_ID,
+      text: `❌ Transcribí el audio pero NO pude guardar la tarea en GitHub.\n\nError: \`${err.message}\`\n\n_${transcription}_`,
+      parse_mode: 'Markdown'
+    });
+    return;
+  }
 
   const p = data.projects.find(p=>p.id===projectId);
+  const aviso = detected ? '' : '\n\n⚠️ _No detecté el proyecto en el audio; lo asigné por defecto. Corregilo en el dashboard._';
   await tg('sendMessage', {
     chat_id: TELEGRAM_CHAT_ID,
-    text: `✅ *Tarea creada en "${p?.name}"*\n\n_${transcription}_\n\n📅 Vence: ${formatDate(due)}`,
+    text: `✅ *Tarea creada en "${p?.name}"*\n\n_${transcription}_\n\n📅 Vence: ${formatDate(due)} ${dueTime}${aviso}`,
     parse_mode: 'Markdown'
   });
 }
 
 // ====== PROCESAR MENSAJES ENTRANTES ======
 async function processUpdates(){
-  // leer offset guardado
+  // leer offset guardado (en el runner de Actions /tmp se borra entre corridas,
+  // por eso al final confirmamos los updates a Telegram para no reprocesarlos)
   let offset = 0;
   if(fs.existsSync('/tmp/tg_offset.txt')) offset = parseInt(fs.readFileSync('/tmp/tg_offset.txt','utf8')) || 0;
 
@@ -231,6 +282,10 @@ async function processUpdates(){
     }
   }
   fs.writeFileSync('/tmp/tg_offset.txt', String(offset));
+
+  // CAMBIO: confirmar a Telegram que ya procesamos estos updates.
+  // Sin esto, la próxima corrida (con /tmp borrado) los volvería a procesar -> tareas duplicadas.
+  await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates?offset=${offset}&timeout=1`).catch(()=>{});
 }
 
 // ====== MAIN ======

@@ -521,6 +521,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781464853517",
+      "projectId": "p1",
+      "text": "llamar a Francisco",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "dueTime": "16:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

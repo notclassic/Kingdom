@@ -413,6 +413,18 @@
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": ""
+    },
+    {
+      "id": "t1781461086048",
+      "projectId": "p1",
+      "text": "Crea una tarea con familia personal: ir al doctor el día 18 de junio con León en familia a las 9 de la mañana.",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "09:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

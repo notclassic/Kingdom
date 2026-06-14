@@ -437,6 +437,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781461096659",
+      "projectId": "p1",
+      "text": "Crea una tarea en Familia León de llamar a Francisco mañana, domingo 14 de junio, a las 4 de la tarde.",
+      "done": false,
+      "dueDate": "2026-06-14",
+      "dueTime": "16:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

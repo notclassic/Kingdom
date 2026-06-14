@@ -5,10 +5,15 @@ const FormData = require('form-data');
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 const ASSEMBLYAI_KEY = process.env.ASSEMBLYAI_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_OWNER = process.env.GITHUB_OWNER;
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const DATA_PATH = 'data.json';
+
+// Modelo de Groq. Si algun dia falla con "model not found", revisa
+// console.groq.com/docs/models y reemplaza este nombre por uno vigente.
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
 // ====== HELPERS ======
 function tg(method, body){
@@ -19,7 +24,6 @@ function tg(method, body){
   }).then(r=>r.json());
 }
 
-// quita tildes y pasa a minúsculas (para comparar texto de forma robusta)
 function norm(s){
   return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
@@ -30,7 +34,7 @@ async function getDataJson(){
     { headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json' } }
   );
   if(!res.ok){
-    console.error('getDataJson falló:', res.status, await res.text().catch(()=>''));
+    console.error('getDataJson fallo:', res.status, await res.text().catch(()=>''));
     return null;
   }
   const json = await res.json();
@@ -48,7 +52,6 @@ async function saveDataJson(data, sha){
       body: JSON.stringify({ message:'Bot: actualizar tareas', content, sha, branch:'main' })
     }
   );
-  // CAMBIO CLAVE: antes no se chequeaba res.ok y el error se tragaba en silencio.
   if(!res.ok){
     const errText = await res.text().catch(()=> '');
     throw new Error(`PUT data.json ${res.status}: ${errText.slice(0,200)}`);
@@ -73,39 +76,38 @@ async function checkOverdue(){
   const overdue = data.tasks.filter(t => !t.done && t.dueDate && t.dueDate < today);
   const dueTomorrow = data.tasks.filter(t => !t.done && t.dueDate && t.dueDate === tomorrow);
 
-  let msg = '🦁 *Kingdom — Resumen diario*\n\n';
+  let msg = '\u{1F981} *Kingdom \u2014 Resumen diario*\n\n';
 
   if(overdue.length > 0){
-    msg += `⚠️ *VENCIDAS (${overdue.length})*\n`;
+    msg += `\u26A0\uFE0F *VENCIDAS (${overdue.length})*\n`;
     overdue.forEach(t => {
       const p = data.projects.find(p=>p.id===t.projectId);
-      msg += `• ${t.text} — _${p?p.name:'?'}_ — Vencida el ${formatDate(t.dueDate)}\n`;
+      msg += `\u2022 ${t.text} \u2014 _${p?p.name:'?'}_ \u2014 Vencida el ${formatDate(t.dueDate)}\n`;
     });
     msg += '\n';
   }
 
   if(dueTomorrow.length > 0){
-    msg += `📅 *VENCEN MAÑANA (${dueTomorrow.length})*\n`;
+    msg += `\u{1F4C5} *VENCEN MANANA (${dueTomorrow.length})*\n`;
     dueTomorrow.forEach(t => {
       const p = data.projects.find(p=>p.id===t.projectId);
-      msg += `• ${t.text} — _${p?p.name:'?'}_\n`;
+      msg += `\u2022 ${t.text} \u2014 _${p?p.name:'?'}_\n`;
     });
     msg += '\n';
   }
 
   if(overdue.length === 0 && dueTomorrow.length === 0){
-    msg += '✅ Todo al día, sin vencimientos pendientes.';
+    msg += '\u2705 Todo al dia, sin vencimientos pendientes.';
   }
 
-  msg += `\n🔗 [Abrir Kingdom](https://notclassic.github.io/Kingdom/dashboard.html)`;
+  msg += `\n\u{1F517} [Abrir Kingdom](https://notclassic.github.io/Kingdom/dashboard.html)`;
 
   await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: msg, parse_mode: 'Markdown' });
   console.log('Alerta enviada');
 }
 
-// ====== TRANSCRIPCIÓN DE AUDIO ======
+// ====== TRANSCRIPCION DE AUDIO (AssemblyAI) ======
 async function transcribeAudio(fileUrl){
-  // 1. subir audio a AssemblyAI
   const audioRes = await fetch(fileUrl);
   const audioBuffer = await audioRes.buffer();
   const uploadRes = await fetch('https://api.assemblyai.com/v2/upload', {
@@ -114,12 +116,11 @@ async function transcribeAudio(fileUrl){
     body: audioBuffer
   });
   if(!uploadRes.ok){
-    console.error('AssemblyAI upload falló:', uploadRes.status, await uploadRes.text().catch(()=>''));
+    console.error('AssemblyAI upload fallo:', uploadRes.status, await uploadRes.text().catch(()=>''));
     return null;
   }
   const { upload_url } = await uploadRes.json();
 
-  // 2. solicitar transcripción en español
   const transcriptRes = await fetch('https://api.assemblyai.com/v2/transcript', {
     method: 'POST',
     headers: { authorization: ASSEMBLYAI_KEY, 'content-type': 'application/json' },
@@ -127,7 +128,6 @@ async function transcribeAudio(fileUrl){
   });
   const { id } = await transcriptRes.json();
 
-  // 3. esperar resultado (polling)
   let text = null;
   for(let i=0; i<20; i++){
     await new Promise(r=>setTimeout(r,3000));
@@ -140,92 +140,137 @@ async function transcribeAudio(fileUrl){
   return text;
 }
 
-// Detecta el proyecto mencionado. Devuelve { projectId, detected }.
-// Compara contra el texto normal Y contra una versión sin espacios,
-// para que "chile autos data bot" matchee con "chileautos databot".
-function detectProject(transcription, projects){
-  const normText = norm(transcription);
-  const collapsed = normText.replace(/\s+/g, ''); // "chile autos" -> "chileautos"
+// ====== PARSEO DEL TEXTO CON GROQ ======
+async function parseWithGroq(transcription, data){
+  const today = new Date().toISOString().slice(0,10);
+  const projectsList = (data.projects||[])
+    .map(p=>`- id ${p.id}: "${p.name}" (${p.context||'profesional'})`).join('\n') || '(ninguno)';
+  const areasList = (data.areas||[]).map(a=>`"${a.name}"`).join(', ') || '(ninguna)';
 
-  let projectId = null;
-  let bestScore = 0;
+  const system = 'Convertis instrucciones dadas por voz en espanol a un objeto JSON. Respondes SOLO con el JSON, sin ningun texto adicional, sin explicaciones y sin comillas de codigo.';
 
-  for(const p of projects){
-    const words = norm(p.name).split(/\s+/).filter(w => w.length > 3);
-    let score = 0;
-    for(const w of words){
-      if(normText.includes(w) || collapsed.includes(w)) score++;
-    }
-    if(score > bestScore){ bestScore = score; projectId = p.id; }
+  const user = `Fecha de hoy: ${today}
+
+Proyectos existentes:
+${projectsList}
+
+Areas disponibles: ${areasList}
+
+Transcripcion del audio:
+"${transcription}"
+
+Devolve un JSON con esta forma exacta:
+{
+  "project_existing_id": "id de un proyecto de la lista si la tarea claramente pertenece a uno; null si ninguno",
+  "project_create": "true SOLO si el usuario pide explicitamente crear un proyecto nuevo que no esta en la lista; si no false",
+  "project_name": "nombre del proyecto mencionado, limpio (ej: Dentista); null si no menciona ninguno",
+  "project_context": "personal o profesional si lo dice; null si no",
+  "project_area": "el nombre de area mas parecido de la lista de areas; null si ninguno aplica",
+  "task_text": "solo la accion a realizar, sin la parte del proyecto ni la fecha (ej: agendar hora); cadena vacia si solo se pide crear un proyecto",
+  "due_date": "fecha de vencimiento YYYY-MM-DD resolviendo expresiones relativas respecto a la fecha de hoy (manana = hoy+1, pasado manana = hoy+2, en N dias = hoy+N); null si no menciona fecha",
+  "due_time": "hora HH:MM en formato 24hs si la menciona (9 de la manana = 09:00, 4 de la tarde = 16:00, 12 del dia = 12:00); null si no menciona hora"
+}`;
+
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method:'POST',
+    headers:{ Authorization:`Bearer ${GROQ_API_KEY}`, 'Content-Type':'application/json' },
+    body: JSON.stringify({
+      model: GROQ_MODEL,
+      temperature: 0,
+      response_format: { type: 'json_object' },
+      messages: [ {role:'system', content: system}, {role:'user', content: user} ]
+    })
+  });
+  if(!res.ok){
+    throw new Error(`Groq ${res.status}: ${(await res.text().catch(()=>'')).slice(0,200)}`);
   }
-
-  const detected = bestScore > 0;
-  if(!projectId){
-    projectId = projects.find(p => p.status === 'active')?.id || projects[0]?.id;
-  }
-  return { projectId, detected };
+  const out = await res.json();
+  let content = out.choices?.[0]?.message?.content || '{}';
+  content = content.replace(/```json/g,'').replace(/```/g,'').trim();
+  return JSON.parse(content);
 }
 
-// Detecta fecha y hora mencionadas en el texto.
-function detectDateTime(transcription){
-  let due = new Date(Date.now() + 86400000).toISOString().slice(0,10); // default: mañana
-  let dueTime = '12:00';
-
-  const dateMatch = transcription.match(/(\d{1,2})\s*de\s*(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i);
-  if(dateMatch){
-    const months = {enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12};
-    const day = parseInt(dateMatch[1]);
-    const month = months[dateMatch[2].toLowerCase()];
-    const year = new Date().getFullYear();
-    due = `${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+function createProjectObject(name, context, areaName, areas){
+  let area = null;
+  if(areaName){
+    const an = norm(areaName);
+    area = areas.find(a => { const n = norm(a.name); return n.includes(an) || an.includes(n); });
   }
-
-  // hora: comparamos sobre texto sin tildes
-  const timeMatch = norm(transcription).match(/(\d{1,2})\s*(de la manana|am|de la tarde|pm|de la noche|del mediodia|del medio dia|del dia)/);
-  if(timeMatch){
-    let hour = parseInt(timeMatch[1]);
-    const period = timeMatch[2];
-    if(period.includes('tarde') || period.includes('noche') || period === 'pm'){
-      hour = hour < 12 ? hour + 12 : hour;
-    } else if(period.includes('manana') || period === 'am'){
-      hour = (hour === 12 ? 0 : hour);
-    } else if(period.includes('medio') || period.includes('dia')){
-      hour = 12;
-    }
-    dueTime = `${String(hour).padStart(2,'0')}:00`;
-  }
-
-  return { due, dueTime };
+  const ctx = context || (area && area.context) || 'profesional';
+  return {
+    id: 'p' + Date.now(),
+    name: String(name).trim(),
+    area: area ? area.id : '',
+    context: ctx,
+    color: (area && area.color) ? area.color : '#007aff',
+    description: '',
+    status: 'active',
+    driveUrl: '',
+    icon: '',
+    contacts: [],
+    hasLeads: false,
+    driveFolderId: ''
+  };
 }
 
 async function handleAudio(message){
   const voice = message.voice || message.audio;
   if(!voice) return;
 
-  await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '🎙️ Transcribiendo tu audio...' });
+  await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '\u{1F399}\uFE0F Transcribiendo tu audio...' });
 
-  // obtener URL del archivo
   const fileInfo = await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getFile?file_id=${voice.file_id}`).then(r=>r.json());
   const fileUrl = `https://api.telegram.org/file/bot${TELEGRAM_TOKEN}/${fileInfo.result.file_path}`;
 
   const transcription = await transcribeAudio(fileUrl);
   if(!transcription){
-    await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '❌ No pude transcribir el audio. Intentá de nuevo.' });
+    await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '\u274C No pude transcribir el audio. Intenta de nuevo.' });
     return;
   }
 
-  // leer datos
   const result = await getDataJson();
-  if(!result){ await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '❌ No pude leer los datos de Kingdom.' }); return; }
+  if(!result){ await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '\u274C No pude leer los datos de Kingdom.' }); return; }
   const { data, sha } = result;
 
-  const { projectId, detected } = detectProject(transcription, data.projects);
-  const { due, dueTime } = detectDateTime(transcription);
+  // parsear con Groq (si falla, seguimos con defaults y avisamos)
+  let parsed = null, groqError = null;
+  try { parsed = await parseWithGroq(transcription, data); }
+  catch(err){ groqError = err.message; console.error('Groq parse fallo:', err.message); }
+
+  // resolver el proyecto destino
+  let projectId = null, createdProject = null;
+  if(parsed){
+    if(parsed.project_existing_id && data.projects.some(p=>p.id===parsed.project_existing_id)){
+      projectId = parsed.project_existing_id;
+    }
+    if(!projectId && parsed.project_name){
+      const target = norm(parsed.project_name);
+      const tc = target.replace(/\s+/g,'');
+      const found = data.projects.find(p=>{
+        const pn = norm(p.name); const pc = pn.replace(/\s+/g,'');
+        return pn===target || pc===tc || pn.includes(target) || target.includes(pn);
+      });
+      if(found) projectId = found.id;
+    }
+    if(!projectId && (parsed.project_create === true || parsed.project_create === 'true') && parsed.project_name){
+      createdProject = createProjectObject(parsed.project_name, parsed.project_context, parsed.project_area, data.areas||[]);
+      data.projects.push(createdProject);
+      projectId = createdProject.id;
+    }
+  }
+  const projectDetected = !!projectId;
+  if(!projectId) projectId = data.projects.find(p=>p.status==='active')?.id || data.projects[0]?.id;
+
+  const taskText = (parsed && parsed.task_text && String(parsed.task_text).trim())
+    ? String(parsed.task_text).trim() : transcription;
+  const due = (parsed && parsed.due_date) ? parsed.due_date
+    : new Date(Date.now()+86400000).toISOString().slice(0,10);
+  const dueTime = (parsed && parsed.due_time) ? parsed.due_time : '12:00';
 
   const newTask = {
     id: 't' + Date.now(),
     projectId,
-    text: transcription,
+    text: taskText,
     done: false,
     dueDate: due,
     dueTime: dueTime,
@@ -236,32 +281,38 @@ async function handleAudio(message){
   };
   data.tasks.push(newTask);
 
-  // CAMBIO CLAVE: si el guardado falla, avisamos en vez de mentir con un "✅".
+  // guardar (si falla, avisar en vez de mentir con un OK)
   try {
     await saveDataJson(data, sha);
   } catch(err){
     console.error('Error guardando tarea:', err.message);
     await tg('sendMessage', {
       chat_id: TELEGRAM_CHAT_ID,
-      text: `❌ Transcribí el audio pero NO pude guardar la tarea en GitHub.\n\nError: \`${err.message}\`\n\n_${transcription}_`,
+      text: `\u274C Transcribi el audio pero NO pude guardar en GitHub.\n\nError: \`${err.message}\`\n\n_${transcription}_`,
       parse_mode: 'Markdown'
     });
     return;
   }
 
   const p = data.projects.find(p=>p.id===projectId);
-  const aviso = detected ? '' : '\n\n⚠️ _No detecté el proyecto en el audio; lo asigné por defecto. Corregilo en el dashboard._';
+  let header = createdProject
+    ? `\u{1F195} *Proyecto nuevo: "${createdProject.name}"* (${createdProject.context})\n\u2705 *Tarea creada adentro*`
+    : `\u2705 *Tarea creada en "${p?.name}"*`;
+
+  let avisos = '';
+  if(createdProject && !createdProject.area) avisos += '\n\n\u26A0\uFE0F _Asigna el area del proyecto nuevo en el dashboard._';
+  if(!projectDetected && !createdProject) avisos += '\n\n\u26A0\uFE0F _No detecte el proyecto; lo asigne por defecto. Corregilo en el dashboard._';
+  if(groqError) avisos += `\n\n\u26A0\uFE0F _No pude estructurar el audio (Groq: ${groqError}). Guarde el texto crudo._`;
+
   await tg('sendMessage', {
     chat_id: TELEGRAM_CHAT_ID,
-    text: `✅ *Tarea creada en "${p?.name}"*\n\n_${transcription}_\n\n📅 Vence: ${formatDate(due)} ${dueTime}${aviso}`,
+    text: `${header}\n\n_${taskText}_\n\n\u{1F4C5} Vence: ${formatDate(due)} ${dueTime}${avisos}`,
     parse_mode: 'Markdown'
   });
 }
 
 // ====== PROCESAR MENSAJES ENTRANTES ======
 async function processUpdates(){
-  // leer offset guardado (en el runner de Actions /tmp se borra entre corridas,
-  // por eso al final confirmamos los updates a Telegram para no reprocesarlos)
   let offset = 0;
   if(fs.existsSync('/tmp/tg_offset.txt')) offset = parseInt(fs.readFileSync('/tmp/tg_offset.txt','utf8')) || 0;
 
@@ -276,15 +327,14 @@ async function processUpdates(){
     else if(msg.text){
       await tg('sendMessage', {
         chat_id: TELEGRAM_CHAT_ID,
-        text: `🦁 Kingdom Bot activo.\n\nMandame un *audio* para crear una tarea por voz.\nRecibís el resumen diario automáticamente a las 9:00 AM.`,
+        text: `\u{1F981} Kingdom Bot activo.\n\nMandame un *audio* para crear una tarea por voz.\nRecibis el resumen diario automaticamente a las 9:00 AM.`,
         parse_mode: 'Markdown'
       });
     }
   }
   fs.writeFileSync('/tmp/tg_offset.txt', String(offset));
 
-  // CAMBIO: confirmar a Telegram que ya procesamos estos updates.
-  // Sin esto, la próxima corrida (con /tmp borrado) los volvería a procesar -> tareas duplicadas.
+  // confirmar a Telegram que ya procesamos estos updates (evita duplicados en la proxima corrida)
   await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/getUpdates?offset=${offset}&timeout=1`).catch(()=>{});
 }
 

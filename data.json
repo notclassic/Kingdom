@@ -136,6 +136,20 @@
       "driveUrl": "",
       "driveFolderId": "",
       "contacts": []
+    },
+    {
+      "id": "p1781467794444",
+      "name": "León",
+      "area": "",
+      "context": "personal",
+      "color": "#007aff",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -550,6 +564,18 @@
       "id": "t1781467788102",
       "projectId": "p1",
       "text": "Crea una nueva tarea en",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781467794444",
+      "projectId": "p1781467794444",
+      "text": "ir al doctor",
       "done": false,
       "dueDate": "2026-06-15",
       "dueTime": "12:00",

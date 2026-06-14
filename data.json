@@ -583,6 +583,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781468784060",
+      "projectId": "p1",
+      "text": "Crea una tarea personal, crea",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

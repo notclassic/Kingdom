@@ -611,12 +611,14 @@
       "projectId": "p1781538739000",
       "text": "Crear tarea",
       "done": false,
-      "dueDate": "2026-06-20",
+      "dueDate": "2026-06-15",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781539246928",

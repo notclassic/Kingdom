@@ -274,6 +274,20 @@
       "hasLeads": false,
       "driveFolderId": "",
       "desc": "undefined"
+    },
+    {
+      "id": "p1781540454184",
+      "name": "Ordenar juguetes",
+      "area": "pa3",
+      "context": "personal",
+      "color": "#f5ac2f",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -617,6 +631,18 @@
       "driveUrl": "",
       "dueSoonAlertSent": false,
       "overdueAlertSent": false
+    },
+    {
+      "id": "t1781540454184",
+      "projectId": "p1781540454184",
+      "text": "ordenar juguetes de León",
+      "done": false,
+      "dueDate": "2026-06-15",
+      "dueTime": "16:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -217,7 +217,8 @@
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t4",
@@ -229,7 +230,8 @@
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t5",

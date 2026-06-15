@@ -459,17 +459,26 @@ input, select, textarea{
 .glass-divider{ height:1px; background:rgba(0,0,0,0.08); margin:4px 6px; }
 
 /* TABS */
-.tabs{ display:flex; gap:8px; margin-top:14px; margin-bottom:14px; }
+.tabs{
+  display:flex; gap:4px; margin-top:14px; margin-bottom:14px;
+  padding:5px; border-radius:999px;
+  background:var(--panel2); border:1px solid var(--border);
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.05);
+  backdrop-filter:blur(14px) saturate(160%); -webkit-backdrop-filter:blur(14px) saturate(160%);
+}
 .tab{
   flex:1; text-align:center;
-  padding:10px 16px; border-radius:10px; font-size:.82rem; font-weight:600;
-  background:var(--panel); border:1px solid var(--border); color:var(--muted); cursor:pointer;
+  padding:9px 12px; border-radius:999px; font-size:.8rem; font-weight:600;
+  background:transparent; border:1px solid transparent; color:var(--muted); cursor:pointer;
+  white-space:nowrap; transition:background .2s ease, color .2s ease, transform .12s ease;
 }
+.tab:active{ transform:scale(.97); }
 @media(max-width:560px){
-  .tabs{ display:grid; grid-template-columns:repeat(2,1fr); gap:6px; }
-  .tab{ padding:8px 6px; font-size:.7rem; line-height:1.3; }
+  .tabs{ display:grid; grid-template-columns:repeat(2,1fr); gap:5px; padding:6px; border-radius:20px; }
+  .tab{ padding:9px 6px; font-size:.72rem; line-height:1.3; }
 }
-.tab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+.tab.active{ background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 1px 4px rgba(0,0,0,.18); }
+[data-theme="dark"] .tabs{ background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.10); }
 #overdueBadge:not(:empty){
   display:inline-block; background:var(--red); color:#fff; font-size:.65rem; font-weight:700;
   border-radius:999px; padding:1px 6px; margin-left:6px; vertical-align:middle;
@@ -1258,8 +1267,13 @@ let autoPushTimer = null;
 function scheduleAutoPush(){
   if(!getGithubToken()) return;
   if(autoPushTimer) clearTimeout(autoPushTimer);
-  autoPushTimer = setTimeout(()=>{ pushToGitHub(true); }, 4000);
+  autoPushTimer = setTimeout(()=>{ autoPushTimer=null; pushToGitHub(true); }, 1500);
 }
+function flushAutoPush(){
+  if(autoPushTimer){ clearTimeout(autoPushTimer); autoPushTimer=null; if(getGithubToken()) pushToGitHub(true); }
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) flushAutoPush(); });
+window.addEventListener('pagehide', flushAutoPush);
 
 /* ====== RESPALDO: EXPORTAR / IMPORTAR ====== */
 function exportData(){

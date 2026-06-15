@@ -208,6 +208,20 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": ""
+    },
+    {
+      "id": "p1781502750840",
+      "name": "Día del Padre",
+      "area": "pa1",
+      "context": "personal",
+      "color": "#ff6b6b",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -510,6 +524,18 @@
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
+    },
+    {
+      "id": "t1781502750840",
+      "projectId": "p1781502750840",
+      "text": "visitar a León",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "08:30",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

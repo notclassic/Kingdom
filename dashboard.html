@@ -248,7 +248,7 @@ section{
 .row-actions button.go:hover{ border-color:var(--green); color:var(--green); }
 .row-actions button.lead-on{ background:#ff8a5c22; border-color:var(--accent); color:var(--accent); }
 .row-actions button.drive-on{ background:#2a9d8f22; border-color:var(--green); color:var(--green); }
-.drag-handle{ cursor:grab; color:var(--muted); font-size:.9rem; padding:2px 4px; user-select:none; }
+.drag-handle{ cursor:grab; color:var(--muted); font-size:.9rem; padding:2px 6px; user-select:none; touch-action:none; -webkit-user-select:none; }
 .project-avatar{
   width:26px; height:26px; border-radius:8px; flex-shrink:0;
   display:flex; align-items:center; justify-content:center;
@@ -524,6 +524,8 @@ input, select, textarea{
 .cal-more{font-size:.6rem; color:var(--muted); margin-top:2px;}
 
 .empty{color:var(--muted); font-size:.8rem; text-align:center; padding:14px 0;}
+.app-logo{ height:40px; width:auto; object-fit:contain; flex-shrink:0; }
+[data-theme="dark"] .app-logo{ filter:invert(1); }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -532,7 +534,7 @@ input, select, textarea{
 
 <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
   <div style="display:flex; align-items:center; gap:10px;">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAIJUlEQVR42u2YeVCU5x3Hf8977MWyp7vLciwCiiigRjC2HqykOiDxRkyqUqx4Rhqr1bHWadY1WsexSjqamFTFWsUDQ6PGoCQq4hGPQMxICBJpFQRxwT3Yg+V9333fp3+ImZjpH9WI4AyfP9+Z931/3+d3P4AxpgEAMMYIXh7QD/ZWVFTQ0Ev38JJFTS89E/J5V4fObxI/eU78j2c9p6R1Gv3EYSAEkJ7eT5yUlPRElbMAELgoi3yeP39uzE7vpzhf5RjvZ2AQx2MJSSJaRpG0iAIcALgTG2soOneu2gaAAWNACAHuTgEIAHBUVJSBBP+Yh15W5nLwcQptUEPqYOXt2SkK11CTzPWJLbll9eotnFQuz4gxKnP2LzdRQxM1xWhMSQG2YAJZQehOAWjQIJ3+1t3A9jgjOWDXsujzI8fopMAJHHACH3BzGBOgJAnRA9WUstWedkb/aryhsOTdBK9YRH8XPPH02qKiLHLmzKP8CxeAAECwAIGsIODSsW83t7qnGQfq93x5jaueta0e6use+M9uSdSPGhap4hlPGOtvy1ZNz81A5LJ0QDIXLh0wt96hWNN35qd3fk44PVNlwABIKDNTaD0h2I+O3gtUwLT8AJqPRlxXZaz9eirr96ftWWm6EmeSrMJc+3Qfy2u+s9E77x/a9XelSsbSFBsCWlEt8J7oztRGL9QDuPPk7cWpVo2O51HKzW/0IWiyUSUp+k8L787P0WbkvtGPdtgpVgiwQJNs3zUF90i31z+E48F34pq3umr7AGO/uTkzEFrUgQCEZ81m4umNtxAw6SPSVZRs0agDU4YsbpL36SMM1mnlm5xeNo1h2TSJTGJsc3ANfnnIbsDtwzlMNXyQF330QPGYXx1ZE+7bltu3YuTK2jaEVsQAAMY/o0c81YsYY4SsVqHyfq0yOEg8YH9JC8X6PVirVRY8fOjdLJZKj2C/yzo750ge2+7OkdqrCkl56CaJ4I2759FUo+Aap9uvWrxktjptwev983f9IcaK8be0xWLujiaHAGTqvwFAUEiI9uCIhChDqEG5EWiD9a1JEedaDidd9ZzJNdgOvZpnL4xvxCWvnLXkxP8DKEXlsszoNoyxFJem/NP9Wdp8AAD8URL9onKAAgDeFKZeIBJRjnaGVyCEbSwLia1eZQ0+aRzodPhXqZPzw8C5fvrhj+/vuHYbv5+fZ1Ai86W3B8fpJ95uYkcKmLjX9HVeIVSdO8mBeK8x88zex7nV1VVIAADM8kSip52tFInoGD+DkhRB0gD+InQCkPwmTEiX3q+0msHHTf11vnteWXVHA2AUWlc8VX/zlu0kEfD+6ez60HeoqjMW7fQL5hANnoavTJoDVsAYW4iuFIAAQDDp9dEIwz0RKUppb2fnUeIgW92+gSmeFuZNh1tbSMl0HhnZkQejs+e+kSJzMf6OBBig3qEF26eukvFv1hcOPzRqfNjyL28Lrf0jdSWm7Cp2wV9qliBAGCHrU4fD0wrmOTKwAiFiIC/wUS0tKBt/FTPM3ky4r9Zp/zwy1oMETryQALocoUXt+Kx5/sR36iKQ8fgO3LhkRlvljX0iLDSgxNOHAQBCQvrclIv4z2LDFQUAGMxmIMrL//8weloP8ACACILeL5FQWz0MPohx8dUOG/OLpQXMxnn5VcHqIeEXpRQ7OUDKLntKxycwHZw3eVz6tKzXTBdQ+E6/MlK9QSwRNyIAEFMADx48vDhhhLZq1W8NbQAA59d1fSdGTU22ayLADZ42/gFc3zBWIiErjxy7QolwxyIUffQG5/PeAqZtiMDwEW0+unpdZuuEmWO0FylRcNnOgy76cg0b1deky4w26RfLlardchGhAYPyIAAAjLUIXRlCPwinaCQBgSCAFRRAIztJBkWKJaJLfbTyXPmMxWNaPi4sFtPiahliLrQ3+BN9gmwvISImvLu/bmpQkPzQnWakAs5Xt3vzpBOp4fbtKPJIxaM9wvpCqpAQrpR/DzQytnsEVvBzoQJJTJ6TQCyQSUTxUvmq1/QzUrNxwPkbDhMEB7R/WF+Ko0iiwedi9sz8pXQ7rk0ehGsyVHOGOmeEqthGDBjhMjPVpZ34x6vo6et1bqWccMx/v1nHMmRikBQn7r0R+F1DY+sKo06SjtC2eHmMKpsMeLYIQiA1cbi2UeB5mSlUQu/6vO1DodYR7bxlm8v4vJkuauDGR+FTzr8oAQIAELEGtuDQWWfcvy7aY25ujSpoaOJboiJ11jt3W+aJg+iU/O31CxUm4wHOZ+8HXEDf4Q3cFQhIaLX5mwlVcK2LCV6rnH7FbEz7sAUB4GcZqZ9VAAYA+OqWxy6nhJ0bjjtrjUZFNu54/XJ9M+foH2NYx/gca45ddUomrfz353qdcp+/2XkweYguyeYIjBs+XH8bvGwcElP1AAJgS/ct/IjoHEbuHU8f/PBYyjcYL4kGUfDvo6ONywA0Cm2I4T1cOvYDfCNrYf6imA4AciquSFtqLx61AQDgWeL+eXjgB08IGFCZxUxFTDl9E4l1s+2ffHsCM9knXS4mLFiNE0b1l0bedwkS9MrR4xFawo5rJhqcDd4Mt2bcBmwBAlLLeegJlHWeZPOpzHjfqfGH38oyh2g0qi3xsca//nH+6FiSVq4vf2/YeebU6NKaS5uDH43n0LPuNrHl0SA2KMsiwhgjo1G7zhim+0Jn0G5Vq9WzMP5e/HgA7nHG/3jdfHzJZTT2yTXoNUxkuH7Wk4sR9PhbZQQAEBoaGhEebkh4nG8vg+FdVSy61RMvrfG99NJLL7300ksvPZ3/AvxoiLwJkkpXAAAAAElFTkSuQmCC" alt="Kingdom logo" style="height:40px; width:40px; object-fit:contain; flex-shrink:0;">
+    <img src="data:image/png;base64,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" alt="Kingdom logo" class="app-logo">
     <h1 style="margin-bottom:0;">Kingdom</h1>
   </div>
   <div style="display:flex; gap:6px; flex-shrink:0;">
@@ -1711,7 +1713,7 @@ function renderProjectCards(){
       return `<div class="task" draggable="true" data-task-id="${t.id}"
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
-        <span class="drag-handle">⠿</span>
+        <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
         <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due}</div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
@@ -1727,7 +1729,7 @@ function renderProjectCards(){
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
       <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
         <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
-        <span class="drag-handle" style="flex-shrink:0;">⠿</span>
+        <span class="drag-handle" style="flex-shrink:0;" ontouchstart="startTouchDrag(event,'project','${p.id}')">⠿</span>
         <span class="project-avatar" style="flex-shrink:0; background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
               onclick="setProjectIcon('${p.id}')" title="Tocar para cambiar el ícono">${
           p.icon
@@ -1785,10 +1787,13 @@ function dragLeave(e){
 function dragDrop(e){
   e.preventDefault();
   e.currentTarget.classList.remove('drag-over');
-  const targetId = e.currentTarget.dataset.id;
-  if(!draggedProjectId || draggedProjectId === targetId) return;
-  const fromIdx = data.projects.findIndex(p=>p.id===draggedProjectId);
-  const toIdx = data.projects.findIndex(p=>p.id===targetId);
+  reorderProjects(draggedProjectId, e.currentTarget.dataset.id);
+}
+function reorderProjects(fromId, toId){
+  if(!fromId || !toId || fromId === toId) return;
+  const fromIdx = data.projects.findIndex(p=>p.id===fromId);
+  const toIdx = data.projects.findIndex(p=>p.id===toId);
+  if(fromIdx<0 || toIdx<0) return;
   const [moved] = data.projects.splice(fromIdx, 1);
   data.projects.splice(toIdx, 0, moved);
   save(); renderAll();
@@ -1816,10 +1821,13 @@ function taskDragLeave(e){
 function taskDrop(e){
   e.preventDefault();
   e.currentTarget.classList.remove('drag-over-task');
-  const targetId = e.currentTarget.dataset.taskId;
-  if(!draggedTaskId || draggedTaskId === targetId) return;
-  const fromIdx = data.tasks.findIndex(t=>t.id===draggedTaskId);
-  const toIdx = data.tasks.findIndex(t=>t.id===targetId);
+  reorderTasks(draggedTaskId, e.currentTarget.dataset.taskId);
+}
+function reorderTasks(fromId, toId){
+  if(!fromId || !toId || fromId === toId) return;
+  const fromIdx = data.tasks.findIndex(t=>t.id===fromId);
+  const toIdx = data.tasks.findIndex(t=>t.id===toId);
+  if(fromIdx<0 || toIdx<0) return;
   const [moved] = data.tasks.splice(fromIdx, 1);
   data.tasks.splice(toIdx, 0, moved);
   save(); renderAll();
@@ -1828,6 +1836,53 @@ function taskDragEnd(e){
   e.currentTarget.classList.remove('dragging');
   document.querySelectorAll('.task.drag-over-task').forEach(t=>t.classList.remove('drag-over-task'));
   draggedTaskId = null;
+}
+
+/* ====== ARRASTRE TÁCTIL (celular) — reusa reorderTasks / reorderProjects ====== */
+let activeTouchDrag = null;
+function startTouchDrag(e, type, id){
+  // arranca solo desde la manija ⠿, así el resto de la fila scrollea normal
+  e.preventDefault();
+  e.stopPropagation();
+  const sel = type === 'task' ? '.task' : '.row';
+  const el = e.currentTarget.closest(sel);
+  if(!el) return;
+  activeTouchDrag = { type, id, el, sel, overClass: type === 'task' ? 'drag-over-task' : 'drag-over', overTarget: null };
+  el.classList.add('dragging');
+  document.addEventListener('touchmove', onTouchDragMove, { passive:false });
+  document.addEventListener('touchend', onTouchDragEnd);
+  document.addEventListener('touchcancel', onTouchDragEnd);
+}
+function onTouchDragMove(e){
+  if(!activeTouchDrag) return;
+  e.preventDefault(); // evita que la página scrollee mientras arrastrás
+  const t = e.touches[0];
+  if(!t) return;
+  const { sel, overClass, el } = activeTouchDrag;
+  document.querySelectorAll('.' + overClass).forEach(x=>x.classList.remove(overClass));
+  const under = document.elementFromPoint(t.clientX, t.clientY);
+  const target = under ? under.closest(sel) : null;
+  if(target && target !== el){
+    target.classList.add(overClass);
+    activeTouchDrag.overTarget = target;
+  } else {
+    activeTouchDrag.overTarget = null;
+  }
+}
+function onTouchDragEnd(){
+  if(!activeTouchDrag) return;
+  const { type, id, el, overClass, overTarget } = activeTouchDrag;
+  el.classList.remove('dragging');
+  document.querySelectorAll('.' + overClass).forEach(x=>x.classList.remove(overClass));
+  document.removeEventListener('touchmove', onTouchDragMove, { passive:false });
+  document.removeEventListener('touchend', onTouchDragEnd);
+  document.removeEventListener('touchcancel', onTouchDragEnd);
+  const targetId = overTarget ? (type === 'task' ? overTarget.dataset.taskId : overTarget.dataset.id) : null;
+  activeTouchDrag = null;
+  if(targetId){
+    if(type === 'task') reorderTasks(id, targetId);
+    else reorderProjects(id, targetId);
+  }
 }
 
 function editDesc(id, newDesc){

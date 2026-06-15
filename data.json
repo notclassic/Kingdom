@@ -53,7 +53,7 @@
     {
       "id": "p1",
       "color": "#007aff",
-      "name": "Chileautos",
+      "name": "Chileautoa",
       "area": "a1",
       "desc": "Analítica interna con potencial SaaS futuro.",
       "status": "active",
@@ -189,6 +189,20 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
+    },
+    {
+      "id": "inbox",
+      "color": "#8a919e",
+      "name": "💡 Ideas",
+      "area": null,
+      "desc": "Ideas sueltas y recordatorios rápidos.",
+      "status": "active",
+      "hasLeads": false,
+      "context": "otro",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -512,5 +526,7 @@
       "projectId": "p9",
       "stage": "ganados"
     }
-  ]
+  ],
+  "deletedTaskIds": [],
+  "deletedProjectIds": []
 }

@@ -74,7 +74,12 @@
       "hasLeads": true,
       "driveUrl": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
       "icon": "",
-      "contacts": [],
+      "contacts": [
+        {
+          "name": "Pepe",
+          "email": "pepe@lubbertlabs.ai"
+        }
+      ],
       "driveFolderId": "",
       "context": "profesional"
     },

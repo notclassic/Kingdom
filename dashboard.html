@@ -377,8 +377,11 @@ input, select, textarea{
 .trash-when{ font-size:.7rem; color:var(--muted); margin-top:2px; }
 .trash-actions{ display:flex; gap:6px; flex:0 0 auto; }
 .trash-actions .priority-btn{ margin-top:0; padding:5px 9px; font-size:.72rem; }
-.alert-cfg-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:.88rem; }
-.alert-cfg-row select{ font-size:.85rem; padding:5px 8px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--text); flex:0 0 auto; }
+.alert-cfg-row{ display:flex; flex-direction:column; gap:7px; padding:12px 0; border-bottom:1px solid var(--border); }
+.alert-cfg-row:last-child{ border-bottom:none; }
+.alert-cfg-label{ font-size:.9rem; font-weight:600; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.alert-cfg-label .hint{ font-weight:400; color:var(--muted); font-size:.8rem; }
+.alert-cfg-row select{ width:100%; font-size:.85rem; padding:9px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); }
 .task-del{background:none; border:none; color:var(--red); font-size:.7rem; cursor:pointer; flex-shrink:0;}
 .due-badge{
   display:inline-block; font-size:.65rem; padding:1px 7px; border-radius:6px; margin-top:3px;
@@ -450,12 +453,16 @@ input, select, textarea{
 [data-theme="dark"] .glass-panel{ background:#1c1c1e; border-color:rgba(255,255,255,.12); }
 .glass-dropdown.open .glass-panel{ display:block; }
 .glass-option{
-  display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:10px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 12px; border-radius:10px;
   font-size:.8rem; cursor:pointer; color:var(--text); transition:background .12s;
 }
 .glass-option:hover{ background:var(--panel2); }
 .glass-option.selected{ background:rgba(59,111,237,.14); color:var(--accent); font-weight:600; }
-.glass-option input{ width:16px; height:16px; accent-color:var(--accent); pointer-events:none; }
+.glass-option .sheet-left{ display:flex; align-items:center; gap:8px; flex:1; min-width:0; }
+.glass-option .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.glass-option .sheet-check{ width:16px; height:16px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+.glass-option .sheet-check-empty{ width:16px; height:16px; border-radius:50%; border:1.5px solid rgba(0,0,0,0.15); flex-shrink:0; }
+[data-theme="dark"] .glass-option .sheet-check-empty{ border-color:rgba(255,255,255,0.2); }
 .glass-divider{ height:1px; background:rgba(0,0,0,0.08); margin:4px 6px; }
 
 /* TABS */
@@ -558,7 +565,7 @@ input, select, textarea{
   <h2>📁 Portafolio</h2>
   <div class="filters" id="areaFilters"></div>
   <div style="margin-bottom:12px;">
-    <button class="proj-sheet-trigger" id="projectSheetTrigger" onclick="openProjectSheet()">
+    <button class="proj-sheet-trigger" id="projectSheetTrigger" onclick="openProjectSheet('projectSheetTrigger')">
       <span id="projectSheetLabel">Todos los proyectos</span><span style="color:var(--muted); font-size:.7rem;">▾</span>
     </button>
   </div>
@@ -595,7 +602,7 @@ input, select, textarea{
 <section>
   <h2>✅ Consola de Enfoque Diario</h2>
   <div style="margin-bottom:12px;">
-    <button class="proj-sheet-trigger" id="projectSheetTrigger2" onclick="openProjectSheet()">
+    <button class="proj-sheet-trigger" id="projectSheetTrigger2" onclick="openProjectSheet('projectSheetTrigger2')">
       <span id="projectSheetLabel2">Todos los proyectos</span><span style="color:var(--muted); font-size:.7rem;">▾</span>
     </button>
   </div>
@@ -755,10 +762,19 @@ input, select, textarea{
 </section>
 <section>
   <h2>⏰ Anticipación de avisos por importancia</h2>
-  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~10 min), así que es aproximado, no exacto.</div>
-  <div class="alert-cfg-row"><span>🔴 Urgente <span style="color:var(--muted);">(:( Quedó la caga)</span></span><select id="alertLeadHigh" onchange="setAlertLead('high', this.value)"></select></div>
-  <div class="alert-cfg-row"><span>🟡 Normal <span style="color:var(--muted);">(:/ Pa mañana)</span></span><select id="alertLeadMedium" onchange="setAlertLead('medium', this.value)"></select></div>
-  <div class="alert-cfg-row"><span>🟢 Puede esperar <span style="color:var(--muted);">(:) No pasa nada)</span></span><select id="alertLeadLow" onchange="setAlertLead('low', this.value)"></select></div>
+  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~5 min), así que es aproximado, no exacto.</div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🔴 Urgente <span class="hint">(:( Quedó la caga)</span></div>
+    <select id="alertLeadHigh" onchange="setAlertLead('high', this.value)"></select>
+  </div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🟡 Normal <span class="hint">(:/ Pa mañana)</span></div>
+    <select id="alertLeadMedium" onchange="setAlertLead('medium', this.value)"></select>
+  </div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🟢 Puede esperar <span class="hint">(:) No pasa nada)</span></div>
+    <select id="alertLeadLow" onchange="setAlertLead('low', this.value)"></select>
+  </div>
 </section>
 <section>
   <h2>💾 Respaldo de datos</h2>
@@ -1601,12 +1617,19 @@ function openProjectSheet(triggerId){
   const overlay = document.getElementById('projectSheetOverlay');
   overlay.classList.add('open');
   // posicionar popover debajo del botón disparador
-  const trigger = document.getElementById(triggerId||'projectSheetTrigger');
+  let trigger = document.getElementById(triggerId||'projectSheetTrigger');
+  if(!trigger || trigger.getBoundingClientRect().width===0){
+    trigger = [document.getElementById('projectSheetTrigger'), document.getElementById('projectSheetTrigger2')]
+      .find(t=>t && t.getBoundingClientRect().width>0) || trigger;
+  }
   const sheet = overlay.querySelector('.sheet');
   if(trigger && sheet){
     const r = trigger.getBoundingClientRect();
     sheet.style.top = (r.bottom + 6) + 'px';
-    sheet.style.left = r.left + 'px';
+    let left = r.left;
+    const maxLeft = window.innerWidth - sheet.offsetWidth - 8;
+    if(left > maxLeft) left = Math.max(8, maxLeft);
+    sheet.style.left = left + 'px';
   }
 }
 function closeProjectSheet(){
@@ -1885,11 +1908,13 @@ function renderLeadsDropdown(){
   else trigger.textContent = `${activeLeadsProjects.size} proyectos seleccionados`;
 
   let html = `<div class="glass-option ${activeLeadsProjects.size===0?'selected':''}" onclick="clearLeadsFilter()">
-    <input type="checkbox" ${activeLeadsProjects.size===0?'checked':''}><span>Todos los proyectos</span></div>
-    <div class="glass-divider"></div>`;
+    <div class="sheet-left"><span>Todos los proyectos</span></div>
+    ${activeLeadsProjects.size===0?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
+  </div><div class="glass-divider"></div>`;
   html += projects.map(p=>`
     <div class="glass-option ${activeLeadsProjects.has(p.id)?'selected':''}" onclick="toggleLeadsFilter('${p.id}')">
-      <input type="checkbox" ${activeLeadsProjects.has(p.id)?'checked':''}><span>${p.name}</span>
+      <div class="sheet-left"><span class="dot" style="background:${p.color}"></span><span>${p.name}</span></div>
+      ${activeLeadsProjects.has(p.id)?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
     </div>`).join('');
   panel.innerHTML = html || '<div class="empty">No hay proyectos marcados con leads.</div>';
 }

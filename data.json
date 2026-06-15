@@ -138,6 +138,20 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
+    },
+    {
+      "id": "p1781481956955",
+      "name": "Arreglar el auto",
+      "area": "a2",
+      "context": "personal",
+      "color": "#34c759",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -615,6 +629,18 @@
       "text": "llamar al dentista",
       "done": false,
       "dueDate": "2026-06-20",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781481956955",
+      "projectId": "p1781481956955",
+      "text": "agendar mantención",
+      "done": false,
+      "dueDate": "2026-06-17",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,

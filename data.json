@@ -610,11 +610,13 @@
       "text": "revisión",
       "done": false,
       "dueDate": "2026-06-15",
-      "dueTime": "13:30",
+      "dueTime": "14:49",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     }
   ],
   "leads": [

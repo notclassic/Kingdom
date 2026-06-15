@@ -311,8 +311,7 @@
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t5",
@@ -420,8 +419,7 @@
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium",
-      "overdueAlertSent": true
+      "priority": "medium"
     },
     {
       "id": "t15",
@@ -591,8 +589,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -617,11 +614,13 @@
   ],
   "deletedTaskIds": [
     "t1781538739000",
-    "t1781539246928"
+    "t1781539246928",
+    "t1781540454184"
   ],
   "deletedProjectIds": [
     "p1781538739000",
-    "p1781539246928"
+    "p1781539246928",
+    "p1781540454184"
   ],
   "trash": [
     {
@@ -690,6 +689,38 @@
           "driveUrl": "",
           "dueSoonAlertSent": false,
           "overdueAlertSent": false
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-15T19:20:23.496Z",
+      "item": {
+        "id": "p1781540454184",
+        "name": "Ordenar juguetes",
+        "area": "pa3",
+        "context": "personal",
+        "color": "#f5ac2f",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": ""
+      },
+      "tasks": [
+        {
+          "id": "t1781540454184",
+          "projectId": "p1781540454184",
+          "text": "ordenar juguetes de León",
+          "done": false,
+          "dueDate": "2026-06-15",
+          "dueTime": "16:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
         }
       ]
     }

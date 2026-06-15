@@ -11,6 +11,10 @@ const GITHUB_OWNER = process.env.GITHUB_OWNER;
 const GITHUB_REPO = process.env.GITHUB_REPO;
 const DATA_PATH = 'data.json';
 const OFFSET_PATH = 'tg_offset.txt';
+const SUMMARY_PATH = 'last_summary.txt';
+
+// Palabra de confirmacion: el audio se procesa SOLO si la contiene (ej: "check").
+const CONFIRM_REGEX = /\bche(ck|k)\b/;
 
 // Modelo de Groq. Si algun dia falla con "model not found", revisa
 // console.groq.com/docs/models y reemplaza este nombre por uno vigente.
@@ -81,6 +85,39 @@ async function saveOffsetToRepo(offset, sha){
     `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${OFFSET_PATH}`,
     { method:'PUT', headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) }
   ).catch(e=>console.error('saveOffset error:', e.message));
+}
+
+// Marca de "ultimo dia que se envio el resumen", para no spamear al correr seguido.
+async function getLastSummary(){
+  const res = await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${SUMMARY_PATH}?ref=main`,
+    { headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json' } }
+  ).catch(()=>null);
+  if(!res || res.status === 404 || !res.ok) return { date: '', sha: null };
+  const json = await res.json();
+  const content = Buffer.from(json.content.replace(/\n/g,''), 'base64').toString('utf8').trim();
+  return { date: content, sha: json.sha };
+}
+
+async function saveLastSummary(dateStr, sha){
+  const content = Buffer.from(dateStr).toString('base64');
+  const body = { message:'Bot: marcar resumen diario enviado', content, branch:'main' };
+  if(sha) body.sha = sha;
+  await fetch(
+    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${SUMMARY_PATH}`,
+    { method:'PUT', headers:{ Authorization:`Bearer ${GITHUB_TOKEN}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' }, body: JSON.stringify(body) }
+  ).catch(e=>console.error('saveLastSummary error:', e.message));
+}
+
+// Envia el resumen una sola vez por dia, despues de las 12 UTC (8 AM Chile).
+async function maybeSendDailySummary(){
+  const now = new Date();
+  if(now.getUTCHours() < 12) return;
+  const todayStr = now.toISOString().slice(0,10);
+  const { date: last, sha } = await getLastSummary();
+  if(last === todayStr) return; // ya se envio hoy
+  await checkOverdue();
+  await saveLastSummary(todayStr, sha);
 }
 
 function formatDate(d){
@@ -190,7 +227,7 @@ Devolve un JSON con esta forma exacta:
   "project_name": "nombre del proyecto mencionado, limpio (ej: Dentista); null si no menciona ninguno",
   "project_context": "personal o profesional si lo dice; null si no",
   "project_area": "el nombre de area mas parecido de la lista de areas; null si ninguno aplica",
-  "task_text": "solo la accion a realizar, sin la parte del proyecto ni la fecha (ej: agendar hora); cadena vacia si solo se pide crear un proyecto",
+  "task_text": "solo la accion a realizar, sin la parte del proyecto ni la fecha ni la palabra de confirmacion check (ej: agendar hora); cadena vacia si solo se pide crear un proyecto",
   "due_date": "fecha de vencimiento YYYY-MM-DD resolviendo expresiones relativas respecto a la fecha de hoy (manana = hoy+1, pasado manana = hoy+2, en N dias = hoy+N); null si no menciona fecha",
   "due_time": "hora HH:MM en formato 24hs si la menciona (9 de la manana = 09:00, 4 de la tarde = 16:00, 12 del dia = 12:00); null si no menciona hora"
 }`;
@@ -220,7 +257,7 @@ function createProjectObject(name, context, areaName, areas){
     const an = norm(areaName);
     area = areas.find(a => { const n = norm(a.name); return n.includes(an) || an.includes(n); });
   }
-  const ctx = context || (area && area.context) || 'profesional';
+  const ctx = context || (area && area.context) || 'personal';
   return {
     id: 'p' + Date.now(),
     name: String(name).trim(),
@@ -252,9 +289,24 @@ async function handleAudio(message){
     return;
   }
 
+  // Guard: el audio solo se procesa si contiene la palabra de confirmacion.
+  if(!CONFIRM_REGEX.test(norm(transcription))){
+    await tg('sendMessage', {
+      chat_id: TELEGRAM_CHAT_ID,
+      text: `\u{1F6AB} El audio no incluye la palabra de confirmacion, asi que NO cree nada.\n\nRepeti el audio y termina diciendo *"check"* cuando este completo.\n\n_Escuche:_ _${transcription}_`,
+      parse_mode: 'Markdown'
+    });
+    return;
+  }
+
   const result = await getDataJson();
   if(!result){ await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: '\u274C No pude leer los datos de Kingdom.' }); return; }
   const { data, sha } = result;
+
+  // bandeja de ideas sueltas (seccion "Otro")
+  if(!data.projects.find(p=>p.id==='inbox')){
+    data.projects.push({id:'inbox', color:'#8a919e', name:'\u{1F4A1} Ideas', area:null, desc:'Ideas sueltas y recordatorios rapidos.', status:'active', hasLeads:false, context:'otro'});
+  }
 
   // parsear con Groq (si falla, seguimos con defaults y avisamos)
   let parsed = null, groqError = null;
@@ -283,10 +335,11 @@ async function handleAudio(message){
     }
   }
   const projectDetected = !!projectId;
-  if(!projectId) projectId = data.projects.find(p=>p.status==='active')?.id || data.projects[0]?.id;
+  if(!projectId) projectId = 'inbox';
 
   const taskText = (parsed && parsed.task_text && String(parsed.task_text).trim())
-    ? String(parsed.task_text).trim() : transcription;
+    ? String(parsed.task_text).trim().replace(/\bche(ck|k)\b/gi,'').trim()
+    : transcription.replace(/\bche(ck|k)\b/gi,'').trim();
   const due = (parsed && parsed.due_date) ? parsed.due_date
     : new Date(Date.now()+86400000).toISOString().slice(0,10);
   const dueTime = (parsed && parsed.due_time) ? parsed.due_time : '12:00';
@@ -319,13 +372,16 @@ async function handleAudio(message){
   }
 
   const p = data.projects.find(p=>p.id===projectId);
+  const wentToInbox = !projectDetected && !createdProject;
   let header = createdProject
     ? `\u{1F195} *Proyecto nuevo: "${createdProject.name}"* (${createdProject.context})\n\u2705 *Tarea creada adentro*`
-    : `\u2705 *Tarea creada en "${p?.name}"*`;
+    : wentToInbox
+      ? `\u{1F4A1} *Idea guardada en Ideas*`
+      : `\u2705 *Tarea creada en "${p?.name}"*`;
 
   let avisos = '';
   if(createdProject && !createdProject.area) avisos += '\n\n\u26A0\uFE0F _Asigna el area del proyecto nuevo en el dashboard._';
-  if(!projectDetected && !createdProject) avisos += '\n\n\u26A0\uFE0F _No detecte el proyecto; lo asigne por defecto. Corregilo en el dashboard._';
+  if(wentToInbox) avisos += '\n\n\u{1F4DD} _Quedo en Ideas. Si va a un proyecto, movela desde el dashboard._';
   if(groqError) avisos += `\n\n\u26A0\uFE0F _No pude estructurar el audio (Groq: ${groqError}). Guarde el texto crudo._`;
 
   await tg('sendMessage', {
@@ -378,7 +434,7 @@ async function processUpdates(){
 // ====== MAIN ======
 (async()=>{
   console.log('Kingdom Bot iniciando...');
-  await checkOverdue();
+  await maybeSendDailySummary();
   await processUpdates();
   console.log('Kingdom Bot finalizado.');
 })();

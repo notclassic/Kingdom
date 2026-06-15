@@ -320,6 +320,10 @@ input, select, textarea{
 .task-body{flex:1;}
 .task-project{font-size:.65rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:.03em;}
 .task-text{margin-top:1px;}
+.task-text-edit{ border-radius:4px; padding:0 3px; cursor:text; }
+.task-text-edit:hover{ background:rgba(0,0,0,0.05); }
+.task-text-edit:focus{ outline:1.5px solid var(--accent); background:var(--panel); }
+.task-drive.task-del-btn:hover{ color:var(--red); border-color:var(--red); }
 .task-del{background:none; border:none; color:var(--red); font-size:.7rem; cursor:pointer; flex-shrink:0;}
 .due-badge{
   display:inline-block; font-size:.65rem; padding:1px 7px; border-radius:6px; margin-top:3px;
@@ -485,6 +489,7 @@ input, select, textarea{
     <div class="chip active" data-ctx="all"          onclick="setContext('all')">Vida</div>
     <div class="chip"        data-ctx="profesional"  onclick="setContext('profesional')">Profesional</div>
     <div class="chip"        data-ctx="personal"     onclick="setContext('personal')">Personal</div>
+    <div class="chip"        data-ctx="otro"         onclick="setContext('otro')">Otro</div>
   </div>
   <h2>📁 Portafolio</h2>
   <div class="filters" id="areaFilters"></div>
@@ -623,6 +628,7 @@ input, select, textarea{
       <div class="priority-selector" style="margin-bottom:8px;">
         <button type="button" class="priority-btn active" data-ctx="profesional" onclick="selectProjectContext('profesional')" style="flex:1;">💼 Profesional</button>
         <button type="button" class="priority-btn" data-ctx="personal" onclick="selectProjectContext('personal')" style="flex:1;">🏠 Personal</button>
+        <button type="button" class="priority-btn" data-ctx="otro" onclick="selectProjectContext('otro')" style="flex:1;">💡 Otro</button>
       </div>
       <input type="hidden" id="np-context" value="profesional">
       <input type="text" id="np-name" placeholder="Nombre del proyecto">
@@ -861,6 +867,7 @@ const PERSONAL_AREAS = [
   {id:'pa4', name:'💰 Finanzas Personales', color:'#1d4ed8', context:'personal'},
   {id:'pa5', name:'✈️ Viajes', color:'#af52de', context:'personal'}
 ];
+const IDEAS_PROJECT = {id:'inbox', color:'#8a919e', name:'💡 Ideas', area:null, desc:'Ideas sueltas y recordatorios rápidos.', status:'active', hasLeads:false, context:'otro'};
 
 const DEFAULT_DATA = {
   areas: JSON.parse(JSON.stringify(DEFAULT_AREAS)),
@@ -990,6 +997,7 @@ function load(){
       PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
       // tag existing areas as profesional if missing context
       parsed.areas.forEach(a=>{ if(!a.context) a.context='profesional'; });
+      if(!parsed.projects.find(p=>p.id==='inbox')) parsed.projects.push(JSON.parse(JSON.stringify(IDEAS_PROJECT)));
       parsed.projects.forEach(p=>{
         if(!p.color){
           const a = parsed.areas.find(a=>a.id===p.area);
@@ -1049,6 +1057,7 @@ function applyImportedData(parsed, skipAutoPush){
   if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
   PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
   parsed.areas.forEach(a=>{ if(!a.context) a.context="profesional"; });
+  if(!parsed.projects.find(p=>p.id==='inbox')) parsed.projects.push(JSON.parse(JSON.stringify(IDEAS_PROJECT)));
   parsed.projects.forEach(p=>{
     if(!p.color){ const a = parsed.areas.find(a=>a.id===p.area); p.color = a ? a.color : '#007aff'; }
     if(p.driveUrl===undefined) p.driveUrl='';
@@ -1244,8 +1253,10 @@ function selectProjectContext(ctx){
   if(areaSel){
     const areas = ctx==='personal'
       ? PERSONAL_AREAS
-      : data.areas.filter(a=>(a.context||'profesional')==='profesional');
-    areaSel.innerHTML = areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('');
+      : ctx==='otro'
+        ? []
+        : data.areas.filter(a=>(a.context||'profesional')==='profesional');
+    areaSel.innerHTML = areas.length ? areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('') : '<option value="">Sin área</option>';
   }
 }
 function openProjectModal(){
@@ -1442,6 +1453,7 @@ function renderTotals(){
 /* ====== RENDER FILTROS DE ÁREA ====== */
 function setContext(ctx){
   activeContext = ctx;
+  activeArea='all';
   document.querySelectorAll('.context-filters .chip').forEach(c=>
     c.classList.toggle('active', c.dataset.ctx===ctx)
   );
@@ -1572,10 +1584,11 @@ function renderProjectCards(){
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>${due}</div>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due}</div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
-        <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (texto, importancia, fecha, hora, proyecto, eliminar)">⋯</button>
+        <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
+        <button class="task-drive task-del-btn" onclick="confirmDeleteTask('${t.id}')" title="Eliminar tarea">🗑</button>
       </div>`;
     }).join('') : '<div class="empty" style="padding:6px 0;">No hay tareas pendientes 🎉</div>';
 
@@ -2003,6 +2016,18 @@ function deleteTask(id){
   data.deletedTaskIds = data.deletedTaskIds || [];
   if(!data.deletedTaskIds.includes(id)) data.deletedTaskIds.push(id);
   data.tasks = data.tasks.filter(t=>t.id!==id);
+  save(); renderAll();
+}
+function confirmDeleteTask(id){
+  if(!confirm('¿Eliminar esta tarea?')) return;
+  deleteTask(id);
+}
+function editTaskText(id, newText){
+  const text = (newText||'').replace(/\s+/g,' ').trim();
+  const t = data.tasks.find(t=>t.id===id);
+  if(!t) return;
+  if(!text || text===t.text){ renderProjectCards(); return; }
+  t.text = text;
   save(); renderAll();
 }
 function formatDate(iso){

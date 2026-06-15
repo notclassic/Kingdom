@@ -51,20 +51,6 @@
   ],
   "projects": [
     {
-      "id": "p1",
-      "color": "#007aff",
-      "name": "Chileautos",
-      "area": "a1",
-      "desc": "Analítica interna con potencial SaaS futuro.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p2",
       "color": "#5856d6",
       "name": "Chatbot IA",
@@ -81,6 +67,20 @@
         }
       ],
       "driveFolderId": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
+      "context": "profesional"
+    },
+    {
+      "id": "p1",
+      "color": "#007aff",
+      "name": "Chileautos",
+      "area": "a1",
+      "desc": "Analítica interna con potencial SaaS futuro.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
       "context": "profesional"
     },
     {

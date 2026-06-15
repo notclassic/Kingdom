@@ -17,17 +17,52 @@
       "name": "Clientes & Agencia",
       "color": "#af52de",
       "context": "profesional"
+    },
+    {
+      "id": "pa1",
+      "name": "👨‍👩‍👧 Familia",
+      "color": "#ff6b6b",
+      "context": "personal"
+    },
+    {
+      "id": "pa2",
+      "name": "🏥 Salud",
+      "color": "#2a9d8f",
+      "context": "personal"
+    },
+    {
+      "id": "pa3",
+      "name": "🏠 Hogar",
+      "color": "#f5ac2f",
+      "context": "personal"
+    },
+    {
+      "id": "pa4",
+      "name": "💰 Finanzas Personales",
+      "color": "#1d4ed8",
+      "context": "personal"
+    },
+    {
+      "id": "pa5",
+      "name": "✈️ Viajes",
+      "color": "#af52de",
+      "context": "personal"
     }
   ],
   "projects": [
     {
       "id": "p1",
       "color": "#007aff",
-      "name": "Chileautos Databot",
+      "name": "Chileautos",
       "area": "a1",
       "desc": "Analítica interna con potencial SaaS futuro.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p2",
@@ -36,7 +71,12 @@
       "area": "a1",
       "desc": "Desarrollo y prospección por rubro.",
       "status": "active",
-      "hasLeads": true
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p3",
@@ -45,7 +85,12 @@
       "area": "a1",
       "desc": "I+D y capacitación continua en automatizaciones.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p4",
@@ -54,7 +99,12 @@
       "area": "a2",
       "desc": "Operación de trading alimentada por el Databot.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p5",
@@ -63,7 +113,12 @@
       "area": "a2",
       "desc": "Servicio presencial / alianza con taller.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p6",
@@ -72,7 +127,12 @@
       "area": "a2",
       "desc": "Operación general de venta online.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p7",
@@ -81,7 +141,12 @@
       "area": "a2",
       "desc": "E-commerce de bolsos de cuero, reactivación.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p8",
@@ -90,7 +155,12 @@
       "area": "a2",
       "desc": "Módulos de snowpark, web y catálogo.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p9",
@@ -99,7 +169,12 @@
       "area": "a3",
       "desc": "Cliente NotClassic: PPT, Ads, cobros.",
       "status": "active",
-      "hasLeads": true
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p10",
@@ -108,7 +183,12 @@
       "area": "a3",
       "desc": "Optimización del sitio principal.",
       "status": "active",
-      "hasLeads": false
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     }
   ],
   "tasks": [

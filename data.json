@@ -247,35 +247,6 @@
       "driveFolderId": ""
     },
     {
-      "id": "p1781538739000",
-      "name": "Auto y Avión",
-      "area": "",
-      "context": "personal",
-      "color": "#007aff",
-      "description": "",
-      "status": "active",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "hasLeads": false,
-      "driveFolderId": ""
-    },
-    {
-      "id": "p1781539246928",
-      "name": "Avión Espacial",
-      "area": "",
-      "context": "personal",
-      "color": "#007aff",
-      "description": "",
-      "status": "active",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "hasLeads": false,
-      "driveFolderId": "",
-      "desc": "undefined"
-    },
-    {
       "id": "p1781540454184",
       "name": "Ordenar juguetes",
       "area": "pa3",
@@ -334,14 +305,13 @@
       "projectId": "p2",
       "text": "Armar listado de rubros",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-15",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "dueSoonAlertSent": true
     },
     {
       "id": "t5",
@@ -444,14 +414,12 @@
       "projectId": "p6",
       "text": "Crear/optimizar publicaciones",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-15",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "priority": "medium"
     },
     {
       "id": "t15",
@@ -602,34 +570,8 @@
       "projectId": "p1781502750840",
       "text": "visitar a León",
       "done": false,
-      "dueDate": "2026-06-18",
-      "dueTime": "08:30",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781538739000",
-      "projectId": "p1781538739000",
-      "text": "Crear tarea",
-      "done": false,
       "dueDate": "2026-06-16",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
-    },
-    {
-      "id": "t1781539246928",
-      "projectId": "p1781539246928",
-      "text": "revisión",
-      "done": false,
-      "dueDate": "2026-06-19",
-      "dueTime": "14:49",
+      "dueTime": "12:30",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
@@ -641,14 +583,13 @@
       "id": "t1781540454184",
       "projectId": "p1781540454184",
       "text": "ordenar juguetes de León",
-      "done": true,
+      "done": false,
       "dueDate": "2026-06-15",
       "dueTime": "16:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -671,9 +612,85 @@
       "stage": "ganados"
     }
   ],
-  "deletedTaskIds": [],
-  "deletedProjectIds": [],
-  "trash": [],
+  "deletedTaskIds": [
+    "t1781538739000",
+    "t1781539246928"
+  ],
+  "deletedProjectIds": [
+    "p1781538739000",
+    "p1781539246928"
+  ],
+  "trash": [
+    {
+      "type": "project",
+      "deletedAt": "2026-06-15T19:20:17.204Z",
+      "item": {
+        "id": "p1781538739000",
+        "name": "Auto y Avión",
+        "area": "",
+        "context": "personal",
+        "color": "#007aff",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": ""
+      },
+      "tasks": [
+        {
+          "id": "t1781538739000",
+          "projectId": "p1781538739000",
+          "text": "Crear tarea",
+          "done": false,
+          "dueDate": "2026-06-15",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "dueSoonAlertSent": false,
+          "overdueAlertSent": false
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-15T19:20:20.603Z",
+      "item": {
+        "id": "p1781539246928",
+        "name": "Avión Espacial",
+        "area": "",
+        "context": "personal",
+        "color": "#007aff",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": "",
+        "desc": "undefined"
+      },
+      "tasks": [
+        {
+          "id": "t1781539246928",
+          "projectId": "p1781539246928",
+          "text": "revisión",
+          "done": false,
+          "dueDate": "2026-06-15",
+          "dueTime": "14:49",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "dueSoonAlertSent": false,
+          "overdueAlertSent": false
+        }
+      ]
+    }
+  ],
   "alertConfig": {
     "high": 30,
     "medium": 60,

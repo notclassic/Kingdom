@@ -646,6 +646,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781481962762",
+      "projectId": "p1781481956955",
+      "text": "no te metas",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

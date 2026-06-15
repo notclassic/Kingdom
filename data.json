@@ -258,7 +258,8 @@
       "icon": "",
       "contacts": [],
       "hasLeads": false,
-      "driveFolderId": ""
+      "driveFolderId": "",
+      "desc": "undefined||"
     }
   ],
   "tasks": [
@@ -583,7 +584,7 @@
       "id": "t1781540454184",
       "projectId": "p1781540454184",
       "text": "ordenar juguetes de León",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-15",
       "dueTime": "16:00",
       "priority": "medium",

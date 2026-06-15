@@ -109,15 +109,55 @@ async function saveLastSummary(dateStr, sha){
   ).catch(e=>console.error('saveLastSummary error:', e.message));
 }
 
-// Envia el resumen una sola vez por dia, despues de las 12 UTC (8 AM Chile).
+// Hora local de Chile (maneja horario de verano/invierno via base de datos de zonas).
+function chileNow(){
+  return new Date(new Date().toLocaleString('en-US', { timeZone:'America/Santiago' }));
+}
+function chileDateStr(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+// Envia el resumen una sola vez por dia, a partir de las 8:30 (hora Chile).
 async function maybeSendDailySummary(){
-  const now = new Date();
-  if(now.getUTCHours() < 12) return;
-  const todayStr = now.toISOString().slice(0,10);
+  const cn = chileNow();
+  if(cn.getHours()*60 + cn.getMinutes() < 510) return; // antes de 8:30
+  const todayStr = chileDateStr(cn);
   const { date: last, sha } = await getLastSummary();
   if(last === todayStr) return; // ya se envio hoy
   await checkOverdue();
   await saveLastSummary(todayStr, sha);
+}
+
+// Alertas por tarea: avisa cuando faltan <=60 min (una vez) y cuando vence (una vez).
+async function checkDueAlerts(){
+  const result = await getDataJson();
+  if(!result) return;
+  const { data, sha } = result;
+  const now = chileNow();
+  let changed = false;
+  for(const t of (data.tasks||[])){
+    if(t.done || !t.dueDate) continue;
+    const due = new Date(`${t.dueDate}T${(t.dueTime||'12:00')}:00`);
+    if(isNaN(due.getTime())) continue;
+    const mins = (due.getTime() - now.getTime())/60000;
+    const cfg = data.alertConfig || {};
+    const lead = cfg[t.priority || 'medium'] || 60;
+    const hhmm = t.dueTime || '12:00';
+    if(mins > 0 && mins <= lead && !t.dueSoonAlertSent){
+      await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u23F0 *Falta poco para esta tarea*\n${t.text}\n_Vence hoy a las ${hhmm}_`, parse_mode:'Markdown' });
+      t.dueSoonAlertSent = true; changed = true;
+    } else if(mins <= 0 && !t.overdueAlertSent){
+      // Solo avisar si vencio hace poco (<3h); evita una avalancha de tareas viejas al activar esto.
+      if(mins > -180){
+        await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u{1F534} *Tarea vencida*\n${t.text}\n_Vencia ${formatDate(t.dueDate)} ${hhmm}_`, parse_mode:'Markdown' });
+      }
+      t.overdueAlertSent = true; changed = true;
+    }
+  }
+  if(changed){
+    try { await saveDataJson(data, sha); }
+    catch(e){ console.error('No pude guardar flags de alerta:', e.message); }
+  }
 }
 
 function formatDate(d){
@@ -435,6 +475,7 @@ async function processUpdates(){
 (async()=>{
   console.log('Kingdom Bot iniciando...');
   await maybeSendDailySummary();
+  await checkDueAlerts();
   await processUpdates();
   console.log('Kingdom Bot finalizado.');
 })();

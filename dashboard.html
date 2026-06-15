@@ -324,6 +324,13 @@ input, select, textarea{
 .task-text-edit:hover{ background:rgba(0,0,0,0.05); }
 .task-text-edit:focus{ outline:1.5px solid var(--accent); background:var(--panel); }
 .task-drive.task-del-btn:hover{ color:var(--red); border-color:var(--red); }
+.trash-row{ display:flex; align-items:center; gap:10px; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); }
+.trash-label{ font-size:.85rem; line-height:1.3; }
+.trash-when{ font-size:.7rem; color:var(--muted); margin-top:2px; }
+.trash-actions{ display:flex; gap:6px; flex:0 0 auto; }
+.trash-actions .priority-btn{ margin-top:0; padding:5px 9px; font-size:.72rem; }
+.alert-cfg-row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); font-size:.88rem; }
+.alert-cfg-row select{ font-size:.85rem; padding:5px 8px; border:1px solid var(--border); border-radius:8px; background:var(--panel); color:var(--text); flex:0 0 auto; }
 .task-del{background:none; border:none; color:var(--red); font-size:.7rem; cursor:pointer; flex-shrink:0;}
 .due-badge{
   display:inline-block; font-size:.65rem; padding:1px 7px; border-radius:6px; margin-top:3px;
@@ -611,8 +618,24 @@ input, select, textarea{
       </div>
       <div class="row2" style="margin-top:6px;">
         <button class="btn-primary" onclick="saveEditTask()">Guardar cambios</button>
-        <button class="btn-toggle" style="margin-top:0; border-color:var(--red); color:var(--red); flex:0 0 auto;" onclick="deleteTaskFromModal()" title="Eliminar tarea">🗑</button>
+        <button class="btn-toggle" style="margin-top:0; border-color:var(--red); color:var(--red); flex:0 0 auto;" onclick="deleteTaskFromModal()" title="Mover a Eliminados">🗑</button>
       </div>
+      <button class="btn-toggle" style="margin-top:6px;" onclick="convertTaskFromModal()" title="Crear un proyecto a partir de esta tarea">📁 Convertir en proyecto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ELIMINADOS / PAPELERA -->
+<div class="modal-overlay" id="trashModalOverlay" onclick="if(event.target===this) closeTrash()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">🗑 Eliminados (<span id="trashCount">0</span>)</h2>
+      <button class="modal-close" onclick="closeTrash()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <div class="row-desc" style="margin-bottom:8px;">Restaurá lo que borraste por error o borralo definitivamente. Lo que quede más de 30 días se borra solo.</div>
+      <div id="trashList"></div>
+      <button class="btn-toggle" style="margin-top:10px; border-color:var(--red); color:var(--red);" onclick="emptyTrash()">Vaciar todo</button>
     </div>
   </div>
 </div>
@@ -679,6 +702,18 @@ input, select, textarea{
   </div>
   <div class="row-desc" id="githubAutoSyncInfo" style="margin-top:8px;"></div>
   <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
+</section>
+<section>
+  <h2>🗑 Eliminados</h2>
+  <div class="row-desc" style="margin-bottom:10px;">Lo que borrás (tareas o proyectos) queda acá, como la papelera del correo. Podés restaurarlo o borrarlo del todo. Se vacía solo a los 30 días.</div>
+  <button class="btn-toggle" style="margin-top:0;" onclick="openTrash()">🗑 Abrir Eliminados</button>
+</section>
+<section>
+  <h2>⏰ Anticipación de avisos por importancia</h2>
+  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~10 min), así que es aproximado, no exacto.</div>
+  <div class="alert-cfg-row"><span>🔴 Urgente <span style="color:var(--muted);">(:( Quedó la caga)</span></span><select id="alertLeadHigh" onchange="setAlertLead('high', this.value)"></select></div>
+  <div class="alert-cfg-row"><span>🟡 Normal <span style="color:var(--muted);">(:/ Pa mañana)</span></span><select id="alertLeadMedium" onchange="setAlertLead('medium', this.value)"></select></div>
+  <div class="alert-cfg-row"><span>🟢 Puede esperar <span style="color:var(--muted);">(:) No pasa nada)</span></span><select id="alertLeadLow" onchange="setAlertLead('low', this.value)"></select></div>
 </section>
 <section>
   <h2>💾 Respaldo de datos</h2>
@@ -980,6 +1015,7 @@ function b64DecodeUnicode(str){
 /* ====== ESTADO ====== */
 const STORAGE_KEY = 'dashboard_portafolio_v1';
 let data = load();
+purgeOldTrash();
 let activeArea = 'all';
 let activeContext = 'all';
 let activeProjects = new Set();
@@ -1012,6 +1048,8 @@ function load(){
       assignDefaultTimes(parsed.tasks);
       if(!parsed.deletedTaskIds) parsed.deletedTaskIds = [];
       if(!parsed.deletedProjectIds) parsed.deletedProjectIds = [];
+      if(!parsed.trash) parsed.trash = [];
+      if(!parsed.alertConfig) parsed.alertConfig = {high:30, medium:60, low:120};
       return parsed;
     }
   }catch(e){}
@@ -1019,6 +1057,8 @@ function load(){
   assignDefaultTimes(def.tasks);
   def.deletedTaskIds = [];
   def.deletedProjectIds = [];
+  def.trash = [];
+  def.alertConfig = {high:30, medium:60, low:120};
   return def;
 }
 function assignDefaultTimes(tasks){
@@ -1070,6 +1110,8 @@ function applyImportedData(parsed, skipAutoPush){
   assignDefaultTimes(parsed.tasks);
   if(!parsed.deletedTaskIds) parsed.deletedTaskIds = [];
   if(!parsed.deletedProjectIds) parsed.deletedProjectIds = [];
+  if(!parsed.trash) parsed.trash = [];
+  if(!parsed.alertConfig) parsed.alertConfig = {high:30, medium:60, low:120};
   data = parsed;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   if(!skipAutoPush) scheduleAutoPush();
@@ -1246,6 +1288,7 @@ function getSelectedPriority(){
   return btn ? btn.dataset.priority : 'medium';
 }
 const PRIORITY_EMOJI = { high:':(', medium:':/', low:':)' };
+const ALERT_LEAD_OPTIONS = [15, 30, 45, 60, 90, 120, 180];
 function selectProjectContext(ctx){
   document.querySelectorAll('[data-ctx]').forEach(b=>b.classList.toggle('active', b.dataset.ctx===ctx));
   document.getElementById('np-context').value = ctx;
@@ -1732,11 +1775,15 @@ function toggleStatus(id){
   save(); renderAll();
 }
 function deleteProject(id){
-  if(!confirm('¿Eliminar este proyecto y sus tareas asociadas? Esta acción no se puede deshacer.')) return;
+  if(!confirm('¿Mover este proyecto y sus tareas a Eliminados?')) return;
+  data.trash = data.trash || [];
   data.deletedProjectIds = data.deletedProjectIds || [];
   data.deletedTaskIds = data.deletedTaskIds || [];
+  const proj = data.projects.find(p=>p.id===id);
+  const projTasks = data.tasks.filter(t=>t.projectId===id);
+  if(proj) data.trash.push({type:'project', deletedAt:new Date().toISOString(), item:JSON.parse(JSON.stringify(proj)), tasks:JSON.parse(JSON.stringify(projTasks))});
   if(!data.deletedProjectIds.includes(id)) data.deletedProjectIds.push(id);
-  data.tasks.filter(t=>t.projectId===id).forEach(t=>{ if(!data.deletedTaskIds.includes(t.id)) data.deletedTaskIds.push(t.id); });
+  projTasks.forEach(t=>{ if(!data.deletedTaskIds.includes(t.id)) data.deletedTaskIds.push(t.id); });
   data.projects = data.projects.filter(p=>p.id!==id);
   data.tasks = data.tasks.filter(t=>t.projectId!==id);
   data.leads.forEach(l=>{ if(l.projectId===id) l.projectId=''; });
@@ -1979,13 +2026,13 @@ function editTaskDate(id, el){
   inp.type = 'date';
   inp.value = t.dueDate || '';
   inp.style.cssText = 'font-size:.85rem;border:none;background:transparent;color:var(--text);outline:none;';
-  inp.onchange = e=>{ t.dueDate = e.target.value; save(); renderAll(); };
+  inp.onchange = e=>{ t.dueDate = e.target.value; t.dueSoonAlertSent=false; t.overdueAlertSent=false; save(); renderAll(); };
 
   const inpTime = document.createElement('input');
   inpTime.type = 'time';
   inpTime.value = t.dueTime || '';
   inpTime.style.cssText = 'font-size:.85rem;border:none;background:transparent;color:var(--text);outline:none;border-left:1px solid var(--border);padding-left:8px;';
-  inpTime.onchange = e=>{ t.dueTime = e.target.value; save(); renderAll(); };
+  inpTime.onchange = e=>{ t.dueTime = e.target.value; t.dueSoonAlertSent=false; t.overdueAlertSent=false; save(); renderAll(); };
 
   const btn = document.createElement('button');
   btn.textContent = '✕';
@@ -2013,14 +2060,98 @@ function toggleTask(id){
   save(); renderAll();
 }
 function deleteTask(id){
+  data.trash = data.trash || [];
   data.deletedTaskIds = data.deletedTaskIds || [];
+  const t = data.tasks.find(t=>t.id===id);
+  if(t) data.trash.push({type:'task', deletedAt:new Date().toISOString(), item:JSON.parse(JSON.stringify(t))});
   if(!data.deletedTaskIds.includes(id)) data.deletedTaskIds.push(id);
   data.tasks = data.tasks.filter(t=>t.id!==id);
   save(); renderAll();
 }
 function confirmDeleteTask(id){
-  if(!confirm('¿Eliminar esta tarea?')) return;
+  if(!confirm('¿Mover esta tarea a Eliminados?')) return;
   deleteTask(id);
+}
+function convertTaskToProject(id){
+  const t = data.tasks.find(t=>t.id===id);
+  if(!t) return;
+  const suggested = (t.text||'').slice(0,40);
+  const name = prompt('Nombre del nuevo proyecto:', suggested);
+  if(name===null) return;
+  const finalName = name.trim() || suggested || 'Proyecto nuevo';
+  const proj = {id:uid('p'), name:finalName, area:null, desc:'', status:'active', hasLeads:false, color:'#8a919e', icon:'', driveUrl:'', driveFolderId:'', contacts:[], context:'personal'};
+  data.projects.push(proj);
+  t.projectId = proj.id;
+  save(); renderAll();
+  alert('Proyecto "'+finalName+'" creado. La tarea quedó adentro. Ajustá su área o sección en el Portafolio si querés.');
+}
+function convertTaskFromModal(){
+  const id = document.getElementById('et-id').value;
+  closeEditTaskModal();
+  convertTaskToProject(id);
+}
+/* ====== PAPELERA / ELIMINADOS ====== */
+function purgeOldTrash(){
+  if(!data || !data.trash || !data.trash.length) return;
+  const cutoff = Date.now() - 30*24*60*60*1000;
+  const before = data.trash.length;
+  data.trash = data.trash.filter(e=> !e.deletedAt || new Date(e.deletedAt).getTime() > cutoff);
+  if(data.trash.length !== before){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){} }
+}
+function openTrash(){ renderTrash(); document.getElementById('trashModalOverlay').classList.add('open'); }
+function closeTrash(){ document.getElementById('trashModalOverlay').classList.remove('open'); }
+function renderTrash(){
+  const cont = document.getElementById('trashList');
+  const trash = data.trash || [];
+  const cnt = document.getElementById('trashCount');
+  if(cnt) cnt.textContent = trash.length;
+  if(!trash.length){ cont.innerHTML = '<div class="empty">No hay nada en Eliminados.</div>'; return; }
+  cont.innerHTML = trash.map((e,i)=>{
+    const when = e.deletedAt ? new Date(e.deletedAt).toLocaleDateString('es-CL') : '';
+    const label = e.type==='project'
+      ? `📁 Proyecto: ${e.item.name} <span style="color:var(--muted);">(${(e.tasks||[]).length} tareas)</span>`
+      : `✓ ${e.item.text}`;
+    return `<div class="trash-row">
+      <div class="trash-label">${label}<div class="trash-when">${when}</div></div>
+      <div class="trash-actions">
+        <button class="priority-btn" onclick="restoreTrashItem(${i})">↩︎ Restaurar</button>
+        <button class="priority-btn task-del-btn" onclick="purgeTrashItem(${i})">🗑 Borrar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function restoreTrashItem(idx){
+  data.trash = data.trash || [];
+  const entry = data.trash[idx];
+  if(!entry) return;
+  if(entry.type==='task'){
+    let pid = entry.item.projectId;
+    if(!data.projects.find(p=>p.id===pid)) pid = 'inbox';
+    entry.item.projectId = pid;
+    data.tasks.push(entry.item);
+    data.deletedTaskIds = (data.deletedTaskIds||[]).filter(x=>x!==entry.item.id);
+  } else if(entry.type==='project'){
+    data.projects.push(entry.item);
+    data.deletedProjectIds = (data.deletedProjectIds||[]).filter(x=>x!==entry.item.id);
+    (entry.tasks||[]).forEach(t=>{
+      data.tasks.push(t);
+      data.deletedTaskIds = (data.deletedTaskIds||[]).filter(x=>x!==t.id);
+    });
+  }
+  data.trash.splice(idx,1);
+  save(); renderTrash(); renderAll();
+}
+function purgeTrashItem(idx){
+  if(!confirm('¿Borrar definitivamente? Esto no se puede deshacer.')) return;
+  data.trash = data.trash || [];
+  data.trash.splice(idx,1);
+  save(); renderTrash();
+}
+function emptyTrash(){
+  if(!(data.trash||[]).length) return;
+  if(!confirm('¿Vaciar Eliminados? Se borra todo definitivamente.')) return;
+  data.trash = [];
+  save(); renderTrash();
 }
 function editTaskText(id, newText){
   const text = (newText||'').replace(/\s+/g,' ').trim();
@@ -2092,8 +2223,11 @@ function saveEditTask(){
   if(!text){ alert('La tarea no puede quedar sin descripción'); return; }
   t.projectId = document.getElementById('et-project').value || t.projectId;
   t.text = text;
-  t.dueDate = document.getElementById('et-due').value;
-  t.dueTime = document.getElementById('et-time').value;
+  const newDue = document.getElementById('et-due').value;
+  const newTime = document.getElementById('et-time').value;
+  if(newDue!==t.dueDate || newTime!==t.dueTime){ t.dueSoonAlertSent=false; t.overdueAlertSent=false; }
+  t.dueDate = newDue;
+  t.dueTime = newTime;
   t.priority = document.getElementById('et-priority').value || 'medium';
   closeEditTaskModal();
   save(); renderAll();
@@ -2286,6 +2420,27 @@ function renderAll(){
   if(calView) renderCalendar();
   renderEmailBanner();
   renderOverdueBadge();
+  renderAlertConfig();
+}
+function leadLabel(m){
+  m = parseInt(m);
+  if(m < 60) return m + ' minutos';
+  if(m % 60 === 0) return (m/60) + (m===60 ? ' hora' : ' horas');
+  return Math.floor(m/60) + ' h ' + (m%60) + ' min';
+}
+function renderAlertConfig(){
+  const cfg = data.alertConfig || {high:30, medium:60, low:120};
+  [['high','alertLeadHigh'],['medium','alertLeadMedium'],['low','alertLeadLow']].forEach(([p,id])=>{
+    const sel = document.getElementById(id);
+    if(!sel) return;
+    sel.innerHTML = ALERT_LEAD_OPTIONS.map(m=>`<option value="${m}">${leadLabel(m)} antes</option>`).join('');
+    sel.value = String(cfg[p] || 60);
+  });
+}
+function setAlertLead(priority, val){
+  data.alertConfig = data.alertConfig || {high:30, medium:60, low:120};
+  data.alertConfig[priority] = parseInt(val) || 60;
+  save();
 }
 function renderOverdueBadge(){
   const today = new Date(); today.setHours(0,0,0,0);

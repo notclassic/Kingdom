@@ -628,14 +628,14 @@
       "projectId": "p1781539246928",
       "text": "revisión",
       "done": false,
-      "dueDate": "2026-06-15",
+      "dueDate": "2026-06-16",
       "dueTime": "14:49",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781540454184",

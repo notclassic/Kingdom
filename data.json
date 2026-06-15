@@ -165,6 +165,20 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
+    },
+    {
+      "id": "p1781538739000",
+      "name": "Auto y Avión",
+      "area": "",
+      "context": "personal",
+      "color": "#007aff",
+      "description": "",
+      "status": "active",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "hasLeads": false,
+      "driveFolderId": ""
     }
   ],
   "tasks": [
@@ -476,6 +490,18 @@
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "08:30",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781538739000",
+      "projectId": "p1781538739000",
+      "text": "Crear tarea",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

@@ -128,13 +128,18 @@ async function maybeSendDailySummary(){
   await saveLastSummary(todayStr, sha);
 }
 
-// Alertas por tarea: avisa cuando faltan <=60 min (una vez) y cuando vence (una vez).
+// Alertas por tarea: avisa cuando faltan <=lead min (una vez) y cuando vence (una vez).
 async function checkDueAlerts(){
   const result = await getDataJson();
   if(!result) return;
   const { data, sha } = result;
   const now = chileNow();
   let changed = false;
+  const kb = (id) => ({ inline_keyboard: [[
+    { text:'\u2705 Ya est\u00e1', callback_data:`done:${id}` },
+    { text:'\u{1F4C5} +1 d\u00eda', callback_data:`snooze:${id}:1` },
+    { text:'\u{1F4C5} +1 sem', callback_data:`snooze:${id}:7` }
+  ]]});
   for(const t of (data.tasks||[])){
     if(t.done || !t.dueDate) continue;
     const due = new Date(`${t.dueDate}T${(t.dueTime||'12:00')}:00`);
@@ -143,13 +148,15 @@ async function checkDueAlerts(){
     const cfg = data.alertConfig || {};
     const lead = cfg[t.priority || 'medium'] || 60;
     const hhmm = t.dueTime || '12:00';
+    const proj = (data.projects||[]).find(p=>p.id===t.projectId);
+    const projName = proj ? proj.name : 'Sin proyecto';
     if(mins > 0 && mins <= lead && !t.dueSoonAlertSent){
-      await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u23F0 *Falta poco para esta tarea*\n${t.text}\n_Vence hoy a las ${hhmm}_`, parse_mode:'Markdown' });
+      await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u23F0 *Falta poco para esta tarea*\n${t.text}\n_${projName} \u00b7 vence hoy ${hhmm}_`, parse_mode:'Markdown', reply_markup: kb(t.id) });
       t.dueSoonAlertSent = true; changed = true;
     } else if(mins <= 0 && !t.overdueAlertSent){
       // Solo avisar si vencio hace poco (<3h); evita una avalancha de tareas viejas al activar esto.
       if(mins > -180){
-        await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u{1F534} *Tarea vencida*\n${t.text}\n_Vencia ${formatDate(t.dueDate)} ${hhmm}_`, parse_mode:'Markdown' });
+        await tg('sendMessage', { chat_id: TELEGRAM_CHAT_ID, text: `\u{1F534} *Tarea vencida*\n${t.text}\n_${projName} \u00b7 vencia ${formatDate(t.dueDate)} ${hhmm}_`, parse_mode:'Markdown', reply_markup: kb(t.id) });
       }
       t.overdueAlertSent = true; changed = true;
     }
@@ -158,6 +165,40 @@ async function checkDueAlerts(){
     try { await saveDataJson(data, sha); }
     catch(e){ console.error('No pude guardar flags de alerta:', e.message); }
   }
+}
+
+// Procesa los botones de las alertas ("Ya esta" / posponer). Llega en la proxima corrida.
+async function handleCallback(cb){
+  const parts = (cb.data || '').split(':');
+  const action = parts[0], taskId = parts[1], arg = parts[2];
+  const chatId = (cb.message && cb.message.chat) ? cb.message.chat.id : TELEGRAM_CHAT_ID;
+  const msgId = cb.message ? cb.message.message_id : null;
+  const result = await getDataJson();
+  if(!result){ await tg('answerCallbackQuery', { callback_query_id: cb.id, text: 'No pude acceder a los datos.' }); return; }
+  const { data: store, sha } = result;
+  const t = (store.tasks||[]).find(x=>x.id===taskId);
+  if(!t){ await tg('answerCallbackQuery', { callback_query_id: cb.id, text: 'La tarea ya no existe.' }); return; }
+  let confirmText = '';
+  if(action === 'done'){
+    t.done = true;
+    confirmText = `\u2705 *Marcada como lista*\n${t.text}`;
+  } else if(action === 'snooze'){
+    const days = parseInt(arg) || 1;
+    const base = t.dueDate ? new Date(`${t.dueDate}T00:00:00`) : new Date();
+    base.setDate(base.getDate() + days);
+    t.dueDate = `${base.getFullYear()}-${String(base.getMonth()+1).padStart(2,'0')}-${String(base.getDate()).padStart(2,'0')}`;
+    t.dueSoonAlertSent = false; t.overdueAlertSent = false;
+    confirmText = `\u{1F4C5} *Pospuesta a ${formatDate(t.dueDate)}*\n${t.text}`;
+  } else {
+    await tg('answerCallbackQuery', { callback_query_id: cb.id });
+    return;
+  }
+  try { await saveDataJson(store, sha); }
+  catch(e){ await tg('answerCallbackQuery', { callback_query_id: cb.id, text: 'No pude guardar el cambio.' }); return; }
+  if(msgId){
+    await tg('editMessageText', { chat_id: chatId, message_id: msgId, text: confirmText, parse_mode:'Markdown', reply_markup: { inline_keyboard: [] } });
+  }
+  await tg('answerCallbackQuery', { callback_query_id: cb.id, text: 'Hecho.' });
 }
 
 function formatDate(d){
@@ -449,6 +490,7 @@ async function processUpdates(){
   for(const upd of updates.result){
     newOffset = upd.update_id + 1;
     if(firstTime) continue; // primera corrida: solo avanzamos el offset, no creamos nada
+    if(upd.callback_query){ await handleCallback(upd.callback_query); continue; }
     const msg = upd.message;
     if(!msg) continue;
     if(msg.voice || msg.audio) await handleAudio(msg);

@@ -20,9 +20,9 @@
     },
     {
       "id": "pa1",
-      "name": "👨‍👩‍👧 Familia",
+      "name": "Familia",
       "color": "#ff6b6b",
-      "context": "personal"
+      "context": "profesional"
     },
     {
       "id": "pa2",
@@ -80,7 +80,7 @@
           "email": "pepe@lubbertlabs.ai"
         }
       ],
-      "driveFolderId": "",
+      "driveFolderId": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
       "context": "profesional"
     },
     {

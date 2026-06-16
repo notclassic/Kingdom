@@ -624,7 +624,7 @@
       "name": "Resumen de todo el proyecto.",
       "area": "a1",
       "desc": "",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -632,8 +632,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287",
-      "completedAt": 1781627363229
+      "parentId": "p1781572037505287"
     },
     {
       "id": "p1781627471826336",
@@ -680,7 +679,7 @@
     {
       "id": "t1781582619084311",
       "projectId": "p1781624973627687",
-      "text": "Bug: el botón de calendario queda pegado al modificar la hora.",
+      "text": "Bug: el botón de calendario se queda pegado al modificar la hora y no tocarlo",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:03",
@@ -1367,7 +1366,7 @@
       "alertSent": false,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": false
     },
     {
       "id": "t1781570314630499",

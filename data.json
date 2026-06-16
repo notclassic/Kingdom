@@ -21,19 +21,19 @@
     {
       "id": "pa1",
       "name": "Familia",
-      "color": "#ff6b6b",
+      "color": "#ffa50a",
       "context": "personal"
     },
     {
       "id": "pa2",
       "name": "Salud",
-      "color": "#2a9d8f",
+      "color": "#9d2a2a",
       "context": "personal"
     },
     {
       "id": "pa3",
       "name": "Hogar",
-      "color": "#f5ac2f",
+      "color": "#9b9a97",
       "context": "personal"
     }
   ],

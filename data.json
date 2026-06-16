@@ -1051,6 +1051,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781584379119607",
+      "projectId": "p1781572037505287",
+      "text": "incluir todos los proyect dentero del boton todas con una fkecha hacia abajo, lo mismp en los otros botones de portafoio con un sub menu desplebale como el de todos los proyectos",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "00:31",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

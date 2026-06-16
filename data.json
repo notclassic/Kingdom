@@ -652,6 +652,19 @@
   ],
   "tasks": [
     {
+      "id": "t1781581543159671",
+      "projectId": "p1781624973628303",
+      "text": "Ajustar los colores del logo: aplicado el logo nuevo (dorado y negro) en el header, con versión para modo claro y oscuro.",
+      "done": true,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:45",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "overdueAlertSent": true
+    },
+    {
       "id": "t1781583152633291",
       "projectId": "p1781624973627687",
       "text": "Bug: muestra todas las tareas como vencidas al crearlas.",
@@ -918,19 +931,6 @@
       "alertSent": false,
       "driveUrl": "",
       "dueSoonAlertSent": false,
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781581543159671",
-      "projectId": "p1781624973628303",
-      "text": "Cambiar el logo actual por el logo nuevo",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:45",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
       "overdueAlertSent": true
     },
     {

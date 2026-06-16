@@ -515,36 +515,6 @@
       "parentId": "p1781589327240693"
     },
     {
-      "id": "p1781624559096999",
-      "name": "Notas y criterios",
-      "area": "a1",
-      "desc": "No son tareas de desarrollo: criterios y recordatorios.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
-      "id": "p178162455909666",
-      "name": "Hechas",
-      "area": "a1",
-      "desc": "Ya completadas.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p1781624973627687",
       "name": "F1 · Bugs base",
       "area": "a1",
@@ -648,6 +618,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781625628409853",
+      "name": "Resumen de todo el proyecto.",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781624973629977"
     }
   ],
   "tasks": [
@@ -932,18 +917,6 @@
       "alertSent": false,
       "driveUrl": "",
       "overdueAlertSent": true
-    },
-    {
-      "id": "t1781585249457736",
-      "projectId": "p1781624973628303",
-      "text": "Resumen de todo el proyecto.",
-      "done": false,
-      "dueDate": "2026-06-17",
-      "dueTime": "00:47",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     },
     {
       "id": "t1781580759092852",
@@ -1958,7 +1931,8 @@
     "t17815917379166",
     "t1781591737916898",
     "t1781593873428356",
-    "t1781593976558694"
+    "t1781593976558694",
+    "t1781585249457736"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1977,7 +1951,9 @@
     "p1781624559095312",
     "p178162455909563",
     "p1781624559095634",
-    "p1781624559096899"
+    "p1781624559096899",
+    "p1781624559096999",
+    "p178162455909666"
   ],
   "trash": [
     {
@@ -2659,6 +2635,66 @@
         "name": "F5 · Cosmético y baja prioridad",
         "area": "a1",
         "desc": "Detalles visuales y de bajo impacto. Al final.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T15:50:31.495Z",
+      "item": {
+        "id": "p1781624559096999",
+        "name": "Notas y criterios",
+        "area": "a1",
+        "desc": "No son tareas de desarrollo: criterios y recordatorios.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T15:50:34.701Z",
+      "item": {
+        "id": "p1781624559096999",
+        "name": "Notas y criterios",
+        "area": "a1",
+        "desc": "No son tareas de desarrollo: criterios y recordatorios.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T15:50:37.428Z",
+      "item": {
+        "id": "p178162455909666",
+        "name": "Hechas",
+        "area": "a1",
+        "desc": "Ya completadas.",
         "status": "active",
         "hasLeads": false,
         "color": "#007aff",

@@ -73,7 +73,7 @@
       "desc": "Analítica interna con potencial SaaS a futuro.",
       "status": "active",
       "hasLeads": false,
-      "driveUrl": "",
+      "driveUrl": "https://drive.google.com/drive/folders/1DE5tzUIDkvd9JC4iSsoSoYEnUCUiFtgh",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
@@ -1139,8 +1139,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t178158357562599",

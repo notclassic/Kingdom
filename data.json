@@ -2,19 +2,19 @@
   "areas": [
     {
       "id": "a1",
-      "name": "Inteligencia & Software",
+      "name": "Desarrollo",
       "color": "#007aff",
       "context": "profesional"
     },
     {
       "id": "a2",
-      "name": "Operaciones Comerciales & Trading",
+      "name": "Negocios",
       "color": "#34c759",
       "context": "profesional"
     },
     {
       "id": "a3",
-      "name": "Clientes & Agencia",
+      "name": "Natclassic",
       "color": "#af52de",
       "context": "profesional"
     },
@@ -32,20 +32,8 @@
     },
     {
       "id": "pa3",
-      "name": "🏠 Hogar",
+      "name": "Hogar",
       "color": "#f5ac2f",
-      "context": "personal"
-    },
-    {
-      "id": "pa4",
-      "name": "💰 Finanzas Personales",
-      "color": "#1d4ed8",
-      "context": "personal"
-    },
-    {
-      "id": "pa5",
-      "name": "✈️ Viajes",
-      "color": "#af52de",
       "context": "personal"
     }
   ],
@@ -737,6 +725,18 @@
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:33",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781580925539583",
+      "projectId": "p1781572037505287",
+      "text": "fevision de pantallazos para para ver cambios",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:35",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

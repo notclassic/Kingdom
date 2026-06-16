@@ -710,13 +710,14 @@
       "projectId": "p1781572037505287",
       "text": "se exporta la inforacion de la caprta linkeada de drive",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-06-17",
       "dueTime": "01:11",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781580666242515",

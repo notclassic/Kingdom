@@ -1899,7 +1899,7 @@
       "id": "t1781626726363974",
       "projectId": "p1781624973627687",
       "text": "Tres límites honestos, para que no te lleves sorpresas: No escribo directo en tu dashboard. Todo pasa por el .md que vos importás; los datos viven en tu GitHub, que no toco. Para modificar o mover algo existente necesito sus ids actuales, así que antes de cada ronda de cambios conviene que me pases un export fresco. Para agregar cosas nuevas no hace falta. \"Reemplazar una tarea por otra\": puedo reescribir el texto de una (mismo id) o crear la nueva y vos borrás la vieja. Borrar no lo hace el import —eso es manual— justamente para no eliminar nada por error.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "14:18",
       "priority": "high",

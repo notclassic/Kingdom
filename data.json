@@ -91,21 +91,6 @@
       "context": "profesional"
     },
     {
-      "id": "inbox",
-      "color": "#8a919e",
-      "name": "💡 Ideas",
-      "area": null,
-      "desc": "Ideas sueltas y recordatorios rápidos.",
-      "status": "active",
-      "hasLeads": false,
-      "context": "otro",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "parentId": null
-    },
-    {
       "id": "p3",
       "color": "#34c759",
       "name": "Aprendizaje Claude",
@@ -219,6 +204,21 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
+    },
+    {
+      "id": "inbox",
+      "color": "#8a919e",
+      "name": "💡 Ideas",
+      "area": null,
+      "desc": "Ideas sueltas y recordatorios rápidos.",
+      "status": "active",
+      "hasLeads": false,
+      "context": "otro",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "parentId": null
     },
     {
       "id": "p178158196081099",
@@ -826,6 +826,18 @@
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:57",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781582349097863",
+      "projectId": "p1781572037505287",
+      "text": "mejorar los botones de respuesta de telfgram",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:58",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

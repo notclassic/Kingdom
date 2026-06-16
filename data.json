@@ -54,7 +54,7 @@
       "id": "p1781572037505287",
       "name": "Kingdom",
       "area": "a1",
-      "desc": "mejoras a desarrollar",
+      "desc": "Mejoras a desarrollar.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -70,7 +70,7 @@
       "color": "#007aff",
       "name": "Chileautos",
       "area": "a1",
-      "desc": "Analítica interna con potencial SaaS futuro.",
+      "desc": "Analítica interna con potencial SaaS a futuro.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -83,7 +83,7 @@
       "id": "p1781582993530486",
       "name": "Plataforma",
       "area": "a1",
-      "desc": "Chileautos",
+      "desc": "Chileautos.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -99,7 +99,7 @@
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
       "area": "a2",
-      "desc": "tiendo el crm de chileautos se utiliza esa infoamcion para activar este proeyecto. a traves de un tercero que revise los autos.",
+      "desc": "Usando el CRM de Chileautos, se utiliza esa información para activar este proyecto a través de un tercero que revise los autos.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -124,10 +124,25 @@
       "context": "profesional"
     },
     {
+      "id": "p1781590678767292",
+      "name": "Bot Atención al Cliente",
+      "area": null,
+      "desc": "Implementación y lanzamiento de bots de atención al cliente en 3 fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento. (base: procedimiento de lanzamiento del bot)",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#8a919e",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p1781582668835650",
-      "name": "whatspp",
+      "name": "WhatsApp",
       "area": "a1",
-      "desc": "envio de mesaje modificando el link con el teleofno y envio por whatsoc contecto de venta",
+      "desc": "Envío de mensajes modificando el link con el teléfono y enviando por WhatsApp el contacto de venta.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -140,7 +155,7 @@
     },
     {
       "id": "p1781584127104452",
-      "name": "plan de publicaicones para capaciond e clientes IG",
+      "name": "Plan de publicaciones para captación de clientes (IG)",
       "area": "a1",
       "desc": "",
       "status": "active",
@@ -184,9 +199,9 @@
     {
       "id": "p6",
       "color": "#00c7be",
-      "name": "Activacion NotClassic",
+      "name": "Activación NotClassic",
       "area": "a2",
-      "desc": "Operación general de venta online, parti buscnado ne¿uevaa agecncias",
+      "desc": "Operación general de venta online; partir buscando nuevas agencias.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -230,7 +245,7 @@
       "color": "#a2845e",
       "name": "Mankeleathers",
       "area": "a2",
-      "desc": "E-commerce de bolsos de cuero, reactivación.",
+      "desc": "E-commerce de bolsos de cuero; reactivación.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -241,26 +256,11 @@
       "parentId": "p6"
     },
     {
-      "id": "p1781590678767292",
-      "name": "Bot Atención al Cliente",
-      "area": null,
-      "desc": "Implementación y lanzamiento de bots de atención al cliente en 3 fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento. (base: procedimiento de lanzamiento del bot)",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
-    },
-    {
       "id": "p9",
       "color": "#af52de",
       "name": "Grupo Arte",
       "area": "a3",
-      "desc": "Cliente NotClassic: PPT, Ads, cobros.",
+      "desc": "Cliente NotClassic: PPT, Ads y cobros.",
       "status": "active",
       "hasLeads": true,
       "driveUrl": "",
@@ -330,7 +330,7 @@
       "id": "p1781589327240693",
       "name": "Script correo",
       "area": "pa1",
-      "desc": "arreglas los correos",
+      "desc": "Arreglar los correos.",
       "status": "active",
       "hasLeads": false,
       "color": "#ffa50a",
@@ -390,7 +390,7 @@
     {
       "id": "t1",
       "projectId": "p1",
-      "text": "Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)",
+      "text": "Configurar alertas de oportunidades de compra (bajo kilometraje, precio bajo, único dueño, nicho).",
       "done": false,
       "dueDate": "2026-06-16",
       "emailAlert": false,
@@ -402,7 +402,7 @@
     {
       "id": "t2",
       "projectId": "p1",
-      "text": "Configurar alertas de información de la industria",
+      "text": "Configurar alertas de información de la industria.",
       "done": false,
       "dueDate": "2026-06-18",
       "emailAlert": false,
@@ -414,7 +414,7 @@
     {
       "id": "t3",
       "projectId": "p2",
-      "text": "Generar email de salida",
+      "text": "Generar email de salida.",
       "done": false,
       "dueDate": "2026-06-15",
       "emailAlert": false,
@@ -428,7 +428,7 @@
     {
       "id": "t4",
       "projectId": "p2",
-      "text": "Armar listado de rubros",
+      "text": "Armar listado de rubros.",
       "done": false,
       "dueDate": "2026-06-15",
       "emailAlert": false,
@@ -442,7 +442,7 @@
     {
       "id": "t5",
       "projectId": "p2",
-      "text": "Buscar leads por rubro",
+      "text": "Buscar leads por rubro.",
       "done": false,
       "dueDate": "2026-06-17",
       "emailAlert": false,
@@ -454,7 +454,7 @@
     {
       "id": "t6",
       "projectId": "p2",
-      "text": "Preparar bot por rubro",
+      "text": "Preparar el bot por rubro.",
       "done": false,
       "dueDate": "2026-06-19",
       "emailAlert": false,
@@ -466,7 +466,7 @@
     {
       "id": "t7",
       "projectId": "p3",
-      "text": "Pruebas e investigación de automatizaciones con Claude",
+      "text": "Pruebas e investigación de automatizaciones con Claude.",
       "done": false,
       "dueDate": "2026-06-20",
       "emailAlert": false,
@@ -478,7 +478,7 @@
     {
       "id": "t10",
       "projectId": "p4",
-      "text": "Preparación y venta de vehículos",
+      "text": "Preparación y venta de vehículos.",
       "done": false,
       "dueDate": "2026-06-25",
       "emailAlert": false,
@@ -490,7 +490,7 @@
     {
       "id": "t1781571878665580",
       "projectId": "p4",
-      "text": "Cordinar reunion con Carranza",
+      "text": "Coordinar reunión con Carranza.",
       "done": false,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
@@ -502,7 +502,7 @@
     {
       "id": "t1781575093446527",
       "projectId": "p4",
-      "text": "Evaluar alertas de oportunidades",
+      "text": "Evaluar alertas de oportunidades.",
       "done": false,
       "dueDate": null,
       "dueTime": null,
@@ -514,7 +514,7 @@
     {
       "id": "t9",
       "projectId": "p4",
-      "text": "Gestionar capital y ofertas de compra",
+      "text": "Gestionar capital y ofertas de compra.",
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
@@ -526,7 +526,7 @@
     {
       "id": "t11",
       "projectId": "p5",
-      "text": "Redactar plan de negocio de pintura, inccluyendo costos e inversion",
+      "text": "Redactar el plan de negocio de pintura, incluyendo costos e inversión.",
       "done": false,
       "dueDate": "2026-06-17",
       "emailAlert": false,
@@ -538,7 +538,7 @@
     {
       "id": "t12",
       "projectId": "p5",
-      "text": "Agendar reunión con dueño del taller",
+      "text": "Agendar reunión con el dueño del taller.",
       "done": false,
       "dueDate": "2026-06-19",
       "emailAlert": false,
@@ -550,7 +550,7 @@
     {
       "id": "t13",
       "projectId": "p5",
-      "text": "Proponer modelo de negocio",
+      "text": "Proponer el modelo de negocio.",
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
@@ -562,7 +562,7 @@
     {
       "id": "t14",
       "projectId": "p6",
-      "text": "Crear/optimizar publicaciones",
+      "text": "Crear y optimizar publicaciones.",
       "done": false,
       "dueDate": "2026-06-15",
       "emailAlert": false,
@@ -575,7 +575,7 @@
     {
       "id": "t15",
       "projectId": "p6",
-      "text": "Web scrapping de competidores",
+      "text": "Web scraping de competidores.",
       "done": false,
       "dueDate": "2026-06-18",
       "emailAlert": false,
@@ -587,7 +587,7 @@
     {
       "id": "t16",
       "projectId": "p6",
-      "text": "Captación de leads",
+      "text": "Captación de leads.",
       "done": false,
       "dueDate": "2026-06-21",
       "emailAlert": false,
@@ -599,7 +599,7 @@
     {
       "id": "t17",
       "projectId": "p7",
-      "text": "Reactivar web y plataforma ecommerce",
+      "text": "Reactivar la web y la plataforma de e-commerce.",
       "done": false,
       "dueDate": "2026-06-24",
       "emailAlert": false,
@@ -611,7 +611,7 @@
     {
       "id": "t18",
       "projectId": "p7",
-      "text": "Estrategia de marketing para liquidar stock",
+      "text": "Estrategia de marketing para liquidar stock.",
       "done": false,
       "dueDate": "2026-06-26",
       "emailAlert": false,
@@ -623,7 +623,7 @@
     {
       "id": "t19",
       "projectId": "p8",
-      "text": "Crear página web desde cero",
+      "text": "Crear la página web desde cero.",
       "done": false,
       "dueDate": "2026-06-20",
       "emailAlert": false,
@@ -635,7 +635,7 @@
     {
       "id": "t20",
       "projectId": "p8",
-      "text": "Actualizar catálogo de productos",
+      "text": "Actualizar el catálogo de productos.",
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
@@ -647,7 +647,7 @@
     {
       "id": "t21",
       "projectId": "p8",
-      "text": "Prospección de clientes potenciales",
+      "text": "Prospección de clientes potenciales.",
       "done": false,
       "dueDate": "2026-06-27",
       "emailAlert": false,
@@ -659,7 +659,7 @@
     {
       "id": "t22",
       "projectId": "p9",
-      "text": "Diseñar presentaciones (PPT)",
+      "text": "Diseñar presentaciones (PPT).",
       "done": false,
       "dueDate": "2026-06-16",
       "emailAlert": false,
@@ -671,7 +671,7 @@
     {
       "id": "t23",
       "projectId": "p9",
-      "text": "Gestionar campañas de Google Ads",
+      "text": "Gestionar campañas de Google Ads.",
       "done": false,
       "dueDate": "2026-06-19",
       "emailAlert": false,
@@ -683,7 +683,7 @@
     {
       "id": "t24",
       "projectId": "p9",
-      "text": "Control y seguimiento de cobros",
+      "text": "Control y seguimiento de cobros.",
       "done": false,
       "dueDate": "2026-06-30",
       "emailAlert": false,
@@ -695,7 +695,7 @@
     {
       "id": "t25",
       "projectId": "p10",
-      "text": "Arreglar y optimizar el sitio notclassic.com",
+      "text": "Arreglar y optimizar el sitio notclassic.com.",
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
@@ -707,7 +707,7 @@
     {
       "id": "t1781502750840",
       "projectId": "p1781502750840",
-      "text": "visitar a León",
+      "text": "Visitar a León.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "12:30",
@@ -721,7 +721,7 @@
     {
       "id": "t1781570314630499",
       "projectId": "p10",
-      "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",
+      "text": "Buscar agencias del estilo de BMR para ofrecerles el servicio.",
       "done": false,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
@@ -733,7 +733,7 @@
     {
       "id": "t1781570353106594",
       "projectId": "p10",
-      "text": "Mejora al sitio, limpieza y ultimo catalogo",
+      "text": "Mejora del sitio: limpieza y último catálogo.",
       "done": false,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
@@ -745,7 +745,7 @@
     {
       "id": "t1781572146539102",
       "projectId": "p1781572037505287",
-      "text": "descargar base y pasar por IA",
+      "text": "Descargar la base y procesarla con IA.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "23:08",
@@ -757,7 +757,7 @@
     {
       "id": "t1781572160041482",
       "projectId": "p1781572037505287",
-      "text": "menu mobible deslizable cmo ihpne",
+      "text": "Menú móvil deslizable, estilo iPhone.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "23:09",
@@ -769,7 +769,7 @@
     {
       "id": "t1781579363026116",
       "projectId": "p1781572037505287",
-      "text": "poder editar la catogira desde el paner no hay un botn de edicion de proyectos",
+      "text": "Poder editar la categoría desde el panel: hoy no hay un botón de edición de proyectos.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:08",
@@ -782,7 +782,7 @@
     {
       "id": "t1781579527608393",
       "projectId": "p1781572037505287",
-      "text": "se exporta la inforacion de la caprta linkeada de drive",
+      "text": "Que se exporte la información de la carpeta de Drive vinculada.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:11",
@@ -795,7 +795,7 @@
     {
       "id": "t1781580666242515",
       "projectId": "p1781572037505287",
-      "text": "fabicon",
+      "text": "Favicon.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:31",
@@ -808,7 +808,7 @@
     {
       "id": "t1781579686000429",
       "projectId": "p1781572037505287",
-      "text": "aca poder pegar fotos  y adjuntar \ncambiar el lapiz ed editar la capeta por editar la catorgia de la tarea si es famlia hogar si es personal o las otras catogias si son distntas y el poder editar dentro de cuando uno  aprieta el link de carpta",
+      "text": "En la tarea: poder pegar fotos y adjuntar archivos; cambiar el lápiz de \"editar carpeta\" por \"editar la categoría de la tarea\" (familia, hogar, personal u otras); y poder editar dentro del enlace de la carpeta.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:12",
@@ -821,7 +821,7 @@
     {
       "id": "t1781580759092852",
       "projectId": "p1781572037505287",
-      "text": "cambio de color osea el botn dia noche apretando el logo en el centro",
+      "text": "Cambio de color (modo día/noche) apretando el logo del centro.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:32",
@@ -834,7 +834,7 @@
     {
       "id": "t1781580800586713",
       "projectId": "p1781572037505287",
-      "text": "botones depslegables",
+      "text": "Botones desplegables.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:33",
@@ -847,7 +847,7 @@
     {
       "id": "t1781580925539583",
       "projectId": "p1781572037505287",
-      "text": "fevision de pantallazos para para ver cambios",
+      "text": "Revisión de pantallazos para ver los cambios.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",
@@ -860,7 +860,7 @@
     {
       "id": "t1781580951081409",
       "projectId": "p1781572037505287",
-      "text": "primero generar vista para celualr y luego apps",
+      "text": "Primero generar la vista para celular y luego la app.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",
@@ -873,7 +873,7 @@
     {
       "id": "t1781581080020863",
       "projectId": "p1781572037505287",
-      "text": "Envío de corres desde acá",
+      "text": "Envío de correos desde acá.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:37",
@@ -886,7 +886,7 @@
     {
       "id": "t1781581108973528",
       "projectId": "p1781572037505287",
-      "text": "Agregar tareasPor 3 vía cooreo",
+      "text": "Agregar tareas (Por 3) vía correo.",
       "done": false,
       "dueDate": null,
       "dueTime": null,
@@ -898,7 +898,7 @@
     {
       "id": "t1781581152031707",
       "projectId": "p1781502750840",
-      "text": "asistir",
+      "text": "Asistir.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "07:30",
@@ -910,7 +910,7 @@
     {
       "id": "t1781581229142396",
       "projectId": "p1781572037505287",
-      "text": "otra vizualizacion del menu de proyectos",
+      "text": "Otra visualización del menú de proyectos.",
       "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:40",
@@ -923,7 +923,7 @@
     {
       "id": "t1781581370745505",
       "projectId": "p1781572037505287",
-      "text": "las tareas cuando uno las cre siempre quedan comoquedo la caga priemro dejarlas para mañana",
+      "text": "Las tareas, al crearse, siempre quedan como \"urgente\" (quedó la caga); deberían quedar por defecto para mañana.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:42",
@@ -936,7 +936,7 @@
     {
       "id": "t1781581497206532",
       "projectId": "p1781572037505287",
-      "text": "xacar el estado en la pantalla si esta con tareas vencidad esta el tono color rojo visual, me gustaria detodas maneras hacerlo mas notorio de tareas vendia, y si la tarea esta vendida necito mas cantidad de aletar por telgram neceiso mas alertas vencidas o por vencer",
+      "text": "Hacer más notorio el estado de tareas vencidas (hoy hay un tono rojo, pero quiero que se note más). Si la tarea está vencida, necesito más alertas por Telegram, tanto vencidas como por vencer.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:43",
@@ -949,7 +949,7 @@
     {
       "id": "t1781581543159671",
       "projectId": "p1781572037505287",
-      "text": "camvbo de colores al logo cafe del nuevo logo",
+      "text": "Cambiar los colores del logo al café del nuevo logo.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:45",
@@ -962,7 +962,7 @@
     {
       "id": "t1781581649266956",
       "projectId": "p1781572037505287",
-      "text": "mienras no se ponga la tarea complekta la parte de alentas debte tenner mas de una programacion⏰ Anticipación de avisos por importancia\nCuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~5 min), así que es aproximado, no exacto.\n🔴 Urgente\n(:( Quedó la caga)\n\n30 minutos antes\n🟡 Normal\n(:/ Pa mañana)\n\n1 hora antes\n🟢 Puede esperar\n(:) No pasa nada)",
+      "text": "Mientras la tarea no se marque como completa, la parte de alertas debería tener más de una programación (anticipación de avisos por importancia).",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "09:00",
@@ -974,7 +974,7 @@
     {
       "id": "t1781581710610850",
       "projectId": "p1781572037505287",
-      "text": "conexion con gmail, poder enviar correos , ideal poder mandar una reunion con viddeo llamda  laas personas de la bbdd de la pagina que tengo por proeycot o",
+      "text": "Conexión con Gmail para poder enviar correos; idealmente, agendar una reunión por videollamada con las personas de la base de datos de la página, por proyecto.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:47",
@@ -987,7 +987,7 @@
     {
       "id": "t1781582263961958",
       "projectId": "p1781572037505287",
-      "text": "el boton nueva cateofgia de configuracion no da la opcion de legeir qusi es personal proefiokal u otro y es de  los bortnes sin diseño",
+      "text": "El botón \"nueva categoría\" en configuración no da la opción de elegir si es personal, profesional u otro, y los botones no tienen diseño.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:57",
@@ -1000,7 +1000,7 @@
     {
       "id": "t1781582349097863",
       "projectId": "p1781572037505287",
-      "text": "mejorar los botones de respuesta de telfgram, las alertas se contan cuando se pone tarea lista",
+      "text": "Mejorar los botones de respuesta de Telegram; las alertas se detienen cuando se marca la tarea como lista.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:58",
@@ -1013,7 +1013,7 @@
     {
       "id": "t1781582365048355",
       "projectId": "p1781572037505287",
-      "text": "genrar dos bot uno para aletas y otro para audios",
+      "text": "Generar dos bots: uno para alertas y otro para audios.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:59",
@@ -1026,7 +1026,7 @@
     {
       "id": "t1781582476167637",
       "projectId": "p1781572037505287",
-      "text": "separar protafolio de crm , la hoja de crm debe ser mas profesional y conectada a gmail",
+      "text": "Separar Portafolio de CRM; la hoja de CRM debe ser más profesional y conectada a Gmail.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:00",
@@ -1039,7 +1039,7 @@
     {
       "id": "t1781582619084311",
       "projectId": "p1781572037505287",
-      "text": "boton de calendario se qued apegado cuando uno modifca la hora y no toca",
+      "text": "El botón de calendario queda pegado cuando uno modifica la hora y no la toca.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:03",
@@ -1053,7 +1053,7 @@
     {
       "id": "t178158273877926",
       "projectId": "p1781582668835650",
-      "text": "el mensaje saluda a la amepres de bvino no al nombre de el usuario disciendo hola vinoteca, tenemos una notica imoratnte para datrte, tenemos una IA para tu negocio",
+      "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:04",
@@ -1067,7 +1067,7 @@
     {
       "id": "t1781583104106856",
       "projectId": "p1781572037505287",
-      "text": "|en menu de nuevo proyecto no esta la copcion de crearlo como subproyecto solo deja proyectos no tiene la opcionm de un dependiete",
+      "text": "En el menú de nuevo proyecto no está la opción de crearlo como subproyecto: solo deja crear proyectos, no dependientes.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:10",
@@ -1081,7 +1081,7 @@
     {
       "id": "t1781583152633291",
       "projectId": "p1781572037505287",
-      "text": "me muesta todas las tareas  vencidas cuando las creo",
+      "text": "Me muestra todas las tareas como vencidas cuando las creo.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:12",
@@ -1093,7 +1093,7 @@
     {
       "id": "t1781583219754591",
       "projectId": "p1781583210289147",
-      "text": "mantencion",
+      "text": "Mantención.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:13",
@@ -1107,7 +1107,7 @@
     {
       "id": "t1781583240720865",
       "projectId": "p1781583210289147",
-      "text": "Revision tecnica",
+      "text": "Revisión técnica.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:13",
@@ -1119,7 +1119,7 @@
     {
       "id": "t1781583512115972",
       "projectId": "p1781572037505287",
-      "text": "mejorar pestaña  leads",
+      "text": "Mejorar la pestaña de Leads.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:18",
@@ -1131,7 +1131,7 @@
     {
       "id": "t1781583565296156",
       "projectId": "p7",
-      "text": "comprar dominio",
+      "text": "Comprar dominio.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:19",
@@ -1144,7 +1144,7 @@
     {
       "id": "t178158357562599",
       "projectId": "p8",
-      "text": "comprar domino en nic",
+      "text": "Comprar dominio en NIC.",
       "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:19",
@@ -1157,7 +1157,7 @@
     {
       "id": "t1781584379119607",
       "projectId": "p1781572037505287",
-      "text": "incluir todos los proyect dentero del boton todas con una fkecha hacia abajo, lo mismp en los otros botones de portafoio con un sub menu desplebale como el de todos los proyectos, el botno todos los poyectos tiene el finlt si es vida profesional o personal u otro",
+      "text": "Incluir todos los proyectos dentro del botón \"Todas\" con una flecha hacia abajo; lo mismo en los otros botones del portafolio, con un submenú desplegable como el de \"Todos los proyectos\". El botón \"Todos los proyectos\" filtra si es vida, profesional, personal u otro.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:31",
@@ -1169,7 +1169,7 @@
     {
       "id": "t1781584626491281",
       "projectId": "p1781572037505287",
-      "text": "se puede eliminar el tituo portafonlio",
+      "text": "¿Se puede eliminar el título \"Portafolio\"?",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:36",
@@ -1182,7 +1182,7 @@
     {
       "id": "t1781585249457736",
       "projectId": "p1781572037505287",
-      "text": "resumen de todo el proyecto",
+      "text": "Resumen de todo el proyecto.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:47",
@@ -1194,7 +1194,7 @@
     {
       "id": "t17815866999337",
       "projectId": "p1781572037505287",
-      "text": "buscar la mejor manera de que la IA mejore los proyecrtos cree tareas y me ayude como asisstente en cad auno, ademas las IA van a tener acceso a cada carpte con todos los documentso del prouecto, y por ejemplo me puede ayudar categorizar entre la urgencaiasde las tareas entre diseño o de funcionalidades o urgentes y menso urgente, crear un nuevo",
+      "text": "Buscar la mejor manera de que la IA mejore los proyectos, cree tareas y me ayude como asistente en cada uno. Las IA tendrán acceso a cada carpeta con todos los documentos del proyecto; por ejemplo, podría ayudarme a categorizar las tareas por urgencia (diseño, funcionalidad, urgente/menos urgente) y a crear tareas nuevas.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "01:11",
@@ -1230,7 +1230,7 @@
     {
       "id": "t1781590678767834",
       "projectId": "p178159067876735",
-      "text": "Analizar y estructurar la base de conocimiento a partir de la info recibida.",
+      "text": "Analizar y estructurar la base de conocimiento a partir de la información recibida.",
       "done": false,
       "dueDate": "2026-06-26",
       "dueTime": "",

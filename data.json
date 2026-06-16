@@ -1703,6 +1703,30 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781593873428356",
+      "projectId": "p1781589327240693",
+      "text": "me llegan iofertas dupplciadas y muy lentas",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "05:10",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781593976558694",
+      "projectId": "p1781589327240693",
+      "text": "sacar duplicados \nhttps://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "05:12",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

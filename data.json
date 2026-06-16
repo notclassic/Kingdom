@@ -276,6 +276,21 @@
       "hasLeads": false,
       "driveFolderId": "",
       "desc": "undefined||"
+    },
+    {
+      "id": "p1781575055004938",
+      "name": "Evaluar alertas de oportunidades",
+      "area": "a2",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ff9f0a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p4"
     }
   ],
   "tasks": [
@@ -364,18 +379,6 @@
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
-      "driveUrl": "",
-      "priority": "medium"
-    },
-    {
-      "id": "t8",
-      "projectId": "p4",
-      "text": "Evaluar alertas de oportunidades",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "emailAlert": false,
-      "alertSent": false,
-      "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
     },
@@ -694,7 +697,8 @@
   "deletedTaskIds": [
     "t1781538739000",
     "t1781539246928",
-    "t1781540454184"
+    "t1781540454184",
+    "t8"
   ],
   "deletedProjectIds": [
     "p1781538739000",

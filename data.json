@@ -29,6 +29,24 @@
       "name": "Hogar",
       "color": "#cea427",
       "context": "personal"
+    },
+    {
+      "id": "pa2",
+      "name": "🏥 Salud",
+      "color": "#2a9d8f",
+      "context": "personal"
+    },
+    {
+      "id": "pa4",
+      "name": "💰 Finanzas Personales",
+      "color": "#1d4ed8",
+      "context": "personal"
+    },
+    {
+      "id": "pa5",
+      "name": "✈️ Viajes",
+      "color": "#af52de",
+      "context": "personal"
     }
   ],
   "projects": [
@@ -219,6 +237,20 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
+    },
+    {
+      "id": "p178158196081099",
+      "name": "Ford",
+      "area": "pa1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal"
     }
   ],
   "tasks": [

@@ -818,6 +818,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781582263961958",
+      "projectId": "p1781572037505287",
+      "text": "el boton nueva cateofgia de configuracion no da la opcion de legeir qusi es personal proefiokal u otro y es de  los bortnes sin diseño",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:57",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

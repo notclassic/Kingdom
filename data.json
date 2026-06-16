@@ -14,7 +14,7 @@
     },
     {
       "id": "a3",
-      "name": "Natclassic",
+      "name": "Notclassic",
       "color": "#af52de",
       "context": "profesional"
     },
@@ -770,6 +770,18 @@
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:43",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781581543159671",
+      "projectId": "p1781572037505287",
+      "text": "camvio de colores al logo cafe",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:45",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

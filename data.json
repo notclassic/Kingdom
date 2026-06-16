@@ -609,7 +609,7 @@
       "name": "Hechas",
       "area": "a1",
       "desc": "Ya completadas.",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -617,14 +617,15 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781627361828
     },
     {
       "id": "p1781625628409853",
       "name": "Resumen de todo el proyecto.",
       "area": "a1",
       "desc": "",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -632,7 +633,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781627363229
     }
   ],
   "tasks": [

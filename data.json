@@ -593,6 +593,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781570314630499",
+      "projectId": "p10",
+      "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

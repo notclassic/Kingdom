@@ -51,6 +51,20 @@
   ],
   "projects": [
     {
+      "id": "p1781572037505287",
+      "name": "Kingdom",
+      "area": "a1",
+      "desc": "mejoras a desarrollar",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional"
+    },
+    {
       "id": "p1",
       "color": "#007aff",
       "name": "Chileautos Databot",
@@ -260,20 +274,6 @@
       "hasLeads": false,
       "driveFolderId": "",
       "desc": "undefined||"
-    },
-    {
-      "id": "p1781572037505287",
-      "name": "Kingdom",
-      "area": "a1",
-      "desc": "mejoras a desarrollar",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional"
     }
   ],
   "tasks": [
@@ -640,6 +640,18 @@
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
       "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781572146539102",
+      "projectId": "p1781572037505287",
+      "text": "descargar base y pasar por IA",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "23:08",
+      "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""

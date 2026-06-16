@@ -1031,7 +1031,8 @@
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t2",

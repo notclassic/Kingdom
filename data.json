@@ -281,7 +281,8 @@
       "icon": "",
       "contacts": [],
       "hasLeads": false,
-      "driveFolderId": ""
+      "driveFolderId": "",
+      "desc": "undefined"
     },
     {
       "id": "inbox",

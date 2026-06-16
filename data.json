@@ -702,8 +702,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781579527608393",
@@ -715,8 +714,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580666242515",
@@ -740,8 +738,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580759092852",
@@ -830,7 +827,7 @@
     {
       "id": "t1781581229142396",
       "projectId": "p1781572037505287",
-      "text": "otra cisuazacion del menu de proyectos",
+      "text": "otra vizualizacion del menu de proyectos",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:40",
@@ -866,7 +863,7 @@
     {
       "id": "t1781581543159671",
       "projectId": "p1781572037505287",
-      "text": "camvio de colores al logo cafe",
+      "text": "camvbo de colores al logo cafe del nuevo logo",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:45",
@@ -1075,6 +1072,18 @@
       "dueDate": "2026-06-16",
       "dueTime": "02:36",
       "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781585249457736",
+      "projectId": "p1781572037505287",
+      "text": "resumen de todo el proyecto",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "00:47",
+      "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""

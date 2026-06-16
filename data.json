@@ -1316,7 +1316,8 @@
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t23",

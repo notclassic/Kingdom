@@ -127,7 +127,7 @@
     {
       "id": "p6",
       "color": "#00c7be",
-      "name": "Activacion not classic",
+      "name": "Activacion NotClassic",
       "area": "a2",
       "desc": "Operación general de venta online, parti buscnado ne¿uevaa agecncias",
       "status": "active",
@@ -734,6 +734,18 @@
       "id": "t1781580925539583",
       "projectId": "p1781572037505287",
       "text": "fevision de pantallazos para para ver cambios",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:35",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781580951081409",
+      "projectId": "p1781572037505287",
+      "text": "primero generar vista para celualr y luego apps",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",

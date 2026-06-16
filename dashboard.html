@@ -256,7 +256,9 @@ section{
   color:#fff; font-weight:800; font-size:.78rem; cursor:pointer;
 }
 .row.dragging{ opacity:.35; }
-.row.drag-over{ border-top:2px solid var(--accent); }
+.row.drop-before{ box-shadow: inset 0 3px 0 0 var(--accent); }
+.row.drop-after{ box-shadow: inset 0 -3px 0 0 var(--accent); }
+.row.drop-inside{ outline:2px solid var(--accent); outline-offset:-2px; background:rgba(59,111,237,.10); }
 .row-detail{
   border-left:3px solid var(--accent-color, var(--accent));
   background:var(--panel); padding:10px 14px 14px 14px; border-bottom:1px solid var(--border);
@@ -1688,7 +1690,6 @@ function clearProjectFilter(){
 /* ====== RENDER TARJETAS PROYECTO ====== */
 let showDoneProjects = false;
 let shownDoneTasks = new Set();
-let moveProjId = null;
 function renderProjectCards(){
   const cont = document.getElementById('projectCards');
   const passFilters = p => (activeArea==='all' || p.area===activeArea)
@@ -1800,7 +1801,6 @@ function renderProjectCards(){
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
-        <button onclick="moveProjectInto('${p.id}')" title="Mover dentro de otro proyecto (subproyecto)">⤵</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
         <button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>
         <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
@@ -1879,28 +1879,6 @@ function getDescendantIds(id){
   }
   return out;
 }
-function moveProjectInto(id){
-  moveProjId = id;
-  const banned = new Set([id, ...getDescendantIds(id)]);
-  const opts = data.projects.filter(p=>!banned.has(p.id) && p.status!=='done');
-  const cur = data.projects.find(p=>p.id===id);
-  const sel = document.getElementById('moveProjSelect');
-  sel.innerHTML = '<option value="">— Nivel superior (sin proyecto padre) —</option>' +
-    opts.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
-  sel.value = (cur && cur.parentId) ? cur.parentId : '';
-  document.getElementById('moveProjTitle').textContent = 'Mover «' + (cur?cur.name:'') + '» dentro de…';
-  document.getElementById('moveProjOverlay').classList.add('open');
-}
-function confirmMoveProject(){
-  const p = data.projects.find(x=>x.id===moveProjId);
-  if(p){ const v = document.getElementById('moveProjSelect').value; p.parentId = v || null; }
-  closeMoveProject();
-  save(); renderAll();
-}
-function closeMoveProject(){
-  moveProjId = null;
-  document.getElementById('moveProjOverlay').classList.remove('open');
-}
 
 /* ====== REORDENAR PROYECTOS (DRAG & DROP) ====== */
 let draggedProjectId = null;
@@ -1909,30 +1887,54 @@ function dragStart(e){
   e.currentTarget.classList.add('dragging');
   e.dataTransfer.effectAllowed = 'move';
 }
+function clearDropClasses(){
+  document.querySelectorAll('.row.drop-before, .row.drop-after, .row.drop-inside')
+    .forEach(r=>r.classList.remove('drop-before','drop-after','drop-inside'));
+}
+function dropZoneAt(clientY, rowEl){
+  const r = rowEl.getBoundingClientRect();
+  const y = clientY - r.top;
+  if(y < r.height*0.30) return 'before';
+  if(y > r.height*0.70) return 'after';
+  return 'inside';
+}
+function dropProject(fromId, targetId, zone){
+  if(!fromId || !targetId || fromId===targetId) return;
+  const from = data.projects.find(p=>p.id===fromId);
+  const target = data.projects.find(p=>p.id===targetId);
+  if(!from || !target) return;
+  if(getDescendantIds(fromId).includes(targetId)) return; // no meter dentro de un hijo propio
+  from.parentId = (zone==='inside') ? targetId : (target.parentId || null);
+  const fromIdx = data.projects.indexOf(from);
+  data.projects.splice(fromIdx, 1);
+  let targetIdx = data.projects.indexOf(target);
+  if(zone==='after' || zone==='inside') targetIdx += 1;
+  data.projects.splice(targetIdx, 0, from);
+  save(); renderAll();
+}
 function dragOver(e){
   e.preventDefault();
-  if(e.currentTarget.dataset.id !== draggedProjectId) e.currentTarget.classList.add('drag-over');
+  const row = e.currentTarget;
+  if(row.dataset.id === draggedProjectId) return;
+  if(draggedProjectId && getDescendantIds(draggedProjectId).includes(row.dataset.id)) return;
+  const zone = dropZoneAt(e.clientY, row);
+  row.classList.remove('drop-before','drop-after','drop-inside');
+  row.classList.add('drop-'+zone);
 }
 function dragLeave(e){
-  e.currentTarget.classList.remove('drag-over');
+  e.currentTarget.classList.remove('drop-before','drop-after','drop-inside');
 }
 function dragDrop(e){
   e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  reorderProjects(draggedProjectId, e.currentTarget.dataset.id);
-}
-function reorderProjects(fromId, toId){
-  if(!fromId || !toId || fromId === toId) return;
-  const fromIdx = data.projects.findIndex(p=>p.id===fromId);
-  const toIdx = data.projects.findIndex(p=>p.id===toId);
-  if(fromIdx<0 || toIdx<0) return;
-  const [moved] = data.projects.splice(fromIdx, 1);
-  data.projects.splice(toIdx, 0, moved);
-  save(); renderAll();
+  const row = e.currentTarget;
+  const zone = row.classList.contains('drop-inside') ? 'inside'
+             : row.classList.contains('drop-after') ? 'after' : 'before';
+  clearDropClasses();
+  dropProject(draggedProjectId, row.dataset.id, zone);
 }
 function dragEnd(e){
   e.currentTarget.classList.remove('dragging');
-  document.querySelectorAll('.row.drag-over').forEach(r=>r.classList.remove('drag-over'));
+  clearDropClasses();
   draggedProjectId = null;
 }
 
@@ -1979,7 +1981,7 @@ function startTouchDrag(e, type, id){
   const sel = type === 'task' ? '.task' : '.row';
   const el = e.currentTarget.closest(sel);
   if(!el) return;
-  activeTouchDrag = { type, id, el, sel, overClass: type === 'task' ? 'drag-over-task' : 'drag-over', overTarget: null };
+  activeTouchDrag = { type, id, el, sel, overTarget: null, overZone: null };
   el.classList.add('dragging');
   document.addEventListener('touchmove', onTouchDragMove, { passive:false });
   document.addEventListener('touchend', onTouchDragEnd);
@@ -1990,30 +1992,36 @@ function onTouchDragMove(e){
   e.preventDefault(); // evita que la página scrollee mientras arrastrás
   const t = e.touches[0];
   if(!t) return;
-  const { sel, overClass, el } = activeTouchDrag;
-  document.querySelectorAll('.' + overClass).forEach(x=>x.classList.remove(overClass));
+  const { sel, el, type, id } = activeTouchDrag;
+  document.querySelectorAll('.task.drag-over-task').forEach(x=>x.classList.remove('drag-over-task'));
+  clearDropClasses();
   const under = document.elementFromPoint(t.clientX, t.clientY);
   const target = under ? under.closest(sel) : null;
-  if(target && target !== el){
-    target.classList.add(overClass);
+  if(!target || target === el){ activeTouchDrag.overTarget = null; return; }
+  if(type === 'task'){
+    target.classList.add('drag-over-task');
     activeTouchDrag.overTarget = target;
   } else {
-    activeTouchDrag.overTarget = null;
+    if(getDescendantIds(id).includes(target.dataset.id)){ activeTouchDrag.overTarget = null; return; }
+    const zone = dropZoneAt(t.clientY, target);
+    target.classList.add('drop-'+zone);
+    activeTouchDrag.overTarget = target;
+    activeTouchDrag.overZone = zone;
   }
 }
 function onTouchDragEnd(){
   if(!activeTouchDrag) return;
-  const { type, id, el, overClass, overTarget } = activeTouchDrag;
+  const { type, id, el, overTarget, overZone } = activeTouchDrag;
   el.classList.remove('dragging');
-  document.querySelectorAll('.' + overClass).forEach(x=>x.classList.remove(overClass));
+  document.querySelectorAll('.task.drag-over-task').forEach(x=>x.classList.remove('drag-over-task'));
+  clearDropClasses();
   document.removeEventListener('touchmove', onTouchDragMove, { passive:false });
   document.removeEventListener('touchend', onTouchDragEnd);
   document.removeEventListener('touchcancel', onTouchDragEnd);
-  const targetId = overTarget ? (type === 'task' ? overTarget.dataset.taskId : overTarget.dataset.id) : null;
   activeTouchDrag = null;
-  if(targetId){
-    if(type === 'task') reorderTasks(id, targetId);
-    else reorderProjects(id, targetId);
+  if(overTarget){
+    if(type === 'task') reorderTasks(id, overTarget.dataset.taskId);
+    else dropProject(id, overTarget.dataset.id, overZone || 'before');
   }
 }
 
@@ -2749,15 +2757,5 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 }
 
 </script>
-<div id="moveProjOverlay" class="mp-overlay" onclick="if(event.target===this)closeMoveProject()">
-  <div class="mp-box">
-    <h3 id="moveProjTitle">Mover dentro de…</h3>
-    <select id="moveProjSelect"></select>
-    <div class="mp-actions">
-      <button class="btn-toggle" style="margin-top:0;" onclick="closeMoveProject()">Cancelar</button>
-      <button class="btn-primary" onclick="confirmMoveProject()">Mover</button>
-    </div>
-  </div>
-</div>
 </body>
 </html>

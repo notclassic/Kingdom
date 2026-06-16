@@ -1593,7 +1593,7 @@ function closeProjectModal(){
 function openTaskModal(projectId){
   populateSelects();
   if(projectId) document.getElementById('nt-project').value = projectId;
-  selectPriority('high'); // default: urgente → +2 horas
+  selectPriority('medium'); // default: pa mañana
   document.getElementById('taskModalOverlay').classList.add('open');
   setTimeout(()=>document.getElementById('nt-text').focus(), 50);
 }
@@ -1952,7 +1952,7 @@ function renderProjectCards(){
     if(tasks.length){
       if(pending.length===0){ statusCls='status-done'; statusLabel='Completado'; }
       else{
-        ownOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
+        ownOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') < today);
         if(ownOverdue){ statusCls='status-late'; statusLabel='Atrasado'; }
         else{ statusCls='status-progress'; statusLabel='A tiempo'; }
       }
@@ -1960,7 +1960,7 @@ function renderProjectCards(){
     const expanded = expandedProjects.has(p.id);
     // Rollup: si un subproyecto/descendiente tiene vencidas, el padre se marca con un tono más suave
     const descIds = getDescendantIds(p.id);
-    const descOverdue = descIds.length>0 && data.tasks.some(t=> descIds.includes(t.projectId) && !t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
+    const descOverdue = descIds.length>0 && data.tasks.some(t=> descIds.includes(t.projectId) && !t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') < today);
     const softLate = !ownOverdue && descOverdue;
     if(softLate){ statusCls='status-late'; statusLabel='Atrasado'; }
     const areaColor = (area && area.color) ? area.color : p.color;
@@ -1968,9 +1968,10 @@ function renderProjectCards(){
     const indent = depth>0 ? `margin-left:${depth*20}px;` : '';
 
     const taskItems = pending.length ? pending.map(t=>{
-      const overdue = t.dueDate && new Date(t.dueDate+'T00:00:00') <= today;
+      const _dd = t.dueDate ? Math.round((new Date(t.dueDate+'T00:00:00')-today)/86400000) : null;
+      const isOverdue = _dd!==null && _dd<0, isToday = _dd===0;
       const due = t.dueDate
-        ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Tocar para cambiar fecha">${overdue?'Vencida · ':''}${formatDate(t.dueDate)}</span>`
+        ? `<span class="due-badge ${isOverdue?'due-overdue':(isToday?'due-today':'due-upcoming')}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Tocar para cambiar fecha">${isOverdue?'Vencida · ':(isToday?'Vence hoy · ':'')}${formatDate(t.dueDate)}</span>`
         : `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);" title="Agregar fecha">+ fecha</span>`;
       return `<div class="task" draggable="true" data-task-id="${t.id}"
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
@@ -2901,7 +2902,7 @@ function renderCalendar(){
     if(taskFilter==='pending') dayTasks = dayTasks.filter(t=>!t.done);
     if(taskFilter==='done') dayTasks = dayTasks.filter(t=>t.done);
     let tasksHtml = dayTasks.slice(0,3).map(t=>{
-      const overdue = !t.done && cellDate <= today;
+      const overdue = !t.done && cellDate < today;
       const cls = t.done ? 'done' : (overdue ? 'overdue' : '');
       const proj = projectInfo(t.projectId);
       const projColor = proj ? proj.color : 'var(--muted)';
@@ -3010,7 +3011,7 @@ function setAlertLead(priority, val){
 }
 function renderOverdueBadge(){
   const today = new Date(); today.setHours(0,0,0,0);
-  const count = data.tasks.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') <= today).length;
+  const count = data.tasks.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') < today).length;
   document.getElementById('overdueBadge').textContent = count>0 ? count : '';
 }
 /* ====== TEMA CLARO/OSCURO ====== */

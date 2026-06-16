@@ -310,6 +310,20 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal"
+    },
+    {
+      "id": "p1781589327240693",
+      "name": "Script correo",
+      "area": "pa1",
+      "desc": "arreglas los correos",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal"
     }
   ],
   "tasks": [
@@ -702,8 +716,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781579527608393",
@@ -715,8 +728,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580666242515",
@@ -728,9 +740,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781579686000429",
@@ -742,8 +752,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580759092852",
@@ -755,9 +764,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580800586713",
@@ -769,9 +776,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580925539583",
@@ -783,9 +788,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580951081409",
@@ -797,9 +800,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581080020863",
@@ -811,9 +812,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581108973528",
@@ -849,9 +848,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581370745505",
@@ -863,9 +860,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581497206532",
@@ -877,9 +872,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581543159671",
@@ -891,9 +884,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581649266956",
@@ -917,9 +908,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781582263961958",
@@ -931,8 +920,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781582349097863",
@@ -944,8 +932,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781582365048355",
@@ -957,8 +944,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781582476167637",
@@ -970,8 +956,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781582619084311",
@@ -983,8 +968,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t178158273877926",
@@ -996,21 +980,19 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781583104106856",
       "projectId": "p1781572037505287",
       "text": "|en menu de nuevo proyecto no esta la copcion de crearlo como subproyecto solo deja proyectos no tiene la opcionm de un dependiete",
-      "done": true,
+      "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:10",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781583152633291",
@@ -1029,14 +1011,12 @@
       "projectId": "p1781583210289147",
       "text": "mantencion",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-06-16",
       "dueTime": "02:13",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "driveUrl": ""
     },
     {
       "id": "t1781583240720865",
@@ -1072,8 +1052,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t178158357562599",
@@ -1085,8 +1064,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781584379119607",

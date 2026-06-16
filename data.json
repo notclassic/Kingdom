@@ -51,6 +51,21 @@
   ],
   "projects": [
     {
+      "id": "p1781572037505287",
+      "name": "Kingdom",
+      "area": "a1",
+      "desc": "mejoras a desarrollar",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p1",
       "color": "#007aff",
       "name": "Chileautos Databot",
@@ -76,21 +91,6 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
-      "id": "p1781572037505287",
-      "name": "Kingdom",
-      "area": "a1",
-      "desc": "mejoras a desarrollar",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
       "context": "profesional",
       "parentId": "p1"
     },

@@ -9,13 +9,13 @@
     {
       "id": "a2",
       "name": "Negocios",
-      "color": "#34c759",
+      "color": "#05081f",
       "context": "profesional"
     },
     {
       "id": "a3",
       "name": "Notclassic",
-      "color": "#af52de",
+      "color": "#971ad5",
       "context": "profesional"
     },
     {
@@ -25,15 +25,9 @@
       "context": "personal"
     },
     {
-      "id": "pa2",
-      "name": "Salud",
-      "color": "#9d2a2a",
-      "context": "personal"
-    },
-    {
       "id": "pa3",
       "name": "Hogar",
-      "color": "#9b9a97",
+      "color": "#cea427",
       "context": "personal"
     }
   ],

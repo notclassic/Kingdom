@@ -818,6 +818,13 @@ input, select, textarea{
     <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importFile').click()">⬆️ Importar datos</button>
   </div>
   <input type="file" id="importFile" accept="application/json" style="display:none;" onchange="importData(event)">
+  <div class="row-desc" style="margin:16px 0 6px; font-weight:700;">🤖 Asistente IA (Gemini)</div>
+  <div class="row-desc" style="margin-bottom:8px;">Exportá tus proyectos a Markdown para mejorarlos con una IA (ortografía, redacción, sugerencias de tareas y subproyectos) y volvé a importar el resultado. La IA debe conservar los marcadores [[id]].</div>
+  <div class="row2">
+    <button class="btn-primary" onclick="exportMarkdown()">⬇️ Exportar a Markdown (.md)</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importMdFile').click()">⬆️ Importar Markdown mejorado</button>
+  </div>
+  <input type="file" id="importMdFile" accept=".md,text/markdown,text/plain" style="display:none;" onchange="importMarkdown(event)">
 </section>
 <section>
   <h2>⚙️ Configuración de categorías (áreas)</h2>
@@ -1359,6 +1366,123 @@ function importData(event){
   reader.readAsText(file);
   event.target.value = '';
 }
+
+/* ====== EXPORT / IMPORT MARKDOWN (asistente IA) ====== */
+function _mdEsc(s){ return (s||'').replace(/\r?\n/g,' ').trim(); }
+function _priWord(p){ return p==='high'?'alta':(p==='low'?'baja':'media'); }
+function _priKey(w){ w=(w||'').toLowerCase(); return w.startsWith('alt')?'high':(w.startsWith('baj')?'low':'medium'); }
+function exportMarkdown(){
+  const L = [];
+  L.push('# Kingdom — Exportación de proyectos');
+  L.push('<!--');
+  L.push('INSTRUCCIONES PARA LA IA:');
+  L.push('- Conservá SIEMPRE los marcadores [[id]] tal cual; no los borres ni los cambies.');
+  L.push('- Podés mejorar redacción y ortografía del texto que va DESPUÉS del marcador, y de las descripciones (líneas que empiezan con >).');
+  L.push('- Fechas: (fecha: AAAA-MM-DD). Prioridad: (prioridad: alta|media|baja).');
+  L.push('- Para AGREGAR algo nuevo usá [[new]] en vez de un id, en el lugar correcto (tarea dentro de su proyecto; subproyecto como ###).');
+  L.push('- No cambies la estructura: "## " proyecto, "### " subproyecto, "- [ ] " tarea, "> " descripción.');
+  L.push('-->','');
+  const byId = {}; data.projects.forEach(p=>byId[p.id]=p);
+  const roots = data.projects.filter(p=>p.status!=='done' && (!p.parentId || !byId[p.parentId]));
+  function emit(p, level){
+    const area = (typeof areaInfo==='function') ? areaInfo(p.area) : null;
+    const hd = level>=2 ? '###' : '##';
+    L.push(`${hd} [[${p.id}]] ${_mdEsc(p.name)}  (área: ${area?area.name:'—'} · estado: ${p.status||'activo'})`);
+    if(p.desc) L.push('> ' + _mdEsc(p.desc));
+    if(p.driveFolderId) L.push(`<!-- drive: ${p.driveFolderId} -->`);
+    data.tasks.filter(t=>t.projectId===p.id).forEach(t=>{
+      let line = `- [${t.done?'x':' '}] [[${t.id}]] ${_mdEsc(t.text)}`;
+      if(t.dueDate) line += ` (fecha: ${t.dueDate})`;
+      line += ` (prioridad: ${_priWord(t.priority)})`;
+      L.push(line);
+    });
+    L.push('');
+    data.projects.filter(c=>c.status!=='done' && c.parentId===p.id).forEach(c=>emit(c, level+1));
+  }
+  roots.forEach(r=>emit(r,1));
+  const blob = new Blob([L.join('\n')], {type:'text/markdown'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+  a.href=url; a.download=`kingdom_proyectos_${stamp}.md`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function _parseTaskMeta(rest){
+  let dueDate=null, priority='medium';
+  const fd = rest.match(/\(fecha:\s*(\d{4}-\d{2}-\d{2})\)/i); if(fd) dueDate=fd[1];
+  const pr = rest.match(/\(prioridad:\s*([a-záéíóúñ]+)\)/i); if(pr) priority=_priKey(pr[1]);
+  const txt = rest.replace(/\(fecha:[^)]*\)/ig,'').replace(/\(prioridad:[^)]*\)/ig,'').trim();
+  return {dueDate, priority, txt};
+}
+function _applyMarkdown(text){
+  const lines = text.split(/\r?\n/);
+  let curProj=null, lastTop=null, upd=0, cre=0, skip=0;
+  const findP = id=>data.projects.find(p=>p.id===id);
+  const findT = id=>data.tasks.find(t=>t.id===id);
+  for(let raw of lines){
+    const line = raw.replace(/<!--[\s\S]*?-->/g,'').replace(/\s+$/,'');
+    if(!line.trim()) continue;
+    let m;
+    m = line.match(/^(#{2,6})\s+\[\[(.+?)\]\]\s*(.*)$/);
+    if(m){
+      const level = m[1].length, id = m[2].trim();
+      let rest = m[3], name = rest, status = null;
+      const meta = rest.match(/\(([^)]*)\)\s*$/);
+      if(meta){
+        name = rest.slice(0, meta.index).trim();
+        const st = meta[1].match(/estado:\s*([a-záéíóúñ]+)/i);
+        if(st){ const s=st[1].toLowerCase(); status = s.startsWith('paus')?'paused':(s.startsWith('term')?'done':'active'); }
+      }
+      name = name.trim();
+      if(id==='new'){
+        const parent = level>=3 ? lastTop : null;
+        const base = parent ? findP(parent) : null;
+        const np = {id:uid('p'), name:name||'Nuevo proyecto', area: base?base.area:null, desc:'', status:status||'active', hasLeads:false, color: base?base.color:'#8a919e', icon:'', driveUrl:'', driveFolderId:'', contacts:[], context: base?(base.context||'profesional'):'profesional', parentId: parent};
+        data.projects.push(np); curProj=np.id; if(level<3) lastTop=np.id; cre++;
+      } else {
+        const p = findP(id);
+        if(p){ if(name) p.name=name; if(status) p.status=status; if(level>=3 && lastTop) p.parentId=lastTop; curProj=id; if(level<3) lastTop=id; upd++; }
+        else { curProj=null; skip++; }
+      }
+      continue;
+    }
+    m = line.match(/^>\s?(.*)$/);
+    if(m){ if(curProj){ const p=findP(curProj); if(p) p.desc=m[1].trim(); } continue; }
+    m = line.match(/^[-*]\s*\[([ xX])\]\s*\[\[(.+?)\]\]\s*(.*)$/);
+    if(m){
+      const done = m[1].toLowerCase()==='x', id = m[2].trim();
+      const meta = _parseTaskMeta(m[3]);
+      if(id==='new'){
+        if(curProj){ data.tasks.push({id:uid('t'), projectId:curProj, text:meta.txt||'Nueva tarea', done, dueDate:meta.dueDate, dueTime:'', priority:meta.priority, emailAlert:false, alertSent:false, driveUrl:''}); cre++; }
+        else skip++;
+      } else {
+        const t = findT(id);
+        if(t){ if(meta.txt) t.text=meta.txt; t.done=done; t.dueDate=meta.dueDate; t.priority=meta.priority; upd++; }
+        else skip++;
+      }
+      continue;
+    }
+    skip++;
+  }
+  return {upd, cre, skip};
+}
+function importMarkdown(event){
+  const file = event.target.files[0];
+  if(!file){ return; }
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      if(!confirm('Voy a aplicar el archivo: actualizo lo existente por su id y agrego lo marcado como [[new]]. No borro nada. ¿Continuar?')){ return; }
+      const r = _applyMarkdown(e.target.result);
+      save(); renderAll(); if(typeof renderAreaSettings==='function') renderAreaSettings();
+      alert('Listo. Actualizados: '+r.upd+' · Nuevos: '+r.cre + (r.skip?(' · Líneas ignoradas: '+r.skip):''));
+    }catch(err){ alert('No se pudo procesar el archivo: '+err.message); }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
 function areaInfo(id){ return data.areas.find(a=>a.id===id) || PERSONAL_AREAS.find(a=>a.id===id) || {name:'—', color:'#8a919e', context:'profesional'}; }
 function projectInfo(id){ return data.projects.find(p=>p.id===id); }
 function uid(prefix){ return prefix + Date.now() + Math.floor(Math.random()*1000); }

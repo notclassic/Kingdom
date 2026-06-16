@@ -280,6 +280,20 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional"
+    },
+    {
+      "id": "p1781583210289147",
+      "name": "Captiva",
+      "area": "pa3",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal"
     }
   ],
   "tasks": [

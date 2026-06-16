@@ -1,43 +1,38 @@
-// Service worker network-first: siempre intenta traer la versión más nueva del
-// dashboard y solo usa la copia guardada cuando no hay internet. Así no queda
-// pegado a una versión vieja en cache (no hace falta navegacion oculta).
+// Kingdom service worker — estrategia NETWORK-FIRST
+// Siempre intenta traer la version fresca desde la red.
+// Solo usa la cache como respaldo si no hay conexion.
+// Subi este archivo a la raiz del repo (junto a dashboard.html).
 
-const CACHE_NAME = 'dashboard-portafolio-v2';
-const FILES_TO_CACHE = [
-  './dashboard.html',
-  './manifest.json'
-];
+const CACHE = 'kingdom-v3';
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(FILES_TO_CACHE))
-  );
+self.addEventListener('install', (e) => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
-    ).then(() => self.clients.claim())
-  );
+self.addEventListener('activate', (e) => {
+  e.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
+    await self.clients.claim();
+  })());
 });
 
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  // Solo tocamos GET del mismo origen (la app). Las llamadas a GitHub/AssemblyAI/etc.
-  // (otro origen, o POST/PUT) pasan directo sin que el service worker las intercepte.
+self.addEventListener('fetch', (e) => {
+  const req = e.request;
   if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
+  e.respondWith((async () => {
+    try {
+      const fresh = await fetch(req, { cache: 'no-store' });
+      try { const cache = await caches.open(CACHE); cache.put(req, fresh.clone()); } catch (_) {}
+      return fresh;
+    } catch (err) {
+      const cached = await caches.match(req);
+      if (cached) return cached;
+      throw err;
+    }
+  })());
+});
 
-  // Network-first: siempre intenta la red; si funciona, actualiza la copia guardada.
-  // Si no hay internet, recién ahí usa la copia.
-  event.respondWith(
-    fetch(req).then((res) => {
-      const copy = res.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {});
-      return res;
-    }).catch(() => caches.match(req))
-  );
+self.addEventListener('message', (e) => {
+  if (e.data === 'skipWaiting') self.skipWaiting();
 });

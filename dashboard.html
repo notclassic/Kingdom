@@ -207,8 +207,10 @@ section{
 }
 .row:last-child{ border-bottom:none; }
 .row:hover{ background:var(--area-tint-strong, var(--panel)); }
-.row.row-late{ background:#e639460d; }
-.row.row-late:hover{ background:#e6394618; }
+.row.row-late{ background:#e639461c; border-left-width:5px; }
+.row.row-late:hover{ background:#e6394628; }
+.row.row-late-soft{ background:#e6394610; border-left-width:5px; }
+.row.row-late-soft:hover{ background:#e639461a; }
 .row.paused{ opacity:.4; }
 .row-head{
   display:grid; grid-template-columns:1fr 170px 100px 170px; gap:12px; padding:8px 14px;
@@ -1946,16 +1948,21 @@ function renderProjectCards(){
     const tasks = data.tasks.filter(t=>t.projectId===p.id);
     const pending = tasks.filter(t=>!t.done);
     let statusCls='status-todo', statusLabel='Sin tareas';
-    let hasOverdue = false;
+    let ownOverdue = false;
     if(tasks.length){
       if(pending.length===0){ statusCls='status-done'; statusLabel='Completado'; }
       else{
-        hasOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
-        if(hasOverdue){ statusCls='status-late'; statusLabel='Atrasado'; }
+        ownOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
+        if(ownOverdue){ statusCls='status-late'; statusLabel='Atrasado'; }
         else{ statusCls='status-progress'; statusLabel='A tiempo'; }
       }
     }
     const expanded = expandedProjects.has(p.id);
+    // Rollup: si un subproyecto/descendiente tiene vencidas, el padre se marca con un tono más suave
+    const descIds = getDescendantIds(p.id);
+    const descOverdue = descIds.length>0 && data.tasks.some(t=> descIds.includes(t.projectId) && !t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
+    const softLate = !ownOverdue && descOverdue;
+    if(softLate){ statusCls='status-late'; statusLabel='Atrasado'; }
     const areaColor = (area && area.color) ? area.color : p.color;
     const tintStyle = (area && area.color) ? ('--area-tint:'+area.color+'14; --area-tint-strong:'+area.color+'24;') : '';
     const indent = depth>0 ? `margin-left:${depth*20}px;` : '';
@@ -1995,7 +2002,7 @@ function renderProjectCards(){
     }
 
     return `
-    <div class="row pf-row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''} ${depth>0?'subproject':''}" style="--accent-color:${hasOverdue?'#e63946':areaColor}; ${tintStyle} ${indent}"
+    <div class="row pf-row ${p.status==='paused'?'paused':''} ${ownOverdue?'row-late':(softLate?'row-late-soft':'')} ${depth>0?'subproject':''}" style="--accent-color:${ownOverdue?'#e63946':(softLate?'#ee6470':areaColor)}; ${tintStyle} ${indent}"
          draggable="true" data-id="${p.id}"
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">

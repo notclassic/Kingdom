@@ -54,7 +54,7 @@
       "id": "p1781572037505287",
       "name": "Kingdom",
       "area": "a1",
-      "desc": "Mejoras del dashboard, organizadas por fases (F1 = bugs base → F5 = cosmético).",
+      "desc": "Mejoras del dashboard, organizadas por fases. Se trabaja de F1 a F5.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -513,6 +513,111 @@
       "contacts": [],
       "context": "personal",
       "parentId": "p1781589327240693"
+    },
+    {
+      "id": "p1781624559094431",
+      "name": "F1 · Bugs base",
+      "area": "a1",
+      "desc": "Errores que afectan el uso diario. Van primero porque destraban el sistema de alertas.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781624559095312",
+      "name": "F2 · Alertas y Telegram",
+      "area": "a1",
+      "desc": "Avisos y bot de Telegram. Dependen de que las fechas estén bien (F1).",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p178162455909563",
+      "name": "F3 · Email y CRM",
+      "area": "a1",
+      "desc": "Correo y CRM. Bloque grande; conviene atacarlo junto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781624559095634",
+      "name": "F4 · UX y navegación",
+      "area": "a1",
+      "desc": "Mejoras de interfaz y navegación, sin urgencia técnica.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781624559096899",
+      "name": "F5 · Cosmético y baja prioridad",
+      "area": "a1",
+      "desc": "Detalles visuales y de bajo impacto. Al final.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781624559096999",
+      "name": "Notas y criterios",
+      "area": "a1",
+      "desc": "No son tareas de desarrollo: criterios y recordatorios.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p178162455909666",
+      "name": "Hechas",
+      "area": "a1",
+      "desc": "Ya completadas.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
     }
   ],
   "tasks": [
@@ -875,7 +980,7 @@
     {
       "id": "t1781572146539102",
       "projectId": "p1781572037505287",
-      "text": "F5 · Descargar la base y procesarla con IA (revisar: ¿va en Chileautos?).",
+      "text": "Descargar la base y procesarla con IA (revisar si va en Chileautos).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "23:08",
@@ -887,7 +992,7 @@
     {
       "id": "t1781572160041482",
       "projectId": "p1781572037505287",
-      "text": "F4 · Menú móvil deslizable, estilo iPhone.",
+      "text": "Menú móvil deslizable, estilo iPhone.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "23:09",
@@ -899,7 +1004,7 @@
     {
       "id": "t1781579363026116",
       "projectId": "p1781572037505287",
-      "text": "✔ Editar la categoría desde el panel (color y nombre).",
+      "text": "Editar la categoría desde el panel (color y nombre).",
       "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:08",
@@ -912,7 +1017,7 @@
     {
       "id": "t1781579527608393",
       "projectId": "p1781572037505287",
-      "text": "✔ Exportar la información de la carpeta de Drive vinculada.",
+      "text": "Exportar la información de la carpeta de Drive vinculada.",
       "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:11",
@@ -925,7 +1030,7 @@
     {
       "id": "t1781580666242515",
       "projectId": "p1781572037505287",
-      "text": "F5 · Favicon.",
+      "text": "Favicon.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:31",
@@ -938,7 +1043,7 @@
     {
       "id": "t1781579686000429",
       "projectId": "p1781572037505287",
-      "text": "F4 · En la tarea: adjuntar fotos/archivos y editar la categoría de la tarea (familia, hogar, personal u otras).",
+      "text": "En la tarea: adjuntar fotos/archivos y editar la categoría de la tarea (familia, hogar, personal u otras).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:12",
@@ -951,7 +1056,7 @@
     {
       "id": "t1781580759092852",
       "projectId": "p1781572037505287",
-      "text": "F5 · Modo día/noche tocando el logo del centro.",
+      "text": "Modo día/noche tocando el logo del centro.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:32",
@@ -964,7 +1069,7 @@
     {
       "id": "t1781580800586713",
       "projectId": "p1781572037505287",
-      "text": "F4 · Botones desplegables.",
+      "text": "Botones desplegables.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:33",
@@ -977,7 +1082,7 @@
     {
       "id": "t1781580925539583",
       "projectId": "p1781572037505287",
-      "text": "Nota · Revisar pantallazos para ver los cambios (parte del proceso).",
+      "text": "Revisar pantallazos para ver los cambios (parte del proceso).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",
@@ -990,7 +1095,7 @@
     {
       "id": "t1781580951081409",
       "projectId": "p1781572037505287",
-      "text": "Nota · Criterio: primero la vista de celular, luego la app.",
+      "text": "Criterio: primero la vista de celular, luego la app.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",
@@ -1003,7 +1108,7 @@
     {
       "id": "t1781581080020863",
       "projectId": "p1781572037505287",
-      "text": "F3 · Enviar correos desde acá.",
+      "text": "Enviar correos desde acá.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:37",
@@ -1016,7 +1121,7 @@
     {
       "id": "t1781581108973528",
       "projectId": "p1781572037505287",
-      "text": "F3 · Agregar tareas (Por 3) vía correo.",
+      "text": "Agregar tareas (Por 3) vía correo.",
       "done": false,
       "dueDate": null,
       "dueTime": null,
@@ -1040,7 +1145,7 @@
     {
       "id": "t1781581229142396",
       "projectId": "p1781572037505287",
-      "text": "✔ Otra visualización del menú de proyectos.",
+      "text": "Otra visualización del menú de proyectos.",
       "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:40",
@@ -1053,7 +1158,7 @@
     {
       "id": "t1781581370745505",
       "projectId": "p1781572037505287",
-      "text": "F1 · Bug: las tareas nuevas quedan como \"urgente\"; deberían quedar por defecto para mañana.",
+      "text": "Bug: las tareas nuevas quedan como \"urgente\"; deberían quedar por defecto para mañana.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:42",
@@ -1066,7 +1171,7 @@
     {
       "id": "t1781581497206532",
       "projectId": "p1781572037505287",
-      "text": "F2 · Hacer más notorias las tareas vencidas y mandar más alertas por Telegram (vencidas y por vencer).",
+      "text": "Hacer más notorias las tareas vencidas y mandar más alertas por Telegram (vencidas y por vencer).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:43",
@@ -1079,7 +1184,7 @@
     {
       "id": "t1781581543159671",
       "projectId": "p1781572037505287",
-      "text": "F5 · Ajustar los colores del logo (café).",
+      "text": "Ajustar los colores del logo (café).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:45",
@@ -1092,7 +1197,7 @@
     {
       "id": "t1781581649266956",
       "projectId": "p1781572037505287",
-      "text": "F2 · Varias programaciones de aviso mientras la tarea no esté completa.",
+      "text": "Varias programaciones de aviso mientras la tarea no esté completa.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "09:00",
@@ -1104,7 +1209,7 @@
     {
       "id": "t1781581710610850",
       "projectId": "p1781572037505287",
-      "text": "F3 · Conexión con Gmail para enviar correos y agendar videollamadas con la base de datos, por proyecto.",
+      "text": "Conexión con Gmail para enviar correos y agendar videollamadas con la base de datos, por proyecto.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:47",
@@ -1117,7 +1222,7 @@
     {
       "id": "t1781582263961958",
       "projectId": "p1781572037505287",
-      "text": "F4 · Botón \"nueva categoría\": agregar opción personal/profesional/otro y darle diseño.",
+      "text": "Botón \"nueva categoría\": agregar opción personal/profesional/otro y darle diseño.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:57",
@@ -1130,7 +1235,7 @@
     {
       "id": "t1781582349097863",
       "projectId": "p1781572037505287",
-      "text": "F2 · Mejorar los botones de respuesta de Telegram; las alertas se detienen al marcar la tarea como lista.",
+      "text": "Mejorar los botones de respuesta de Telegram; las alertas se detienen al marcar la tarea como lista.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:58",
@@ -1143,7 +1248,7 @@
     {
       "id": "t1781582365048355",
       "projectId": "p1781572037505287",
-      "text": "F2 · Separar en dos bots: uno para alertas y otro para audios.",
+      "text": "Separar en dos bots: uno para alertas y otro para audios.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:59",
@@ -1156,7 +1261,7 @@
     {
       "id": "t1781582476167637",
       "projectId": "p1781572037505287",
-      "text": "F3 · Separar Portafolio de CRM; CRM más profesional y conectado a Gmail.",
+      "text": "Separar Portafolio de CRM; CRM más profesional y conectado a Gmail.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:00",
@@ -1169,7 +1274,7 @@
     {
       "id": "t1781582619084311",
       "projectId": "p1781572037505287",
-      "text": "F1 · Bug: el botón de calendario queda pegado al modificar la hora.",
+      "text": "Bug: el botón de calendario queda pegado al modificar la hora.",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:03",
@@ -1197,7 +1302,7 @@
     {
       "id": "t1781583104106856",
       "projectId": "p1781572037505287",
-      "text": "F4 · Opción de crear subproyecto en el menú de nuevo proyecto (hoy solo por arrastre).",
+      "text": "Opción de crear subproyecto en el menú de nuevo proyecto (hoy solo por arrastre).",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:10",
@@ -1211,7 +1316,7 @@
     {
       "id": "t1781583152633291",
       "projectId": "p1781572037505287",
-      "text": "F1 · Bug: muestra todas las tareas como vencidas al crearlas.",
+      "text": "Bug: muestra todas las tareas como vencidas al crearlas.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:12",
@@ -1288,7 +1393,7 @@
     {
       "id": "t1781584379119607",
       "projectId": "p1781572037505287",
-      "text": "F4 · Submenús desplegables en \"Todas\"/\"Todos los proyectos\" con filtro por vida/profesional/personal/otro.",
+      "text": "Submenús desplegables en \"Todas\"/\"Todos los proyectos\" con filtro por vida/profesional/personal/otro.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:31",
@@ -1300,9 +1405,9 @@
     {
       "id": "t1781584626491281",
       "projectId": "p1781572037505287",
-      "text": "F5 · Evaluar eliminar el título \"Portafolio\".",
+      "text": "Evaluar eliminar el título \"Portafolio\".",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-06-16",
       "dueTime": "02:36",
       "priority": "low",
       "emailAlert": false,
@@ -1314,7 +1419,7 @@
     {
       "id": "t1781585249457736",
       "projectId": "p1781572037505287",
-      "text": "F5 · Resumen de todo el proyecto.",
+      "text": "Resumen de todo el proyecto.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:47",
@@ -1326,7 +1431,7 @@
     {
       "id": "t17815866999337",
       "projectId": "p1781572037505287",
-      "text": "Nota · Que la IA ayude como asistente y cree tareas por proyecto (es lo que estamos haciendo).",
+      "text": "Que la IA ayude como asistente y cree tareas por proyecto (es lo que estamos haciendo).",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "01:11",
@@ -1746,7 +1851,7 @@
     {
       "id": "t1781594560171737",
       "projectId": "p1781572037505287",
-      "text": "Poder agregar pantallazo o copiar con Ctrl V un print de pantalla cuando uno crea una tarea asi no tendria que estar revisando los pantallazos guardo para dar las instruciones de mejora",
+      "text": "Pegar un pantallazo con Ctrl+V al crear una tarea, para no tener que revisar capturas guardadas al dar instrucciones de mejora.",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "03:21",

@@ -866,6 +866,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781582619084311",
+      "projectId": "p1781572037505287",
+      "text": "boton de calendario se qued apegado cuando uno modifca la hora y no toca",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:03",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -526,6 +526,18 @@ input, select, textarea{
 .empty{color:var(--muted); font-size:.8rem; text-align:center; padding:14px 0;}
 .app-logo{ height:40px; width:auto; object-fit:contain; flex-shrink:0; }
 [data-theme="dark"] .app-logo{ filter:invert(1); }
+.done-tasks-toggle{ background:none; border:none; color:var(--muted); font-size:.78rem; cursor:pointer; padding:8px 2px 4px; display:block; }
+.done-tasks-toggle:hover{ color:var(--text); }
+.done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
+.done-projects-bar:hover{ color:var(--text); }
+.done-row{ opacity:.8; }
+.row.subproject{ }
+.mp-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:2000; padding:20px; }
+.mp-overlay.open{ display:flex; }
+.mp-box{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:18px; width:min(380px,92vw); box-shadow:0 20px 60px rgba(0,0,0,.3); }
+.mp-box h3{ margin:0 0 12px; font-size:1rem; }
+.mp-box select{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.9rem; }
+.mp-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:16px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -1672,39 +1684,55 @@ function clearProjectFilter(){
 }
 
 /* ====== RENDER TARJETAS PROYECTO ====== */
+let showDoneProjects = false;
+let shownDoneTasks = new Set();
+let moveProjId = null;
 function renderProjectCards(){
   const cont = document.getElementById('projectCards');
-  let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
-  if(activeContext !== 'all') projects = projects.filter(p=> (p.context||'profesional') === activeContext);
-  if(activeProjects.size>0) projects = projects.filter(p=>activeProjects.has(p.id));
+  const passFilters = p => (activeArea==='all' || p.area===activeArea)
+    && (activeContext==='all' || (p.context||'profesional')===activeContext)
+    && (activeProjects.size===0 || activeProjects.has(p.id));
 
-  if(projects.length===0){
+  const visible = data.projects.filter(p => p.status!=='done' && passFilters(p));
+  const doneList = data.projects.filter(p => p.status==='done' && passFilters(p));
+
+  if(visible.length===0 && doneList.length===0){
     cont.innerHTML = '<div class="empty">No hay proyectos en esta área.</div>';
     return;
   }
 
-  cont.innerHTML = `<div class="row-head"><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>` +
-  projects.map(p=>{
+  // Orden jerárquico: cada padre seguido de sus hijos, respetando el orden del array
+  const visibleIds = new Set(visible.map(p=>p.id));
+  const byParent = {};
+  visible.forEach(p=>{
+    const key = (p.parentId && visibleIds.has(p.parentId)) ? p.parentId : '__root__';
+    (byParent[key] = byParent[key] || []).push(p);
+  });
+  const ordered = [];
+  (function walk(key, depth){
+    (byParent[key]||[]).forEach(p=>{ ordered.push({p, depth}); walk(p.id, depth+1); });
+  })('__root__', 0);
+
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  function projectRow(entry){
+    const p = entry.p, depth = entry.depth;
     const area = areaInfo(p.area);
     const tasks = data.tasks.filter(t=>t.projectId===p.id);
-    const done = tasks.filter(t=>t.done).length;
-    const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+    const pending = tasks.filter(t=>!t.done);
     let statusCls='status-todo', statusLabel='Sin tareas';
     let hasOverdue = false;
     if(tasks.length){
-      const today = new Date(); today.setHours(0,0,0,0);
-      const pending = tasks.filter(t=>!t.done);
-      if(pending.length===0){
-        statusCls='status-done'; statusLabel='Completado';
-      }else{
+      if(pending.length===0){ statusCls='status-done'; statusLabel='Completado'; }
+      else{
         hasOverdue = pending.some(t=> t.dueDate && new Date(t.dueDate+'T00:00:00') <= today);
         if(hasOverdue){ statusCls='status-late'; statusLabel='Atrasado'; }
         else{ statusCls='status-progress'; statusLabel='A tiempo'; }
       }
     }
-    const pending = tasks.filter(t=>!t.done);
     const expanded = expandedProjects.has(p.id);
-    const today = new Date(); today.setHours(0,0,0,0);
+    const indent = depth>0 ? `margin-left:${depth*20}px;` : '';
+
     const taskItems = pending.length ? pending.map(t=>{
       const overdue = t.dueDate && new Date(t.dueDate+'T00:00:00') <= today;
       const due = t.dueDate
@@ -1722,12 +1750,30 @@ function renderProjectCards(){
       </div>`;
     }).join('') : '<div class="empty" style="padding:6px 0;">No hay tareas pendientes 🎉</div>';
 
+    // Tareas terminadas (ocultas por defecto)
+    const doneTasks = tasks.filter(t=>t.done);
+    const showDT = shownDoneTasks.has(p.id);
+    let doneTasksBlock = '';
+    if(doneTasks.length){
+      doneTasksBlock = `<button class="done-tasks-toggle" onclick="toggleDoneTasks('${p.id}')">${showDT?'▾':'▸'} Terminadas (${doneTasks.length})</button>`;
+      if(showDT){
+        doneTasksBlock += doneTasks.map(t=>`
+          <div class="task done">
+            <input type="checkbox" checked onchange="toggleTask('${t.id}')" title="Destildar para reactivar">
+            <span class="proj-dot" style="background:${p.color}"></span>
+            <div class="task-body"><div class="task-text">${t.text}</div></div>
+            <button class="task-drive task-del-btn" onclick="confirmDeleteTask('${t.id}')" title="Eliminar tarea">🗑</button>
+          </div>`).join('');
+      }
+    }
+
     return `
-    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''}" style="--accent-color:${hasOverdue?'#e63946':p.color}"
+    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''} ${depth>0?'subproject':''}" style="--accent-color:${hasOverdue?'#e63946':p.color}; ${indent}"
          draggable="true" data-id="${p.id}"
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
       <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+        ${depth>0?'<span style="color:var(--muted); flex-shrink:0; font-size:1rem;">↳</span>':''}
         <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
         <span class="drag-handle" style="flex-shrink:0;" ontouchstart="startTouchDrag(event,'project','${p.id}')">⠿</span>
         <span class="project-avatar" style="flex-shrink:0; background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
@@ -1751,25 +1797,109 @@ function renderProjectCards(){
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
+        <button onclick="moveProjectInto('${p.id}')" title="Mover dentro de otro proyecto (subproyecto)">⤵</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
         <button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>
         <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
         ${p.status==='active'
-          ? `<button onclick="toggleStatus('${p.id}')">⏸</button>`
-          : `<button class="go" onclick="toggleStatus('${p.id}')">▶</button>`}
+          ? `<button onclick="toggleStatus('${p.id}')" title="Pausar">⏸</button>`
+          : `<button class="go" onclick="toggleStatus('${p.id}')" title="Reanudar">▶</button>`}
+        <button class="go" onclick="finishProject('${p.id}')" title="Marcar como terminado">✓</button>
         <button class="danger" onclick="deleteProject('${p.id}')">🗑</button>
       </div>
     </div>
-    ${expanded ? `<div class="row-detail" style="--accent-color:${p.color}">
-      <div class="task-list">${taskItems}</div>
+    ${expanded ? `<div class="row-detail" style="--accent-color:${p.color}; ${indent}">
+      <div class="task-list">${taskItems}${doneTasksBlock}</div>
       ${p.driveFolderId ? `
       <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
         <button class="btn-toggle" style="margin-top:0;" onclick="listDriveFiles('${p.id}')">📁 Cargar archivos de Drive</button>
         <div id="drivefiles-${p.id}" style="margin-top:8px;"></div>
       </div>` : ''}
     </div>` : ''}`;
-  }).join('');
+  }
+
+  let html = `<div class="row-head"><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>`;
+  html += ordered.map(projectRow).join('');
+
+  if(doneList.length){
+    html += `<div class="done-projects-bar" onclick="toggleShowDoneProjects()"><span>✅ Proyectos terminados (${doneList.length})</span><span>${showDoneProjects?'▲':'▼'}</span></div>`;
+    if(showDoneProjects){
+      html += doneList.map(p=>{
+        const area = areaInfo(p.area);
+        return `<div class="row done-row" style="--accent-color:${p.color};">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+            <span class="project-avatar" style="flex-shrink:0; background:${p.color};">${(p.name||'?').trim().charAt(0).toUpperCase()}</span>
+            <div style="min-width:0; flex:1;"><div class="row-name" style="text-decoration:line-through; opacity:.7;">${p.name}</div></div>
+          </div>
+          <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
+          <div><span class="status-pill status-done">Terminado</span></div>
+          <div class="row-actions">
+            <button class="go" onclick="reactivateProject('${p.id}')" title="Reactivar proyecto">↩</button>
+            <button class="danger" onclick="deleteProject('${p.id}')">🗑</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  cont.innerHTML = html;
 }
+function finishProject(id){
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  p.status = 'done';
+  p.completedAt = Date.now();
+  save(); renderAll();
+}
+function reactivateProject(id){
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  p.status = 'active';
+  delete p.completedAt;
+  save(); renderAll();
+}
+function toggleShowDoneProjects(){
+  showDoneProjects = !showDoneProjects;
+  renderProjectCards();
+}
+function toggleDoneTasks(pid){
+  if(shownDoneTasks.has(pid)) shownDoneTasks.delete(pid);
+  else shownDoneTasks.add(pid);
+  renderProjectCards();
+}
+function getDescendantIds(id){
+  const out = [];
+  let stack = data.projects.filter(p=>p.parentId===id).map(p=>p.id);
+  while(stack.length){
+    const cur = stack.pop();
+    out.push(cur);
+    data.projects.filter(p=>p.parentId===cur).forEach(p=>stack.push(p.id));
+  }
+  return out;
+}
+function moveProjectInto(id){
+  moveProjId = id;
+  const banned = new Set([id, ...getDescendantIds(id)]);
+  const opts = data.projects.filter(p=>!banned.has(p.id) && p.status!=='done');
+  const cur = data.projects.find(p=>p.id===id);
+  const sel = document.getElementById('moveProjSelect');
+  sel.innerHTML = '<option value="">— Nivel superior (sin proyecto padre) —</option>' +
+    opts.map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  sel.value = (cur && cur.parentId) ? cur.parentId : '';
+  document.getElementById('moveProjTitle').textContent = 'Mover «' + (cur?cur.name:'') + '» dentro de…';
+  document.getElementById('moveProjOverlay').classList.add('open');
+}
+function confirmMoveProject(){
+  const p = data.projects.find(x=>x.id===moveProjId);
+  if(p){ const v = document.getElementById('moveProjSelect').value; p.parentId = v || null; }
+  closeMoveProject();
+  save(); renderAll();
+}
+function closeMoveProject(){
+  moveProjId = null;
+  document.getElementById('moveProjOverlay').classList.remove('open');
+}
+
 /* ====== REORDENAR PROYECTOS (DRAG & DROP) ====== */
 let draggedProjectId = null;
 function dragStart(e){
@@ -2617,5 +2747,15 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 }
 
 </script>
+<div id="moveProjOverlay" class="mp-overlay" onclick="if(event.target===this)closeMoveProject()">
+  <div class="mp-box">
+    <h3 id="moveProjTitle">Mover dentro de…</h3>
+    <select id="moveProjSelect"></select>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeMoveProject()">Cancelar</button>
+      <button class="btn-primary" onclick="confirmMoveProject()">Mover</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

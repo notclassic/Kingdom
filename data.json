@@ -233,6 +233,20 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal"
+    },
+    {
+      "id": "p1781582668835650",
+      "name": "whatspp",
+      "area": "a1",
+      "desc": "envio de mesaje modificando el link con el teleofno y envio por whatsoc contecto de venta",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional"
     }
   ],
   "tasks": [
@@ -874,6 +888,18 @@
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "02:03",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t178158273877926",
+      "projectId": "p1781582668835650",
+      "text": "el mensaje saluda a la amepres de bvino no al nombre de el usuario disciendo hola vinoteca, tenemos una notica imoratnte para datrte, tenemos una IA para tu negocio",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:04",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

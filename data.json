@@ -1301,14 +1301,14 @@
       "projectId": "p1781572037505287",
       "text": "F5 · Evaluar eliminar el título \"Portafolio\".",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-06-17",
       "dueTime": "02:36",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781585249457736",

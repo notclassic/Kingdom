@@ -553,7 +553,7 @@ input, select, textarea{
 .pf-toggle.on{ color:#22c55e; border-color:#22c55e66; background:#22c55e14; }
 .id-tag{ display:inline-flex; align-items:center; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.58rem; color:var(--muted); opacity:.6; cursor:pointer; white-space:nowrap; }
 .id-tag:hover{ opacity:1; color:var(--text); }
-.id-ico{ font-size:.7rem; line-height:1; }
+.id-ico{ background:#e6007e; color:#fff; font-weight:800; font-size:.5rem; line-height:1; letter-spacing:.4px; padding:2px 3px; border-radius:3px; }
 .id-num{ display:none; margin-left:4px; user-select:all; }
 .id-tag:hover .id-num{ display:inline-block; }
 .done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
@@ -2066,7 +2066,7 @@ function renderProjectCards(){
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due} <span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">🏷️</span><span class="id-num">${t.id}</span></span></div>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due} <span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span></div>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
@@ -2083,7 +2083,7 @@ function renderProjectCards(){
             <input type="checkbox" checked onchange="toggleTask('${t.id}')" title="Destildar para reactivar">
             <span class="proj-dot" style="background:${p.color}"></span>
             <div class="task-body"><div class="task-text">${t.text}</div></div>
-            <span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">🏷️</span><span class="id-num">${t.id}</span></span>
+            <span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>
             <span class="done-flag">✓ Listo</span>
             <button class="task-drive task-del-btn" onclick="confirmDeleteTask('${t.id}')" title="Eliminar tarea">🗑</button>
           </div>`).join('');
@@ -2118,7 +2118,7 @@ function renderProjectCards(){
                onblur="editDesc('${p.id}', this.textContent)"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
                title="Click para editar la descripción">${p.desc}</div>
-          <div style="margin-top:2px;"><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">🏷️</span><span class="id-num">${p.id}</span></span></div>
+          <div style="margin-top:2px;"><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
         </div>
       </div>
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>

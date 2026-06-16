@@ -241,6 +241,21 @@
       "parentId": "p6"
     },
     {
+      "id": "p1781590678767292",
+      "name": "Bot Atención al Cliente",
+      "area": null,
+      "desc": "Implementación y lanzamiento de bots de atención al cliente en 3 fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento. (base: procedimiento de lanzamiento del bot)",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#8a919e",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p9",
       "color": "#af52de",
       "name": "Grupo Arte",
@@ -324,21 +339,6 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal"
-    },
-    {
-      "id": "p1781590678767292",
-      "name": "Bot Atención al Cliente",
-      "area": null,
-      "desc": "Implementación y lanzamiento de bots de atención al cliente en 3 fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento. (base: procedimiento de lanzamiento del bot)",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p1781590678767214",
@@ -1139,8 +1139,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t178158357562599",

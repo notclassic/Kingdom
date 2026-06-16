@@ -123,9 +123,9 @@
     {
       "id": "p6",
       "color": "#00c7be",
-      "name": "Venta Ecommerce",
+      "name": "Activacion not classic",
       "area": "a2",
-      "desc": "Operación general de venta online.",
+      "desc": "Operación general de venta online, parti buscnado ne¿uevaa agecncias",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -260,6 +260,20 @@
       "hasLeads": false,
       "driveFolderId": "",
       "desc": "undefined||"
+    },
+    {
+      "id": "p1781572037505287",
+      "name": "Kingdom",
+      "area": "a1",
+      "desc": "mejoras a desarrollar",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional"
     }
   ],
   "tasks": [

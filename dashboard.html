@@ -195,12 +195,12 @@ section{
 .row{
   display:grid; grid-template-columns:1fr 170px 100px 170px;
   align-items:center; gap:12px; padding:10px 14px;
-  border-bottom:1px solid var(--border); background:var(--panel2);
+  border-bottom:1px solid var(--border); background:var(--area-tint, var(--panel2));
   border-left:3px solid var(--accent-color, var(--accent));
   transition:background .12s;
 }
 .row:last-child{ border-bottom:none; }
-.row:hover{ background:var(--panel); }
+.row:hover{ background:var(--area-tint-strong, var(--panel)); }
 .row.row-late{ background:#e639460d; }
 .row.row-late:hover{ background:#e6394618; }
 .row.paused{ opacity:.4; }
@@ -209,6 +209,7 @@ section{
   font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted);
   background:var(--panel); border-bottom:1px solid var(--border); border-left:3px solid transparent;
 }
+.row.pf-row, .row-head.pf-head{ grid-template-columns:1fr 100px 170px; }
 .row-name{ font-weight:600; font-size:.85rem; line-height:1.3; border-radius:6px; padding:2px 4px; margin:-2px -4px; }
 .row-name:hover{ background:rgba(0,0,0,0.04); }
 .row-name:focus{ outline:2px solid var(--accent); background:var(--panel); }
@@ -263,6 +264,7 @@ section{
 .row-detail .task{ background:var(--panel2); }
 @media(max-width:760px){
   .row, .row-head{ grid-template-columns:1fr; gap:6px; }
+  .row.pf-row{ grid-template-columns:1fr; }
   .row-head{ display:none; }
   .row{ border-left:3px solid var(--accent-color, var(--accent)); }
   .row-name{ margin:0; padding:0; }
@@ -1731,6 +1733,8 @@ function renderProjectCards(){
       }
     }
     const expanded = expandedProjects.has(p.id);
+    const areaColor = (area && area.color) ? area.color : p.color;
+    const tintStyle = (area && area.color) ? ('--area-tint:'+area.color+'14; --area-tint-strong:'+area.color+'24;') : '';
     const indent = depth>0 ? `margin-left:${depth*20}px;` : '';
 
     const taskItems = pending.length ? pending.map(t=>{
@@ -1768,7 +1772,7 @@ function renderProjectCards(){
     }
 
     return `
-    <div class="row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''} ${depth>0?'subproject':''}" style="--accent-color:${hasOverdue?'#e63946':p.color}; ${indent}"
+    <div class="row pf-row ${p.status==='paused'?'paused':''} ${hasOverdue?'row-late':''} ${depth>0?'subproject':''}" style="--accent-color:${hasOverdue?'#e63946':areaColor}; ${tintStyle} ${indent}"
          draggable="true" data-id="${p.id}"
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
@@ -1793,7 +1797,6 @@ function renderProjectCards(){
                title="Click para editar la descripción">${p.desc}</div>
         </div>
       </div>
-      <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
@@ -1808,7 +1811,7 @@ function renderProjectCards(){
         <button class="danger" onclick="deleteProject('${p.id}')">🗑</button>
       </div>
     </div>
-    ${expanded ? `<div class="row-detail" style="--accent-color:${p.color}; ${indent}">
+    ${expanded ? `<div class="row-detail" style="--accent-color:${areaColor}; ${indent}">
       <div class="task-list">${taskItems}${doneTasksBlock}</div>
       ${p.driveFolderId ? `
       <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
@@ -1818,7 +1821,7 @@ function renderProjectCards(){
     </div>` : ''}`;
   }
 
-  let html = `<div class="row-head"><div>Proyecto</div><div>Área</div><div>Estado</div><div>Acciones</div></div>`;
+  let html = `<div class="row-head pf-head"><div>Proyecto</div><div>Estado</div><div>Acciones</div></div>`;
   html += ordered.map(projectRow).join('');
 
   if(doneList.length){
@@ -1826,12 +1829,11 @@ function renderProjectCards(){
     if(showDoneProjects){
       html += doneList.map(p=>{
         const area = areaInfo(p.area);
-        return `<div class="row done-row" style="--accent-color:${p.color};">
+        return `<div class="row done-row pf-row" style="--accent-color:${p.color};">
           <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
             <span class="project-avatar" style="flex-shrink:0; background:${p.color};">${(p.name||'?').trim().charAt(0).toUpperCase()}</span>
             <div style="min-width:0; flex:1;"><div class="row-name" style="text-decoration:line-through; opacity:.7;">${p.name}</div></div>
           </div>
-          <div class="area-tag" style="background:${area.color}22; color:${area.color};">${area.name}</div>
           <div><span class="status-pill status-done">Terminado</span></div>
           <div class="row-actions">
             <button class="go" onclick="reactivateProject('${p.id}')" title="Reactivar proyecto">↩</button>

@@ -124,6 +124,21 @@
       "context": "profesional"
     },
     {
+      "id": "p1781582668835650",
+      "name": "whatspp",
+      "area": "a1",
+      "desc": "envio de mesaje modificando el link con el teleofno y envio por whatsoc contecto de venta",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p3",
       "color": "#34c759",
       "name": "Aprendizaje Claude",
@@ -266,20 +281,6 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal"
-    },
-    {
-      "id": "p1781582668835650",
-      "name": "whatspp",
-      "area": "a1",
-      "desc": "envio de mesaje modificando el link con el teleofno y envio por whatsoc contecto de venta",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional"
     },
     {
       "id": "p1781583210289147",
@@ -895,7 +896,7 @@
     {
       "id": "t1781582349097863",
       "projectId": "p1781572037505287",
-      "text": "mejorar los botones de respuesta de telfgram",
+      "text": "mejorar los botones de respuesta de telfgram, las alertas se contan cuando se pone tarea lista",
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:58",

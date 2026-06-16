@@ -386,36 +386,6 @@
       "parentId": "p2"
     },
     {
-      "id": "p1781591737915348",
-      "name": "Infraestructura de Datos y Scraping",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
-      "id": "p1781591737916659",
-      "name": "Motor de Precio Justo y Scoring",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
       "id": "p1781591737916170",
       "name": "Dashboard e Interfaz (Streamlit)",
       "area": "a1",
@@ -508,21 +478,6 @@
     {
       "id": "p178159242619814",
       "name": "Pipeline Comercial y Leads",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
-      "id": "p1781592426198812",
-      "name": "Modelo de Negocio y Monetización",
       "area": "a1",
       "desc": "",
       "status": "active",
@@ -1465,126 +1420,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781591737916723",
-      "projectId": "p1781591737915348",
-      "text": "Captura base diaria (batch 03:00) sobre las ~3500 páginas: actualizar precios y marcar vendidos sin borrar histórico.",
-      "done": false,
-      "dueDate": "2026-06-20",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916544",
-      "projectId": "p1781591737915348",
-      "text": "Captura incremental horaria: escanear \"más recientes\" hasta toparse con un ID ya registrado.",
-      "done": false,
-      "dueDate": "2026-06-19",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916337",
-      "projectId": "p1781591737915348",
-      "text": "Modelar la base con histórico (estado vendido, última actualización) en PostgreSQL + Redis para dedup y alertas.",
-      "done": false,
-      "dueDate": "2026-06-24",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916203",
-      "projectId": "p1781591737915348",
-      "text": "Normalizar la taxonomía del aviso: marca, modelo, versión, km, precio, región, tipo de vendedor, único dueño, teléfono.",
-      "done": false,
-      "dueDate": "2026-06-22",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916371",
-      "projectId": "p1781591737915348",
-      "text": "Evaluar la API oficial de Chileautos para asegurar continuidad y evitar bloqueos (Datadome).",
-      "done": false,
-      "dueDate": "2026-06-26",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t178159173791642",
-      "projectId": "p1781591737916659",
-      "text": "Clustering por Marca + Modelo + Año (y Versión si hay datos) y normalización de KM anual.",
-      "done": false,
-      "dueDate": "2026-06-27",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916507",
-      "projectId": "p1781591737916659",
-      "text": "Perfiles de oportunidad independientes: precio (-15% vs mediana), bajo recorrido, urgencia de venta y único dueño.",
-      "done": false,
-      "dueDate": "2026-06-30",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916165",
-      "projectId": "p1781591737916659",
-      "text": "Clasificación \"Oportunidad de Oro\" (2+ perfiles o -20% de precio).",
-      "done": false,
-      "dueDate": "2026-07-02",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916660",
-      "projectId": "p1781591737916659",
-      "text": "Scoring de riesgo/fraude mediante NLP de la descripción del aviso.",
-      "done": false,
-      "dueDate": "2026-07-04",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916663",
-      "projectId": "p1781591737916659",
-      "text": "Desarrollar el MVP del motor para un segmento (ej. SUVs populares).",
-      "done": false,
-      "dueDate": "2026-07-08",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781591737916379",
       "projectId": "p1781591737916170",
       "text": "Radar de oportunidades en tiempo real: tarjetas de alerta, tabla filtrable y botón directo a WhatsApp.",
@@ -1969,54 +1804,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781592426198470",
-      "projectId": "p1781592426198812",
-      "text": "Definir oferta B2B (SaaS): dashboard de pricing competitivo, monitor de stock estancado y API de valoración.",
-      "done": false,
-      "dueDate": "2026-07-12",
-      "dueTime": "13:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t178159242619847",
-      "projectId": "p1781592426198812",
-      "text": "Definir oferta B2C: Personal Shopper, Radar de Oportunidades Premium y Marketplace de preventa.",
-      "done": false,
-      "dueDate": "2026-07-14",
-      "dueTime": "13:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198338",
-      "projectId": "p1781592426198812",
-      "text": "Validar la demanda del Personal Shopper con un grupo piloto de compradores.",
-      "done": false,
-      "dueDate": "2026-07-20",
-      "dueTime": "15:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198163",
-      "projectId": "p1781592426198812",
-      "text": "Cerrar alianzas con proveedores (mecánicos, transferencias) para la capa transaccional.",
-      "done": false,
-      "dueDate": "2026-07-25",
-      "dueTime": "15:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t178159242619870",
       "projectId": "p1781592426198305",
       "text": "Definir política de privacidad y mecanismo \"No Molestar\" (Ley 19.628 y 21.719).",
@@ -2081,7 +1868,21 @@
     "t1781584117554430",
     "t1781591737916878",
     "t1781591737916395",
-    "t1781591737916280"
+    "t1781591737916280",
+    "t1781591737916723",
+    "t1781591737916544",
+    "t1781591737916337",
+    "t1781591737916203",
+    "t1781591737916371",
+    "t178159173791642",
+    "t1781591737916507",
+    "t1781591737916165",
+    "t1781591737916660",
+    "t1781591737916663",
+    "t1781592426198470",
+    "t178159242619847",
+    "t1781592426198338",
+    "t1781592426198163"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2090,7 +1891,10 @@
     "p1781575055004938",
     "p1781505153732486",
     "p1781505112956872",
-    "p1781591737916995"
+    "p1781591737916995",
+    "p1781591737915348",
+    "p1781591737916659",
+    "p1781592426198812"
   ],
   "trash": [
     {
@@ -2297,6 +2101,237 @@
           "dueDate": "2026-07-05",
           "dueTime": "12:00",
           "priority": "low",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T06:48:11.950Z",
+      "item": {
+        "id": "p1781591737915348",
+        "name": "Infraestructura de Datos y Scraping",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": [
+        {
+          "id": "t1781591737916723",
+          "projectId": "p1781591737915348",
+          "text": "Captura base diaria (batch 03:00) sobre las ~3500 páginas: actualizar precios y marcar vendidos sin borrar histórico.",
+          "done": false,
+          "dueDate": "2026-06-20",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916544",
+          "projectId": "p1781591737915348",
+          "text": "Captura incremental horaria: escanear \"más recientes\" hasta toparse con un ID ya registrado.",
+          "done": false,
+          "dueDate": "2026-06-19",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916337",
+          "projectId": "p1781591737915348",
+          "text": "Modelar la base con histórico (estado vendido, última actualización) en PostgreSQL + Redis para dedup y alertas.",
+          "done": false,
+          "dueDate": "2026-06-24",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916203",
+          "projectId": "p1781591737915348",
+          "text": "Normalizar la taxonomía del aviso: marca, modelo, versión, km, precio, región, tipo de vendedor, único dueño, teléfono.",
+          "done": false,
+          "dueDate": "2026-06-22",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916371",
+          "projectId": "p1781591737915348",
+          "text": "Evaluar la API oficial de Chileautos para asegurar continuidad y evitar bloqueos (Datadome).",
+          "done": false,
+          "dueDate": "2026-06-26",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T06:48:15.115Z",
+      "item": {
+        "id": "p1781591737916659",
+        "name": "Motor de Precio Justo y Scoring",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": [
+        {
+          "id": "t178159173791642",
+          "projectId": "p1781591737916659",
+          "text": "Clustering por Marca + Modelo + Año (y Versión si hay datos) y normalización de KM anual.",
+          "done": false,
+          "dueDate": "2026-06-27",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916507",
+          "projectId": "p1781591737916659",
+          "text": "Perfiles de oportunidad independientes: precio (-15% vs mediana), bajo recorrido, urgencia de venta y único dueño.",
+          "done": false,
+          "dueDate": "2026-06-30",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916165",
+          "projectId": "p1781591737916659",
+          "text": "Clasificación \"Oportunidad de Oro\" (2+ perfiles o -20% de precio).",
+          "done": false,
+          "dueDate": "2026-07-02",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916660",
+          "projectId": "p1781591737916659",
+          "text": "Scoring de riesgo/fraude mediante NLP de la descripción del aviso.",
+          "done": false,
+          "dueDate": "2026-07-04",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916663",
+          "projectId": "p1781591737916659",
+          "text": "Desarrollar el MVP del motor para un segmento (ej. SUVs populares).",
+          "done": false,
+          "dueDate": "2026-07-08",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T06:48:46.074Z",
+      "item": {
+        "id": "p1781592426198812",
+        "name": "Modelo de Negocio y Monetización",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": [
+        {
+          "id": "t1781592426198470",
+          "projectId": "p1781592426198812",
+          "text": "Definir oferta B2B (SaaS): dashboard de pricing competitivo, monitor de stock estancado y API de valoración.",
+          "done": false,
+          "dueDate": "2026-07-12",
+          "dueTime": "13:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t178159242619847",
+          "projectId": "p1781592426198812",
+          "text": "Definir oferta B2C: Personal Shopper, Radar de Oportunidades Premium y Marketplace de preventa.",
+          "done": false,
+          "dueDate": "2026-07-14",
+          "dueTime": "13:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198338",
+          "projectId": "p1781592426198812",
+          "text": "Validar la demanda del Personal Shopper con un grupo piloto de compradores.",
+          "done": false,
+          "dueDate": "2026-07-20",
+          "dueTime": "15:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198163",
+          "projectId": "p1781592426198812",
+          "text": "Cerrar alianzas con proveedores (mecánicos, transferencias) para la capa transaccional.",
+          "done": false,
+          "dueDate": "2026-07-25",
+          "dueTime": "15:00",
+          "priority": "medium",
           "emailAlert": false,
           "alertSent": false,
           "driveUrl": ""

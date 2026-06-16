@@ -851,7 +851,7 @@
       "id": "t1781581229142396",
       "projectId": "p1781572037505287",
       "text": "otra vizualizacion del menu de proyectos",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:40",
       "priority": "high",

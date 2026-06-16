@@ -655,7 +655,7 @@
       "id": "t1781583152633291",
       "projectId": "p1781624973627687",
       "text": "Bug: muestra todas las tareas como vencidas al crearlas.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "dueTime": "00:12",
       "priority": "high",

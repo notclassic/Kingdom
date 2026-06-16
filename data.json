@@ -282,7 +282,7 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": "",
-      "desc": "undefined"
+      "desc": "visita al Jardin 830 am jueves"
     },
     {
       "id": "inbox",
@@ -475,6 +475,36 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1781594011028615",
+      "name": "me llegan iofertas dupplciadas y muy lentas",
+      "area": "pa1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781589327240693"
+    },
+    {
+      "id": "p178159401880768",
+      "name": "https://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit",
+      "area": "pa1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781589327240693"
     }
   ],
   "tasks": [
@@ -1703,30 +1733,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t1781593873428356",
-      "projectId": "p1781589327240693",
-      "text": "me llegan iofertas dupplciadas y muy lentas",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "05:10",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781593976558694",
-      "projectId": "p1781589327240693",
-      "text": "sacar duplicados \nhttps://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "05:12",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1780,7 +1786,9 @@
     "t1781591737916379",
     "t1781591737916378",
     "t17815917379166",
-    "t1781591737916898"
+    "t1781591737916898",
+    "t1781593873428356",
+    "t1781593976558694"
   ],
   "deletedProjectIds": [
     "p1781538739000",

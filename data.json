@@ -605,21 +605,6 @@
       "parentId": "p1781572037505287"
     },
     {
-      "id": "p1781624973629157",
-      "name": "Hechas",
-      "area": "a1",
-      "desc": "Ya completadas.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p1781625628409853",
       "name": "Resumen de todo el proyecto.",
       "area": "a1",
@@ -995,45 +980,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t1781581229142396",
-      "projectId": "p1781624973629157",
-      "text": "Otra visualización del menú de proyectos.",
-      "done": true,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:40",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781579527608393",
-      "projectId": "p1781624973629157",
-      "text": "Exportar la información de la carpeta de Drive vinculada.",
-      "done": true,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:11",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781579363026116",
-      "projectId": "p1781624973629157",
-      "text": "Editar la categoría desde el panel (color y nombre).",
-      "done": true,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:08",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "overdueAlertSent": true
     },
     {
       "id": "t1",
@@ -1988,7 +1934,10 @@
     "t1781591737916898",
     "t1781593873428356",
     "t1781593976558694",
-    "t1781585249457736"
+    "t1781585249457736",
+    "t1781581229142396",
+    "t1781579527608393",
+    "t1781579363026116"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2009,7 +1958,8 @@
     "p1781624559095634",
     "p1781624559096899",
     "p1781624559096999",
-    "p178162455909666"
+    "p178162455909666",
+    "p1781624973629157"
   ],
   "trash": [
     {
@@ -2762,6 +2712,66 @@
         "parentId": "p1781572037505287"
       },
       "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T21:40:44.776Z",
+      "item": {
+        "id": "p1781624973629157",
+        "name": "Hechas",
+        "area": "a1",
+        "desc": "Ya completadas.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": [
+        {
+          "id": "t1781581229142396",
+          "projectId": "p1781624973629157",
+          "text": "Otra visualización del menú de proyectos.",
+          "done": true,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:40",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781579527608393",
+          "projectId": "p1781624973629157",
+          "text": "Exportar la información de la carpeta de Drive vinculada.",
+          "done": true,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:11",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781579363026116",
+          "projectId": "p1781624973629157",
+          "text": "Editar la categoría desde el panel (color y nombre).",
+          "done": true,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:08",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        }
+      ]
     }
   ],
   "alertConfig": {

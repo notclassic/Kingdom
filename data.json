@@ -356,14 +356,14 @@
       "projectId": "p2",
       "text": "Armar listado de rubros",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-15",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t5",
@@ -490,14 +490,13 @@
       "projectId": "p6",
       "text": "Crear/optimizar publicaciones",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-15",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
       "priority": "medium",
-      "overdueAlertSent": false,
-      "dueSoonAlertSent": false
+      "overdueAlertSent": true
     },
     {
       "id": "t15",
@@ -698,28 +697,24 @@
       "projectId": "p1781572037505287",
       "text": "poder editar la catogira desde el paner no hay un botn de edicion de proyectos",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-16",
       "dueTime": "01:08",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "driveUrl": ""
     },
     {
       "id": "t1781579527608393",
       "projectId": "p1781572037505287",
       "text": "se exporta la inforacion de la caprta linkeada de drive",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-16",
       "dueTime": "01:11",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "driveUrl": ""
     },
     {
       "id": "t1781580666242515",
@@ -731,22 +726,19 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781579686000429",
       "projectId": "p1781572037505287",
       "text": "aca poder pegar fotos  y adjuntar \ncambiar el lapiz ed editar la capeta por editar la catorgia de la tarea si es famlia hogar si es personal o las otras catogias si son distntas y el poder editar dentro de cuando uno  aprieta el link de carpta",
-      "done": true,
-      "dueDate": "2026-06-17",
+      "done": false,
+      "dueDate": "2026-06-16",
       "dueTime": "01:12",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "driveUrl": ""
     },
     {
       "id": "t1781580759092852",
@@ -758,8 +750,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580800586713",
@@ -771,8 +762,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580925539583",
@@ -784,8 +774,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781580951081409",
@@ -797,8 +786,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581080020863",
@@ -810,8 +798,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581108973528",
@@ -847,8 +834,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781581370745505",
@@ -1097,6 +1083,18 @@
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "00:47",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t17815866999337",
+      "projectId": "p1781572037505287",
+      "text": "buscar la mejor manera de que la IA mejore los proyecrtos cree tareas y me ayude como asisstente en cad auno, ademas las IA van a tener acceso a cada carpte con todos los documentso del prouecto, y por ejemplo me puede ayudar categorizar entre la urgencaiasde las tareas entre diseño o de funcionalidades o urgentes y menso urgente",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "01:11",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

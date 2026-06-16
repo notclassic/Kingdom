@@ -97,6 +97,21 @@
       "context": "profesional"
     },
     {
+      "id": "inbox",
+      "color": "#8a919e",
+      "name": "💡 Ideas",
+      "area": null,
+      "desc": "Ideas sueltas y recordatorios rápidos.",
+      "status": "active",
+      "hasLeads": false,
+      "context": "otro",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "parentId": null
+    },
+    {
       "id": "p3",
       "color": "#34c759",
       "name": "Aprendizaje Claude",
@@ -195,48 +210,6 @@
       "context": "profesional"
     },
     {
-      "id": "p1781505112956872",
-      "name": "Agregar tareasPor 3 vía cooreo",
-      "area": "",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "otro"
-    },
-    {
-      "id": "p1781505153732486",
-      "name": "Envío de corres desde acá",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional"
-    },
-    {
-      "id": "inbox",
-      "color": "#8a919e",
-      "name": "💡 Ideas",
-      "area": null,
-      "desc": "Ideas sueltas y recordatorios rápidos.",
-      "status": "active",
-      "hasLeads": false,
-      "context": "otro",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": ""
-    },
-    {
       "id": "p1781502750840",
       "name": "Día del Padre",
       "area": "pa1",
@@ -249,21 +222,6 @@
       "contacts": [],
       "hasLeads": false,
       "driveFolderId": ""
-    },
-    {
-      "id": "p1781540454184",
-      "name": "Ordenar juguetes",
-      "area": "pa3",
-      "context": "personal",
-      "color": "#f5ac2f",
-      "description": "",
-      "status": "active",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "hasLeads": false,
-      "driveFolderId": "",
-      "desc": "undefined||"
     }
   ],
   "tasks": [
@@ -599,18 +557,6 @@
       "overdueAlertSent": false
     },
     {
-      "id": "t1781540454184",
-      "projectId": "p1781540454184",
-      "text": "ordenar juguetes de León",
-      "done": true,
-      "dueDate": "2026-06-15",
-      "dueTime": "16:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781570314630499",
       "projectId": "p10",
       "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",
@@ -753,6 +699,30 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781581080020863",
+      "projectId": "p1781572037505287",
+      "text": "Envío de corres desde acá",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:37",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781581108973528",
+      "projectId": "p1781572037505287",
+      "text": "Agregar tareasPor 3 vía cooreo",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -785,7 +755,9 @@
     "p1781538739000",
     "p1781539246928",
     "p1781540454184",
-    "p1781575055004938"
+    "p1781575055004938",
+    "p1781505153732486",
+    "p1781505112956872"
   ],
   "trash": [
     {
@@ -888,6 +860,58 @@
           "driveUrl": ""
         }
       ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T03:37:45.330Z",
+      "item": {
+        "id": "p1781540454184",
+        "name": "Ordenar juguetes",
+        "area": "pa3",
+        "context": "personal",
+        "color": "#f5ac2f",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": "",
+        "desc": "undefined||"
+      },
+      "tasks": [
+        {
+          "id": "t1781540454184",
+          "projectId": "p1781540454184",
+          "text": "ordenar juguetes de León",
+          "done": true,
+          "dueDate": "2026-06-15",
+          "dueTime": "16:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T03:38:06.824Z",
+      "item": {
+        "id": "p1781505153732486",
+        "name": "Envío de corres desde acá",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional"
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

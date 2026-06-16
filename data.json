@@ -1081,7 +1081,7 @@
       "id": "t178158357562599",
       "projectId": "p8",
       "text": "comprar domino en nic",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:19",
       "priority": "high",

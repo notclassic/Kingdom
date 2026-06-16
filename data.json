@@ -681,6 +681,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781579527608393",
+      "projectId": "p1781572037505287",
+      "text": "se exporta la inforacion de la caprta linkeada de drive",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:11",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -189,6 +189,11 @@ section{
   backdrop-filter:blur(12px) saturate(150%);
   -webkit-backdrop-filter:blur(12px) saturate(150%);
 }
+#areaFilters .chip.active{
+  background:var(--chip-color, var(--accent));
+  border-color:var(--chip-color, var(--accent));
+  color:#fff;
+}
 
 /* PORTAFOLIO */
 .cards{display:flex; flex-direction:column; gap:0; border:1px solid var(--border); border-radius:10px; overflow:hidden;}
@@ -1605,7 +1610,7 @@ function renderAreaFilters(){
   let html = `<div class="chip ${activeArea==='all'?'active':''}" onclick="setArea('all')">Todas</div>`;
   data.areas.forEach(a=>{
     if(usedAreas.has(a.id))
-      html += `<div class="chip ${activeArea===a.id?'active':''}" onclick="setArea('${a.id}')">${a.name}</div>`;
+      html += `<div class="chip ${activeArea===a.id?'active':''}" style="--chip-color:${a.color}" onclick="setArea('${a.id}')">${a.name}</div>`;
   });
   document.getElementById('areaFilters').innerHTML = html;
 }
@@ -1912,9 +1917,45 @@ function dropProject(fromId, targetId, zone){
   data.projects.splice(targetIdx, 0, from);
   save(); renderAll();
 }
+function convertTaskToSubproject(taskId, parentProjectId){
+  const t = data.tasks.find(x=>x.id===taskId);
+  const parent = data.projects.find(p=>p.id===parentProjectId);
+  if(!t || !parent) return;
+  if(!confirm('¿Convertir la tarea «'+t.text+'» en subproyecto dentro de «'+parent.name+'»?')) return;
+  const np = {id:uid('p'), name:(t.text||'Sin nombre'), area:parent.area, desc:'', status:'active', hasLeads:false, color:parent.color, icon:'', driveUrl:'', driveFolderId:'', contacts:[], context:(parent.context||'profesional'), parentId:parent.id};
+  data.projects.push(np);
+  data.tasks = data.tasks.filter(x=>x.id!==taskId);
+  data.deletedTaskIds = data.deletedTaskIds || [];
+  if(!data.deletedTaskIds.includes(taskId)) data.deletedTaskIds.push(taskId);
+  save(); renderAll();
+}
+function convertProjectToTask(projectId, destProjectId, afterTaskId){
+  const p = data.projects.find(x=>x.id===projectId);
+  if(!p) return;
+  if(destProjectId === projectId) return;
+  const hasTasks = data.tasks.some(t=>t.projectId===projectId);
+  const hasChildren = data.projects.some(x=>x.parentId===projectId);
+  if(hasTasks || hasChildren){ alert('«'+p.name+'» tiene tareas o subproyectos. Movelos o vacialo antes de convertirlo en tarea.'); return; }
+  const dest = data.projects.find(x=>x.id===destProjectId);
+  if(!dest) return;
+  if(!confirm('¿Convertir el proyecto «'+p.name+'» en una tarea de «'+dest.name+'»?')) return;
+  const nt = {id:uid('t'), projectId:destProjectId, text:p.name, done:false, dueDate:null, dueTime:null, priority:'medium', emailAlert:false, alertSent:false, driveUrl:''};
+  const idx = data.tasks.findIndex(t=>t.id===afterTaskId);
+  if(idx>=0) data.tasks.splice(idx+1, 0, nt); else data.tasks.push(nt);
+  data.projects = data.projects.filter(x=>x.id!==projectId);
+  data.deletedProjectIds = data.deletedProjectIds || [];
+  if(!data.deletedProjectIds.includes(projectId)) data.deletedProjectIds.push(projectId);
+  expandedProjects.add(destProjectId);
+  save(); renderAll();
+}
 function dragOver(e){
   e.preventDefault();
   const row = e.currentTarget;
+  if(draggedTaskId && !draggedProjectId){
+    row.classList.remove('drop-before','drop-after','drop-inside');
+    row.classList.add('drop-inside');
+    return;
+  }
   if(row.dataset.id === draggedProjectId) return;
   if(draggedProjectId && getDescendantIds(draggedProjectId).includes(row.dataset.id)) return;
   const zone = dropZoneAt(e.clientY, row);
@@ -1927,6 +1968,11 @@ function dragLeave(e){
 function dragDrop(e){
   e.preventDefault();
   const row = e.currentTarget;
+  if(draggedTaskId && !draggedProjectId){
+    clearDropClasses();
+    convertTaskToSubproject(draggedTaskId, row.dataset.id);
+    return;
+  }
   const zone = row.classList.contains('drop-inside') ? 'inside'
              : row.classList.contains('drop-after') ? 'after' : 'before';
   clearDropClasses();
@@ -1935,6 +1981,7 @@ function dragDrop(e){
 function dragEnd(e){
   e.currentTarget.classList.remove('dragging');
   clearDropClasses();
+  document.querySelectorAll('.task.drag-over-task').forEach(t=>t.classList.remove('drag-over-task'));
   draggedProjectId = null;
 }
 
@@ -1955,7 +2002,13 @@ function taskDragLeave(e){
 function taskDrop(e){
   e.preventDefault();
   e.currentTarget.classList.remove('drag-over-task');
-  reorderTasks(draggedTaskId, e.currentTarget.dataset.taskId);
+  const taskId = e.currentTarget.dataset.taskId;
+  if(draggedProjectId && !draggedTaskId){
+    const tk = data.tasks.find(t=>t.id===taskId);
+    if(tk) convertProjectToTask(draggedProjectId, tk.projectId, taskId);
+    return;
+  }
+  reorderTasks(draggedTaskId, taskId);
 }
 function reorderTasks(fromId, toId){
   if(!fromId || !toId || fromId === toId) return;
@@ -1992,26 +2045,33 @@ function onTouchDragMove(e){
   e.preventDefault(); // evita que la página scrollee mientras arrastrás
   const t = e.touches[0];
   if(!t) return;
-  const { sel, el, type, id } = activeTouchDrag;
+  const { el, type, id } = activeTouchDrag;
   document.querySelectorAll('.task.drag-over-task').forEach(x=>x.classList.remove('drag-over-task'));
   clearDropClasses();
+  activeTouchDrag.overTarget = null; activeTouchDrag.overKind = null; activeTouchDrag.overZone = null;
   const under = document.elementFromPoint(t.clientX, t.clientY);
-  const target = under ? under.closest(sel) : null;
-  if(!target || target === el){ activeTouchDrag.overTarget = null; return; }
+  if(!under) return;
   if(type === 'task'){
-    target.classList.add('drag-over-task');
-    activeTouchDrag.overTarget = target;
+    const task = under.closest('.task');
+    if(task && task !== el){ task.classList.add('drag-over-task'); activeTouchDrag.overTarget = task; activeTouchDrag.overKind = 'reorderTask'; return; }
+    const row = under.closest('.row');
+    if(row){ row.classList.add('drop-inside'); activeTouchDrag.overTarget = row; activeTouchDrag.overKind = 'toSubproject'; return; }
   } else {
-    if(getDescendantIds(id).includes(target.dataset.id)){ activeTouchDrag.overTarget = null; return; }
-    const zone = dropZoneAt(t.clientY, target);
-    target.classList.add('drop-'+zone);
-    activeTouchDrag.overTarget = target;
-    activeTouchDrag.overZone = zone;
+    const task = under.closest('.task');
+    if(task){ task.classList.add('drag-over-task'); activeTouchDrag.overTarget = task; activeTouchDrag.overKind = 'toTask'; return; }
+    const row = under.closest('.row');
+    if(row && row !== el){
+      if(getDescendantIds(id).includes(row.dataset.id)) return;
+      const zone = dropZoneAt(t.clientY, row);
+      row.classList.add('drop-'+zone);
+      activeTouchDrag.overTarget = row; activeTouchDrag.overKind = 'reorderProject'; activeTouchDrag.overZone = zone;
+      return;
+    }
   }
 }
 function onTouchDragEnd(){
   if(!activeTouchDrag) return;
-  const { type, id, el, overTarget, overZone } = activeTouchDrag;
+  const { type, id, el, overTarget, overKind, overZone } = activeTouchDrag;
   el.classList.remove('dragging');
   document.querySelectorAll('.task.drag-over-task').forEach(x=>x.classList.remove('drag-over-task'));
   clearDropClasses();
@@ -2019,10 +2079,11 @@ function onTouchDragEnd(){
   document.removeEventListener('touchend', onTouchDragEnd);
   document.removeEventListener('touchcancel', onTouchDragEnd);
   activeTouchDrag = null;
-  if(overTarget){
-    if(type === 'task') reorderTasks(id, overTarget.dataset.taskId);
-    else dropProject(id, overTarget.dataset.id, overZone || 'before');
-  }
+  if(!overTarget) return;
+  if(overKind === 'reorderTask') reorderTasks(id, overTarget.dataset.taskId);
+  else if(overKind === 'toSubproject') convertTaskToSubproject(id, overTarget.dataset.id);
+  else if(overKind === 'toTask'){ const tk = data.tasks.find(x=>x.id===overTarget.dataset.taskId); if(tk) convertProjectToTask(id, tk.projectId, overTarget.dataset.taskId); }
+  else if(overKind === 'reorderProject') dropProject(id, overTarget.dataset.id, overZone || 'before');
 }
 
 function editDesc(id, newDesc){

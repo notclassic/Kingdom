@@ -1063,6 +1063,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781584626491281",
+      "projectId": "p1781572037505287",
+      "text": "se puede eliminar el tituo portafonlio",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:36",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -97,7 +97,7 @@
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
       "area": "a2",
-      "desc": "Operación de trading alimentada por el Databot.",
+      "desc": "tiendo el crm de chileautos se utiliza esa infoamcion para activar este proeyecto.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -352,6 +352,18 @@
       "priority": "medium"
     },
     {
+      "id": "t8",
+      "projectId": "p4",
+      "text": "Evaluar alertas de oportunidades",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "emailAlert": false,
+      "alertSent": false,
+      "dueTime": "13:00",
+      "driveUrl": "",
+      "priority": "medium"
+    },
+    {
       "id": "t10",
       "projectId": "p4",
       "text": "Preparación y venta de vehículos",
@@ -550,18 +562,6 @@
       "text": "Arreglar y optimizar el sitio notclassic.com",
       "done": false,
       "dueDate": "2026-06-23",
-      "emailAlert": false,
-      "alertSent": false,
-      "dueTime": "13:00",
-      "driveUrl": "",
-      "priority": "medium"
-    },
-    {
-      "id": "t8",
-      "projectId": "p4",
-      "text": "Evaluar alertas de oportunidades",
-      "done": false,
-      "dueDate": "2026-06-16",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",

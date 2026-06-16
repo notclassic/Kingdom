@@ -97,7 +97,7 @@
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
       "area": "a2",
-      "desc": "tiendo el crm de chileautos se utiliza esa infoamcion para activar este proeyecto.",
+      "desc": "tiendo el crm de chileautos se utiliza esa infoamcion para activar este proeyecto. a traves de un tercero que revise los autos.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -376,6 +376,18 @@
       "priority": "medium"
     },
     {
+      "id": "t1781571878665580",
+      "projectId": "p4",
+      "text": "Cordinar reunion con Carranza",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t9",
       "projectId": "p4",
       "text": "Gestionar capital y ofertas de compra",
@@ -390,7 +402,7 @@
     {
       "id": "t11",
       "projectId": "p5",
-      "text": "Redactar plan de negocio de pintura",
+      "text": "Redactar plan de negocio de pintura, inccluyendo costos e inversion",
       "done": false,
       "dueDate": "2026-06-17",
       "emailAlert": false,

@@ -139,6 +139,21 @@
       "parentId": "p2"
     },
     {
+      "id": "p1781584127104452",
+      "name": "plan de publicaicones para capaciond e clientes IG",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p3",
       "color": "#34c759",
       "name": "Aprendizaje Claude",
@@ -1036,18 +1051,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t1781584117554430",
-      "projectId": "p2",
-      "text": "plan de publicaicones para capaciond e clientes",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "02:28",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1074,7 +1077,8 @@
     "t1781538739000",
     "t1781539246928",
     "t1781540454184",
-    "t8"
+    "t8",
+    "t1781584117554430"
   ],
   "deletedProjectIds": [
     "p1781538739000",

@@ -247,6 +247,20 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional"
+    },
+    {
+      "id": "p1781582993530486",
+      "name": "Plataforma",
+      "area": "a1",
+      "desc": "Chileautos",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional"
     }
   ],
   "tasks": [

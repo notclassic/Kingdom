@@ -26,26 +26,8 @@
     },
     {
       "id": "pa3",
-      "name": "Hogar",
+      "name": "FORD",
       "color": "#cea427",
-      "context": "personal"
-    },
-    {
-      "id": "pa2",
-      "name": "🏥 Salud",
-      "color": "#2a9d8f",
-      "context": "personal"
-    },
-    {
-      "id": "pa4",
-      "name": "💰 Finanzas Personales",
-      "color": "#1d4ed8",
-      "context": "personal"
-    },
-    {
-      "id": "pa5",
-      "name": "✈️ Viajes",
-      "color": "#af52de",
       "context": "personal"
     }
   ],

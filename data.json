@@ -51,20 +51,6 @@
   ],
   "projects": [
     {
-      "id": "p1",
-      "color": "#007aff",
-      "name": "Chileautos Databot",
-      "area": "a1",
-      "desc": "Analítica interna con potencial SaaS futuro.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p4",
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
@@ -78,6 +64,20 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1",
+      "color": "#007aff",
+      "name": "Chileautos Databot",
+      "area": "a1",
+      "desc": "Analítica interna con potencial SaaS futuro.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p1781572037505287",

@@ -1002,7 +1002,7 @@
       "id": "t1781583104106856",
       "projectId": "p1781572037505287",
       "text": "|en menu de nuevo proyecto no esta la copcion de crearlo como subproyecto solo deja proyectos no tiene la opcionm de un dependiete",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:10",
       "priority": "high",

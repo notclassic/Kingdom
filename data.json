@@ -842,6 +842,30 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781582365048355",
+      "projectId": "p1781572037505287",
+      "text": "genrar dos bot uno para aletas y otro para audios",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:59",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781582476167637",
+      "projectId": "p1781572037505287",
+      "text": "SEPRAR separaa las tareas",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:00",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

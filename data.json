@@ -356,14 +356,14 @@
       "projectId": "p2",
       "text": "Armar listado de rubros",
       "done": false,
-      "dueDate": "2026-06-15",
+      "dueDate": "2026-06-16",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t5",

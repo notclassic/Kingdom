@@ -404,7 +404,7 @@
       "id": "p1781591737916116",
       "name": "Pipeline Comercial y Leads",
       "area": "a1",
-      "desc": "",
+      "desc": "Convierte oportunidades en negocio: leads de financiamiento, personal shopper, arbitraje geográfico y servicios transaccionales.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -419,7 +419,7 @@
       "id": "p1781591737916310",
       "name": "Modelo de Negocio y Monetización",
       "area": "a1",
-      "desc": "",
+      "desc": "Define los productos B2B (SaaS) y B2C, y cómo se cobra cada uno.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -434,7 +434,7 @@
       "id": "p1781592426198283",
       "name": "Infraestructura de Datos y Scraping",
       "area": "a1",
-      "desc": "",
+      "desc": "Captura y normalización de datos de Chileautos: scraping base e incremental, e histórico en base de datos.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -449,7 +449,7 @@
       "id": "p1781592426198782",
       "name": "Motor de Precio Justo y Scoring",
       "area": "a1",
-      "desc": "",
+      "desc": "Algoritmos que valoran cada auto y detectan oportunidades (precio, kilometraje, urgencia, único dueño).",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -464,22 +464,7 @@
       "id": "p1781592426198972",
       "name": "Dashboard e Interfaz (Streamlit)",
       "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
-      "id": "p178159242619814",
-      "name": "Pipeline Comercial y Leads",
-      "area": "a1",
-      "desc": "",
+      "desc": "Interfaz para ver oportunidades en tiempo real, análisis de mercado y normalización de datos.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -494,7 +479,7 @@
       "id": "p1781592426198305",
       "name": "Cumplimiento Legal y Riesgos",
       "area": "a1",
-      "desc": "",
+      "desc": "Manejo legal de los datos (Ley 19.628 y 21.719), uso de datos públicos y reducción de riesgos.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -1259,8 +1244,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t178158357562599",
@@ -1298,8 +1282,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781585249457736",
@@ -1746,66 +1729,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781592426198253",
-      "projectId": "p178159242619814",
-      "text": "CPL Engine: clasificador de intención de financiamiento (Random Forest/XGBoost) + Lead Score 0-100.",
-      "done": false,
-      "dueDate": "2026-07-22",
-      "dueTime": "13:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198830",
-      "projectId": "p178159242619814",
-      "text": "Dashboard de embudo (Iniciado → Validado → Enviado a financiera → Convertido) e integración con API CRM.",
-      "done": false,
-      "dueDate": "2026-07-25",
-      "dueTime": "14:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198770",
-      "projectId": "p178159242619814",
-      "text": "Personal Shopper: informes de historial legal/mecánico y detección de anomalías geo-sociales.",
-      "done": false,
-      "dueDate": "2026-07-28",
-      "dueTime": "13:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198265",
-      "projectId": "p178159242619814",
-      "text": "Calculadora de arbitraje geográfico: spread regional, matriz de costos logísticos y estimador de margen neto.",
-      "done": false,
-      "dueDate": "2026-08-01",
-      "dueTime": "13:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781592426198169",
-      "projectId": "p178159242619814",
-      "text": "Capa transaccional: seguros, transferencia de dominio y tracker de monetización por transacción.",
-      "done": false,
-      "dueDate": "2026-08-05",
-      "dueTime": "13:00",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t178159242619870",
       "projectId": "p1781592426198305",
       "text": "Definir política de privacidad y mecanismo \"No Molestar\" (Ley 19.628 y 21.719).",
@@ -1884,7 +1807,12 @@
     "t1781592426198470",
     "t178159242619847",
     "t1781592426198338",
-    "t1781592426198163"
+    "t1781592426198163",
+    "t1781592426198253",
+    "t1781592426198830",
+    "t1781592426198770",
+    "t1781592426198265",
+    "t1781592426198169"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1896,7 +1824,8 @@
     "p1781591737916995",
     "p1781591737915348",
     "p1781591737916659",
-    "p1781592426198812"
+    "p1781592426198812",
+    "p178159242619814"
   ],
   "trash": [
     {
@@ -2334,6 +2263,87 @@
           "dueDate": "2026-07-25",
           "dueTime": "15:00",
           "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T06:48:52.183Z",
+      "item": {
+        "id": "p178159242619814",
+        "name": "Pipeline Comercial y Leads",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": [
+        {
+          "id": "t1781592426198253",
+          "projectId": "p178159242619814",
+          "text": "CPL Engine: clasificador de intención de financiamiento (Random Forest/XGBoost) + Lead Score 0-100.",
+          "done": false,
+          "dueDate": "2026-07-22",
+          "dueTime": "13:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198830",
+          "projectId": "p178159242619814",
+          "text": "Dashboard de embudo (Iniciado → Validado → Enviado a financiera → Convertido) e integración con API CRM.",
+          "done": false,
+          "dueDate": "2026-07-25",
+          "dueTime": "14:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198770",
+          "projectId": "p178159242619814",
+          "text": "Personal Shopper: informes de historial legal/mecánico y detección de anomalías geo-sociales.",
+          "done": false,
+          "dueDate": "2026-07-28",
+          "dueTime": "13:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198265",
+          "projectId": "p178159242619814",
+          "text": "Calculadora de arbitraje geográfico: spread regional, matriz de costos logísticos y estimador de margen neto.",
+          "done": false,
+          "dueDate": "2026-08-01",
+          "dueTime": "13:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781592426198169",
+          "projectId": "p178159242619814",
+          "text": "Capa transaccional: seguros, transferencia de dominio y tracker de monetización por transacción.",
+          "done": false,
+          "dueDate": "2026-08-05",
+          "dueTime": "13:00",
+          "priority": "low",
           "emailAlert": false,
           "alertSent": false,
           "driveUrl": ""

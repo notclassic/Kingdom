@@ -579,7 +579,7 @@
       "name": "F5 · Cosmético y baja prioridad",
       "area": "a1",
       "desc": "Detalles visuales y de bajo impacto. Al final.",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -587,14 +587,15 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781627396112
     },
     {
       "id": "p1781624973629977",
       "name": "Notas y criterios",
       "area": "a1",
       "desc": "No son tareas de desarrollo: criterios y recordatorios.",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -602,7 +603,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781627371758
     },
     {
       "id": "p1781624973629157",
@@ -635,6 +637,21 @@
       "context": "profesional",
       "parentId": "p1781572037505287",
       "completedAt": 1781627363229
+    },
+    {
+      "id": "p1781627471826336",
+      "name": "Flujo de mejoras con IA (límites y método)",
+      "area": "a1",
+      "desc": "Cómo funciona mejorar Kingdom con IA y sus límites: no se escribe directo en el dashboard, todo pasa por el .md que importás (los datos viven en GitHub). Para modificar o mover algo existente hace falta un export fresco con los ids actuales; para agregar cosas nuevas no. Reemplazar una tarea: se reescribe su texto (mismo id) o se crea la nueva y se borra la vieja a mano. El import no borra: eso es manual, para no eliminar nada por error.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
     }
   ],
   "tasks": [
@@ -1353,7 +1370,7 @@
       "alertSent": false,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": false
     },
     {
       "id": "t1781570314630499",

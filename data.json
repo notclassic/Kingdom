@@ -786,6 +786,30 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781581649266956",
+      "projectId": "p1781572037505287",
+      "text": "mienras no se ponga la tarea complekta la parte de alentas debte tenner mas de una programacion⏰ Anticipación de avisos por importancia\nCuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~5 min), así que es aproximado, no exacto.\n🔴 Urgente\n(:( Quedó la caga)\n\n30 minutos antes\n🟡 Normal\n(:/ Pa mañana)\n\n1 hora antes\n🟢 Puede esperar\n(:) No pasa nada)",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "09:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781581710610850",
+      "projectId": "p1781572037505287",
+      "text": "conexion con gmail, poder enviar correos , ideal poder mandar una reunion con viddeo llamda  laas personas de la bbdd de la pagina que tengo por proeycot o",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:47",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

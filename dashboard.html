@@ -188,6 +188,7 @@ section{
 #areaFilters .chip{
   backdrop-filter:blur(12px) saturate(150%);
   -webkit-backdrop-filter:blur(12px) saturate(150%);
+  user-select:none; -webkit-user-select:none; -webkit-touch-callout:none;
 }
 #areaFilters .chip.active{
   background:var(--chip-color, var(--accent));
@@ -1617,14 +1618,57 @@ function renderAreaFilters(){
   // solo mostrar áreas que tienen proyectos en el contexto activo
   const ctxProjects = activeContext==='all' ? data.projects : data.projects.filter(p=>(p.context||'profesional')===activeContext);
   const usedAreas = new Set(ctxProjects.map(p=>p.area));
-  let html = `<div class="chip ${activeArea==='all'?'active':''}" onclick="setArea('all')">Todas</div>`;
+  let html = `<div class="chip ${activeArea==='all'?'active':''}" data-area-id="all">Todas</div>`;
   data.areas.forEach(a=>{
     if(usedAreas.has(a.id))
-      html += `<div class="chip ${activeArea===a.id?'active':''}" style="--chip-color:${a.color}" onclick="setArea('${a.id}')">${a.name}</div>`;
+      html += `<div class="chip ${activeArea===a.id?'active':''}" style="--chip-color:${a.color}" data-area-id="${a.id}">${a.name}</div>`;
   });
-  document.getElementById('areaFilters').innerHTML = html;
+  const cont = document.getElementById('areaFilters');
+  cont.innerHTML = html;
+  cont.querySelectorAll('.chip').forEach(el=>attachChipHandlers(el, el.dataset.areaId));
 }
 function setArea(id){ activeArea = id; activeProjects.clear(); renderAll(); }
+let chipLastTouch = 0;
+function attachChipHandlers(el, id){
+  let timer=null, longFired=false, sx=0, sy=0, moved=false;
+  const begin=(x,y)=>{ longFired=false; moved=false; sx=x; sy=y;
+    if(id && id!=='all'){ timer=setTimeout(()=>{ longFired=true; openChipEditor(id); }, 500); } };
+  const move=(x,y)=>{ if(Math.abs(x-sx)>10 || Math.abs(y-sy)>10){ moved=true; clearTimeout(timer); } };
+  const finish=()=>{ clearTimeout(timer); if(!longFired && !moved) setArea(id); };
+  el.addEventListener('touchstart', e=>{ const t=e.touches[0]; begin(t.clientX,t.clientY); }, {passive:true});
+  el.addEventListener('touchmove', e=>{ const t=e.touches[0]; move(t.clientX,t.clientY); }, {passive:true});
+  el.addEventListener('touchend', ()=>{ chipLastTouch=Date.now(); finish(); });
+  el.addEventListener('touchcancel', ()=>{ clearTimeout(timer); });
+  el.addEventListener('mousedown', e=>{ if(Date.now()-chipLastTouch<600) return; begin(e.clientX,e.clientY); });
+  el.addEventListener('mousemove', e=>{ if(timer) move(e.clientX,e.clientY); });
+  el.addEventListener('mouseup', ()=>{ if(Date.now()-chipLastTouch<600) return; finish(); });
+  el.addEventListener('mouseleave', ()=>{ clearTimeout(timer); });
+}
+let chipEditId = null;
+function openChipEditor(id){
+  const a = data.areas.find(x=>x.id===id);
+  if(!a) return;
+  chipEditId = id;
+  document.getElementById('chipEditColor').value = a.color || '#007aff';
+  document.getElementById('chipEditName').value = a.name || '';
+  document.getElementById('chipEditOverlay').classList.add('open');
+  setTimeout(()=>{ const n=document.getElementById('chipEditName'); if(n){ n.focus(); n.select(); } }, 50);
+}
+function saveChipEdit(){
+  const a = data.areas.find(x=>x.id===chipEditId);
+  if(a){
+    const name = document.getElementById('chipEditName').value.trim();
+    a.color = document.getElementById('chipEditColor').value;
+    if(name) a.name = name;
+    save(); renderAll();
+    if(typeof renderAreaSettings==='function') renderAreaSettings();
+  }
+  closeChipEdit();
+}
+function closeChipEdit(){
+  chipEditId = null;
+  document.getElementById('chipEditOverlay').classList.remove('open');
+}
 
 function toggleMsDropdown(){}
 function toggleProjectDropdown(){}
@@ -2827,5 +2871,20 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
 }
 
 </script>
+<div id="chipEditOverlay" class="mp-overlay" onclick="if(event.target===this)closeChipEdit()">
+  <div class="mp-box">
+    <h3>Editar categoría</h3>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <input type="color" id="chipEditColor" class="color-dot" style="width:30px; height:30px;" title="Color">
+      <input type="text" id="chipEditName" placeholder="Nombre de la categoría"
+             style="flex:1; min-width:0; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.95rem;"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); saveChipEdit();}">
+    </div>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeChipEdit()">Cerrar</button>
+      <button class="btn-primary" onclick="saveChipEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

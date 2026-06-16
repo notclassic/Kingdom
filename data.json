@@ -669,6 +669,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781579363026116",
+      "projectId": "p1781572037505287",
+      "text": "poder editar la catogira desde el paner no hay un botn de edicion de proyectos",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:08",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -762,6 +762,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781581497206532",
+      "projectId": "p1781572037505287",
+      "text": "xacar el estado en la pantalla si esta con tareas vencidad esta el tono color rojo visual, me gustaria detodas maneras hacerlo mas notorio de tareas vendia, y si la tarea esta vendida necito mas cantidad de aletar por telgram neceiso mas alertas vencidas o por vencer",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:43",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

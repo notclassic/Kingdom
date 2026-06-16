@@ -825,6 +825,7 @@ input, select, textarea{
     <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importMdFile').click()">⬆️ Importar Markdown mejorado</button>
   </div>
   <input type="file" id="importMdFile" accept=".md,text/markdown,text/plain" style="display:none;" onchange="importMarkdown(event)">
+  <button class="btn-toggle" style="margin-top:8px;" onclick="openAiPaste()">📋 Pegar sugerencias de IA</button>
 </section>
 <section>
   <h2>⚙️ Configuración de categorías (áreas)</h2>
@@ -1389,7 +1390,8 @@ function exportMarkdown(){
     const hd = level>=2 ? '###' : '##';
     L.push(`${hd} [[${p.id}]] ${_mdEsc(p.name)}  (área: ${area?area.name:'—'} · estado: ${p.status||'activo'})`);
     if(p.desc) L.push('> ' + _mdEsc(p.desc));
-    if(p.driveFolderId) L.push(`<!-- drive: ${p.driveFolderId} -->`);
+    if(p.driveUrl) L.push('Drive: ' + p.driveUrl);
+    else if(p.driveFolderId) L.push('Drive: https://drive.google.com/drive/folders/' + p.driveFolderId);
     data.tasks.filter(t=>t.projectId===p.id).forEach(t=>{
       let line = `- [${t.done?'x':' '}] [[${t.id}]] ${_mdEsc(t.text)}`;
       if(t.dueDate) line += ` (fecha: ${t.dueDate})`;
@@ -1482,6 +1484,38 @@ function importMarkdown(event){
   reader.readAsText(file);
   event.target.value='';
 }
+
+/* ====== IMPORTAR SUGERENCIAS DE IA (pegar, solo [[new]]) ====== */
+function openAiPaste(){ var t=document.getElementById('aiPasteText'); if(t) t.value=''; document.getElementById('aiPasteOverlay').classList.add('open'); }
+function closeAiPaste(){ document.getElementById('aiPasteOverlay').classList.remove('open'); }
+function importAISuggestions(){
+  const text = (document.getElementById('aiPasteText').value || '');
+  const lines = text.split(/\r?\n/);
+  const toAdd = [];
+  for(let raw of lines){
+    if(raw.indexOf('[[new]]') < 0) continue;
+    let s = raw.replace('[[new]]','').replace(/^[\s*\-\u2022]+/,'').trim();
+    let dueDate=null, priority='medium';
+    const fd = s.match(/\(fecha:\s*(\d{4}-\d{2}-\d{2})\)/i); if(fd) dueDate=fd[1];
+    const pr = s.match(/\(prioridad:\s*([a-zA-Z\u00e1\u00e9\u00ed\u00f3\u00fa\u00f1]+)\)/i); if(pr) priority=_priKey(pr[1]);
+    s = s.replace(/\(fecha:[^)]*\)/ig,'').replace(/\(prioridad:[^)]*\)/ig,'');
+    s = s.replace(/\[\[[^\]]*\]\]/g,'');
+    s = s.replace(/\s*\d+\s*$/,'').trim();
+    s = s.replace(/\s+/g,' ').trim();
+    if(s) toAdd.push({text:s, dueDate, priority});
+  }
+  if(toAdd.length===0){ alert('No encontré líneas con [[new]] para importar.'); return; }
+  let inbox = data.projects.find(p=>p.id==='ia-inbox');
+  if(!inbox){
+    inbox = {id:'ia-inbox', name:'💡 Sugerencias IA', area:null, desc:'Tareas sugeridas por la IA. Arrastralas a su proyecto.', status:'active', hasLeads:false, color:'#8a919e', icon:'', driveUrl:'', driveFolderId:'', contacts:[], context:'otro'};
+    data.projects.push(inbox);
+  }
+  toAdd.forEach(o=>{ data.tasks.push({id:uid('t'), projectId:'ia-inbox', text:o.text, done:false, dueDate:o.dueDate, dueTime:'', priority:o.priority, emailAlert:false, alertSent:false, driveUrl:''}); });
+  save(); renderAll();
+  closeAiPaste();
+  alert('Importé ' + toAdd.length + ' sugerencias a "💡 Sugerencias IA". Arrastralas a sus proyectos.');
+}
+
 
 function areaInfo(id){ return data.areas.find(a=>a.id===id) || PERSONAL_AREAS.find(a=>a.id===id) || {name:'—', color:'#8a919e', context:'profesional'}; }
 function projectInfo(id){ return data.projects.find(p=>p.id===id); }
@@ -3007,6 +3041,17 @@ if('serviceWorker' in navigator && location.protocol.startsWith('http')){
     <div class="mp-actions">
       <button class="btn-toggle" style="margin-top:0;" onclick="closeChipEdit()">Cerrar</button>
       <button class="btn-primary" onclick="saveChipEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+<div id="aiPasteOverlay" class="mp-overlay" onclick="if(event.target===this)closeAiPaste()">
+  <div class="mp-box" style="width:min(560px,94vw);">
+    <h3>Pegar sugerencias de IA</h3>
+    <div class="row-desc" style="margin-bottom:8px;">Pegá lo que te devolvió la IA. Importo solo las líneas marcadas con [[new]] como tareas nuevas en "💡 Sugerencias IA".</div>
+    <textarea id="aiPasteText" rows="10" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.85rem; resize:vertical; box-sizing:border-box;"></textarea>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeAiPaste()">Cancelar</button>
+      <button class="btn-primary" onclick="importAISuggestions()">Importar sugerencias</button>
     </div>
   </div>
 </div>

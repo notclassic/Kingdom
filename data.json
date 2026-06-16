@@ -595,6 +595,18 @@
       "driveUrl": ""
     },
     {
+      "id": "t1781570353106594",
+      "projectId": "p10",
+      "text": "Mejora al sitio, limpieza y ultimo catalogo",
+      "done": false,
+      "dueDate": "2026-06-19",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t1781570314630499",
       "projectId": "p10",
       "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",

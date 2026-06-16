@@ -352,11 +352,11 @@
       "priority": "medium"
     },
     {
-      "id": "t9",
+      "id": "t10",
       "projectId": "p4",
-      "text": "Gestionar capital y ofertas de compra",
+      "text": "Preparación y venta de vehículos",
       "done": false,
-      "dueDate": "2026-06-22",
+      "dueDate": "2026-06-25",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
@@ -364,11 +364,11 @@
       "priority": "medium"
     },
     {
-      "id": "t10",
+      "id": "t9",
       "projectId": "p4",
-      "text": "Preparación y venta de vehículos",
+      "text": "Gestionar capital y ofertas de compra",
       "done": false,
-      "dueDate": "2026-06-25",
+      "dueDate": "2026-06-22",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
@@ -595,9 +595,9 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781570353106594",
+      "id": "t1781570314630499",
       "projectId": "p10",
-      "text": "Mejora al sitio, limpieza y ultimo catalogo",
+      "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",
       "done": false,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
@@ -607,9 +607,9 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781570314630499",
+      "id": "t1781570353106594",
       "projectId": "p10",
-      "text": "buscar agnecias del estilo de BMR para ofrecer el servicio",
+      "text": "Mejora al sitio, limpieza y ultimo catalogo",
       "done": false,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",

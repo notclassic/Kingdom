@@ -165,7 +165,8 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
-      "context": "profesional"
+      "context": "profesional",
+      "parentId": "p6"
     },
     {
       "id": "p8",
@@ -720,6 +721,18 @@
       "dueDate": null,
       "dueTime": null,
       "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781581152031707",
+      "projectId": "p1781502750840",
+      "text": "asistir",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "07:30",
+      "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""

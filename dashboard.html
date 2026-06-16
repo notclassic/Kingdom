@@ -1420,6 +1420,7 @@ function _parseTaskMeta(rest){
 function _applyMarkdown(text){
   const lines = text.split(/\r?\n/);
   let curProj=null, lastTop=null, upd=0, cre=0, skip=0;
+  const order=[];
   const findP = id=>data.projects.find(p=>p.id===id);
   const findT = id=>data.tasks.find(t=>t.id===id);
   for(let raw of lines){
@@ -1456,16 +1457,20 @@ function _applyMarkdown(text){
       const done = m[1].toLowerCase()==='x', id = m[2].trim();
       const meta = _parseTaskMeta(m[3]);
       if(id==='new'){
-        if(curProj){ data.tasks.push({id:uid('t'), projectId:curProj, text:meta.txt||'Nueva tarea', done, dueDate:meta.dueDate, dueTime:'', priority:meta.priority, emailAlert:false, alertSent:false, driveUrl:''}); cre++; }
+        if(curProj){ const nt={id:uid('t'), projectId:curProj, text:meta.txt||'Nueva tarea', done, dueDate:meta.dueDate, dueTime:'', priority:meta.priority, emailAlert:false, alertSent:false, driveUrl:''}; data.tasks.push(nt); order.push(nt.id); cre++; }
         else skip++;
       } else {
         const t = findT(id);
-        if(t){ if(meta.txt) t.text=meta.txt; t.done=done; t.dueDate=meta.dueDate; t.priority=meta.priority; upd++; }
+        if(t){ if(meta.txt) t.text=meta.txt; t.done=done; t.dueDate=meta.dueDate; t.priority=meta.priority; if(curProj) t.projectId=curProj; order.push(id); upd++; }
         else skip++;
       }
       continue;
     }
     skip++;
+  }
+  if(order.length){
+    const pos={}; order.forEach((id,i)=>{ if(!(id in pos)) pos[id]=i; });
+    data.tasks.sort((a,b)=>{ const pa=(a.id in pos)?pos[a.id]:Infinity, pb=(b.id in pos)?pos[b.id]:Infinity; return pa-pb; });
   }
   return {upd, cre, skip};
 }

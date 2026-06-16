@@ -386,21 +386,6 @@
       "parentId": "p2"
     },
     {
-      "id": "p1781591737916170",
-      "name": "Dashboard e Interfaz (Streamlit)",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
       "id": "p1781591737916116",
       "name": "Pipeline Comercial y Leads",
       "area": "a1",
@@ -1407,54 +1392,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781591737916379",
-      "projectId": "p1781591737916170",
-      "text": "Radar de oportunidades en tiempo real: tarjetas de alerta, tabla filtrable y botón directo a WhatsApp.",
-      "done": false,
-      "dueDate": "2026-07-10",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916378",
-      "projectId": "p1781591737916170",
-      "text": "Pestaña de análisis comercial: estimación de precio de mercado, percentiles y comparativa con la competencia.",
-      "done": false,
-      "dueDate": "2026-07-15",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t17815917379166",
-      "projectId": "p1781591737916170",
-      "text": "Sección Mercado: volumen de publicaciones, ranking de modelos y mapa de calor geográfico.",
-      "done": false,
-      "dueDate": "2026-07-18",
-      "dueTime": "12:00",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781591737916898",
-      "projectId": "p1781591737916170",
-      "text": "Pestaña de normalización con edición asistida por IA (sugerir versión, validar km, detectar único dueño).",
-      "done": false,
-      "dueDate": "2026-07-20",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781591737916675",
       "projectId": "p1781591737916116",
       "text": "CPL Engine: clasificador de intención de financiamiento (Random Forest/XGBoost) + Lead Score 0-100.",
@@ -1814,7 +1751,11 @@
     "t1781592426198830",
     "t1781592426198770",
     "t1781592426198265",
-    "t1781592426198169"
+    "t1781592426198169",
+    "t1781591737916379",
+    "t1781591737916378",
+    "t17815917379166",
+    "t1781591737916898"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1827,7 +1768,8 @@
     "p1781591737915348",
     "p1781591737916659",
     "p1781592426198812",
-    "p178159242619814"
+    "p178159242619814",
+    "p1781591737916170"
   ],
   "trash": [
     {
@@ -2346,6 +2288,75 @@
           "dueDate": "2026-08-05",
           "dueTime": "13:00",
           "priority": "low",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-16T07:04:49.799Z",
+      "item": {
+        "id": "p1781591737916170",
+        "name": "Dashboard e Interfaz (Streamlit)",
+        "area": "a1",
+        "desc": "",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": [
+        {
+          "id": "t1781591737916379",
+          "projectId": "p1781591737916170",
+          "text": "Radar de oportunidades en tiempo real: tarjetas de alerta, tabla filtrable y botón directo a WhatsApp.",
+          "done": false,
+          "dueDate": "2026-07-10",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916378",
+          "projectId": "p1781591737916170",
+          "text": "Pestaña de análisis comercial: estimación de precio de mercado, percentiles y comparativa con la competencia.",
+          "done": false,
+          "dueDate": "2026-07-15",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t17815917379166",
+          "projectId": "p1781591737916170",
+          "text": "Sección Mercado: volumen de publicaciones, ranking de modelos y mapa de calor geográfico.",
+          "done": false,
+          "dueDate": "2026-07-18",
+          "dueTime": "12:00",
+          "priority": "low",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781591737916898",
+          "projectId": "p1781591737916170",
+          "text": "Pestaña de normalización con edición asistida por IA (sugerir versión, validar km, detectar único dueño).",
+          "done": false,
+          "dueDate": "2026-07-20",
+          "dueTime": "12:00",
+          "priority": "medium",
           "emailAlert": false,
           "alertSent": false,
           "driveUrl": ""

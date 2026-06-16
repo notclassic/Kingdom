@@ -353,7 +353,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781590678767292"
+      "parentId": "p2"
     },
     {
       "id": "p178159067876735",
@@ -368,7 +368,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781590678767292"
+      "parentId": "p2"
     },
     {
       "id": "p1781590678767753",
@@ -383,7 +383,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781590678767292"
+      "parentId": "p2"
     }
   ],
   "tasks": [
@@ -1139,8 +1139,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t178158357562599",

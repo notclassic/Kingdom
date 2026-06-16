@@ -323,7 +323,7 @@
       "id": "p178158196081099",
       "name": "Ford",
       "area": "pa1",
-      "desc": "",
+      "desc": "repacion de la camiontea",
       "status": "active",
       "hasLeads": false,
       "color": "#ffa50a",
@@ -1745,7 +1745,7 @@
     {
       "id": "t1781594560171737",
       "projectId": "p1781572037505287",
-      "text": "Poder agregar pantallazo o copiar con Ctrl V un print de pantalla",
+      "text": "Poder agregar pantallazo o copiar con Ctrl V un print de pantalla cuando uno crea una tarea asi no tendria que estar revisando los pantallazos guardo para dar las instruciones de mejora",
       "done": false,
       "dueDate": "2026-06-17",
       "dueTime": "03:21",

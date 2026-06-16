@@ -975,6 +975,42 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781583219754591",
+      "projectId": "p1781583210289147",
+      "text": "mantencion",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:13",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781583240720865",
+      "projectId": "p1781583210289147",
+      "text": "Revision tecnica",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "00:13",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781583512115972",
+      "projectId": "p1781572037505287",
+      "text": "mejorar pestaña  leads",
+      "done": false,
+      "dueDate": "2026-06-17",
+      "dueTime": "00:18",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

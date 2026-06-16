@@ -305,21 +305,6 @@
       "parentId": null
     },
     {
-      "id": "inbox",
-      "color": "#8a919e",
-      "name": "💡 Ideas",
-      "area": null,
-      "desc": "Ideas sueltas y recordatorios rápidos.",
-      "status": "active",
-      "hasLeads": false,
-      "context": "otro",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "parentId": null
-    },
-    {
       "id": "p178158196081099",
       "name": "Ford",
       "area": "pa1",
@@ -347,6 +332,21 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional",
+      "parentId": null
+    },
+    {
+      "id": "inbox",
+      "color": "#8a919e",
+      "name": "💡 Ideas",
+      "area": null,
+      "desc": "Ideas sueltas y recordatorios rápidos.",
+      "status": "active",
+      "hasLeads": false,
+      "context": "otro",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
       "parentId": null
     },
     {

@@ -184,34 +184,6 @@
       "parentId": null
     },
     {
-      "id": "p3",
-      "color": "#34c759",
-      "name": "Aprendizaje Claude",
-      "area": "a1",
-      "desc": "I+D y capacitación continua en automatizaciones.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
-      "id": "p6",
-      "color": "#00c7be",
-      "name": "Activación NotClassic",
-      "area": "a2",
-      "desc": "Operación general de venta online; partir buscando nuevas agencias.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p10",
       "color": "#8e8e93",
       "name": "NotClassic",
@@ -257,11 +229,26 @@
       "parentId": "p6"
     },
     {
-      "id": "p5",
-      "color": "#ff3b30",
-      "name": "Pintura a Domicilio",
+      "id": "p1781589327240693",
+      "name": "Script correo",
+      "area": "pa1",
+      "desc": "Arreglar los correos.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null
+    },
+    {
+      "id": "p6",
+      "color": "#00c7be",
+      "name": "Activación NotClassic",
       "area": "a2",
-      "desc": "Servicio presencial / alianza con taller.",
+      "desc": "Operación general de venta online; partir buscando nuevas agencias.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -272,19 +259,19 @@
       "parentId": null
     },
     {
-      "id": "p1781583210289147",
-      "name": "Captiva",
-      "area": "pa3",
-      "desc": "buscar donde hacer camvbio de aciet y pagar luz meter scanner yrevision tecnica",
+      "id": "p3",
+      "color": "#34c759",
+      "name": "Aprendizaje Claude",
+      "area": "a1",
+      "desc": "I+D y capacitación continua en automatizaciones.",
       "status": "active",
       "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
       "driveUrl": "",
-      "driveFolderId": "",
+      "icon": "",
       "contacts": [],
-      "context": "personal",
-      "parentId": "p1781502750840"
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
     },
     {
       "id": "inbox",
@@ -302,18 +289,19 @@
       "parentId": null
     },
     {
-      "id": "p178158196081099",
-      "name": "Ford",
-      "area": "pa1",
-      "desc": "",
+      "id": "p1781583210289147",
+      "name": "Captiva",
+      "area": "pa3",
+      "desc": "buscar donde hacer camvbio de aciet y pagar luz meter scanner yrevision tecnica",
       "status": "active",
       "hasLeads": false,
-      "color": "#ffa50a",
+      "color": "#cea427",
       "icon": "",
       "driveUrl": "",
       "driveFolderId": "",
       "contacts": [],
-      "context": "personal"
+      "context": "personal",
+      "parentId": null
     },
     {
       "id": "p1781502750840",
@@ -332,18 +320,19 @@
       "parentId": null
     },
     {
-      "id": "p1781589327240693",
-      "name": "Script correo",
-      "area": "pa1",
-      "desc": "Arreglar los correos.",
+      "id": "p5",
+      "color": "#ff3b30",
+      "name": "Pintura a Domicilio",
+      "area": "a2",
+      "desc": "Servicio presencial / alianza con taller.",
       "status": "active",
       "hasLeads": false,
-      "color": "#ffa50a",
-      "icon": "",
       "driveUrl": "",
-      "driveFolderId": "",
+      "icon": "",
       "contacts": [],
-      "context": "personal"
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
     },
     {
       "id": "p1781590678767214",
@@ -498,6 +487,21 @@
     {
       "id": "p178159401880768",
       "name": "https://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit",
+      "area": "pa1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781589327240693"
+    },
+    {
+      "id": "p178158196081099",
+      "name": "Ford",
       "area": "pa1",
       "desc": "",
       "status": "active",

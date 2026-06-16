@@ -579,7 +579,7 @@
       "name": "F5 · Cosmético y baja prioridad",
       "area": "a1",
       "desc": "Detalles visuales y de bajo impacto. Al final.",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -587,15 +587,14 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287",
-      "completedAt": 1781627396112
+      "parentId": "p1781572037505287"
     },
     {
       "id": "p1781624973629977",
       "name": "Notas y criterios",
       "area": "a1",
       "desc": "No son tareas de desarrollo: criterios y recordatorios.",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -603,15 +602,14 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287",
-      "completedAt": 1781627371758
+      "parentId": "p1781572037505287"
     },
     {
       "id": "p1781624973629157",
       "name": "Hechas",
       "area": "a1",
       "desc": "Ya completadas.",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -619,8 +617,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287",
-      "completedAt": 1781627361828
+      "parentId": "p1781572037505287"
     },
     {
       "id": "p1781625628409853",

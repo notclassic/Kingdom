@@ -1011,6 +1011,30 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781583565296156",
+      "projectId": "p7",
+      "text": "comprar dominio",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:19",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t178158357562599",
+      "projectId": "p8",
+      "text": "comprar domino en nic",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:19",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

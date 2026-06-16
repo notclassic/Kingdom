@@ -667,7 +667,7 @@
       "id": "t1781581370745505",
       "projectId": "p1781624973627687",
       "text": "Bug: las tareas nuevas quedan como \"urgente\"; deberían quedar por defecto para mañana.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:42",
       "priority": "high",

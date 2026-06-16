@@ -20,13 +20,13 @@
     },
     {
       "id": "pa1",
-      "name": "👨‍👩‍👧 Familia",
+      "name": "Familia",
       "color": "#ff6b6b",
       "context": "personal"
     },
     {
       "id": "pa2",
-      "name": "🏥 Salud",
+      "name": "Salud",
       "color": "#2a9d8f",
       "context": "personal"
     },
@@ -725,6 +725,18 @@
       "done": false,
       "dueDate": "2026-06-16",
       "dueTime": "01:32",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781580800586713",
+      "projectId": "p1781572037505287",
+      "text": "botones depslegables",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:33",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

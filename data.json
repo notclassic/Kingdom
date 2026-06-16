@@ -717,6 +717,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781580759092852",
+      "projectId": "p1781572037505287",
+      "text": "cambio de color osea el botn dia noche apretando el logo en el centro",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "01:32",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

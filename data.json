@@ -810,7 +810,8 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781581108973528",
@@ -846,7 +847,8 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781581370745505",

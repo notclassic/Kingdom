@@ -1036,6 +1036,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781584117554430",
+      "projectId": "p2",
+      "text": "plan de publicaicones para capaciond e clientes",
+      "done": false,
+      "dueDate": "2026-06-16",
+      "dueTime": "02:28",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

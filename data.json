@@ -100,7 +100,7 @@
     {
       "id": "p2",
       "color": "#5856d6",
-      "name": "Chatbot IA",
+      "name": "Agente IA",
       "area": "a1",
       "desc": "Producto de NotClassic: un Agente de IA que atiende y vende por WhatsApp 24/7, integrado al catálogo vivo de la tienda (WooCommerce) y entrenado con la información del cliente para responder, recomendar y cerrar ventas sin fuga a la competencia. Incluye plan comercial de tres canales (outbound por scraping, inbound orgánico en Instagram e inbound pago con Meta Ads) y planes START/PRO/FULL. Clientes/leads actuales: Club California y Bodega Mar y Tierra.",
       "status": "active",

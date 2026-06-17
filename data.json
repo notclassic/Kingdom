@@ -263,18 +263,18 @@
       "parentId": null
     },
     {
-      "id": "p3",
-      "color": "#34c759",
-      "name": "Aprendizaje Claude",
-      "area": "a1",
-      "desc": "I+D y capacitación continua en automatizaciones.",
+      "id": "p1781673306507675",
+      "name": "Autos",
+      "area": "pa3",
+      "desc": "",
       "status": "active",
       "hasLeads": false,
-      "driveUrl": "",
+      "color": "#cea427",
       "icon": "",
-      "contacts": [],
+      "driveUrl": "",
       "driveFolderId": "",
-      "context": "profesional",
+      "contacts": [],
+      "context": "personal",
       "parentId": null
     },
     {
@@ -290,12 +290,12 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": null
+      "parentId": "p1781673306507675"
     },
     {
       "id": "p178158196081099",
       "name": "Ford",
-      "area": "pa1",
+      "area": "pa3",
       "desc": "repacion de la camiontea",
       "status": "active",
       "hasLeads": false,
@@ -305,7 +305,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": null
+      "parentId": "p1781673306507675"
     },
     {
       "id": "p5",
@@ -316,6 +316,21 @@
       "status": "active",
       "hasLeads": false,
       "driveUrl": "https://drive.google.com/drive/folders/1QOOxBstv_sXNIfgb97MKuSzasJNOjEHe",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
+    },
+    {
+      "id": "p3",
+      "color": "#34c759",
+      "name": "Aprendizaje Claude",
+      "area": "a1",
+      "desc": "I+D y capacitación continua en automatizaciones.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
@@ -817,8 +832,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781579686000429",
@@ -856,8 +870,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",
@@ -977,8 +990,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1",

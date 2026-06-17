@@ -981,6 +981,8 @@ function deleteArea(id){
   if(count > 0){ alert(`No se puede eliminar: tiene ${count} proyecto${count===1?'':'s'} asignado${count===1?'':'s'}. Movelos a otra área primero.`); return; }
   if(!confirm('¿Eliminar esta categoría?')) return;
   data.areas = data.areas.filter(a=>a.id!==id);
+  data.deletedAreaIds = data.deletedAreaIds || [];
+  if(!data.deletedAreaIds.includes(id)) data.deletedAreaIds.push(id);
   save(); renderAll(); renderAreaSettings();
 }
 
@@ -1159,7 +1161,7 @@ function load(){
       const parsed = JSON.parse(raw);
       if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
       // migrate personal areas if not present
-      PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
+      parsed.deletedAreaIds = parsed.deletedAreaIds || []; PERSONAL_AREAS.forEach(pa=>{ if(!parsed.deletedAreaIds.includes(pa.id) && !parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
       // tag existing areas as profesional if missing context
       parsed.areas.forEach(a=>{ if(!a.context) a.context='profesional'; });
       if(!parsed.projects.find(p=>p.id==='inbox')) parsed.projects.push(JSON.parse(JSON.stringify(IDEAS_PROJECT)));
@@ -1224,7 +1226,7 @@ function saveGithubToken(){
 /* ====== SINCRONIZACIÓN CON GITHUB (data.json en el repo) ====== */
 function applyImportedData(parsed, skipAutoPush){
   if(!parsed.areas) parsed.areas = JSON.parse(JSON.stringify(DEFAULT_AREAS));
-  PERSONAL_AREAS.forEach(pa=>{ if(!parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
+  parsed.deletedAreaIds = parsed.deletedAreaIds || []; PERSONAL_AREAS.forEach(pa=>{ if(!parsed.deletedAreaIds.includes(pa.id) && !parsed.areas.find(a=>a.id===pa.id)) parsed.areas.push(pa); });
   parsed.areas.forEach(a=>{ if(!a.context) a.context="profesional"; });
   if(!parsed.projects.find(p=>p.id==='inbox')) parsed.projects.push(JSON.parse(JSON.stringify(IDEAS_PROJECT)));
   parsed.projects.forEach(p=>{
@@ -1647,11 +1649,7 @@ function selectProjectContext(ctx){
   document.getElementById('np-context').value = ctx;
   const areaSel = document.getElementById('np-area');
   if(areaSel){
-    const areas = ctx==='personal'
-      ? PERSONAL_AREAS
-      : ctx==='otro'
-        ? []
-        : data.areas.filter(a=>(a.context||'profesional')==='profesional');
+    const areas = data.areas.filter(a=>(a.context||'profesional')===ctx);
     areaSel.innerHTML = areas.length ? areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('') : '<option value="">Sin área</option>';
   }
 }
@@ -2925,10 +2923,21 @@ function populateSelects(){
   const stageSel = document.getElementById('nl-stage');
   stageSel.innerHTML = STAGES.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
 
-  const projOptions = data.projects.filter(p=>p.status==='active')
-    .map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  const projOptions = _projOptionsHierarchy();
   document.getElementById('nl-project').innerHTML = '<option value="">Sin proyecto vinculado</option>' + projOptions;
   document.getElementById('nt-project').innerHTML = projOptions;
+}
+function _projOptionsHierarchy(){
+  const out = [];
+  const kids = pid => data.projects.filter(p=>p.status==='active' && (p.parentId||null)===(pid||null));
+  (function walk(pid, depth){
+    kids(pid).forEach(p=>{
+      const prefix = depth>0 ? ('\u00A0\u00A0\u00A0'.repeat(depth) + '└ ') : '';
+      out.push(`<option value="${p.id}">${prefix}${p.name}</option>`);
+      walk(p.id, depth+1);
+    });
+  })(null, 0);
+  return out.join('');
 }
 
 /* ====== EMAIL: BANNER Y CHEQUEO DE VENCIDAS ====== */

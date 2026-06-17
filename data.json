@@ -217,21 +217,6 @@
       "parentId": "p6"
     },
     {
-      "id": "p1781583210289147",
-      "name": "Captiva",
-      "area": "pa3",
-      "desc": "Mantencion y revision tecnica",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
-      "driveUrl": "https://drive.google.com/drive/folders/1c2n_K0giw7vrNgTNwoNnr3olgltYjfXY",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": null
-    },
-    {
       "id": "p1781589327240693",
       "name": "Script correo",
       "area": "pa1",
@@ -293,6 +278,21 @@
       "parentId": null
     },
     {
+      "id": "p1781583210289147",
+      "name": "Captiva",
+      "area": "pa3",
+      "desc": "Mantencion y revision tecnica",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "https://drive.google.com/drive/folders/1c2n_K0giw7vrNgTNwoNnr3olgltYjfXY",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null
+    },
+    {
       "id": "p178158196081099",
       "name": "Ford",
       "area": "pa1",
@@ -310,7 +310,7 @@
     {
       "id": "p5",
       "color": "#ff3b30",
-      "name": "Pintura a Domicilio",
+      "name": "Taller Movil",
       "area": "a2",
       "desc": "Servicio presencial / alianza con taller.",
       "status": "active",
@@ -817,8 +817,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781579686000429",
@@ -856,8 +855,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",

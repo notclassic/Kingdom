@@ -1909,6 +1909,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781675067534706",
+      "projectId": "p1781572037505287",
+      "text": "sacar estado, en la parte visual",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "01:44",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

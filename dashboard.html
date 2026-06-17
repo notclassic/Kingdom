@@ -687,7 +687,8 @@ input, select, textarea{
       <button class="modal-close" onclick="closeTaskModal()">✕</button>
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
-      <select id="nt-project"></select>
+      <select id="nt-project" onchange="onTaskProjectChange()"></select>
+      <select id="nt-subproject" style="display:none;"></select>
       <div class="priority-selector" id="nt-priority-group">
         <button type="button" class="priority-btn active" data-priority="high"   onclick="selectPriority('high')">:( Quedó la caga</button>
         <button type="button" class="priority-btn"        data-priority="medium" onclick="selectPriority('medium')">:/ Pa mañana</button>
@@ -1689,7 +1690,12 @@ function closeProjectModal(){
 }
 function openTaskModal(projectId){
   populateSelects();
-  if(projectId) document.getElementById('nt-project').value = projectId;
+  if(projectId){
+    const root = _rootOf(projectId);
+    document.getElementById('nt-project').value = root;
+    onTaskProjectChange();
+    if(projectId !== root){ document.getElementById('nt-subproject').value = projectId; }
+  }
   selectPriority('medium'); // default: pa mañana
   document.getElementById('taskModalOverlay').classList.add('open');
   setTimeout(()=>document.getElementById('nt-text').focus(), 50);
@@ -2882,7 +2888,8 @@ function formatDate(iso){
   return `${d}/${m}/${y}`;
 }
 function addTask(){
-  const projectId = document.getElementById('nt-project').value;
+  const sub = document.getElementById('nt-subproject');
+  const projectId = (sub && sub.value) ? sub.value : document.getElementById('nt-project').value;
   const text = document.getElementById('nt-text').value.trim();
   const dueDate = document.getElementById('nt-due').value;
   const dueTime = document.getElementById('nt-time').value;
@@ -2966,7 +2973,36 @@ function populateSelects(){
 
   const projOptions = _projOptionsHierarchy();
   document.getElementById('nl-project').innerHTML = '<option value="">Sin proyecto vinculado</option>' + projOptions;
-  document.getElementById('nt-project').innerHTML = projOptions;
+  // nueva tarea: paso 1 = solo proyectos principales
+  document.getElementById('nt-project').innerHTML = data.projects
+    .filter(p=>p.status==='active' && !p.parentId)
+    .map(p=>`<option value="${p.id}">${p.name}</option>`).join('');
+  onTaskProjectChange();
+}
+function _subprojectOptions(rootId, sel){
+  const out = ['<option value="">— Directo al proyecto</option>'];
+  const kids = pid => data.projects.filter(p=>p.status==='active' && (p.parentId||null)===pid);
+  (function walk(pid, depth){
+    kids(pid).forEach(p=>{
+      const prefix = '\u00A0\u00A0\u00A0'.repeat(depth) + '└ ';
+      out.push(`<option value="${p.id}" ${p.id===sel?'selected':''}>${prefix}${p.name}</option>`);
+      walk(p.id, depth+1);
+    });
+  })(rootId, 0);
+  return out.join('');
+}
+function onTaskProjectChange(){
+  const root = document.getElementById('nt-project').value;
+  const sub = document.getElementById('nt-subproject');
+  if(!sub) return;
+  const hasSubs = data.projects.some(p=>p.status==='active' && p.parentId===root);
+  sub.innerHTML = _subprojectOptions(root, '');
+  sub.style.display = hasSubs ? '' : 'none';
+}
+function _rootOf(id){
+  let p = data.projects.find(x=>x.id===id);
+  while(p && p.parentId){ const par = data.projects.find(x=>x.id===p.parentId); if(!par) break; p = par; }
+  return p ? p.id : id;
 }
 function _projOptionsHierarchy(){
   const out = [];

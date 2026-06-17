@@ -853,7 +853,8 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",
@@ -972,7 +973,8 @@
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1",
@@ -1383,7 +1385,8 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781583565296156",

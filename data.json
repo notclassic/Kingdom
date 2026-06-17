@@ -592,21 +592,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781572037505287"
-    },
-    {
-      "id": "p1781627471826336",
-      "name": "Flujo de mejoras con IA (límites y método)",
-      "area": "a1",
-      "desc": "Cómo funciona mejorar Kingdom con IA y sus límites: no se escribe directo en el dashboard, todo pasa por el .md que importás (los datos viven en GitHub). Para modificar o mover algo existente hace falta un export fresco con los ids actuales; para agregar cosas nuevas no. Reemplazar una tarea: se reescribe su texto (mismo id) o se crea la nueva y se borra la vieja a mano. El import no borra: eso es manual, para no eliminar nada por error.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
     }
   ],
   "tasks": [
@@ -2044,7 +2029,8 @@
     "p178162455909666",
     "p1781624973629157",
     "p1781594011028615",
-    "p178159401880768"
+    "p178159401880768",
+    "p1781627471826336"
   ],
   "trash": [
     {
@@ -2873,6 +2859,26 @@
         "alertSent": false,
         "driveUrl": ""
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-17T06:33:03.511Z",
+      "item": {
+        "id": "p1781627471826336",
+        "name": "Flujo de mejoras con IA (límites y método)",
+        "area": "a1",
+        "desc": "Cómo funciona mejorar Kingdom con IA y sus límites: no se escribe directo en el dashboard, todo pasa por el .md que importás (los datos viven en GitHub). Para modificar o mover algo existente hace falta un export fresco con los ids actuales; para agregar cosas nuevas no. Reemplazar una tarea: se reescribe su texto (mismo id) o se crea la nueva y se borra la vieja a mano. El import no borra: eso es manual, para no eliminar nada por error.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

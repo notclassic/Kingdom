@@ -802,8 +802,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781579686000429",
@@ -841,8 +840,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",
@@ -962,8 +960,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1",
@@ -1920,6 +1917,18 @@
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "01:44",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781675722089858",
+      "projectId": "p1781572037505287",
+      "text": "mantener la regla de las dimensiones",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "01:55",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

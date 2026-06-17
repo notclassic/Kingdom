@@ -678,7 +678,7 @@
       "id": "t1781582619084311",
       "projectId": "p1781624973627687",
       "text": "Bug: el botón de calendario se queda pegado al modificar la hora y no tocarlo",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:03",
       "priority": "high",

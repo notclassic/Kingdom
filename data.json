@@ -519,7 +519,7 @@
       "name": "F1 · Bugs base",
       "area": "a1",
       "desc": "Errores que afectan el uso diario. Van primero porque destraban el sistema de alertas.",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -527,7 +527,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781663104663
     },
     {
       "id": "p1781624973628909",
@@ -845,7 +846,7 @@
       "id": "t1781594560171737",
       "projectId": "p1781624973628126",
       "text": "Pegar un pantallazo con Ctrl+V al crear una tarea, para no tener que revisar capturas guardadas al dar instrucciones de mejora.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "dueTime": "03:21",
       "priority": "medium",

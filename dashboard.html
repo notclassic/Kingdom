@@ -385,6 +385,7 @@ input, select, textarea{
 .task.done .task-text{text-decoration:line-through;}
 .task input[type=checkbox]{width:18px; height:18px; margin-top:2px; flex-shrink:0; accent-color:var(--green);}
 .proj-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.due-dot{ display:inline-block; width:7px; height:7px; border-radius:50%; margin-right:5px; vertical-align:middle; flex-shrink:0; }
 .task-body{flex:1;}
 .task-project{font-size:.65rem; color:var(--accent); font-weight:600; text-transform:uppercase; letter-spacing:.03em;}
 .task-text{margin-top:1px;}
@@ -571,7 +572,7 @@ input, select, textarea{
 .tree-toggle{ background:linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%); border:1px solid var(--border); color:var(--text); }
 .tree-toggle:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.12); }
 .ep-label{ display:block; font-size:.7rem; font-weight:700; color:var(--muted); margin:10px 0 3px; }
-.pf-filterbar{ display:flex; align-items:center; gap:9px; flex-wrap:wrap; margin-bottom:14px; }
+.pf-filterbar{ display:flex; align-items:center; justify-content:flex-start; gap:9px; flex-wrap:wrap; margin-bottom:14px; }
 .act-ico{ display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; padding:0; border:none; border-radius:13px; color:#fff; cursor:pointer; box-shadow:0 2px 7px rgba(0,0,0,.16); transition:transform .12s, box-shadow .12s, filter .12s; }
 .act-ico svg{ width:22px; height:22px; }
 .act-ico:hover{ transform:translateY(-2px); box-shadow:0 5px 14px rgba(0,0,0,.24); filter:brightness(1.07); }
@@ -2264,14 +2265,16 @@ function renderProjectCards(){
     const taskItems = pending.length ? pending.map(t=>{
       const _dd = t.dueDate ? Math.round((new Date(t.dueDate+'T00:00:00')-today)/86400000) : null;
       const isOverdue = _dd!==null && _dd<0, isToday = _dd===0;
+      const dotColor = isOverdue ? '#e63946' : (isToday ? '#f5a623' : '');
+      const dueDot = dotColor ? `<span class="due-dot" style="background:${dotColor};"></span>` : '';
       const due = t.dueDate
-        ? `<span class="due-badge ${isOverdue?'due-overdue':(isToday?'due-today':'due-upcoming')}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Tocar para cambiar fecha">${isOverdue?'Vencida · ':(isToday?'Vence hoy · ':'')}${formatDate(t.dueDate)}</span>`
+        ? `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer; background:var(--panel); border:1px solid var(--border); color:var(--text);" title="Tocar para cambiar fecha">${dueDot}${fmtShort(t.dueDate)}</span>`
         : `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);" title="Agregar fecha">+ fecha</span>`;
       return `<div class="task" draggable="true" data-task-id="${t.id}"
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due} <span class="id-tag" style="float:right; margin-left:8px;" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span></div>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
@@ -2341,7 +2344,7 @@ function renderProjectCards(){
         <button class="danger" onclick="deleteProject('${p.id}')">🗑</button>
       </div>
     </div>
-    ${expanded ? `<div class="row-detail" style="--accent-color:${areaColor}; ${indent}">
+    ${expanded ? `<div class="row-detail" style="--accent-color:${areaColor};">
       <div class="task-list">${taskItems}${doneTasksBlock}</div>
       ${p.driveFolderId ? `
       <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
@@ -3060,6 +3063,11 @@ function formatDate(iso){
   if(!iso) return '';
   const [y,m,d] = iso.split('-');
   return `${d}/${m}/${y}`;
+}
+function fmtShort(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}`;
 }
 function addTask(){
   const sub = document.getElementById('nt-subproject');

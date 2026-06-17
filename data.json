@@ -1291,14 +1291,14 @@
       "projectId": "p1781502750840",
       "text": "Visitar a León.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-06-18",
       "dueTime": "12:30",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781570314630499",

@@ -551,7 +551,7 @@ input, select, textarea{
 .done-tasks-toggle{ background:none; border:none; color:var(--muted); font-size:.78rem; cursor:pointer; padding:8px 2px 4px; display:block; }
 .done-tasks-toggle:hover{ color:var(--text); }
 .done-flag{ font-size:.6rem; font-weight:700; color:#22c55e; background:#22c55e1f; padding:1px 6px; border-radius:6px; align-self:center; white-space:nowrap; }
-.pf-toolbar{ display:flex; justify-content:flex-end; padding:4px 2px 8px; }
+.pf-toolbar{ display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap; padding:4px 2px 8px; }
 .pf-toggle{ background:var(--panel2); border:1px solid var(--border); color:var(--muted); font-size:.78rem; padding:5px 10px; border-radius:8px; cursor:pointer; }
 .pf-toggle.on{ color:#22c55e; border-color:#22c55e66; background:#22c55e14; }
 .id-tag{ display:inline-flex; align-items:center; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.58rem; color:var(--muted); opacity:.6; cursor:pointer; white-space:nowrap; }
@@ -559,6 +559,9 @@ input, select, textarea{
 .id-ico{ background:#e6007e; color:#fff; font-weight:800; font-size:.5rem; line-height:1; letter-spacing:.4px; padding:2px 3px; border-radius:3px; }
 .id-num{ display:none; margin-left:4px; user-select:all; }
 .id-tag:hover .id-num{ display:inline-block; }
+.area-mini{ font-size:.62rem; color:var(--muted); background:var(--panel2); border:1px solid var(--border); border-radius:6px; padding:2px 5px; max-width:180px; cursor:pointer; }
+.tree-toggle{ flex-shrink:0; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:7px; font-size:.7rem; font-weight:700; padding:3px 7px; cursor:pointer; min-width:26px; }
+.tree-toggle:hover{ border-color:var(--accent); color:var(--accent); }
 .done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
 .done-projects-bar:hover{ color:var(--text); }
 .done-row{ opacity:.8; }
@@ -985,6 +988,24 @@ function deleteArea(id){
   if(!data.deletedAreaIds.includes(id)) data.deletedAreaIds.push(id);
   save(); renderAll(); renderAreaSettings();
 }
+function editProjectArea(id, areaId){
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  p.area = areaId;
+  const ai = areaInfo(areaId);
+  if(ai && ai.context) p.context = ai.context;
+  save(); renderAll();
+}
+function _areaOptions(sel){
+  const ctxs = [['profesional','Profesional'],['personal','Personal'],['otro','Otro']];
+  let html = '';
+  ctxs.forEach(([c,label])=>{
+    const as = data.areas.filter(a=>(a.context||'profesional')===c);
+    if(!as.length) return;
+    html += `<optgroup label="${label}">` + as.map(a=>`<option value="${a.id}" ${a.id===sel?'selected':''}>${a.name}</option>`).join('') + `</optgroup>`;
+  });
+  return html;
+}
 
 /* ====== CONTACTOS POR PROYECTO ====== */
 function addContact(projectId){
@@ -1151,6 +1172,8 @@ let activeArea = 'all';
 let activeContext = 'all';
 let activeProjects = new Set();
 let expandedProjects = new Set();
+let collapsedProjects = new Set((()=>{ try{ return JSON.parse(localStorage.getItem('kingdom_collapsed')||'[]'); }catch(_){ return []; } })());
+function saveCollapsed(){ try{ localStorage.setItem('kingdom_collapsed', JSON.stringify([...collapsedProjects])); }catch(_){} }
 let activeLeadsProjects = new Set();
 let taskFilter = 'pending';
 
@@ -2027,7 +2050,7 @@ function renderProjectCards(){
   });
   const ordered = [];
   (function walk(key, depth){
-    (byParent[key]||[]).forEach(p=>{ ordered.push({p, depth}); walk(p.id, depth+1); });
+    (byParent[key]||[]).forEach(p=>{ ordered.push({p, depth}); if(!collapsedProjects.has(p.id)) walk(p.id, depth+1); });
   })('__root__', 0);
 
   const today = new Date(); today.setHours(0,0,0,0);
@@ -2102,6 +2125,7 @@ function renderProjectCards(){
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
       <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
+        ${(byParent[p.id]||[]).length ? `<button class="tree-toggle" onclick="toggleCollapse('${p.id}')" title="Mostrar u ocultar los subproyectos">${collapsedProjects.has(p.id)?`▸ ${(byParent[p.id]||[]).length}`:'▾'}</button>` : ''}
         <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
         <span class="drag-handle" style="flex-shrink:0;" ontouchstart="startTouchDrag(event,'project','${p.id}')">⠿</span>
         <span class="project-avatar" style="flex-shrink:0; background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
@@ -2120,6 +2144,7 @@ function renderProjectCards(){
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
                title="Click para editar la descripción">${p.desc}</div>
           <div style="margin-top:2px;"><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
+          <div style="margin-top:3px;"><select class="area-mini" onchange="editProjectArea('${p.id}', this.value)" onclick="event.stopPropagation()" title="Cambiar la categoría de este proyecto">${_areaOptions(p.area)}</select></div>
         </div>
       </div>
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
@@ -2145,7 +2170,7 @@ function renderProjectCards(){
     </div>` : ''}`;
   }
 
-  let html = `<div class="pf-toolbar"><button class="pf-toggle ${showCompletedInline?'on':''}" onclick="toggleCompletedInline()" title="Mostrar u ocultar las tareas completadas dentro de cada proyecto">${showCompletedInline?'☑':'☐'} Ver completadas</button></div>`;
+  let html = `<div class="pf-toolbar"><button class="pf-toggle" onclick="collapseAllProjects()" title="Ocultar todos los subproyectos">⊟ Contraer todo</button><button class="pf-toggle" onclick="expandAllProjects()" title="Mostrar todos los subproyectos">⊞ Expandir todo</button><button class="pf-toggle ${showCompletedInline?'on':''}" onclick="toggleCompletedInline()" title="Mostrar u ocultar las tareas completadas dentro de cada proyecto">${showCompletedInline?'☑':'☐'} Ver completadas</button></div>`;
   html += `<div class="row-head pf-head"><div>Proyecto</div><div>Estado</div><div>Acciones</div></div>`;
   html += ordered.map(projectRow).join('');
 
@@ -2423,6 +2448,22 @@ function renameProject(id, newName){
 function toggleExpand(id){
   if(expandedProjects.has(id)) expandedProjects.delete(id);
   else expandedProjects.add(id);
+  renderProjectCards();
+}
+function toggleCollapse(id){
+  if(collapsedProjects.has(id)) collapsedProjects.delete(id);
+  else collapsedProjects.add(id);
+  saveCollapsed();
+  renderProjectCards();
+}
+function collapseAllProjects(){
+  collapsedProjects = new Set(data.projects.filter(p=>p.parentId).map(p=>p.parentId));
+  saveCollapsed();
+  renderProjectCards();
+}
+function expandAllProjects(){
+  collapsedProjects.clear();
+  saveCollapsed();
   renderProjectCards();
 }
 function toggleHasLeads(id){

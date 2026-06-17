@@ -2026,6 +2026,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781720722538277",
+      "projectId": "p1781720027768812",
+      "text": "Revisar alfombra",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "14:25",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

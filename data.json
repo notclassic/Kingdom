@@ -924,7 +924,7 @@
       "id": "t1781580759092852",
       "projectId": "p1781624973628303",
       "text": "Modo día/noche tocando el logo del centro.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:32",
       "priority": "low",

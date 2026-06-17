@@ -564,6 +564,14 @@ input, select, textarea{
 .tree-toggle{ flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:3px; background:var(--panel2); border:1px solid var(--accent); color:var(--accent); border-radius:999px; font-size:.72rem; font-weight:800; padding:5px 11px; cursor:pointer; min-width:30px; line-height:1; transition:transform .12s, background .12s, color .12s; }
 .tree-toggle:hover{ background:var(--accent); color:#fff; transform:translateY(-1px); }
 .ep-label{ display:block; font-size:.7rem; font-weight:700; color:var(--muted); margin:10px 0 3px; }
+.pf-filterbar{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+.filter-trigger{ display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; border:none; border-radius:999px; padding:9px 16px; font-size:.82rem; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.14); transition:transform .12s, box-shadow .12s; }
+.filter-trigger:hover{ transform:translateY(-1px); box-shadow:0 4px 13px rgba(0,0,0,.2); }
+.filter-trigger .ft-icon{ opacity:.95; }
+.filter-trigger .ft-chevron{ font-size:.95rem; opacity:.9; margin-left:1px; line-height:1; }
+.sheet-section{ font-size:.64rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); padding:9px 16px 4px; }
+.pf-btn{ display:inline-flex; align-items:center; gap:5px; background:var(--panel); border:1px solid var(--border); color:var(--text); font-size:.74rem; font-weight:600; padding:7px 13px; border-radius:999px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); transition:transform .12s, box-shadow .12s, border-color .12s, color .12s; }
+.pf-btn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.1); }
 .done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
 .done-projects-bar:hover{ color:var(--text); }
 .done-row{ opacity:.8; }
@@ -612,13 +620,14 @@ input, select, textarea{
     <div class="chip"        data-ctx="personal"     onclick="setContext('personal')">Personal</div>
     <div class="chip"        data-ctx="otro"         onclick="setContext('otro')">Otro</div>
   </div>
-  <h2>📁 Portafolio</h2>
-  <div class="filters" id="areaFilters"></div>
-  <div style="margin-bottom:12px;">
-    <button class="proj-sheet-trigger" id="projectSheetTrigger" onclick="openProjectSheet('projectSheetTrigger')">
-      <span id="projectSheetLabel">Todos los proyectos</span><span style="color:var(--muted); font-size:.7rem;">▾</span>
+  <div class="pf-filterbar">
+    <button class="filter-trigger" id="projectSheetTrigger" onclick="openProjectSheet('projectSheetTrigger')">
+      <svg class="ft-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-7z"/></svg>
+      <span id="filterBtnLabel">Todas</span>
+      <span class="ft-chevron">⌄</span>
     </button>
   </div>
+  <div class="filters" id="areaFilters" style="display:none;"></div>
   <div class="totals" id="totals"></div>
   <div class="cards" id="projectCards"></div>
 </section>
@@ -1993,6 +2002,8 @@ function setContext(ctx){
   renderAll();
 }
 function renderAreaFilters(){
+  const cont = document.getElementById('areaFilters');
+  if(!cont || cont.style.display==='none') return;
   // solo mostrar áreas que tienen proyectos en el contexto activo
   const ctxProjects = activeContext==='all' ? data.projects : data.projects.filter(p=>(p.context||'profesional')===activeContext);
   const usedAreas = new Set(ctxProjects.map(p=>p.area));
@@ -2001,11 +2012,20 @@ function renderAreaFilters(){
     if(usedAreas.has(a.id))
       html += `<div class="chip ${activeArea===a.id?'active':''}" style="--chip-color:${a.color}" data-area-id="${a.id}">${a.name}</div>`;
   });
-  const cont = document.getElementById('areaFilters');
   cont.innerHTML = html;
   cont.querySelectorAll('.chip').forEach(el=>attachChipHandlers(el, el.dataset.areaId));
 }
 function setArea(id){ activeArea = id; activeProjects.clear(); renderAll(); }
+function pickArea(id){ setArea(id); updateFilterLabel(); closeProjectSheet(); }
+function updateFilterLabel(){
+  let label;
+  if(activeProjects.size===1) label = projectInfo([...activeProjects][0]).name;
+  else if(activeProjects.size>1) label = `${activeProjects.size} proyectos`;
+  else if(activeArea!=='all'){ const a = areaInfo(activeArea); label = a ? a.name : 'Todas'; }
+  else label = 'Todas';
+  const el = document.getElementById('filterBtnLabel');
+  if(el) el.textContent = label;
+}
 let chipLastTouch = 0;
 function attachChipHandlers(el, id){
   let timer=null, longFired=false, sx=0, sy=0, moved=false;
@@ -2055,18 +2075,28 @@ function toggleProjectDropdown2(){}
 function openProjectSheet(triggerId){
   let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
   if(activeContext!=='all') projects = projects.filter(p=>(p.context||'profesional')===activeContext);
-  let html = `<div class="sheet-divider" style="display:none"></div>
-  <div class="sheet-option" onclick="clearProjectFilter()">
+  const ck = '<div class="sheet-check"></div>', em = '<div class="sheet-check-empty"></div>';
+  // sección categorías
+  const ctxProjects = activeContext==='all' ? data.projects : data.projects.filter(p=>(p.context||'profesional')===activeContext);
+  const usedAreas = new Set(ctxProjects.map(p=>p.area));
+  let html = `<div class="sheet-section">Categorías</div>`;
+  html += `<div class="sheet-option" onclick="pickArea('all')"><div class="sheet-left"><span>Todas</span></div>${activeArea==='all'?ck:em}</div>`;
+  data.areas.forEach(a=>{
+    if(usedAreas.has(a.id))
+      html += `<div class="sheet-option" onclick="pickArea('${a.id}')"><div class="sheet-left"><span class="dot" style="background:${a.color}"></span><span>${a.name}</span></div>${activeArea===a.id?ck:em}</div>`;
+  });
+  html += `<div class="sheet-divider"></div><div class="sheet-section">Proyectos</div>`;
+  html += `<div class="sheet-option" onclick="clearProjectFilter()">
     <div class="sheet-left"><span>Todos los proyectos</span></div>
-    ${activeProjects.size===0?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
-  </div><div class="sheet-divider"></div>`;
+    ${activeProjects.size===0?ck:em}
+  </div>`;
   html += projects.map(p=>`
     <div class="sheet-option" onclick="toggleProjectFilter('${p.id}')">
       <div class="sheet-left">
         <span class="dot" style="background:${p.color}"></span>
         <span>${p.name}</span>
       </div>
-      ${activeProjects.has(p.id)?'<div class="sheet-check"></div>':'<div class="sheet-check-empty"></div>'}
+      ${activeProjects.has(p.id)?ck:em}
     </div>`).join('');
   document.getElementById('projectSheetList').innerHTML = html;
   const overlay = document.getElementById('projectSheetOverlay');
@@ -2093,7 +2123,7 @@ function closeProjectSheet(){
 document.addEventListener('click', e=>{
   const overlay = document.getElementById('projectSheetOverlay');
   if(overlay && overlay.classList.contains('open')){
-    if(!e.target.closest('.sheet') && !e.target.closest('.proj-sheet-trigger')){
+    if(!e.target.closest('.sheet') && !e.target.closest('.proj-sheet-trigger') && !e.target.closest('.filter-trigger')){
       closeProjectSheet();
     }
   }
@@ -2106,6 +2136,7 @@ function updateSheetLabels(){
     const el = document.getElementById('projectSheetLabel'+s);
     if(el) el.textContent = label;
   });
+  updateFilterLabel();
 }
 function renderProjectFilters(){ updateSheetLabels(); }
 function toggleProjectFilter(id){
@@ -2285,7 +2316,7 @@ function renderProjectCards(){
     </div>` : ''}`;
   }
 
-  let html = `<div class="pf-toolbar"><button class="pf-toggle" onclick="collapseAllProjects()" title="Ocultar todos los subproyectos">⊟ Contraer todo</button><button class="pf-toggle" onclick="expandAllProjects()" title="Mostrar todos los subproyectos">⊞ Expandir todo</button><button class="pf-toggle ${showCompletedInline?'on':''}" onclick="toggleCompletedInline()" title="Mostrar u ocultar las tareas completadas dentro de cada proyecto">${showCompletedInline?'☑':'☐'} Ver completadas</button></div>`;
+  let html = `<div class="pf-toolbar"><button class="pf-btn" onclick="collapseAllProjects()" title="Ocultar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>Contraer</button><button class="pf-btn" onclick="expandAllProjects()" title="Mostrar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Expandir</button></div>`;
   html += `<div class="row-head pf-head"><div>Proyecto</div><div>Estado</div><div>Acciones</div></div>`;
   html += ordered.map(projectRow).join('');
 

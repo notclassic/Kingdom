@@ -228,16 +228,15 @@ section{
 .color-dot::-webkit-color-swatch-wrapper{ padding:0; }
 .color-dot::-webkit-color-swatch{ border:1px solid var(--border); border-radius:50%; }
 .color-dot::-moz-color-swatch{ border:1px solid var(--border); border-radius:50%; }
-.expand-pill{
-  flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:4px;
-  background:linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
-  border:1px solid var(--border); border-radius:999px;
-  padding:5px 11px; font-size:.72rem; font-weight:700; color:var(--text); cursor:pointer;
-  min-width:42px; line-height:1; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .12s, box-shadow .12s, border-color .12s;
-}
+.arrow-btn{ flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:3px; width:50px; height:30px; padding:0; border-radius:999px; font-size:.72rem; font-weight:700; cursor:pointer; line-height:1; box-sizing:border-box; transition:transform .12s, box-shadow .12s, border-color .12s, background .12s, color .12s; }
+.arrow-btn .ar{ width:11px; display:inline-block; text-align:center; }
+.arrow-btn .ct{ min-width:9px; text-align:left; }
+.arrow-spacer{ flex-shrink:0; width:50px; display:inline-block; }
+.expand-pill{ background:linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%); border:1px solid var(--border); color:var(--text); box-shadow:0 1px 2px rgba(0,0,0,.06); }
 .expand-pill:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.12); }
 @media(max-width:760px){
-  .expand-pill{ padding:6px 12px; font-size:.8rem; }
+  .arrow-btn{ width:52px; height:32px; font-size:.78rem; }
+  .arrow-spacer{ width:52px; }
 }
 .row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; }
 .row-desc:hover{ background:rgba(0,0,0,0.04); }
@@ -561,7 +560,7 @@ input, select, textarea{
 .id-num{ display:none; margin-left:4px; user-select:all; }
 .id-tag:hover .id-num{ display:inline-block; }
 .area-mini{ font-size:.62rem; color:var(--muted); background:var(--panel2); border:1px solid var(--border); border-radius:6px; padding:2px 5px; max-width:180px; cursor:pointer; }
-.tree-toggle{ flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:3px; background:var(--panel2); border:1px solid var(--accent); color:var(--accent); border-radius:999px; font-size:.72rem; font-weight:800; padding:5px 11px; cursor:pointer; min-width:30px; line-height:1; transition:transform .12s, background .12s, color .12s; }
+.tree-toggle{ background:var(--panel2); border:1px solid var(--accent); color:var(--accent); font-weight:800; }
 .tree-toggle:hover{ background:var(--accent); color:#fff; transform:translateY(-1px); }
 .ep-label{ display:block; font-size:.7rem; font-weight:700; color:var(--muted); margin:10px 0 3px; }
 .pf-filterbar{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
@@ -622,7 +621,7 @@ input, select, textarea{
   </div>
   <div class="pf-filterbar">
     <button class="filter-trigger" id="projectSheetTrigger" onclick="openProjectSheet('projectSheetTrigger')">
-      <svg class="ft-icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4-2v-7z"/></svg>
+      <svg class="ft-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M8 12h8M11 17h2"/></svg>
       <span id="filterBtnLabel">Todas</span>
       <span class="ft-chevron">⌄</span>
     </button>
@@ -2272,8 +2271,10 @@ function renderProjectCards(){
          ondragstart="dragStart(event)" ondragover="dragOver(event)" ondragleave="dragLeave(event)"
          ondrop="dragDrop(event)" ondragend="dragEnd(event)">
       <div style="display:flex; align-items:center; gap:10px; min-width:0; flex:1;">
-        ${(byParent[p.id]||[]).length ? `<button class="tree-toggle" onclick="toggleCollapse('${p.id}')" title="Mostrar u ocultar los subproyectos">${collapsedProjects.has(p.id)?`▸ ${(byParent[p.id]||[]).length}`:'▾'}</button>` : ''}
-        <button class="expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes">${expanded?'▲':'▼'} ${pending.length}</button>
+        ${(byParent[p.id]||[]).length
+          ? `<button class="arrow-btn tree-toggle" onclick="toggleCollapse('${p.id}')" title="Mostrar u ocultar los subproyectos"><span class="ar">${collapsedProjects.has(p.id)?'▸':'▾'}</span><span class="ct">${(byParent[p.id]||[]).length}</span></button>`
+          : `<span class="arrow-spacer"></span>`}
+        <button class="arrow-btn expand-pill" onclick="toggleExpand('${p.id}')" title="Ver tareas pendientes"><span class="ar">${expanded?'▲':'▼'}</span><span class="ct">${pending.length}</span></button>
         <span class="drag-handle" style="flex-shrink:0;" ontouchstart="startTouchDrag(event,'project','${p.id}')">⠿</span>
         <span class="project-avatar" style="flex-shrink:0; background:${p.color}; ${p.icon&&(p.icon.startsWith('http')||p.icon.startsWith('data:'))?'padding:0; overflow:hidden;':''}"
               onclick="setProjectIcon('${p.id}')" title="Tocar para cambiar el ícono">${

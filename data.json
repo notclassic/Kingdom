@@ -1936,6 +1936,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781677173049787",
+      "projectId": "p1781572037505287",
+      "text": "separar potafolia de crm. sacar la infomraicon de la pestaña conficuracion y afgregarla en la nueva pestaña de crm que debe tener un conceptot logico",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "02:18",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

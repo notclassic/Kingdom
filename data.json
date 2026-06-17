@@ -100,7 +100,7 @@
     {
       "id": "p2",
       "color": "#5856d6",
-      "name": "Chatbot IA",
+      "name": "Agente IA",
       "area": "a1",
       "desc": "Desarrollo y prospección por rubro.",
       "status": "active",
@@ -832,8 +832,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781579686000429",
@@ -871,8 +870,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",
@@ -992,8 +990,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1",

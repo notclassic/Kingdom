@@ -279,8 +279,7 @@ section{
   background:var(--panel); padding:10px 14px 14px 14px; border-bottom:1px solid var(--border);
 }
 .row-detail .task{ background:var(--panel2); }
-.row-detail .task-list{ padding-left:40px; }
-@media(max-width:760px){ .row-detail .task-list{ padding-left:22px; } }
+.row-detail .task-list{ padding-left:20px; }
 @media(max-width:760px){
   .row, .row-head{ grid-template-columns:1fr; gap:6px; }
   .row.pf-row{ grid-template-columns:1fr; }
@@ -2293,10 +2292,9 @@ function renderProjectCards(){
                onblur="editDesc('${p.id}', this.textContent)"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
                title="Click para editar la descripción">${p.desc}</div>
-          <div style="margin-top:2px;"><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
         </div>
       </div>
-      <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
+      <div><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="manageDrive('${p.id}')" title="Carpeta de Drive: abrir o editar el link">📁</button>
@@ -2320,7 +2318,7 @@ function renderProjectCards(){
   }
 
   let html = `<div class="pf-toolbar"><button class="pf-btn" onclick="collapseAllProjects()" title="Ocultar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>Contraer</button><button class="pf-btn" onclick="expandAllProjects()" title="Mostrar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Expandir</button></div>`;
-  html += `<div class="row-head pf-head"><div>Proyecto</div><div>Estado</div><div>Acciones</div></div>`;
+  html += `<div class="row-head pf-head"><div>Proyecto</div><div>ID</div><div>Acciones</div></div>`;
   html += ordered.map(projectRow).join('');
 
   if(doneList.length){

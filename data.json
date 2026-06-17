@@ -1948,6 +1948,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781677426654730",
+      "projectId": "p1781572037505287",
+      "text": "los botnees de heramientas nuevo poryecot y nueva tarea solo que sean iconos sin texto recuerda la usabilidad de el celuclar por lo que el tamaño de los iconos debe ser adecuado",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "02:22",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

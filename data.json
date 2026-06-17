@@ -1380,13 +1380,14 @@
       "projectId": "p1781583210289147",
       "text": "Revisión técnica.",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-06-18",
       "dueTime": "00:13",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1781583565296156",

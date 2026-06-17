@@ -2923,7 +2923,7 @@
   "alertConfig": {
     "high": 60,
     "medium": 180,
-    "low": 120
+    "low": 180
   },
   "deletedAreaIds": [
     "pa5",

@@ -54,6 +54,21 @@
       "parentId": null
     },
     {
+      "id": "p1781624973628909",
+      "name": "F2 · Alertas y Telegram",
+      "area": "a3",
+      "desc": "Avisos y bot de Telegram. Dependen de que las fechas estén bien (F1).",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
       "id": "p1",
       "color": "#007aff",
       "name": "Chileautos",
@@ -502,21 +517,6 @@
       "context": "profesional",
       "parentId": "p1781572037505287",
       "completedAt": 1781663104663
-    },
-    {
-      "id": "p1781624973628909",
-      "name": "F2 · Alertas y Telegram",
-      "area": "a3",
-      "desc": "Avisos y bot de Telegram. Dependen de que las fechas estén bien (F1).",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
     },
     {
       "id": "p1781624973628982",

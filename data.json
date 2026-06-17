@@ -802,8 +802,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781579686000429",
@@ -841,8 +840,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781582263961958",
@@ -962,8 +960,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1",
@@ -1896,6 +1893,18 @@
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "01:38",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781674917879234",
+      "projectId": "p1781572037505287",
+      "text": "mejorar contraer no incluye las tareas",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "01:41",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

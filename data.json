@@ -2014,6 +2014,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781720529792548",
+      "projectId": "p1781720027768812",
+      "text": "Cotizar omicinetica\nDerrocha izq proveedores locales \nLavado asientos",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "14:21",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

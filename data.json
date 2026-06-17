@@ -1000,7 +1000,8 @@
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t6",
@@ -1835,7 +1836,8 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t1781635855125",
@@ -1847,7 +1849,8 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781674712115694",

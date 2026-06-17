@@ -578,6 +578,9 @@ input, select, textarea{
 .sheet-section{ font-size:.64rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); padding:9px 16px 4px; }
 .pf-btn{ display:inline-flex; align-items:center; gap:5px; background:var(--panel); border:1px solid var(--border); color:var(--text); font-size:.74rem; font-weight:600; padding:7px 13px; border-radius:999px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); transition:transform .12s, box-shadow .12s, border-color .12s, color .12s; }
 .pf-btn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.1); }
+.pf-iconbtn{ display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; padding:0; background:var(--panel); border:1px solid var(--border); color:var(--muted); border-radius:10px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.05); transition:transform .12s, box-shadow .12s, border-color .12s, color .12s; }
+.pf-iconbtn svg{ width:18px; height:18px; }
+.pf-iconbtn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.1); }
 .done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
 .done-projects-bar:hover{ color:var(--text); }
 .done-row{ opacity:.8; }
@@ -2332,8 +2335,7 @@ function renderProjectCards(){
     </div>` : ''}`;
   }
 
-  let html = `<div class="pf-toolbar"><button class="pf-btn" onclick="collapseAllProjects()" title="Ocultar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 14l5-5 5 5z"/></svg>Contraer</button><button class="pf-btn" onclick="expandAllProjects()" title="Mostrar todos los subproyectos"><svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>Expandir</button></div>`;
-  html += `<div class="row-head pf-head"><div>Proyecto</div><div>ID</div><div>Acciones</div></div>`;
+  let html = `<div class="pf-toolbar"><button class="pf-iconbtn" onclick="collapseAllProjects()" title="Contraer todo" aria-label="Contraer todo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5-5 5 5M7 18l5-5 5 5"/></svg></button><button class="pf-iconbtn" onclick="expandAllProjects()" title="Expandir todo" aria-label="Expandir todo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6l5 5 5-5M7 11l5 5 5-5"/></svg></button></div>`;
   html += ordered.map(projectRow).join('');
 
   if(doneList.length){

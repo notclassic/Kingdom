@@ -1096,7 +1096,7 @@
       "id": "t11",
       "projectId": "p5",
       "text": "Redactar el plan de negocio de pintura, incluyendo costos e inversión.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "emailAlert": false,
       "alertSent": false,

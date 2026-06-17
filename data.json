@@ -357,7 +357,7 @@
       "name": "Fase 1 · Recopilación de información",
       "area": null,
       "desc": "Recopilación de información del negocio: cuestionario (productos, horarios, políticas, FAQ) y material de base (manuales, guiones, enlaces).",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#8a919e",
       "icon": "",
@@ -365,7 +365,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p2"
+      "parentId": "p2",
+      "completedAt": 1781724024266
     },
     {
       "id": "p178159067876735",

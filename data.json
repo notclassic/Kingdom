@@ -35,18 +35,6 @@
       "name": "Salud",
       "color": "#2a9d8f",
       "context": "personal"
-    },
-    {
-      "id": "pa5",
-      "name": "✈️ Viajes",
-      "color": "#af52de",
-      "context": "personal"
-    },
-    {
-      "id": "pa4",
-      "name": "💰 Finanzas Personales",
-      "color": "#1d4ed8",
-      "context": "personal"
     }
   ],
   "projects": [
@@ -2782,5 +2770,8 @@
     "medium": 60,
     "low": 120
   },
-  "deletedAreaIds": []
+  "deletedAreaIds": [
+    "pa5",
+    "pa4"
+  ]
 }

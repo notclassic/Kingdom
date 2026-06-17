@@ -26,7 +26,7 @@
     },
     {
       "id": "pa3",
-      "name": "FORD",
+      "name": "Auto",
       "color": "#cea427",
       "context": "personal"
     },
@@ -972,8 +972,7 @@
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1",
@@ -1384,8 +1383,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781583565296156",

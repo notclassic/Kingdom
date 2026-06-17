@@ -2922,7 +2922,7 @@
   ],
   "alertConfig": {
     "high": 60,
-    "medium": 60,
+    "medium": 180,
     "low": 120
   },
   "deletedAreaIds": [

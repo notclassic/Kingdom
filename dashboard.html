@@ -1236,6 +1236,7 @@ function assignDefaultTimes(tasks){
 }
 function save(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  try{ localStorage.setItem('kingdom_dirty','1'); }catch(_){}
   // auto-push con fusión: conserva lo que escribió el bot (ver pushToGitHub)
   scheduleAutoPush();
 }
@@ -1300,7 +1301,12 @@ async function pullFromGitHub(silent){
 }
 async function autoPullOnLoad(){
   if(!getGithubToken()) return;
-  await pullFromGitHub(true);
+  // si hay cambios locales sin subir, subirlos (fusionando) en vez de bajar y pisarlos
+  if(localStorage.getItem('kingdom_dirty')==='1'){
+    await pushToGitHub(true);
+  } else {
+    await pullFromGitHub(true);
+  }
 }
 async function pushToGitHub(silent){
   const token = getGithubToken();
@@ -1357,6 +1363,7 @@ async function pushToGitHub(silent){
       renderAll();
     }
     if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub.' : '✓ Datos subidos a GitHub correctamente.';
+    try{ localStorage.setItem('kingdom_dirty','0'); }catch(_){}
   }catch(err){
     if(banner) banner.textContent = (silent?'Error de auto-sync: ':'Error al subir: ')+err.message;
   }

@@ -1963,6 +1963,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781717736940",
+      "projectId": "p1781583210289147",
+      "text": "Agenda otra hora",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "10:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

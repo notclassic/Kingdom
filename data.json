@@ -1325,18 +1325,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781581152031707",
-      "projectId": "p1781502750840",
-      "text": "Asistir.",
-      "done": false,
-      "dueDate": "2026-06-18",
-      "dueTime": "07:30",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t178158273877926",
       "projectId": "p1781582668835650",
       "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
@@ -1995,7 +1983,8 @@
     "t1781585249457736",
     "t1781581229142396",
     "t1781579527608393",
-    "t1781579363026116"
+    "t1781579363026116",
+    "t1781581152031707"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2832,6 +2821,22 @@
           "overdueAlertSent": true
         }
       ]
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-06-17T06:11:13.962Z",
+      "item": {
+        "id": "t1781581152031707",
+        "projectId": "p1781502750840",
+        "text": "Asistir.",
+        "done": false,
+        "dueDate": "2026-06-18",
+        "dueTime": "07:30",
+        "priority": "high",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": ""
+      }
     }
   ],
   "alertConfig": {

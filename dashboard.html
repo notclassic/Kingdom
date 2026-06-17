@@ -229,14 +229,15 @@ section{
 .color-dot::-webkit-color-swatch{ border:1px solid var(--border); border-radius:50%; }
 .color-dot::-moz-color-swatch{ border:1px solid var(--border); border-radius:50%; }
 .expand-pill{
-  flex-shrink:0; display:flex; align-items:center; justify-content:center;
-  background:var(--panel2); border:1.5px solid var(--border); border-radius:8px;
-  padding:4px 8px; font-size:.72rem; font-weight:700; color:var(--muted); cursor:pointer;
-  min-width:36px; gap:3px; line-height:1;
+  flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:4px;
+  background:linear-gradient(180deg, var(--panel) 0%, var(--panel2) 100%);
+  border:1px solid var(--border); border-radius:999px;
+  padding:5px 11px; font-size:.72rem; font-weight:700; color:var(--text); cursor:pointer;
+  min-width:42px; line-height:1; box-shadow:0 1px 2px rgba(0,0,0,.06); transition:transform .12s, box-shadow .12s, border-color .12s;
 }
-.expand-pill:hover{ border-color:var(--accent); color:var(--accent); }
+.expand-pill:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-1px); box-shadow:0 2px 7px rgba(0,0,0,.12); }
 @media(max-width:760px){
-  .expand-pill{ padding:6px 10px; font-size:.8rem; }
+  .expand-pill{ padding:6px 12px; font-size:.8rem; }
 }
 .row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; }
 .row-desc:hover{ background:rgba(0,0,0,0.04); }
@@ -560,8 +561,9 @@ input, select, textarea{
 .id-num{ display:none; margin-left:4px; user-select:all; }
 .id-tag:hover .id-num{ display:inline-block; }
 .area-mini{ font-size:.62rem; color:var(--muted); background:var(--panel2); border:1px solid var(--border); border-radius:6px; padding:2px 5px; max-width:180px; cursor:pointer; }
-.tree-toggle{ flex-shrink:0; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:7px; font-size:.7rem; font-weight:700; padding:3px 7px; cursor:pointer; min-width:26px; }
-.tree-toggle:hover{ border-color:var(--accent); color:var(--accent); }
+.tree-toggle{ flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; gap:3px; background:var(--panel2); border:1px solid var(--accent); color:var(--accent); border-radius:999px; font-size:.72rem; font-weight:800; padding:5px 11px; cursor:pointer; min-width:30px; line-height:1; transition:transform .12s, background .12s, color .12s; }
+.tree-toggle:hover{ background:var(--accent); color:#fff; transform:translateY(-1px); }
+.ep-label{ display:block; font-size:.7rem; font-weight:700; color:var(--muted); margin:10px 0 3px; }
 .done-projects-bar{ margin-top:16px; padding:11px 14px; border-radius:12px; background:var(--panel2); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none; }
 .done-projects-bar:hover{ color:var(--text); }
 .done-row{ opacity:.8; }
@@ -701,6 +703,50 @@ input, select, textarea{
       </div>
       <input type="checkbox" id="nt-alert" style="display:none">
       <button class="btn-primary" onclick="addTask()">Guardar tarea</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR PROYECTO -->
+<div class="modal-overlay" id="editProjectOverlay" onclick="if(event.target===this) closeEditProject()">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h2 style="margin:0;">✎ Editar proyecto</h2>
+      <button class="modal-close" onclick="closeEditProject()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="ep-id">
+      <label class="ep-label">Nombre</label>
+      <input type="text" id="ep-name">
+      <label class="ep-label">Descripción</label>
+      <textarea id="ep-desc" rows="2" style="resize:vertical;"></textarea>
+      <div id="ep-cat-wrap">
+        <label class="ep-label">Categoría</label>
+        <select id="ep-area"></select>
+      </div>
+      <div id="ep-cat-note" class="row-desc" style="display:none; margin-top:4px;">La categoría la hereda del proyecto padre.</div>
+      <label class="ep-label">Color</label>
+      <input type="color" id="ep-color" style="width:60px; height:36px; padding:0; border:none; background:none; cursor:pointer;">
+      <button class="btn-primary" style="margin-top:14px;" onclick="saveEditProject()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CARPETA DRIVE -->
+<div class="modal-overlay" id="driveOverlay" onclick="if(event.target===this) closeDrive()">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h2 style="margin:0;">📁 Carpeta de Drive</h2>
+      <button class="modal-close" onclick="closeDrive()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="dr-id">
+      <div class="row-desc" style="margin-bottom:6px;">Pegá el link de la carpeta o documento de Google Drive.</div>
+      <input type="text" id="dr-url" placeholder="https://drive.google.com/...">
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button class="btn-toggle" style="margin-top:0;" onclick="openDriveLink()">↗ Abrir carpeta</button>
+        <button class="btn-primary" onclick="saveDrive()">Guardar link</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1764,6 +1810,63 @@ function promptDriveUrl(obj){
   obj.driveUrl = url.trim();
   save(); renderAll();
 }
+/* ====== CARPETA DE DRIVE (modal) ====== */
+function manageDrive(id){
+  const p = projectInfo(id);
+  document.getElementById('dr-id').value = id;
+  document.getElementById('dr-url').value = p.driveUrl || '';
+  document.getElementById('driveOverlay').classList.add('open');
+}
+function closeDrive(){ document.getElementById('driveOverlay').classList.remove('open'); }
+function openDriveLink(){
+  const u = document.getElementById('dr-url').value.trim();
+  if(u) window.open(u, '_blank');
+  else alert('No hay link guardado. Pegá uno y tocá Guardar.');
+}
+function saveDrive(){
+  const id = document.getElementById('dr-id').value;
+  const p = projectInfo(id);
+  p.driveUrl = document.getElementById('dr-url').value.trim();
+  save(); renderAll(); closeDrive();
+}
+/* ====== EDITAR PROYECTO (modal) ====== */
+function openEditProject(id){
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('ep-id').value = id;
+  document.getElementById('ep-name').value = p.name || '';
+  document.getElementById('ep-desc').value = p.desc || '';
+  document.getElementById('ep-color').value = (p.color && p.color.startsWith('#')) ? p.color : '#007aff';
+  const isSub = !!p.parentId && data.projects.some(x=>x.id===p.parentId);
+  document.getElementById('ep-cat-wrap').style.display = isSub ? 'none' : '';
+  document.getElementById('ep-cat-note').style.display = isSub ? '' : 'none';
+  if(!isSub) document.getElementById('ep-area').innerHTML = _areaOptions(p.area);
+  document.getElementById('editProjectOverlay').classList.add('open');
+  setTimeout(()=>document.getElementById('ep-name').focus(), 50);
+}
+function closeEditProject(){ document.getElementById('editProjectOverlay').classList.remove('open'); }
+function saveEditProject(){
+  const id = document.getElementById('ep-id').value;
+  const p = data.projects.find(x=>x.id===id);
+  if(!p) return;
+  const nm = document.getElementById('ep-name').value.trim();
+  if(nm) p.name = nm;
+  p.desc = document.getElementById('ep-desc').value.trim();
+  p.color = document.getElementById('ep-color').value;
+  const isSub = !!p.parentId && data.projects.some(x=>x.id===p.parentId);
+  if(!isSub){
+    const areaId = document.getElementById('ep-area').value;
+    p.area = areaId;
+    const ai = areaInfo(areaId);
+    if(ai && ai.context) p.context = ai.context;
+    // los subproyectos heredan la categoría del padre
+    getDescendantIds(id).forEach(did=>{
+      const c = data.projects.find(x=>x.id===did);
+      if(c){ c.area = areaId; if(ai && ai.context) c.context = ai.context; }
+    });
+  }
+  save(); renderAll(); closeEditProject();
+}
 function openTaskDrive(taskId){
   const t = data.tasks.find(t=>t.id===taskId);
   if(t.driveUrl){
@@ -2157,14 +2260,13 @@ function renderProjectCards(){
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
                title="Click para editar la descripción">${p.desc}</div>
           <div style="margin-top:2px;"><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
-          <div style="margin-top:3px;"><select class="area-mini" onchange="editProjectArea('${p.id}', this.value)" onclick="event.stopPropagation()" title="Cambiar la categoría de este proyecto">${_areaOptions(p.area)}</select></div>
         </div>
       </div>
       <div><span class="status-pill ${statusCls}">${statusLabel}</span></div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
-        <button class="${p.driveUrl?'drive-on':''}" onclick="openDrive('${p.id}')" title="${p.driveUrl?'Abrir carpeta de Drive':'Configurar carpeta de Drive'}">📁</button>
-        <button onclick="editDrive('${p.id}')" title="Cambiar el link de Drive">✎</button>
+        <button class="${p.driveUrl?'drive-on':''}" onclick="manageDrive('${p.id}')" title="Carpeta de Drive: abrir o editar el link">📁</button>
+        <button onclick="openEditProject('${p.id}')" title="Editar el proyecto (nombre, categoría, color)">✎</button>
         <button class="${p.hasLeads?'lead-on':''}" onclick="toggleHasLeads('${p.id}')" title="¿Tiene leads?">🎯 ${data.leads.filter(l=>l.projectId===p.id).length}</button>
         ${p.status==='active'
           ? `<button onclick="toggleStatus('${p.id}')" title="Pausar">⏸</button>`

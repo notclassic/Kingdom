@@ -508,7 +508,7 @@
       "name": "F2 · Alertas y Telegram",
       "area": "a3",
       "desc": "Avisos y bot de Telegram. Dependen de que las fechas estén bien (F1).",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -516,7 +516,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "completedAt": 1781683698872
     },
     {
       "id": "p1781624973628982",

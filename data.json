@@ -1951,6 +1951,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781717730685",
+      "projectId": "inbox",
+      "text": "agendar hora al dentista",
+      "done": false,
+      "dueDate": "2026-06-18",
+      "dueTime": "16:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

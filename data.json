@@ -520,6 +520,21 @@
       "completedAt": 1781683698872
     },
     {
+      "id": "p1781624973628982",
+      "name": "F3 · Email y CRM",
+      "area": "a1",
+      "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
       "id": "p1781624973628126",
       "name": "F4 · UX y navegación",
       "area": "a1",
@@ -565,25 +580,10 @@
       "parentId": "p1781572037505287"
     },
     {
-      "id": "p1781624973628982",
-      "name": "F3 · Email y CRM",
-      "area": "a1",
-      "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781624973629977"
-    },
-    {
       "id": "p1781720027768812",
       "name": "Subaru",
       "area": "pa3",
-      "desc": "",
+      "desc": "Auto Oso",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -1353,7 +1353,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
+      "dueSoonAlertSent": false,
       "overdueAlertSent": false
     },
     {

@@ -59,14 +59,13 @@
       "name": "Chileautos",
       "area": "a1",
       "desc": "Inteligencia y servicios automotrices sobre los datos de Chileautos: analítica de precios, detección de oportunidades y servicios B2B (SaaS) y B2C. Basado en el plan de negocio unificado y la planificación técnica (en la carpeta de Drive).",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "driveUrl": "https://drive.google.com/drive/folders/1DE5tzUIDkvd9JC4iSsoSoYEnUCUiFtgh",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
-      "context": "profesional",
-      "completedAt": 1781744331348
+      "context": "profesional"
     },
     {
       "id": "p1781582993530486",
@@ -105,7 +104,7 @@
       "area": "a1",
       "desc": "Producto de NotClassic: un Agente de IA que atiende y vende por WhatsApp 24/7, integrado al catálogo vivo de la tienda (WooCommerce) y entrenado con la información del cliente para responder, recomendar y cerrar ventas sin fuga a la competencia. Incluye plan comercial de tres canales (outbound por scraping, inbound orgánico en Instagram e inbound pago con Meta Ads) y planes START/PRO/FULL. Clientes/leads actuales: Club California y Bodega Mar y Tierra.",
       "status": "active",
-      "hasLeads": false,
+      "hasLeads": true,
       "driveUrl": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
       "icon": "",
       "contacts": [],
@@ -132,7 +131,7 @@
       "name": "WhatsApp",
       "area": "a1",
       "desc": "Prospección saliente por WhatsApp: arma el mensaje y el link con el teléfono del contacto para ofrecer el agente de IA al negocio (el saludo va a la empresa, no a una persona).",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -140,8 +139,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p2",
-      "completedAt": 1781743606925
+      "parentId": "p2"
     },
     {
       "id": "p1781584127104452",
@@ -359,7 +357,7 @@
       "name": "Fase 1 · Recopilación de información",
       "area": null,
       "desc": "Recopilación de información del negocio: cuestionario (productos, horarios, políticas, FAQ) y material de base (manuales, guiones, enlaces).",
-      "status": "done",
+      "status": "active",
       "hasLeads": false,
       "color": "#8a919e",
       "icon": "",
@@ -367,8 +365,7 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p2",
-      "completedAt": 1781724024266
+      "parentId": "p2"
     },
     {
       "id": "p178159067876735",
@@ -523,21 +520,6 @@
       "completedAt": 1781683698872
     },
     {
-      "id": "p1781624973628982",
-      "name": "F3 · Email y CRM",
-      "area": "a1",
-      "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p1781624973628126",
       "name": "F4 · UX y navegación",
       "area": "a1",
@@ -581,6 +563,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1781624973628982",
+      "name": "F3 · Email y CRM",
+      "area": "a1",
+      "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781624973629977"
     },
     {
       "id": "p1781720027768812",
@@ -1013,14 +1010,14 @@
       "projectId": "p2",
       "text": "Buscar leads por rubro.",
       "done": false,
-      "dueDate": "2026-06-21",
+      "dueDate": "2026-06-17",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t6",
@@ -1098,7 +1095,7 @@
       "id": "t11",
       "projectId": "p5",
       "text": "Redactar el plan de negocio de pintura, incluyendo costos e inversión.",
-      "done": true,
+      "done": false,
       "dueDate": "2026-06-17",
       "emailAlert": false,
       "alertSent": false,
@@ -1356,7 +1353,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
+      "dueSoonAlertSent": false,
       "overdueAlertSent": false
     },
     {
@@ -2103,8 +2100,7 @@
     "t1781581229142396",
     "t1781579527608393",
     "t1781579363026116",
-    "t1781581152031707",
-    "t1781719836601"
+    "t1781581152031707"
   ],
   "deletedProjectIds": [
     "p1781538739000",

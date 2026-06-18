@@ -2009,7 +2009,7 @@
       "id": "t1781720436507",
       "projectId": "p1781720027768812",
       "text": "ver el precio marcado en base a la base Chile Auto para la publicación",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "dueTime": "20:00",
       "priority": "medium",

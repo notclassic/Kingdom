@@ -59,13 +59,14 @@
       "name": "Chileautos",
       "area": "a1",
       "desc": "Inteligencia y servicios automotrices sobre los datos de Chileautos: analítica de precios, detección de oportunidades y servicios B2B (SaaS) y B2C. Basado en el plan de negocio unificado y la planificación técnica (en la carpeta de Drive).",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "driveUrl": "https://drive.google.com/drive/folders/1DE5tzUIDkvd9JC4iSsoSoYEnUCUiFtgh",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
-      "context": "profesional"
+      "context": "profesional",
+      "completedAt": 1781744331348
     },
     {
       "id": "p1781582993530486",

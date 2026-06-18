@@ -131,7 +131,7 @@
       "name": "WhatsApp",
       "area": "a1",
       "desc": "Prospección saliente por WhatsApp: arma el mensaje y el link con el teléfono del contacto para ofrecer el agente de IA al negocio (el saludo va a la empresa, no a una persona).",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -139,7 +139,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p2"
+      "parentId": "p2",
+      "completedAt": 1781743606925
     },
     {
       "id": "p1781584127104452",

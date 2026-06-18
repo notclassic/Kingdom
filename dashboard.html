@@ -581,6 +581,18 @@ input, select, textarea{
 .ai-manage{ background:#f5a623; }
 .ai-newproj{ background:#34c759; }
 .ai-newtask{ background:#af52de; }
+.ai-context{ background:#30b0c7; }
+.ai-new{ background:#34c759; }
+.new-choices{ display:flex; flex-direction:column; gap:10px; padding:6px 4px 4px; }
+.new-choice{ display:flex; align-items:center; gap:14px; width:100%; text-align:left; background:var(--panel2); border:1px solid var(--border); border-radius:16px; padding:14px; cursor:pointer; transition:transform .12s, box-shadow .12s, background .15s; }
+.new-choice:hover{ transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.12); }
+.new-choice:active{ transform:scale(.98); }
+[data-theme="dark"] .new-choice{ background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.10); }
+.new-choice .nc-ico{ display:inline-flex; align-items:center; justify-content:center; width:46px; height:46px; border-radius:13px; flex-shrink:0; box-shadow:0 2px 7px rgba(0,0,0,.16); }
+.new-choice .nc-ico svg{ width:24px; height:24px; }
+.new-choice .nc-text{ display:flex; flex-direction:column; gap:2px; }
+.new-choice .nc-text b{ font-size:.98rem; }
+.new-choice .nc-text small{ font-size:.74rem; color:var(--muted); }
 .ai-collapse, .ai-expand{ background:#7c8694; }
 @media(max-width:560px){ .act-ico{ width:42px; height:42px; } }
 .filter-trigger{ display:inline-flex; align-items:center; gap:8px; background:var(--accent); color:#fff; border:none; border-radius:999px; padding:9px 16px; font-size:.82rem; font-weight:700; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,.14); transition:transform .12s, box-shadow .12s; }
@@ -635,12 +647,7 @@ input, select, textarea{
 <div id="tab-main">
 <!-- PORTAFOLIO -->
 <section>
-  <div class="filters context-filters" id="contextFilters">
-    <div class="chip active" data-ctx="all"          onclick="setContext('all')">Vida</div>
-    <div class="chip"        data-ctx="profesional"  onclick="setContext('profesional')">Profesional</div>
-    <div class="chip"        data-ctx="personal"     onclick="setContext('personal')">Personal</div>
-    <div class="chip"        data-ctx="otro"         onclick="setContext('otro')">Otro</div>
-  </div>
+  <!-- La selección de ámbito (Vida/Profesional/Personal/Otro) ahora vive en el ícono #contextSheetTrigger de la barra de acciones. -->
   <div class="pf-filterbar" id="actionBar">
     <button class="act-ico ai-filter" id="projectSheetTrigger" onclick="openProjectSheet('projectSheetTrigger')" title="Filtrar (Todas / por categoría o proyecto)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M8 12h8M11 17h2"/></svg>
@@ -649,11 +656,8 @@ input, select, textarea{
     <button class="act-ico ai-manage" onclick="openManage()" title="Gestionar cambios (pegar, previsualizar, respaldos)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a1 1 0 0 1 1 1 1 1 0 0 1-1 1H9a1 1 0 0 1-1-1 1 1 0 0 1 1-1zM8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 11h6M9 15h4"/></svg>
     </button>
-    <button class="act-ico ai-newproj" onclick="openProjectModal()" title="Nuevo proyecto">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg>
-    </button>
-    <button class="act-ico ai-newtask" onclick="openTaskModal()" title="Nueva tarea">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 9v6M9 12h6"/></svg>
+    <button class="act-ico ai-new" id="newSheetTrigger" onclick="openNewSheet()" title="Crear nuevo (tarea o proyecto)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
     </button>
     <button class="act-ico ai-collapse" onclick="collapseAllProjects()" title="Contraer todo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5-5 5 5M7 18l5-5 5 5"/></svg>
@@ -719,9 +723,32 @@ input, select, textarea{
 <div class="sheet-overlay" id="projectSheetOverlay" onclick="closeProjectSheet()">
   <div class="sheet" onclick="event.stopPropagation()">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Seleccioná proyectos</div>
+    <div class="sheet-title">Filtros</div>
     <div class="sheet-list" id="projectSheetList"></div>
     <button class="sheet-cancel" onclick="closeProjectSheet()">Cerrar</button>
+  </div>
+</div>
+
+<!-- iOS ACTION SHEET — CREAR NUEVO (tarea / proyecto) -->
+<div class="sheet-overlay" id="newSheetOverlay" onclick="closeNewSheet()">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Crear nuevo</div>
+    <div class="new-choices">
+      <button class="new-choice" onclick="pickNew('task')">
+        <span class="nc-ico" style="background:#af52de;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3.5"/><path d="M12 9v6M9 12h6"/></svg>
+        </span>
+        <span class="nc-text"><b>Tarea</b><small>Un pendiente dentro de un proyecto</small></span>
+      </button>
+      <button class="new-choice" onclick="pickNew('project')">
+        <span class="nc-ico" style="background:#34c759;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg>
+        </span>
+        <span class="nc-text"><b>Proyecto</b><small>Un frente de trabajo o subproyecto</small></span>
+      </button>
+    </div>
+    <button class="sheet-cancel" onclick="closeNewSheet()">Cerrar</button>
   </div>
 </div>
 
@@ -2028,13 +2055,33 @@ function renderTotals(){
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */
+const CONTEXT_LABELS = { all:'Vida', profesional:'Profesional', personal:'Personal', otro:'Otro' };
 function setContext(ctx){
   activeContext = ctx;
   activeArea='all';
-  document.querySelectorAll('.context-filters .chip').forEach(c=>
-    c.classList.toggle('active', c.dataset.ctx===ctx)
-  );
+  updateContextButton();
   renderAll();
+}
+function updateContextButton(){
+  const b = document.getElementById('contextSheetTrigger');
+  if(b) b.title = 'Ámbito: ' + (CONTEXT_LABELS[activeContext] || 'Vida');
+}
+let _lastSheetTrigger = 'projectSheetTrigger';
+function pickContextInSheet(v){
+  setContext(v);                        // cambia el ámbito y re-renderiza el portafolio
+  openProjectSheet(_lastSheetTrigger);  // reconstruye el filtro abierto con el ámbito nuevo
+}
+function openNewSheet(){
+  const o = document.getElementById('newSheetOverlay');
+  if(o) o.classList.add('open');
+}
+function closeNewSheet(){
+  const o = document.getElementById('newSheetOverlay');
+  if(o) o.classList.remove('open');
+}
+function pickNew(kind){
+  closeNewSheet();
+  if(kind==='task') openTaskModal(); else openProjectModal();
 }
 function renderAreaFilters(){
   const cont = document.getElementById('areaFilters');
@@ -2108,13 +2155,20 @@ function toggleProjectDropdown(){}
 function toggleProjectDropdown2(){}
 
 function openProjectSheet(triggerId){
+  _lastSheetTrigger = triggerId || 'projectSheetTrigger';
   let projects = data.projects.filter(p=> activeArea==='all' || p.area===activeArea);
   if(activeContext!=='all') projects = projects.filter(p=>(p.context||'profesional')===activeContext);
   const ck = '<div class="sheet-check"></div>', em = '<div class="sheet-check-empty"></div>';
+  // sección ámbito
+  let html = `<div class="sheet-section">Ámbito</div>`;
+  [['all','Vida'],['profesional','Profesional'],['personal','Personal'],['otro','Otro']].forEach(([v,l])=>{
+    html += `<div class="sheet-option" onclick="pickContextInSheet('${v}')"><div class="sheet-left"><span>${l}</span></div>${activeContext===v?ck:em}</div>`;
+  });
+  html += `<div class="sheet-divider"></div>`;
   // sección categorías
   const ctxProjects = activeContext==='all' ? data.projects : data.projects.filter(p=>(p.context||'profesional')===activeContext);
   const usedAreas = new Set(ctxProjects.map(p=>p.area));
-  let html = `<div class="sheet-section">Categorías</div>`;
+  html += `<div class="sheet-section">Categorías</div>`;
   html += `<div class="sheet-option" onclick="pickArea('all')"><div class="sheet-left"><span>Todas</span></div>${activeArea==='all'?ck:em}</div>`;
   data.areas.forEach(a=>{
     if(usedAreas.has(a.id))
@@ -2158,7 +2212,7 @@ function closeProjectSheet(){
 document.addEventListener('click', e=>{
   const overlay = document.getElementById('projectSheetOverlay');
   if(overlay && overlay.classList.contains('open')){
-    if(!e.target.closest('.sheet') && !e.target.closest('.proj-sheet-trigger') && !e.target.closest('.filter-trigger')){
+    if(!e.target.closest('.sheet') && !e.target.closest('.proj-sheet-trigger') && !e.target.closest('.filter-trigger') && !e.target.closest('.ai-filter')){
       closeProjectSheet();
     }
   }
@@ -3354,6 +3408,7 @@ function renderDayView(iso){
 
 /* ====== RENDER GENERAL ====== */
 function renderAll(){
+  updateContextButton();
   renderTotals();
   renderAreaFilters();
   renderProjectFilters();

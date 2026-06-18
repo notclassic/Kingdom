@@ -1,38 +1,38 @@
-// Kingdom service worker — estrategia NETWORK-FIRST
-// Siempre intenta traer la version fresca desde la red.
-// Solo usa la cache como respaldo si no hay conexion.
-// Subi este archivo a la raiz del repo (junto a dashboard.html).
+/* Kingdom — Service Worker (network-first)
+   Estrategia: siempre intenta la red primero (para traer la última versión
+   del dashboard y los datos) y, si no hay conexión, cae a la caché.
+   Si cambiás el nombre de la caché (kingdom-vX), se invalida la anterior. */
 
-const CACHE = 'kingdom-v3';
+const CACHE = 'kingdom-v4';
+const APP_SHELL = ['./', 'dashboard.html', 'manifest.json'];
 
-self.addEventListener('install', (e) => {
+self.addEventListener('install', (event) => {
   self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(APP_SHELL)).catch(() => {})
+  );
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil((async () => {
-    const keys = await caches.keys();
-    await Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)));
-    await self.clients.claim();
-  })());
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
 });
 
-self.addEventListener('fetch', (e) => {
-  const req = e.request;
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
   if (req.method !== 'GET') return;
-  e.respondWith((async () => {
-    try {
-      const fresh = await fetch(req, { cache: 'no-store' });
-      try { const cache = await caches.open(CACHE); cache.put(req, fresh.clone()); } catch (_) {}
-      return fresh;
-    } catch (err) {
-      const cached = await caches.match(req);
-      if (cached) return cached;
-      throw err;
-    }
-  })());
-});
 
-self.addEventListener('message', (e) => {
-  if (e.data === 'skipWaiting') self.skipWaiting();
+  event.respondWith(
+    fetch(req)
+      .then((res) => {
+        // Guardo una copia fresca en caché para uso offline.
+        const copy = res.clone();
+        caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+        return res;
+      })
+      .catch(() => caches.match(req))
+  );
 });

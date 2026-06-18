@@ -310,7 +310,7 @@
     {
       "id": "p5",
       "color": "#ff3b30",
-      "name": "Pintura a Domicilio",
+      "name": "Taller movil",
       "area": "a2",
       "desc": "Servicio de pintura presencial, en alianza con un taller.",
       "status": "active",
@@ -1353,7 +1353,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true,
+      "dueSoonAlertSent": false,
       "overdueAlertSent": false
     },
     {

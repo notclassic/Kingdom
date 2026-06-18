@@ -1287,7 +1287,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": false,
+      "dueSoonAlertSent": true,
       "overdueAlertSent": false
     },
     {

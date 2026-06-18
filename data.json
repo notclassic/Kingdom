@@ -255,7 +255,7 @@
       "desc": "Operación general de venta online; empezar buscando nuevas agencias.",
       "status": "active",
       "hasLeads": false,
-      "driveUrl": "",
+      "driveUrl": "https://drive.google.com/drive/folders/1JP-7VCgUax-vEG4chP7bJHuAY-9aZuVW",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
@@ -1881,8 +1881,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781674917879234",
@@ -1894,8 +1893,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781675067534706",
@@ -1907,8 +1905,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781675722089858",
@@ -1920,8 +1917,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781676760577201",

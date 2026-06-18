@@ -1946,7 +1946,8 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t1781677426654730",

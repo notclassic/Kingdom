@@ -672,7 +672,8 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t1781582349097863",
@@ -976,7 +977,8 @@
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "dueSoonAlertSent": true
     },
     {
       "id": "t3",

@@ -3157,5 +3157,8 @@
   "deletedAreaIds": [
     "pa5",
     "pa4"
-  ]
+  ],
+  "meta": {
+    "lastOffset": 0
+  }
 }

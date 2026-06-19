@@ -754,7 +754,7 @@
       "id": "t1781580800586713",
       "projectId": "p1781624973628126",
       "text": "Botones desplegables.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:33",
       "priority": "medium",
@@ -767,7 +767,7 @@
       "id": "t1781584379119607",
       "projectId": "p1781624973628126",
       "text": "Submenús desplegables en \"Todas\"/\"Todos los proyectos\" con filtro por vida/profesional/personal/otro.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "dueTime": "00:31",
       "priority": "medium",
@@ -781,7 +781,7 @@
       "id": "t1781579686000429",
       "projectId": "p1781624973628126",
       "text": "En la tarea: adjuntar fotos/archivos y editar la categoría de la tarea (familia, hogar, personal u otras).",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:12",
       "priority": "medium",
@@ -833,7 +833,7 @@
       "id": "t1781583104106856",
       "projectId": "p1781624973628126",
       "text": "Opción de crear subproyecto en el menú de nuevo proyecto (hoy solo por arrastre).",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:10",
       "priority": "medium",
@@ -860,7 +860,7 @@
       "id": "t1781584626491281",
       "projectId": "p1781624973628303",
       "text": "Evaluar eliminar el título \"Portafolio\".",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "02:36",
       "priority": "low",
@@ -901,7 +901,7 @@
       "id": "t1781580925539583",
       "projectId": "p1781624973629977",
       "text": "Revisar pantallazos para ver los cambios (parte del proceso).",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-16",
       "dueTime": "01:35",
       "priority": "low",
@@ -1017,9 +1017,7 @@
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "priority": "medium"
     },
     {
       "id": "t7",
@@ -1055,9 +1053,7 @@
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781575093446527",
@@ -1107,9 +1103,7 @@
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "priority": "medium"
     },
     {
       "id": "t13",
@@ -1246,8 +1240,7 @@
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true
+      "priority": "medium"
     },
     {
       "id": "t24",
@@ -1283,9 +1276,7 @@
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781570353106594",
@@ -1297,9 +1288,7 @@
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t178158273877926",
@@ -1596,9 +1585,7 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "driveUrl": ""
     },
     {
       "id": "t1781592426198575",

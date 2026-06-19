@@ -924,7 +924,7 @@ input, select, textarea{
       <button class="modal-close" onclick="closeProjectModal()">✕</button>
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
-      <div class="priority-selector" style="margin-bottom:8px;">
+      <div class="priority-selector" id="np-context-selector" style="margin-bottom:8px;">
         <button type="button" class="priority-btn active" data-ctx="profesional" onclick="selectProjectContext('profesional')" style="flex:1;">💼 Profesional</button>
         <button type="button" class="priority-btn" data-ctx="personal" onclick="selectProjectContext('personal')" style="flex:1;">🏠 Personal</button>
         <button type="button" class="priority-btn" data-ctx="otro" onclick="selectProjectContext('otro')" style="flex:1;">💡 Otro</button>
@@ -932,11 +932,9 @@ input, select, textarea{
       <input type="hidden" id="np-context" value="profesional">
       <input type="text" id="np-name" placeholder="Nombre del proyecto">
       <select id="np-area"></select>
+      <select id="np-parent" onchange="npParentChanged()"><option value="">Proyecto principal (sin padre)</option></select>
+      <div id="np-parent-note" style="display:none; font-size:.78rem; color:var(--muted); margin:-2px 2px 0;">Hereda área y contexto del proyecto padre.</div>
       <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
-      <label class="checkrow" style="flex-direction:column; align-items:flex-start; gap:6px;">
-        Ícono / foto del proyecto (opcional)
-        <input type="file" id="np-icon" accept="image/*">
-      </label>
       <button class="btn-primary" onclick="addProject()">Guardar proyecto</button>
     </div>
   </div>
@@ -1866,11 +1864,22 @@ function selectProjectContext(ctx){
     areaSel.innerHTML = areas.length ? areas.map(a=>`<option value="${a.id}">${a.name}</option>`).join('') : '<option value="">Sin área</option>';
   }
 }
+function npParentChanged(){
+  const isSub = !!(document.getElementById('np-parent') && document.getElementById('np-parent').value);
+  const areaSel = document.getElementById('np-area');
+  const ctxSel = document.getElementById('np-context-selector');
+  const note = document.getElementById('np-parent-note');
+  if(areaSel) areaSel.style.display = isSub ? 'none' : '';
+  if(ctxSel) ctxSel.style.display = isSub ? 'none' : '';
+  if(note) note.style.display = isSub ? '' : 'none';
+}
 function openProjectModal(){
   populateSelects();
   // pre-seleccionar según el contexto activo
   const ctx = (activeContext === 'all') ? 'profesional' : activeContext;
   selectProjectContext(ctx);
+  const npp = document.getElementById('np-parent'); if(npp) npp.value='';
+  npParentChanged();
   document.getElementById('projectModalOverlay').classList.add('open');
   setTimeout(()=>document.getElementById('np-name').focus(), 50);
 }
@@ -2834,23 +2843,27 @@ function deleteProject(id){
 }
 function addProject(){
   const name = document.getElementById('np-name').value.trim();
-  const area = document.getElementById('np-area').value;
-  const desc = document.getElementById('np-desc').value.trim();
   if(!name){ alert('Falta el nombre del proyecto'); return; }
-  const color = areaInfo(area).color;
-  const context = document.getElementById('np-context').value;
-  const proj = {id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, icon:'', driveUrl:'', driveFolderId:'', contacts:[], context};
+  const parentId = document.getElementById('np-parent') ? document.getElementById('np-parent').value : '';
+  let area, context;
+  if(parentId){
+    const par = data.projects.find(x=>x.id===parentId);
+    area = par ? par.area : document.getElementById('np-area').value;
+    context = par ? (par.context||'profesional') : document.getElementById('np-context').value;
+  } else {
+    area = document.getElementById('np-area').value;
+    context = document.getElementById('np-context').value;
+  }
+  const desc = document.getElementById('np-desc').value.trim();
+  const ai = areaInfo(area);
+  const color = ai ? ai.color : '#6b7280';
+  const proj = {id:uid('p'), name, area, desc, status:'active', hasLeads:false, color, icon:'', driveUrl:'', driveFolderId:'', contacts:[], context, parentId: parentId || null};
   data.projects.push(proj);
-  const iconInput = document.getElementById('np-icon');
-  const file = iconInput.files[0];
-  iconInput.value='';
   document.getElementById('np-name').value='';
   document.getElementById('np-desc').value='';
+  const npp = document.getElementById('np-parent'); if(npp) npp.value='';
   closeProjectModal();
   save(); renderAll();
-  if(file){
-    readIconFile(file, dataUrl=>{ proj.icon = dataUrl; save(); renderAll(); });
-  }
 }
 
 /* ====== RENDER PROYECTOS CON LEADS ====== */
@@ -3312,6 +3325,8 @@ function populateSelects(){
 
   const projOptions = _projOptionsHierarchy();
   document.getElementById('nl-project').innerHTML = '<option value="">Sin proyecto vinculado</option>' + projOptions;
+  const npParent = document.getElementById('np-parent');
+  if(npParent){ const cur = npParent.value; npParent.innerHTML = '<option value="">Proyecto principal (sin padre)</option>' + projOptions; npParent.value = cur; }
 }
 function _rootOf(id){
   let p = data.projects.find(x=>x.id===id);

@@ -2078,6 +2078,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781846888794474",
+      "projectId": "p1781572037505287",
+      "text": "Crear un mcp a kingdom",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "01:27",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

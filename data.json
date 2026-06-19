@@ -232,22 +232,6 @@
       "parentId": null
     },
     {
-      "id": "p1781502750840",
-      "name": "Día del Padre",
-      "area": "pa1",
-      "context": "personal",
-      "color": "#ff6b6b",
-      "description": "",
-      "status": "active",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "hasLeads": false,
-      "driveFolderId": "",
-      "desc": "Visita al jardín, jueves 8:30 a.m.",
-      "parentId": null
-    },
-    {
       "id": "p6",
       "color": "#00c7be",
       "name": "Activación NotClassic",
@@ -255,7 +239,7 @@
       "desc": "Operación general de venta online; empezar buscando nuevas agencias.",
       "status": "active",
       "hasLeads": false,
-      "driveUrl": "",
+      "driveUrl": "https://drive.google.com/drive/folders/1JP-7VCgUax-vEG4chP7bJHuAY-9aZuVW",
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
@@ -310,7 +294,7 @@
     {
       "id": "p5",
       "color": "#ff3b30",
-      "name": "Pintura a Domicilio",
+      "name": "Taller movil",
       "area": "a2",
       "desc": "Servicio de pintura presencial, en alianza con un taller.",
       "status": "active",
@@ -583,7 +567,7 @@
       "id": "p1781720027768812",
       "name": "Subaru",
       "area": "pa3",
-      "desc": "",
+      "desc": "Auto Oso",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -672,6 +656,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -977,6 +962,7 @@
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1012,14 +998,14 @@
       "projectId": "p2",
       "text": "Buscar leads por rubro.",
       "done": false,
-      "dueDate": "2026-06-21",
+      "dueDate": "2026-06-17",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "dueSoonAlertSent": true,
+      "overdueAlertSent": true
     },
     {
       "id": "t6",
@@ -1155,6 +1141,7 @@
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1280,20 +1267,6 @@
       "priority": "medium"
     },
     {
-      "id": "t1781502750840",
-      "projectId": "p1781502750840",
-      "text": "Visitar a León.",
-      "done": false,
-      "dueDate": "2026-06-18",
-      "dueTime": "08:30",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": false,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781570314630499",
       "projectId": "p10",
       "text": "Buscar agencias del estilo de BMR para ofrecerles el servicio.",
@@ -1356,7 +1329,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "dueSoonAlertSent": false,
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1830,7 +1803,7 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "https://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit"
     },
     {
       "id": "t1781626726363974",
@@ -1885,6 +1858,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1898,6 +1872,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1911,6 +1886,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1924,6 +1900,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1937,6 +1914,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1950,6 +1928,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1963,6 +1942,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1976,6 +1956,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -1989,6 +1970,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -2002,6 +1984,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -2015,19 +1998,21 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
       "id": "t1781720436507",
       "projectId": "p1781720027768812",
       "text": "ver el precio marcado en base a la base Chile Auto para la publicación",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-17",
       "dueTime": "20:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -2041,6 +2026,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -2054,19 +2040,8 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
+      "dueSoonAlertSent": true,
       "overdueAlertSent": true
-    },
-    {
-      "id": "t178184243013271",
-      "projectId": "p6",
-      "text": "Publicaciones IG\nSabías que ahora puedes hacer avisos por whataps\nRevisar guardados en Instagram",
-      "done": false,
-      "dueDate": "2026-06-20",
-      "dueTime": "00:12",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     },
     {
       "id": "t1781841347094366",
@@ -2075,6 +2050,30 @@
       "done": false,
       "dueDate": "2026-06-21",
       "dueTime": "09:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1781846779879411",
+      "projectId": "p7",
+      "text": "Publicaciones en IG",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "01:26",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t178184243013271",
+      "projectId": "p6",
+      "text": "Publicaciones IG\nSabías que ahora puedes hacer avisos por whataps\nRevisar guardados en Instagram",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "00:12",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
@@ -2140,7 +2139,7 @@
     "t1781579527608393",
     "t1781579363026116",
     "t1781581152031707",
-    "t1781719836601"
+    "t1781502750840"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2166,7 +2165,8 @@
     "p1781594011028615",
     "p178159401880768",
     "p1781627471826336",
-    "p1781625628409853"
+    "p1781625628409853",
+    "p1781502750840"
   ],
   "trash": [
     {
@@ -3055,6 +3055,42 @@
         "parentId": "p1781572037505287"
       },
       "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-19T02:21:22.114Z",
+      "item": {
+        "id": "p1781502750840",
+        "name": "Día del Padre",
+        "area": "pa1",
+        "context": "personal",
+        "color": "#ff6b6b",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": "",
+        "desc": "Visita al jardín, jueves 8:30 a.m.",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1781502750840",
+          "projectId": "p1781502750840",
+          "text": "Visitar a León.",
+          "done": false,
+          "dueDate": "2026-06-18",
+          "dueTime": "08:30",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        }
+      ]
     }
   ],
   "alertConfig": {

@@ -241,6 +241,9 @@ section{
 .row-desc{ font-size:.7rem; color:var(--muted); margin-top:2px; border-radius:6px; padding:2px 4px; margin-left:-4px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .row-desc:hover{ background:rgba(0,0,0,0.04); -webkit-line-clamp:unset; overflow:visible; }
 .row-desc:focus{ outline:2px solid var(--accent); background:var(--panel); color:var(--text); white-space:normal; -webkit-line-clamp:unset; overflow:visible; }
+.row-desc:empty{ min-height:1.1em; }
+.row-desc:empty::before{ content:'Agregar descripción…'; color:var(--muted); opacity:.5; }
+.row-desc:empty:focus::before{ content:''; }
 .area-tag{
   font-size:.6rem; padding:4px 9px; border-radius:8px; font-weight:700;
   text-transform:uppercase; letter-spacing:.03em; display:inline-block; justify-self:start;
@@ -286,7 +289,7 @@ section{
   .row-head{ display:none; }
   .row{ border-left:3px solid var(--accent-color, var(--accent)); }
   .row-name{ margin:0; padding:0; }
-  .row-desc{ margin-left:0; }
+  .row-desc{ margin-left:0; display:block; -webkit-line-clamp:unset; overflow:visible; white-space:normal; min-height:1.2em; }
   .row-actions{
     display:grid; grid-template-columns:repeat(auto-fit, minmax(40px, 1fr)); gap:4px;
     justify-content:stretch;
@@ -524,11 +527,11 @@ input, select, textarea{
 }
 [data-theme="dark"] .tabs{ background:rgba(28,28,32,.55); border-color:rgba(255,255,255,.12); box-shadow:0 10px 34px rgba(0,0,0,.5), inset 0 1px 1px rgba(255,255,255,.08); }
 #overdueBadge:not(:empty){
-  position:absolute; top:5px; right:7px;
-  display:inline-block; background:var(--red); color:#fff; font-size:.6rem; font-weight:700;
-  border-radius:999px; min-width:15px; text-align:center; padding:0 4px; line-height:15px;
-  border:1.5px solid var(--panel);
+  margin-left:auto; background:var(--red); color:#fff; font-size:.66rem; font-weight:700;
+  border-radius:999px; min-width:18px; text-align:center; padding:1px 6px; line-height:1.45;
 }
+.hamburger-dot{ display:none; }
+.hamburger-dot.on{ display:block; position:absolute; top:5px; right:5px; width:9px; height:9px; border-radius:50%; background:var(--red); border:1.5px solid var(--panel2); }
 
 /* CALENDARIO */
 .cal-header{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
@@ -605,11 +608,11 @@ input, select, textarea{
 .filter-group:last-child{ margin-bottom:0; }
 .filter-label{ font-size:.64rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; color:var(--muted); margin-bottom:7px; }
 .filter-chips{ display:flex; flex-wrap:wrap; gap:6px; }
-.fchip{ display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border); background:var(--panel2); color:var(--muted); border-radius:999px; padding:7px 13px; font-size:.8rem; font-weight:600; cursor:pointer; transition:background .15s, color .15s, border-color .15s; }
-.fchip:hover{ color:var(--text); }
-.fchip.active{ background:var(--accent); border-color:var(--accent); color:#fff; }
-.fchip .dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.fchip.active .dot{ display:none; }
+.fchip{ display:inline-flex; align-items:center; gap:7px; border:1.5px solid var(--border); background:var(--panel2); color:var(--muted); border-radius:999px; padding:8px 14px; font-size:.82rem; font-weight:600; cursor:pointer; transition:background .15s, color .15s, border-color .15s, transform .1s, box-shadow .15s; }
+.fchip:hover{ color:var(--text); border-color:var(--muted); }
+.fchip:active{ transform:scale(.96); }
+.fchip.active{ background:var(--accent); border-color:var(--accent); color:#fff; box-shadow:0 2px 9px rgba(59,111,237,.28); }
+.fchip .dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; box-shadow:0 0 0 2px rgba(0,0,0,.04); }
 .filter-list{ max-height:230px; overflow-y:auto; border:1px solid var(--border); border-radius:12px; padding:4px; }
 [data-theme="dark"] .fchip{ background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.10); }
 [data-theme="dark"] .filter-list{ border-color:rgba(255,255,255,.10); }
@@ -650,6 +653,7 @@ input, select, textarea{
   </div>
   <button id="hamburgerBtn" class="hamburger-btn" onclick="toggleAppMenu(event)" title="Menú" aria-label="Menú">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <span id="hamburgerDot" class="hamburger-dot"></span>
   </button>
 </div>
 
@@ -662,6 +666,7 @@ input, select, textarea{
   <button class="appmenu-item" data-tab="tasks" onclick="setTabFromMenu('tasks')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
     <span>Calendario y Tareas</span>
+    <span id="overdueBadge" class="menu-badge"></span>
   </button>
   <button class="appmenu-item" data-tab="leads" onclick="setTabFromMenu('leads')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
@@ -674,41 +679,26 @@ input, select, textarea{
 </nav>
 
 <div class="tabs" id="bottomNav">
-  <div class="tab active" onclick="setTab('main')" title="Portafolio y CRM" aria-label="Portafolio y CRM">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-  </div>
-  <div class="tab" onclick="setTab('tasks')" title="Calendario y Tareas" aria-label="Calendario y Tareas">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
-    <span id="overdueBadge"></span>
-  </div>
-  <div class="tab" onclick="setTab('leads')" title="Leads" aria-label="Leads">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
-  </div>
-  <div class="tab" onclick="setTab('settings')" title="Configuración" aria-label="Configuración">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-  </div>
+  <button class="act-ico ai-filter" id="projectSheetTrigger" onclick="openFilterModal()" title="Filtros (ámbito, categoría, proyecto)" aria-label="Filtros">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M8 12h8M11 17h2"/></svg>
+    <span id="filterBtnLabel" style="display:none;"></span>
+  </button>
+  <button class="act-ico ai-manage" onclick="openManage()" title="Gestionar / actualizar datos" aria-label="Actualizar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a1 1 0 0 1 1 1 1 1 0 0 1-1 1H9a1 1 0 0 1-1-1 1 1 0 0 1 1-1zM8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 11h6M9 15h4"/></svg>
+  </button>
+  <button class="act-ico ai-new" id="newSheetTrigger" onclick="openNew()" title="Crear nuevo (tarea o proyecto)" aria-label="Nuevo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+  <button class="act-ico ai-tree" id="treeLevelBtn" onclick="cycleTreeLevel()" title="Nivel de detalle del árbol" aria-label="Expandir">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6l5 5 5-5M7 11l5 5 5-5"/></svg>
+    <span class="tree-badge" id="treeLevelBadge">2</span>
+  </button>
 </div>
 
 <div id="tab-main">
 <!-- PORTAFOLIO -->
 <section>
-  <!-- La selección de ámbito (Vida/Profesional/Personal/Otro) ahora vive en el ícono #contextSheetTrigger de la barra de acciones. -->
-  <div class="pf-filterbar" id="actionBar">
-    <button class="act-ico ai-filter" id="projectSheetTrigger" onclick="openFilterModal()" title="Filtros (ámbito, categoría, proyecto)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M8 12h8M11 17h2"/></svg>
-      <span id="filterBtnLabel" style="display:none;"></span>
-    </button>
-    <button class="act-ico ai-manage" onclick="openManage()" title="Gestionar cambios (pegar, previsualizar, respaldos)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a1 1 0 0 1 1 1 1 1 0 0 1-1 1H9a1 1 0 0 1-1-1 1 1 0 0 1 1-1zM8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 11h6M9 15h4"/></svg>
-    </button>
-    <button class="act-ico ai-new" id="newSheetTrigger" onclick="openNew()" title="Crear nuevo (tarea o proyecto)">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-    </button>
-    <button class="act-ico ai-tree" id="treeLevelBtn" onclick="cycleTreeLevel()" title="Mostrando proyectos · tocá para abrir subproyectos">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6l5 5 5-5M7 11l5 5 5-5"/></svg>
-      <span class="tree-badge" id="treeLevelBadge">1</span>
-    </button>
-  </div>
+  <!-- Las acciones (filtro, actualizar, nuevo, expandir) ahora viven en la barra inferior. -->
   <div class="filters" id="areaFilters" style="display:none;"></div>
   <div class="totals" id="totals"></div>
   <div class="cards" id="projectCards"></div>
@@ -765,8 +755,7 @@ input, select, textarea{
 <!-- MODAL DE FILTROS -->
 <div class="modal-overlay" id="filterModalOverlay" onclick="if(event.target===this) closeFilterModal()">
   <div class="modal">
-    <div class="modal-header">
-      <h2 style="margin:0;">Filtros</h2>
+    <div class="modal-header" style="justify-content:flex-end; margin-bottom:6px;">
       <button class="modal-close" onclick="closeFilterModal()">✕</button>
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
@@ -1209,6 +1198,13 @@ function toggleAppMenu(e){
   if(e) e.stopPropagation();
   const m = document.getElementById('appMenu');
   if(m.classList.contains('open')){ closeAppMenu(); return; }
+  const btn = document.getElementById('hamburgerBtn');
+  if(btn){
+    const r = btn.getBoundingClientRect();
+    m.style.top = (r.bottom + 6) + 'px';
+    m.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+    m.style.left = 'auto';
+  }
   updateAppMenuActive();
   m.classList.add('open');
   document.getElementById('appMenuOverlay').classList.add('open');
@@ -2154,6 +2150,12 @@ function closeFilterModal(){
   const o = document.getElementById('filterModalOverlay');
   if(o) o.classList.remove('open');
 }
+function _tint(hex, a){
+  hex = (hex||'#3b6fed').replace('#','');
+  if(hex.length===3) hex = hex.split('').map(c=>c+c).join('');
+  const n = parseInt(hex,16);
+  return `rgba(${(n>>16)&255}, ${(n>>8)&255}, ${n&255}, ${a})`;
+}
 function buildFilterBody(){
   const ck = '<div class="sheet-check"></div>', em = '<div class="sheet-check-empty"></div>';
   // Ámbito (segmentado)
@@ -2168,8 +2170,11 @@ function buildFilterBody(){
   h += `<div class="filter-group"><div class="filter-label">Categoría</div><div class="filter-chips">`;
   h += `<button type="button" class="fchip${activeArea==='all'?' active':''}" onclick="filterPickArea('all')">Todas</button>`;
   data.areas.forEach(a=>{
-    if(usedAreas.has(a.id))
-      h += `<button type="button" class="fchip${activeArea===a.id?' active':''}" onclick="filterPickArea('${a.id}')"><span class="dot" style="background:${a.color}"></span>${a.name}</button>`;
+    if(usedAreas.has(a.id)){
+      const on = activeArea===a.id;
+      const st = on ? ` style="background:${_tint(a.color,0.14)}; border-color:${a.color}; color:${a.color}; box-shadow:0 2px 9px ${_tint(a.color,0.22)};"` : '';
+      h += `<button type="button" class="fchip${on?' active':''}"${st} onclick="filterPickArea('${a.id}')"><span class="dot" style="background:${a.color}"></span>${a.name}</button>`;
+    }
   });
   h += `</div></div>`;
   // Proyecto (lista con check)
@@ -3537,7 +3542,10 @@ function setAlertLead(priority, val){
 function renderOverdueBadge(){
   const today = new Date(); today.setHours(0,0,0,0);
   const count = data.tasks.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') < today).length;
-  document.getElementById('overdueBadge').textContent = count>0 ? count : '';
+  const b = document.getElementById('overdueBadge');
+  if(b) b.textContent = count>0 ? count : '';
+  const d = document.getElementById('hamburgerDot');
+  if(d) d.classList.toggle('on', count>0);
 }
 /* ====== TEMA CLARO/OSCURO ====== */
 function applyTheme(theme){

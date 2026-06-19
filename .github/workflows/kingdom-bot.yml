@@ -1,9 +1,9 @@
-name: Kingdom Bot
+name: Kingdom Bots (Audio y Notificaciones)
 
 on:
   schedule:
-    - cron: '0 12 * * *'
-  workflow_dispatch:
+    - cron: '*/3 * * * *' # Se ejecuta cada 3 minutos
+  workflow_dispatch: # Te permite ejecutarlo a mano desde GitHub
 
 permissions:
   contents: write
@@ -17,18 +17,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
-      - name: Install dependencies
-        run: npm install node-fetch@2 form-data
-
-      - name: Run Kingdom Bot
+      - name: Ejecutar Bot de Audio
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           ASSEMBLYAI_KEY: ${{ secrets.ASSEMBLYAI_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_OWNER: notclassic
           GITHUB_REPO: Kingdom
-        run: node bot.js
+        run: node bot_audio.js
+
+      - name: Ejecutar Bot de Notificaciones
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OWNER: notclassic
+          GITHUB_REPO: Kingdom
+        run: node bot_notificaciones.js

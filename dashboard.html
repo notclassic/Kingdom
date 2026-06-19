@@ -41,18 +41,15 @@ h1{
 h2{font-size:1rem; font-weight:600; margin:0 0 10px; display:flex; align-items:center; gap:8px;}
 .subtitle{color:var(--muted); font-size:.8rem; margin-bottom:16px;}
 
-.totals{display:flex; gap:8px; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin-bottom:12px; position:sticky; top:0; z-index:500; background:var(--bg); padding:10px 0 12px; box-shadow:0 8px 10px -8px rgba(0,0,0,.18);}
+.totals{display:flex; gap:8px; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin-bottom:8px; position:sticky; top:0; z-index:500; background:var(--bg); padding:0 4px 8px; box-shadow:0 6px 12px -6px rgba(0,0,0,.22);}
 .totals::-webkit-scrollbar{ display:none; }
 #appHeader{ overflow:hidden; transition:max-height .28s ease, opacity .22s ease, margin .28s ease; max-height:160px; }
 #appHeader.collapsed{ max-height:0; opacity:0; margin-bottom:0 !important; }
-.sumchip{ flex:0 0 auto; min-width:88px; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:9px 13px; display:flex; flex-direction:column; gap:3px; }
+.sumchip{ flex:0 0 auto; min-width:88px; background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:9px 13px; display:flex; flex-direction:column; align-items:center; text-align:center; gap:3px; }
 .sumchip b{ font-size:1.3rem; font-weight:800; line-height:1; color:var(--text); }
 .sumchip span{ font-size:.68rem; color:var(--muted); font-weight:600; }
 .sumchip.alert{ border-color:rgba(230,57,70,.42); background:rgba(230,57,70,.08); }
 .sumchip.alert b{ color:var(--red); }
-.sumchip.prog{ min-width:118px; }
-.sumbar{ height:5px; border-radius:3px; background:var(--panel2); overflow:hidden; margin-top:3px; }
-.sumbar > i{ display:block; height:100%; background:var(--green); border-radius:3px; transition:width .3s ease; }
 .header-action-icon{ display:none; }
 @media(max-width:560px){
   .sumchip{ min-width:78px; padding:8px 11px; }
@@ -501,7 +498,7 @@ input, select, textarea{
   padding:7px; border-radius:999px;
   width:max-content; max-width:calc(100vw - 24px);
   overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none;
-  background:rgba(22,22,24,.82);
+  background:rgba(22,22,24,.95);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 12px 38px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.06);
   backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
@@ -536,7 +533,7 @@ input, select, textarea{
   .tabs{ bottom:14px; gap:4px; padding:7px; }
   .tab{ width:48px; height:46px; }
 }
-[data-theme="dark"] .tabs{ background:rgba(22,22,24,.82); border-color:rgba(255,255,255,.10); box-shadow:0 12px 38px rgba(0,0,0,.55), inset 0 1px 1px rgba(255,255,255,.06); }
+[data-theme="dark"] .tabs{ background:rgba(22,22,24,.95); border-color:rgba(255,255,255,.10); box-shadow:0 12px 38px rgba(0,0,0,.55), inset 0 1px 1px rgba(255,255,255,.06); }
 #overdueBadge:not(:empty){
   margin-left:auto; background:var(--red); color:#fff; font-size:.66rem; font-weight:700;
   border-radius:999px; min-width:18px; text-align:center; padding:1px 6px; line-height:1.45;
@@ -581,7 +578,7 @@ input, select, textarea{
 @media(max-width:560px){ .app-logo{ height:66px; } }
 .app-logo-dark{ display:none; }
 [data-theme="dark"] .app-logo-light{ display:none; }
-[data-theme="dark"] .app-logo-dark{ display:inline-block; }
+[data-theme="dark"] .app-logo-dark{ display:inline-block; filter:drop-shadow(0 0 1px rgba(255,255,255,.35)); }
 
 .done-tasks-toggle{ background:none; border:none; color:var(--muted); font-size:.78rem; cursor:pointer; padding:8px 2px 4px; display:block; }
 .done-tasks-toggle:hover{ color:var(--text); }
@@ -2149,17 +2146,14 @@ function renderTotals(){
   const subs = active.filter(p=>p.parentId).length;
   const activeIds = active.map(p=>p.id);
   const tAll = data.tasks.filter(t=>activeIds.includes(t.projectId));
-  const done = tAll.filter(t=>t.done).length;
-  const pending = tAll.length - done;
+  const pending = tAll.filter(t=>!t.done).length;
   const today = new Date(); today.setHours(0,0,0,0);
   const overdue = tAll.filter(t=>!t.done && t.dueDate && new Date(t.dueDate+'T00:00:00') < today).length;
-  const pct = tAll.length ? Math.round(done/tAll.length*100) : 0;
   document.getElementById('totals').innerHTML = `
     <div class="sumchip"><b>${topLevel}</b><span>Proyectos</span></div>
     <div class="sumchip"><b>${subs}</b><span>Subproyectos</span></div>
     <div class="sumchip"><b>${pending}</b><span>Tareas pend.</span></div>
     <div class="sumchip${overdue>0?' alert':''}"><b>${overdue}</b><span>Vencidas</span></div>
-    <div class="sumchip prog"><b>${pct}%</b><span>Progreso</span><div class="sumbar"><i style="width:${pct}%"></i></div></div>
     ${paused>0 ? `<div class="sumchip"><b>${paused}</b><span>En pausa</span></div>` : ''}
   `;
 }

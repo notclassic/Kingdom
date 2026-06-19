@@ -2042,6 +2042,18 @@
       "driveUrl": "",
       "dueSoonAlertSent": true,
       "overdueAlertSent": true
+    },
+    {
+      "id": "t1781841347094366",
+      "projectId": "p9",
+      "text": "Manejo de RRSS",
+      "done": false,
+      "dueDate": "2026-06-21",
+      "dueTime": "09:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

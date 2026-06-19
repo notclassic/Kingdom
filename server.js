@@ -24,7 +24,7 @@ async function getData() {
   
   if (res.status === 404) {
     console.log('data.json no existe. Creandolo...');
-    await fetch(api, {
+    const createRes = await fetch(api, {
       method: 'PUT',
       headers: { ...headers, 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -33,12 +33,22 @@ async function getData() {
         branch: BRANCH
       })
     });
+    if (!createRes.ok) {
+       const errBody = await createRes.text();
+       console.error('ERROR MORTAL AL CREAR: ', createRes.status, errBody);
+       return null;
+    }
     const res2 = await fetch(api + '?ref=' + BRANCH, { headers });
     const file2 = await res2.json();
     return { sha: file2.sha, data: { tasks: [], meta: { lastOffset: 0 } } };
   }
 
-  if (!res.ok) return null;
+  if (!res.ok) {
+    const errBody = await res.text();
+    console.error('ERROR MORTAL AL LEER: ', res.status, errBody);
+    return null;
+  }
+
   const file = await res.json();
   return { sha: file.sha, data: JSON.parse(Buffer.from(file.content, 'base64').toString('utf8')) };
 }
@@ -46,7 +56,7 @@ async function getData() {
 async function saveData(fileSha, newData, commitMsg) {
   const api = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + FILE_PATH;
   const headers = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json', 'content-type': 'application/json' };
-  await fetch(api, {
+  const res = await fetch(api, {
     method: 'PUT',
     headers,
     body: JSON.stringify({
@@ -56,6 +66,9 @@ async function saveData(fileSha, newData, commitMsg) {
       branch: BRANCH
     })
   });
+  if (!res.ok) {
+    console.error('ERROR MORTAL AL GUARDAR: ', res.status, await res.text());
+  }
 }
 
 async function sendMsg(text) {
@@ -125,7 +138,7 @@ async function audioLoop(offset) {
         const taskText = await toTask(raw);
         
         const repoData = await getData();
-        if (!repoData) throw new Error('No se pudo leer data.json');
+        if (!repoData) throw new Error('No se pudo leer data.json (revisar logs)');
         
         repoData.data.tasks = repoData.data.tasks || [];
         repoData.data.tasks.push({
@@ -137,7 +150,7 @@ async function audioLoop(offset) {
         await saveData(repoData.sha, repoData.data, 'Bot Audio: Nueva tarea por voz');
         await sendMsg('[OK] Tarea agregada: ' + taskText);
       } catch (e) {
-        await sendMsg('[ERROR] Error en audio: ' + e.message);
+        await sendMsg('[ERROR] ' + e.message);
       }
     }
   } catch (e) {

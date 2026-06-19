@@ -21,6 +21,23 @@ async function getData() {
   const api = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + FILE_PATH;
   const headers = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json' };
   const res = await fetch(api + '?ref=' + BRANCH, { headers });
+  
+  if (res.status === 404) {
+    console.log('data.json no existe. Creandolo...');
+    await fetch(api, {
+      method: 'PUT',
+      headers: { ...headers, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        message: 'Bot: Crear data.json inicial',
+        content: Buffer.from(JSON.stringify({ tasks: [], meta: { lastOffset: 0 } }, null, 2)).toString('base64'),
+        branch: BRANCH
+      })
+    });
+    const res2 = await fetch(api + '?ref=' + BRANCH, { headers });
+    const file2 = await res2.json();
+    return { sha: file2.sha, data: { tasks: [], meta: { lastOffset: 0 } } };
+  }
+
   if (!res.ok) return null;
   const file = await res.json();
   return { sha: file.sha, data: JSON.parse(Buffer.from(file.content, 'base64').toString('utf8')) };

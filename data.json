@@ -2090,6 +2090,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1781848016142721",
+      "projectId": "p1781572037505287",
+      "text": "Generar auditoría a la programación robusta con varios usuarios",
+      "done": false,
+      "dueDate": "2026-06-20",
+      "dueTime": "01:46",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

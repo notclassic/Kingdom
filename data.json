@@ -232,22 +232,6 @@
       "parentId": null
     },
     {
-      "id": "p1781502750840",
-      "name": "Día del Padre",
-      "area": "pa1",
-      "context": "personal",
-      "color": "#ff6b6b",
-      "description": "",
-      "status": "active",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "hasLeads": false,
-      "driveFolderId": "",
-      "desc": "Visita al jardín, jueves 8:30 a.m.",
-      "parentId": null
-    },
-    {
       "id": "p6",
       "color": "#00c7be",
       "name": "Activación NotClassic",
@@ -1283,20 +1267,6 @@
       "priority": "medium"
     },
     {
-      "id": "t1781502750840",
-      "projectId": "p1781502750840",
-      "text": "Visitar a León.",
-      "done": false,
-      "dueDate": "2026-06-18",
-      "dueTime": "08:30",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781570314630499",
       "projectId": "p10",
       "text": "Buscar agencias del estilo de BMR para ofrecerles el servicio.",
@@ -2132,7 +2102,8 @@
     "t1781581229142396",
     "t1781579527608393",
     "t1781579363026116",
-    "t1781581152031707"
+    "t1781581152031707",
+    "t1781502750840"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2158,7 +2129,8 @@
     "p1781594011028615",
     "p178159401880768",
     "p1781627471826336",
-    "p1781625628409853"
+    "p1781625628409853",
+    "p1781502750840"
   ],
   "trash": [
     {
@@ -3047,6 +3019,42 @@
         "parentId": "p1781572037505287"
       },
       "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-06-19T02:21:22.114Z",
+      "item": {
+        "id": "p1781502750840",
+        "name": "Día del Padre",
+        "area": "pa1",
+        "context": "personal",
+        "color": "#ff6b6b",
+        "description": "",
+        "status": "active",
+        "driveUrl": "",
+        "icon": "",
+        "contacts": [],
+        "hasLeads": false,
+        "driveFolderId": "",
+        "desc": "Visita al jardín, jueves 8:30 a.m.",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1781502750840",
+          "projectId": "p1781502750840",
+          "text": "Visitar a León.",
+          "done": false,
+          "dueDate": "2026-06-18",
+          "dueTime": "08:30",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        }
+      ]
     }
   ],
   "alertConfig": {

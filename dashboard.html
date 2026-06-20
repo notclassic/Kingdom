@@ -31,6 +31,7 @@ body{
 }
 @media(min-width:900px){
   body{ max-width:1100px; margin:0 auto; padding:24px; padding-bottom:110px; }
+  .totals{ margin-left:-24px; margin-right:-24px; padding-left:24px; padding-right:24px; }
   .cal-cell{ min-height:90px; }
 }
 h1{
@@ -41,7 +42,7 @@ h1{
 h2{font-size:1rem; font-weight:600; margin:0 0 10px; display:flex; align-items:center; gap:8px;}
 .subtitle{color:var(--muted); font-size:.8rem; margin-bottom:16px;}
 
-.totals{display:flex; gap:8px; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin-bottom:8px; position:sticky; top:0; z-index:500; background:var(--bg); padding:0 4px 8px; box-shadow:0 6px 12px -6px rgba(0,0,0,.22);}
+.totals{display:flex; gap:8px; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; scrollbar-width:none; margin:0 -12px 8px; position:sticky; top:0; z-index:500; background:var(--bg); padding:0 12px 8px; box-shadow:0 6px 12px -6px rgba(0,0,0,.22);}
 .totals::-webkit-scrollbar{ display:none; }
 #appHeader{ overflow:hidden; transition:max-height .28s ease, opacity .22s ease, margin .28s ease; max-height:160px; }
 #appHeader.collapsed{ max-height:0; opacity:0; margin-bottom:0 !important; }
@@ -502,7 +503,7 @@ input, select, textarea{
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 12px 38px rgba(0,0,0,.45), inset 0 1px 1px rgba(255,255,255,.06);
   backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
-  transition:transform .25s ease, padding .25s ease, opacity .25s ease;
+  transition:transform .3s cubic-bezier(.22,.61,.36,1);
   transform-origin:center bottom;
 }
 .tabs::-webkit-scrollbar{ display:none; }
@@ -1235,16 +1236,17 @@ function updateAppMenuActive(){
 let _lastScrollY = 0, _barTick = false;
 function _updateBarShrink(){
   const y = window.scrollY || document.documentElement.scrollTop || 0;
-  const diff = y - _lastScrollY;
-  // zona muerta: ignorar micro-movimientos para que no tiemble
-  if(Math.abs(diff) < 12){ _barTick = false; return; }
   const bar = document.getElementById('bottomNav');
   const hdr = document.getElementById('appHeader');
-  const down = diff > 0 && y > 60;
-  const up = diff < 0;
-  if(bar){ if(down) bar.classList.add('shrink'); else if(up || y < 10) bar.classList.remove('shrink'); }
-  if(hdr){ if(down) hdr.classList.add('collapsed'); else if(up || y < 10) hdr.classList.remove('collapsed'); }
-  _lastScrollY = y;
+  // histéresis por posición: achica pasando 140px, vuelve bajo 70px.
+  // La banda ancha (70px) evita que tiemble con micro-movimientos del scroll.
+  if(y > 140){
+    if(bar) bar.classList.add('shrink');
+    if(hdr) hdr.classList.add('collapsed');
+  } else if(y < 70){
+    if(bar) bar.classList.remove('shrink');
+    if(hdr) hdr.classList.remove('collapsed');
+  }
   _barTick = false;
 }
 window.addEventListener('scroll', function(){ if(!_barTick){ _barTick=true; requestAnimationFrame(_updateBarShrink); } }, {passive:true});

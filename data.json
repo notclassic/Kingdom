@@ -1160,7 +1160,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1286,7 +1286,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1430,7 +1430,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -1671,7 +1671,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -2143,7 +2143,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     }
   ],

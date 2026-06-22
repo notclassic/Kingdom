@@ -68,6 +68,21 @@
       "context": "profesional"
     },
     {
+      "id": "p1782160541989891",
+      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1"
+    },
+    {
       "id": "p1781582993530486",
       "name": "Plataforma",
       "area": "a1",
@@ -96,21 +111,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1782160541989891",
-      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p2",

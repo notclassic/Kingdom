@@ -1831,18 +1831,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781674357980641",
-      "projectId": "p1781589327240693",
-      "text": "Archivos de drive contienen script de buscar trabajos:",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "https://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit"
-    },
-    {
       "id": "t1781674712115694",
       "projectId": "p1781572037505287",
       "text": "contanilizar proyecto/ subproeycto /  tareas parence ser mas",
@@ -3204,6 +3192,22 @@
     {
       "type": "task",
       "deletedAt": "2026-06-22T15:22:04.290Z",
+      "item": {
+        "id": "t1781674357980641",
+        "projectId": "p1781589327240693",
+        "text": "Archivos de drive contienen script de buscar trabajos:",
+        "done": false,
+        "dueDate": null,
+        "dueTime": null,
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": "https://script.google.com/home/projects/1TGncIpJy1Gzi5aQXRYuC8wndtjvni7PqWfwvylU8MZ7Ng3xQ5FOewr4P/edit"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-06-22T15:22:25.055Z",
       "item": {
         "id": "t1781674357980641",
         "projectId": "p1781589327240693",

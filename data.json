@@ -127,6 +127,21 @@
       "context": "profesional"
     },
     {
+      "id": "p9",
+      "color": "#af52de",
+      "name": "Grupo Arte",
+      "area": "a3",
+      "desc": "Cliente de NotClassic: presentaciones (PPT), campañas de Ads y gestión de cobros.",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p1781590678767292",
       "name": "Bot Atención al Cliente",
       "area": null,
@@ -170,21 +185,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p2"
-    },
-    {
-      "id": "p9",
-      "color": "#af52de",
-      "name": "Grupo Arte",
-      "area": "a3",
-      "desc": "Cliente de NotClassic: presentaciones (PPT), campañas de Ads y gestión de cobros.",
-      "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p10",
@@ -1175,7 +1175,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1214,7 +1214,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1301,7 +1301,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1364,7 +1364,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1445,7 +1445,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1457,7 +1457,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1686,7 +1686,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2122,7 +2122,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2134,7 +2134,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2146,7 +2146,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2158,7 +2158,7 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     }
   ],

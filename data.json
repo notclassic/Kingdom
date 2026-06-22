@@ -142,6 +142,21 @@
       "parentId": "p2"
     },
     {
+      "id": "p1782160541989891",
+      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p1781584127104452",
       "name": "Plan de publicaciones para captación de clientes",
       "area": "a1",
@@ -577,21 +592,6 @@
       "contacts": [],
       "context": "personal",
       "parentId": "p1781673306507675"
-    },
-    {
-      "id": "p1782160541989891",
-      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
     }
   ],
   "tasks": [

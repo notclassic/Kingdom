@@ -54,6 +54,21 @@
       "parentId": null
     },
     {
+      "id": "p9",
+      "color": "#af52de",
+      "name": "Grupo Arte",
+      "area": "a3",
+      "desc": "Cliente de NotClassic: presentaciones (PPT), campañas de Ads y gestión de cobros.",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p1",
       "color": "#007aff",
       "name": "Chileautos",
@@ -111,21 +126,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p9",
-      "color": "#af52de",
-      "name": "Grupo Arte",
-      "area": "a3",
-      "desc": "Cliente de NotClassic: presentaciones (PPT), campañas de Ads y gestión de cobros.",
-      "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p2",

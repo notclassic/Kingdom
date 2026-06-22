@@ -2157,6 +2157,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1782141526661249",
+      "projectId": "p1781589327240693",
+      "text": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+      "done": false,
+      "dueDate": "2026-06-23",
+      "dueTime": "11:18",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

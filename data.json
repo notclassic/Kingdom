@@ -113,20 +113,6 @@
       "parentId": "p1"
     },
     {
-      "id": "p2",
-      "color": "#5856d6",
-      "name": "Chatbot IA",
-      "area": "a1",
-      "desc": "Agente autónomo de ventas y marketing (Project Manager AI): prospecta por rubro, extrae contactos, genera material (flyers, presentaciones, video), hace el primer contacto por WhatsApp y deriva al humano para el cierre, todo desde un panel de control. (base: propuesta del agente autónomo, Drive)",
-      "status": "active",
-      "hasLeads": true,
-      "driveUrl": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p9",
       "color": "#af52de",
       "name": "Grupo Arte",
@@ -139,7 +125,21 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional",
-      "parentId": "p2"
+      "parentId": null
+    },
+    {
+      "id": "p2",
+      "color": "#5856d6",
+      "name": "Chatbot IA",
+      "area": "a1",
+      "desc": "Agente autónomo de ventas y marketing (Project Manager AI): prospecta por rubro, extrae contactos, genera material (flyers, presentaciones, video), hace el primer contacto por WhatsApp y deriva al humano para el cierre, todo desde un panel de control. (base: propuesta del agente autónomo, Drive)",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "https://drive.google.com/drive/folders/1ntjp1rxonClTNPFo-g1qaBLN6Xh35c6T",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional"
     },
     {
       "id": "p1781590678767292",

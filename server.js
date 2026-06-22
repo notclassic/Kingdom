@@ -111,9 +111,8 @@ const ok   = (obj) => ({ content: [{ type: "text", text: JSON.stringify(obj, nul
 const fail = (msg) => ({ content: [{ type: "text", text: `ERROR: ${msg}` }], isError: true });
 
 const NOTA_EDICION =
-  "NOTA: crear tareas nuevas es fiable. Editar una tarea existente o guardar un " +
-  "resultado puede ser revertido por el dashboard la proxima vez que sincronice, " +
-  "salvo que se aplique el parche opcional al merge de app.js (ver README).";
+  "Con el app.js parcheado este cambio persiste y aparece en el dashboard. " +
+  "En conflicto (misma tarea editada a la vez en el dashboard y aca) gana esta version.";
 
 // ---------------------------------------------------------------------------
 //  Definicion de un McpServer con todas las herramientas
@@ -324,6 +323,7 @@ function buildServer() {
             emailAlert: false,
             alertSent: false,
             driveUrl: "",
+            mcpUpdatedAt: new Date().toISOString(),
           };
           data.tasks.push(creada);
           return creada;
@@ -359,6 +359,7 @@ function buildServer() {
           if (typeof done === "boolean") { t.done = done; if (!done) t.alertSent = false; }
           if (priority) t.priority = priority;
           if (typeof dueDate === "string") t.dueDate = dueDate;
+          t.mcpUpdatedAt = new Date().toISOString();
           actualizada = t;
           return t;
         }, `MCP: actualizar tarea ${taskId}`);
@@ -391,6 +392,7 @@ function buildServer() {
           t.result = result;
           t.resultType = type || "";
           t.resultAt = new Date().toISOString();
+          t.mcpUpdatedAt = t.resultAt;
           if (markDone) { t.done = true; }
           info = { id: t.id, resultType: t.resultType, resultAt: t.resultAt, done: !!t.done };
           return info;

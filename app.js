@@ -489,7 +489,21 @@ function mergeRepoIntoLocal(repoData){
   const delProjs = new Set(data.deletedProjectIds||[]);
   const addTasks = repoData.tasks.filter(t=> !localTaskIds.has(t.id) && !delTasks.has(t.id));
   const addProjects = (repoData.projects||[]).filter(p=> !localProjIds.has(p.id) && !delProjs.has(p.id));
-  if(addTasks.length || addProjects.length){
+  // Adoptar ediciones hechas por el MCP (Claude) en tareas que YA existen local.
+  // Solo afecta tareas con mcpUpdatedAt (campo que escribe unicamente el MCP),
+  // asi no se pisa lo del bot ni el resto del estado local.
+  const repoTaskById = new Map(repoData.tasks.map(t=>[t.id, t]));
+  let mcpChanged = false;
+  for(const t of data.tasks){
+    const r = repoTaskById.get(t.id);
+    if(r && r.mcpUpdatedAt && r.mcpUpdatedAt !== t.mcpUpdatedAt){
+      t.done = r.done; t.text = r.text; t.priority = r.priority; t.dueDate = r.dueDate;
+      t.result = r.result; t.resultType = r.resultType; t.resultAt = r.resultAt;
+      t.mcpUpdatedAt = r.mcpUpdatedAt;
+      mcpChanged = true;
+    }
+  }
+  if(addTasks.length || addProjects.length || mcpChanged){
     data.tasks = [...data.tasks, ...addTasks];
     data.projects = [...data.projects, ...addProjects];
     return true;
@@ -555,7 +569,18 @@ async function pushToGitHub(silent){
       const delProjs = new Set(data.deletedProjectIds||[]);
       const botTasks = repoData.tasks.filter(t=> !localTaskIds.has(t.id) && !delTasks.has(t.id));
       const botProjects = (repoData.projects||[]).filter(p=> !localProjIds.has(p.id) && !delProjs.has(p.id));
-      payload = { ...data, tasks: [...data.tasks, ...botTasks], projects: [...data.projects, ...botProjects] };
+      // Adoptar ediciones del MCP (Claude) sobre tareas existentes antes de subir,
+      // para no pisar lo que Claude escribio recien en el repo.
+      const repoTaskById = new Map(repoData.tasks.map(t=>[t.id, t]));
+      const mergedLocalTasks = data.tasks.map(t=>{
+        const r = repoTaskById.get(t.id);
+        if(r && r.mcpUpdatedAt && r.mcpUpdatedAt !== t.mcpUpdatedAt){
+          return { ...t, done:r.done, text:r.text, priority:r.priority, dueDate:r.dueDate,
+                   result:r.result, resultType:r.resultType, resultAt:r.resultAt, mcpUpdatedAt:r.mcpUpdatedAt };
+        }
+        return t;
+      });
+      payload = { ...data, tasks: [...mergedLocalTasks, ...botTasks], projects: [...data.projects, ...botProjects] };
     }
 
     const body = {

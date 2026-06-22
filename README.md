@@ -13,22 +13,27 @@ Claude**: este servidor no llama a ningún otro modelo ni necesita otra API key.
 2. **El plan gratis de Render se duerme** tras ~15 min sin uso. La primera
    llamada de Claude después de un rato puede tardar 30-50 s o incluso fallar la
    primera vez; reintentás y anda. Si querés que nunca se duerma, es un plan pago.
-3. **Escribir tareas nuevas es fiable. Editar tareas existentes o guardar
-   resultados puede ser revertido por el dashboard** la próxima vez que
-   sincronice, por cómo está hecho hoy el "merge" en `app.js`. Hay un parche
-   opcional al final que lo arregla. Sin ese parche, `create_task` funciona bien,
-   pero `update_task` y `save_task_result` no son confiables.
+3. **Hay dos archivos, no uno.** Además del servidor (`mcp/`), incluyo tu
+   `app.js` ya parcheado. Con ese `app.js`, crear tareas, editarlas y guardar
+   resultados desde Claude se reflejan en el dashboard. Si NO reemplazás tu
+   `app.js`, solo `create_task` es confiable; `update_task` y `save_task_result`
+   pueden perderse al sincronizar. El resultado guardado queda en el `data.json`
+   pero todavía no se muestra dentro de la tarjeta de la tarea (eso es un cambio
+   visual aparte, ver final).
 4. **Seguridad:** la protección es un secreto largo dentro de la URL. Cualquiera
    que tenga la URL completa puede leer y escribir tu repo. No la compartas, no la
    pegues en lugares públicos. Es razonable para uso personal; no es OAuth.
 
 ---
 
-## Paso 1 — Subir la carpeta `mcp/` a tu repo
+## Paso 1 — Subir los archivos a tu repo
 
-Copiá esta carpeta `mcp/` (con `server.js` y `package.json`) a la raíz de tu
-repo `Kingdom` y subila a GitHub (commit + push, o arrastrándola desde la web de
-GitHub con "Add file > Upload files"). No toca nada de lo que ya tenés.
+1. Copiá la carpeta `mcp/` (con `server.js`, `package.json`, `README.md`) a la
+   raíz de tu repo `Kingdom`.
+2. Reemplazá tu `app.js` por el `app.js` de esta entrega (el parcheado). Es lo que
+   hace que editar tareas y guardar resultados desde Claude no se pierdan.
+
+Subí todo a GitHub (commit + push, o "Add file > Upload files" desde la web).
 
 ## Paso 2 — Crear un token de GitHub (fino, solo para Kingdom)
 
@@ -116,45 +121,33 @@ No necesitás memorizarlos. Decís, por ejemplo:
 
 ---
 
-## Parche opcional al dashboard (para que las ESCRITURAS no se pierdan)
+## El `app.js` parcheado (para que las ESCRITURAS no se pierdan)
 
-Hoy, cuando el dashboard sincroniza, para una tarea que existe en tu navegador y
-en el repo, **gana la copia local del navegador**. Por eso un resultado guardado
-por Claude (`save_task_result`) o un cambio de `update_task` puede desaparecer en
-la próxima sincronización del dashboard.
+Por diseño, tu dashboard es "local-first": al sincronizar, para una tarea que ya
+existe, **gana la copia de tu navegador** y nunca la pisa el repo. Eso protege tu
+trabajo del bot, pero también descartaba lo que Claude editara.
 
-Esto **preserva** lo que el MCP escribió en los campos de resultado. En `app.js`,
-buscá este bloque (está en la función de subida a GitHub):
+El `app.js` que incluyo modifica las **dos** funciones de fusión
+(`mergeRepoIntoLocal` y el merge dentro de `pushToGitHub`) para que adopten los
+cambios del repo **solo en tareas con el campo `mcpUpdatedAt`** (que escribe
+únicamente el servidor MCP). Así:
 
-```js
-      const botTasks = repoData.tasks.filter(t=> !localTaskIds.has(t.id) && !delTasks.has(t.id));
-      const botProjects = (repoData.projects||[]).filter(p=> !localProjIds.has(p.id) && !delProjs.has(p.id));
-      payload = { ...data, tasks: [...data.tasks, ...botTasks], projects: [...data.projects, ...botProjects] };
-```
+- Crear, editar y guardar resultados desde Claude ahora sobreviven.
+- Lo que escribe el bot y el resto de tu estado local siguen igual de protegidos
+  que antes (el bot no usa `mcpUpdatedAt`).
 
-y reemplazalo por:
+**Para instalarlo:** reemplazá tu `app.js` actual por el `app.js` de esta entrega
+(commit + push al repo). No cambia nada de la interfaz; solo la lógica de fusión.
 
-```js
-      const botTasks = repoData.tasks.filter(t=> !localTaskIds.has(t.id) && !delTasks.has(t.id));
-      const botProjects = (repoData.projects||[]).filter(p=> !localProjIds.has(p.id) && !delProjs.has(p.id));
-      // Preservar resultados de IA que el MCP escribio en tareas existentes:
-      const repoById = new Map(repoData.tasks.map(t=>[t.id, t]));
-      const mergedLocal = data.tasks.map(t=>{
-        const r = repoById.get(t.id);
-        if(r && r.resultAt && r.resultAt !== t.resultAt){
-          return { ...t, result: r.result, resultType: r.resultType, resultAt: r.resultAt };
-        }
-        return t;
-      });
-      payload = { ...data, tasks: [...mergedLocal, ...botTasks], projects: [...data.projects, ...botProjects] };
-```
+**El límite honesto:** si editás la *misma* tarea en el dashboard y desde Claude
+entre dos sincronizaciones, gana la versión del MCP (last-write-wins). Es una
+ventana angosta. Para evitarla, sincronizá el dashboard antes de pedirle a Claude
+que toque tareas que vos también estás editando a mano.
 
-Esto hace que los **resultados** sobrevivan. Los cambios de `done` desde el MCP
-siguen pudiendo pisarse si editás esa tarea en el dashboard antes de sincronizar;
-para evitarlo, sincronizá el dashboard antes de tocar tareas que Claude modificó.
-
-Mostrar el resultado dentro de la tarjeta de la tarea en el dashboard es un
-cambio aparte (visual). Si confirmás que la conexión funciona, te lo agrego.
+**Lo que todavía falta (visual):** `save_task_result` guarda el entregable en el
+`data.json` (campos `result`, `resultType`, `resultAt`), pero el dashboard aún no
+lo muestra dentro de la tarjeta de la tarea. Mostrarlo es un cambio chico de
+interfaz; si confirmás que la conexión funciona, te lo agrego.
 
 ---
 

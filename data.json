@@ -577,6 +577,21 @@
       "contacts": [],
       "context": "personal",
       "parentId": "p1781673306507675"
+    },
+    {
+      "id": "p1782160541989891",
+      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
     }
   ],
   "tasks": [
@@ -1160,7 +1175,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1199,7 +1214,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1286,7 +1301,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1349,7 +1364,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1430,7 +1445,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1442,7 +1457,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1671,7 +1686,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2099,18 +2114,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1781850133121341",
-      "projectId": "p5",
-      "text": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
-      "done": false,
-      "dueDate": "2026-06-20",
-      "dueTime": "02:21",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781919048635878",
       "projectId": "p1781572037505287",
       "text": "corrije el diseño del menu ayq ue etsa todo centraod a la iaquierda y no etsa bien dentrado al medio, ve los espacio y gera un diseño como de mac glases",
@@ -2119,7 +2122,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2131,7 +2134,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2143,7 +2146,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2155,7 +2158,7 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     }
   ],
@@ -2220,7 +2223,8 @@
     "t1781581152031707",
     "t1781502750840",
     "t1781674349882111",
-    "t1781674357980641"
+    "t1781674357980641",
+    "t1781850133121341"
   ],
   "deletedProjectIds": [
     "p1781538739000",

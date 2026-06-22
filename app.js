@@ -1501,7 +1501,7 @@ function renderProjectCards(){
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" onblur="editTaskText('${t.id}', this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}" title="Click para editar el texto">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;" onblur="editTaskText('${t.id}', this.innerText)" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}" title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
@@ -1552,10 +1552,10 @@ function renderProjectCards(){
                onblur="renameProject('${p.id}', this.textContent)"
                onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
                title="Click para editar el nombre">${p.name}</div>
-          <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false"
-               onblur="editDesc('${p.id}', this.textContent)"
-               onkeydown="if(event.key==='Enter'){event.preventDefault(); this.blur();}"
-               title="Click para editar la descripción">${p.desc}</div>
+          <div class="row-desc" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;"
+               onblur="editDesc('${p.id}', this.innerText)"
+               onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}"
+               title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${p.desc}</div>
         </div>
       </div>
       <div><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
@@ -2309,7 +2309,7 @@ function emptyTrash(){
   save(); renderTrash();
 }
 function editTaskText(id, newText){
-  const text = (newText||'').replace(/\s+/g,' ').trim();
+  const text = (newText||'').replace(/\r\n?/g,'\n').replace(/[ \t]+/g,' ').replace(/\n{3,}/g,'\n\n').trim();
   const t = data.tasks.find(t=>t.id===id);
   if(!t) return;
   if(!text || text===t.text){ renderProjectCards(); return; }

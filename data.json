@@ -54,21 +54,6 @@
       "parentId": null
     },
     {
-      "id": "p1782160541989891",
-      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
-    },
-    {
       "id": "p9",
       "color": "#af52de",
       "name": "Grupo Arte",
@@ -556,6 +541,21 @@
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781572037505287"
+    },
+    {
+      "id": "p1782160541989891",
+      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
       "icon": "",
       "driveUrl": "",
       "driveFolderId": "",

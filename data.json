@@ -1849,7 +1849,7 @@
     {
       "id": "t1781674712115694",
       "projectId": "p1781572037505287",
-      "text": "contanilizar proyecto/ subproeycto /  tareas parence ser mas",
+      "text": "Contabilizar proyectos, subproyectos y tareas.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "01:38",
@@ -1858,7 +1858,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:09.105Z"
     },
     {
       "id": "t1781674917879234",

@@ -2176,7 +2176,7 @@
       "id": "t1782183004321456",
       "projectId": "p1",
       "text": "venta de analis de elasiticda de preico en base a la demora de venta",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-26",
       "dueTime": "12:00",
       "priority": "low",

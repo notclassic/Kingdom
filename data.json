@@ -1879,7 +1879,7 @@
     {
       "id": "t1781675067534706",
       "projectId": "p1781572037505287",
-      "text": "sacar estado, en la parte visual",
+      "text": "Quitar el estado de la parte visual.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "01:44",
@@ -1888,7 +1888,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:16.582Z"
     },
     {
       "id": "t1781675722089858",

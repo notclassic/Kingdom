@@ -550,9 +550,9 @@
     },
     {
       "id": "p1782160541989891",
-      "name": "Ver el video\nhttps://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv\n\nPara conectar la web a Claude",
+      "name": "Conectar la web a Claude",
       "area": "a1",
-      "desc": "",
+      "desc": "Referencia: reel de Instagram con el método para conectar la web a Claude → https://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv",
       "status": "active",
       "hasLeads": false,
       "color": "#5856d6",
@@ -561,7 +561,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781572037505287"
+      "parentId": "p1781572037505287",
+      "mcpUpdatedAt": "2026-06-23T20:59:16.774Z"
     },
     {
       "id": "p1781624973629977",

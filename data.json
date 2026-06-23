@@ -1864,7 +1864,7 @@
     {
       "id": "t1781674917879234",
       "projectId": "p1781572037505287",
-      "text": "mejorar contraer no incluye las tareas",
+      "text": "Mejorar la función de contraer: actualmente no incluye las tareas.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "01:41",
@@ -1873,7 +1873,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:12.685Z"
     },
     {
       "id": "t1781675067534706",

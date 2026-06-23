@@ -1191,7 +1191,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1230,7 +1230,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1281,7 +1281,7 @@
       "done": false,
       "dueDate": "2026-06-24",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1317,7 +1317,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1380,7 +1380,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1461,7 +1461,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -1473,7 +1473,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -1690,7 +1690,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -1702,7 +1702,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {
@@ -2147,7 +2147,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
     },
@@ -2160,7 +2160,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": "https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit?tab=t.0"
     },
     {
@@ -2172,7 +2172,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0"
     },
     {
@@ -2184,7 +2184,7 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0"
     },
     {
@@ -2196,7 +2196,7 @@
       "dueTime": "00:47",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     }
   ],

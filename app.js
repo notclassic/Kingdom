@@ -503,6 +503,17 @@ function mergeRepoIntoLocal(repoData){
       mcpChanged = true;
     }
   }
+  // Adoptar ediciones del MCP en PROYECTOS que YA existen local (nombre/desc).
+  // Mismo criterio que tareas: solo si el proyecto del repo trae mcpUpdatedAt distinto.
+  const repoProjById = new Map((repoData.projects||[]).map(p=>[p.id, p]));
+  for(const p of data.projects){
+    const r = repoProjById.get(p.id);
+    if(r && r.mcpUpdatedAt && r.mcpUpdatedAt !== p.mcpUpdatedAt){
+      p.name = r.name; p.desc = r.desc;
+      p.mcpUpdatedAt = r.mcpUpdatedAt;
+      mcpChanged = true;
+    }
+  }
   if(addTasks.length || addProjects.length || mcpChanged){
     data.tasks = [...data.tasks, ...addTasks];
     data.projects = [...data.projects, ...addProjects];
@@ -580,7 +591,16 @@ async function pushToGitHub(silent){
         }
         return t;
       });
-      payload = { ...data, tasks: [...mergedLocalTasks, ...botTasks], projects: [...data.projects, ...botProjects] };
+      // Adoptar ediciones del MCP sobre PROYECTOS existentes (nombre/desc) antes de subir.
+      const repoProjById = new Map((repoData.projects||[]).map(p=>[p.id, p]));
+      const mergedLocalProjects = data.projects.map(p=>{
+        const r = repoProjById.get(p.id);
+        if(r && r.mcpUpdatedAt && r.mcpUpdatedAt !== p.mcpUpdatedAt){
+          return { ...p, name:r.name, desc:r.desc, mcpUpdatedAt:r.mcpUpdatedAt };
+        }
+        return p;
+      });
+      payload = { ...data, tasks: [...mergedLocalTasks, ...botTasks], projects: [...mergedLocalProjects, ...botProjects] };
     }
 
     const body = {

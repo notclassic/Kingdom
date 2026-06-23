@@ -1909,7 +1909,7 @@
     {
       "id": "t1781676760577201",
       "projectId": "p1781572037505287",
-      "text": "falta un menu de hambuguesa",
+      "text": "Falta un menú de hamburguesa.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "02:11",
@@ -1918,7 +1918,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:21.798Z"
     },
     {
       "id": "t1781677173049787",

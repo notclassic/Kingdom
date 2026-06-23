@@ -2070,14 +2070,15 @@
     {
       "id": "t178184243013271",
       "projectId": "p6",
-      "text": "Publicaciones IG\nSabías que ahora puedes hacer avisos por whataps\nRevisar guardados en Instagram",
+      "text": "Publicaciones en Instagram. Idea: comunicar que ahora se pueden enviar avisos por WhatsApp. Revisar los guardados de Instagram.",
       "done": false,
       "dueDate": "2026-06-20",
       "dueTime": "00:12",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-06-23T01:00:04.333Z"
     },
     {
       "id": "t1781846888794474",

@@ -220,7 +220,7 @@
       "id": "p1781589327240693",
       "name": "Script correo",
       "area": "pa1",
-      "desc": "Arreglar el script de correos, utilizo estos script para reviar mi correo gmail y de esta manera ver las ofertas laborales que me llegan. pero no estan funcionando bien, poruqe",
+      "desc": "Arreglar el script de correos, utilizo estos script para reviar mi correo gmail y de esta manera ver las ofertas laborales que me llegan. pero no estan funcionando bien, poruqe llegan ofertas duplicadas y con mucha demora. El script de búsqueda está en los archivos de Drive.",
       "status": "active",
       "hasLeads": false,
       "color": "#ffa50a",

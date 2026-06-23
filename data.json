@@ -1191,7 +1191,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1230,7 +1230,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1281,7 +1281,7 @@
       "done": false,
       "dueDate": "2026-06-24",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1317,7 +1317,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1380,7 +1380,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1461,7 +1461,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1473,7 +1473,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1690,7 +1690,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1702,7 +1702,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2147,7 +2147,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
     },
@@ -2160,7 +2160,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2172,7 +2172,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2184,7 +2184,19 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1782190127885284",
+      "projectId": "p1",
+      "text": "poner unn costo de capital por tiempo en venderse, un auto que se demora en venderdese dos mesetienee un costo financiero vs uno que se vende en el dia. un  500.000 en un dias quizas es mejor que 800.000 en 4 meses de tiempo en venderse+",
+      "done": false,
+      "dueDate": "2026-06-24",
+      "dueTime": "00:47",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
       "driveUrl": ""
     }
   ],

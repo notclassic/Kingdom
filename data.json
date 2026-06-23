@@ -1954,7 +1954,7 @@
     {
       "id": "t1781679423163989",
       "projectId": "p1781572037505287",
-      "text": "cambiar texto en version movil reemplzaar por iconos no necesito que diga vida puedsser ser un boton, profeisonarl puedeser un icono cobarta y personal puede ser un copo de nieve,",
+      "text": "En la versión móvil, reemplazar texto por iconos: \"vida\" puede ser un botón, \"profesional\" un icono de corbata y \"personal\" un copo de nieve.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "02:55",
@@ -1963,7 +1963,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:40.126Z"
     },
     {
       "id": "t1781717730685",

@@ -1890,7 +1890,7 @@
     {
       "id": "t1781675722089858",
       "projectId": "p1781572037505287",
-      "text": "mantener la regla de las dimensiones, esoaciado de las tareasm de los iconos y sub proyectos, ubicacion de icono ID, recordar la simetria en el diseñom",
+      "text": "Mantener la regla de dimensiones: espaciado de tareas, iconos y subproyectos, ubicación del icono de ID y simetría en el diseño.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "01:55",
@@ -1899,7 +1899,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T00:59:52.866Z"
     },
     {
       "id": "t1781676760577201",

@@ -1924,7 +1924,7 @@
     {
       "id": "t1781677173049787",
       "projectId": "p1781572037505287",
-      "text": "separar potafolia de crm. sacar la infomraicon de la pestaña conficuracion y afgregarla en la nueva pestaña de crm que debe tener un conceptot logico",
+      "text": "Separar Portafolio de CRM: mover la información de la pestaña de Configuración a una nueva pestaña de CRM con una estructura lógica.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "02:18",
@@ -1933,7 +1933,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:31.480Z"
     },
     {
       "id": "t1781677426654730",

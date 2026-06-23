@@ -592,6 +592,21 @@
       "contacts": [],
       "context": "personal",
       "parentId": "p1781673306507675"
+    },
+    {
+      "id": "p178218303327465",
+      "name": "venta de analis de elasiticda de preico en base a la demora de venta",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781582993530486"
     }
   ],
   "tasks": [
@@ -2171,18 +2186,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t1782183004321456",
-      "projectId": "p1",
-      "text": "venta de analis de elasiticda de preico en base a la demora de venta",
-      "done": false,
-      "dueDate": "2026-06-26",
-      "dueTime": "12:00",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -2247,7 +2250,8 @@
     "t1781502750840",
     "t1781674349882111",
     "t1781674357980641",
-    "t1781850133121341"
+    "t1781850133121341",
+    "t1782183004321456"
   ],
   "deletedProjectIds": [
     "p1781538739000",

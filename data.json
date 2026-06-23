@@ -2117,14 +2117,15 @@
     {
       "id": "t1781919048635878",
       "projectId": "p1781572037505287",
-      "text": "corrije el diseño del menu ayq ue etsa todo centraod a la iaquierda y no etsa bien dentrado al medio, ve los espacio y gera un diseño como de mac glases",
+      "text": "Corregir el diseño del menú: hoy está alineado a la izquierda y no centrado. Revisar los espacios y aplicar un estilo \"glass\" tipo Mac.",
       "done": false,
       "dueDate": "2026-06-22",
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
     },
     {
       "id": "t178214150332569",

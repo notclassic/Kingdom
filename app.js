@@ -809,14 +809,51 @@ function renderBackupsList(){
       <button class="btn-toggle" onclick="restoreBackup(${i})">Restaurar</button>
     </div>`).join('');
 }
-function restoreBackup(i){
+async function restoreBackup(i){
   const arr = getBackups(); const b = arr[i]; if(!b) return;
   if(!confirm('¿Restaurar el respaldo del '+_fmtTs(b.ts)+'? Antes guardo la versión actual por las dudas.')) return;
   saveBackupSnapshot('antes de restaurar');
   data = JSON.parse(JSON.stringify(b.data));
-  save(); renderAll(); if(typeof renderAreaSettings==='function') renderAreaSettings();
+  // Guardar local SIN disparar el auto-push con fusión (que volvería a traer las ediciones del MCP).
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  if(autoPushTimer){ clearTimeout(autoPushTimer); autoPushTimer=null; }
+  renderAll(); if(typeof renderAreaSettings==='function') renderAreaSettings();
   renderBackupsList();
-  alert('Restaurado el respaldo del '+_fmtTs(b.ts)+'.');
+  // Subir a GitHub PISANDO el repo (sin fusionar), para que la versión restaurada gane
+  // y no vuelva a aparecer lo que había editado el MCP por la sincronización.
+  await overwriteGitHub();
+  alert('Restaurado el respaldo del '+_fmtTs(b.ts)+'. Esta versión quedó como la definitiva.');
+}
+function overwriteGitHub(){
+  const token = getGithubToken();
+  const banner = document.getElementById('githubSyncStatus');
+  if(!token) return Promise.resolve();
+  return (async ()=>{
+    try{
+      let sha;
+      const getRes = await fetch(ghApiUrl()+`?ref=${GITHUB_CONFIG.BRANCH}`, {
+        headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json'}
+      });
+      if(getRes.ok){ const gj = await getRes.json(); sha = gj.sha; }
+      else if(getRes.status !== 404){ throw new Error('HTTP '+getRes.status); }
+      const body = {
+        message: 'Restaurar respaldo desde el dashboard (pisa la version anterior)',
+        content: b64EncodeUnicode(JSON.stringify(data, null, 2)),
+        branch: GITHUB_CONFIG.BRANCH
+      };
+      if(sha) body.sha = sha;
+      const putRes = await fetch(ghApiUrl(), {
+        method:'PUT',
+        headers:{Authorization:'Bearer '+token, Accept:'application/vnd.github+json', 'Content-Type':'application/json'},
+        body: JSON.stringify(body)
+      });
+      if(!putRes.ok){ const e = await putRes.json().catch(()=>({})); throw new Error(putRes.status+' '+(e.message||'')); }
+      try{ localStorage.setItem('kingdom_dirty','0'); }catch(_){}
+      if(banner) banner.textContent = '✓ Respaldo restaurado y subido a GitHub.';
+    }catch(err){
+      if(banner) banner.textContent = 'Restauré local, pero no pude pisar GitHub ('+err.message+'). La sincronización podría traer lo anterior.';
+    }
+  })();
 }
 function openManage(){
   var t=document.getElementById('manageMdInput'); if(t) t.value='';

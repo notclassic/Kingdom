@@ -223,6 +223,41 @@ function buildServer(env) {
   );
 
   server.registerTool(
+    "update_project",
+    {
+      description:
+        "Modifica el nombre o la descripcion de un proyecto o subproyecto existente. " +
+        "Solo pasa los campos a cambiar. " + NOTA_EDICION,
+      inputSchema: {
+        projectId: z.string(),
+        name: z.string().optional(),
+        desc: z.string().optional(),
+      },
+    },
+    async ({ projectId, name, desc }) => {
+      try {
+        let actualizado;
+        await mutate(
+          cfg,
+          (data) => {
+            const p = byId(data.projects, projectId);
+            if (!p) throw new Error(`No existe el proyecto ${projectId}.`);
+            if (typeof name === "string") p.name = name;
+            if (typeof desc === "string") p.desc = desc;
+            p.mcpUpdatedAt = new Date().toISOString();
+            actualizado = p;
+            return p;
+          },
+          `MCP: actualizar proyecto ${projectId}`
+        );
+        return ok({ actualizado, ok: true, nota: NOTA_EDICION });
+      } catch (e) {
+        return fail(e.message);
+      }
+    }
+  );
+
+  server.registerTool(
     "list_tasks",
     {
       description:

@@ -1939,7 +1939,7 @@
     {
       "id": "t1781677426654730",
       "projectId": "p1781572037505287",
-      "text": "los botnees de heramientas nuevo poryecot y nueva tarea solo que sean iconos sin texto recuerda la usabilidad de el celuclar por lo que el tamaño de los iconos debe ser adecuado",
+      "text": "Los botones \"nuevo proyecto\" y \"nueva tarea\" deben ser solo iconos, sin texto. Cuidar la usabilidad en celular con un tamaño de icono adecuado.",
       "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "02:22",
@@ -1948,7 +1948,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-23T01:00:35.664Z"
     },
     {
       "id": "t1781679423163989",

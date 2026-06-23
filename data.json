@@ -250,7 +250,7 @@
       "id": "p1781673306507675",
       "name": "Autos",
       "area": "pa3",
-      "desc": "",
+      "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -259,7 +259,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": null
+      "parentId": null,
+      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
     },
     {
       "id": "p1781583210289147",

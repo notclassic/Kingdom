@@ -1176,7 +1176,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1215,7 +1215,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1266,7 +1266,7 @@
       "done": false,
       "dueDate": "2026-06-24",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1302,7 +1302,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1365,7 +1365,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1446,7 +1446,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1458,7 +1458,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1675,7 +1675,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1687,7 +1687,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2132,7 +2132,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
     },
@@ -2145,7 +2145,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2157,7 +2157,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2169,7 +2169,19 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1782183004321456",
+      "projectId": "p1",
+      "text": "venta de analis de elasiticda de preico en base a la demora de venta",
+      "done": false,
+      "dueDate": "2026-06-26",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
       "driveUrl": ""
     }
   ],

@@ -1157,7 +1157,7 @@
       "done": false,
       "dueDate": "2026-06-25",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"

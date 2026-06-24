@@ -2175,14 +2175,15 @@
     {
       "id": "t1782141526661249",
       "projectId": "p1781589327240693",
-      "text": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+      "text": "Arreglar el script de LinkedIn (BuscaPegaBot-LinkedIn): lee los correos de LinkedIn, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit",
       "done": false,
       "dueDate": "2026-06-23",
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0"
+      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+      "mcpUpdatedAt": "2026-06-24T20:41:15.177Z"
     },
     {
       "id": "t1782141553644300",

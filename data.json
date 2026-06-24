@@ -296,9 +296,9 @@
     {
       "id": "p5",
       "color": "#ff3b30",
-      "name": "Taller movil",
+      "name": "Taller móvil",
       "area": "a2",
-      "desc": "Servicio de pintura presencial, en alianza con un taller.",
+      "desc": "Servicio de pintura automotriz a domicilio (se va donde el cliente). La idea es asociarse con un taller establecido para ganar conocimiento del negocio.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "https://drive.google.com/drive/folders/1QOOxBstv_sXNIfgb97MKuSzasJNOjEHe",
@@ -306,7 +306,8 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional",
-      "parentId": null
+      "parentId": null,
+      "mcpUpdatedAt": "2026-06-24T20:22:21.258Z"
     },
     {
       "id": "p3",

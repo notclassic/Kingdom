@@ -2188,14 +2188,15 @@
     {
       "id": "t1782141553644300",
       "projectId": "p1781589327240693",
-      "text": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
-      "done": false,
+      "text": "(Duplicada del script de LinkedIn — es la misma que la otra tarea. Se puede borrar desde la papelera del dashboard.)",
+      "done": true,
       "dueDate": "2026-06-23",
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0"
+      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+      "mcpUpdatedAt": "2026-06-24T20:41:19.157Z"
     },
     {
       "id": "t1782190127885284",

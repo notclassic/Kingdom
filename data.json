@@ -2046,7 +2046,7 @@
     {
       "id": "t1781720529792548",
       "projectId": "p1781720027768812",
-      "text": "Cotizar omicinetica\nDerrocha izq proveedores locales \nLavado asientos",
+      "text": "Arreglos mecánicos del Subaru: cambio de aceite de la caja de cambios y cambio de juntas homocinéticas (derecha e izquierda). Buscar dónde realizar estos trabajos y cotizar con talleres/proveedores locales.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "14:21",
@@ -2055,7 +2055,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-24T20:31:51.911Z"
     },
     {
       "id": "t1781720722538277",

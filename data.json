@@ -266,7 +266,7 @@
       "id": "p1781583210289147",
       "name": "Captiva",
       "area": "pa3",
-      "desc": "Buscar dónde hacer el cambio de aceite, pagar la luz, pasar el scanner y la revisión técnica.",
+      "desc": "Mantención del Captiva. Tiene encendida una luz de advertencia en el tablero (no es el Check Engine); al parecer es un problema de inyectores, que hay que diagnosticar con scanner. Pendientes también: cambio de aceite y revisión técnica.",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -275,7 +275,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": "p1781673306507675"
+      "parentId": "p1781673306507675",
+      "mcpUpdatedAt": "2026-06-24T20:22:11.579Z"
     },
     {
       "id": "p178158196081099",

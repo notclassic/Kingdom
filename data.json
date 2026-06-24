@@ -2061,7 +2061,7 @@
     {
       "id": "t1781720722538277",
       "projectId": "p1781720027768812",
-      "text": "Revisar alfombra y la gotita paraplastico de tablero y pulida de foco a plástico",
+      "text": "Detalles estéticos del Subaru: revisar las alfombras, pegar con La Gotita el plástico del tablero, pulir los focos (ópticas plásticas) y lavar los asientos.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "14:25",
@@ -2070,7 +2070,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-24T20:31:56.041Z"
     },
     {
       "id": "t1781841347094366",

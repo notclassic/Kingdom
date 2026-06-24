@@ -2017,7 +2017,7 @@
     {
       "id": "t1781720098473190",
       "projectId": "p1781720027768812",
-      "text": "✅ Tarea creada en \"Autos\" Crear la publicación con la información en su Subaru impresa, año 2014, 170.000 kilómetros, CVT automático, Con neumáticos nuevos, llantas de la versión full , y no empresa Outback, es un Forester año 2014, entonces 70.000 kilómetros. Crear la tarea de publicación de Chile Autos en Marketplace de venta, único, no, 2 dueños, sin techo, afinamiento hecho, algunos detalles de luces prendidas. 📅 Vence: 18/ uso familiar06/2026 12: pintura en buen estado00",
+      "text": "Generar el contenido para la publicación de venta (Chile Autos y Marketplace) del Subaru Forester 2014. Datos a incluir: 170.000 km, CVT automático, 2 dueños, uso familiar, neumáticos nuevos, llantas de la versión full, sin techo, afinamiento hecho, pintura en buen estado y pocos detalles estéticos.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "14:14",
@@ -2026,7 +2026,8 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-06-24T20:31:48.007Z"
     },
     {
       "id": "t1781720436507",

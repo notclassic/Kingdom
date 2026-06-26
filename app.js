@@ -1258,7 +1258,36 @@ function renderTotals(){
     <div class="sumchip"><b>${pending}</b><span>Tareas pend.</span></div>
     <div class="sumchip${overdue>0?' alert':''}"><b>${overdue}</b><span>Vencidas</span></div>
     ${paused>0 ? `<div class="sumchip"><b>${paused}</b><span>En pausa</span></div>` : ''}
+    ${renderLastUpdateChip()}
   `;
+}
+
+/* ====== ÚLTIMA ACTUALIZACIÓN POR CLAUDE (MCP) ====== */
+/* Toma la edición más reciente hecha por Claude (campo mcpUpdatedAt, que solo
+   escribe el MCP) entre tareas y proyectos, y la muestra como una línea bajo los
+   totales. Es solo lectura: no modifica datos. La hora se muestra en la zona
+   horaria del navegador (la tuya, Chile). */
+function lastMcpUpdate(){
+  let max = null;
+  const consider = v => { if(v && (!max || v > max)) max = v; };
+  (data.tasks||[]).forEach(t=> consider(t.mcpUpdatedAt));
+  (data.projects||[]).forEach(p=> consider(p.mcpUpdatedAt));
+  return max;
+}
+function fmtMcpStamp(iso){
+  if(!iso) return '';
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return '';
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mi = String(d.getMinutes()).padStart(2,'0');
+  return `${dd}/${mm} ${hh}:${mi}`;
+}
+function renderLastUpdateChip(){
+  const stamp = fmtMcpStamp(lastMcpUpdate());
+  if(!stamp) return '';
+  return `<div class="mcp-last-update" style="flex-basis:100%; width:100%; text-align:center; font-size:.72rem; color:var(--muted); margin-top:8px;">✏️ Última actualización por Claude: ${stamp}</div>`;
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */
@@ -2376,7 +2405,7 @@ function editTaskText(id, newText){
 function formatDate(iso){
   if(!iso) return '';
   const [y,m,d] = iso.split('-');
-  return `${d}/${m}/${y}`;
+  return `${d}/${m}`;
 }
 function fmtShort(iso){
   if(!iso) return '';

@@ -1258,36 +1258,25 @@ function renderTotals(){
     <div class="sumchip"><b>${pending}</b><span>Tareas pend.</span></div>
     <div class="sumchip${overdue>0?' alert':''}"><b>${overdue}</b><span>Vencidas</span></div>
     ${paused>0 ? `<div class="sumchip"><b>${paused}</b><span>En pausa</span></div>` : ''}
-    ${renderLastUpdateChip()}
   `;
 }
 
-/* ====== ÚLTIMA ACTUALIZACIÓN POR CLAUDE (MCP) ====== */
-/* Toma la edición más reciente hecha por Claude (campo mcpUpdatedAt, que solo
-   escribe el MCP) entre tareas y proyectos, y la muestra como una línea bajo los
-   totales. Es solo lectura: no modifica datos. La hora se muestra en la zona
-   horaria del navegador (la tuya, Chile). */
-function lastMcpUpdate(){
-  let max = null;
-  const consider = v => { if(v && (!max || v > max)) max = v; };
-  (data.tasks||[]).forEach(t=> consider(t.mcpUpdatedAt));
-  (data.projects||[]).forEach(p=> consider(p.mcpUpdatedAt));
-  return max;
-}
-function fmtMcpStamp(iso){
-  if(!iso) return '';
-  const d = new Date(iso);
+/* ====== MARCA DE EDICIÓN POR CLAUDE (MCP) ====== */
+/* Cada tarea/proyecto editado por Claude por la conexión guarda mcpUpdatedAt
+   (campo que solo escribe el MCP). mcpEditBadge() lo muestra como un ícono de
+   reloj chico y tenue dentro de la tarjeta; al pasar el mouse (o mantener
+   pulsado) aparece la fecha y hora completa de la edición. Las ediciones
+   manuales en el dashboard no se marcan. La hora es la del navegador. */
+function mcpEditBadge(item){
+  if(!item || !item.mcpUpdatedAt) return '';
+  const d = new Date(item.mcpUpdatedAt);
   if(isNaN(d.getTime())) return '';
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const hh = String(d.getHours()).padStart(2,'0');
   const mi = String(d.getMinutes()).padStart(2,'0');
-  return `${dd}/${mm} ${hh}:${mi}`;
-}
-function renderLastUpdateChip(){
-  const stamp = fmtMcpStamp(lastMcpUpdate());
-  if(!stamp) return '';
-  return `<div class="mcp-last-update" style="flex-basis:100%; width:100%; text-align:center; font-size:.72rem; color:var(--muted); margin-top:8px;">✏️ Última actualización por Claude: ${stamp}</div>`;
+  const full = `${dd}/${mm} ${hh}:${mi}`;
+  return `<span class="mcp-edit" title="Editado por Claude el ${full}" style="display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; color:var(--muted); opacity:.7; cursor:help; flex-shrink:0;">🕒</span>`;
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */
@@ -1587,7 +1576,7 @@ function renderProjectCards(){
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;" onblur="editTaskText('${t.id}', this.innerText)" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}" title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;" onblur="editTaskText('${t.id}', this.innerText)" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}" title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>${mcpEditBadge(t)}
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
@@ -1644,7 +1633,7 @@ function renderProjectCards(){
                title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${p.desc}</div>
         </div>
       </div>
-      <div><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span></div>
+      <div><span class="id-tag" onclick="copyId(event,'${p.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${p.id}</span></span>${mcpEditBadge(p)}</div>
       <div class="row-actions">
         <button onclick="quickAddTask('${p.id}')" title="Agregar tarea a este proyecto">➕</button>
         <button class="${p.driveUrl?'drive-on':''}" onclick="manageDrive('${p.id}')" title="Carpeta de Drive: abrir o editar el link">📁</button>

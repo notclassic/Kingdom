@@ -2046,7 +2046,7 @@
     {
       "id": "t1781720529792548",
       "projectId": "p1781720027768812",
-      "text": "Arreglos mecánicos del Subaru: cambio de aceite de la caja de cambios y cambio de juntas homocinéticas (derecha e izquierda). Buscar dónde realizar estos trabajos y cotizar con talleres/proveedores locales.",
+      "text": "Arreglos mecánicos del Subaru Forester 2014 (CVT). Dos trabajos: (1) cambio de aceite de la caja CVT y (2) cambio de juntas homocinéticas (derecha e izquierda).\n\nCAMBIO DE ACEITE CAJA CVT — puntos clave a exigir al taller:\n- Fluido: debe ser el específico de Subaru para CVT (Subaru CVTF / \"High Torque CVTF\"). NO sirve aceite de automática común ni CVT de otras marcas; el fluido equivocado puede dañar la caja. Pregunta filtro al taller: \"¿usás el fluido CVT original de Subaru o un equivalente certificado para esta caja?\". Si dudan, no es el lugar.\n- Procedimiento: se hace por drenar y rellenar (escurrido), respetando el nivel con el método de temperatura de Subaru. Mejor un taller que conozca Subaru, no uno genérico.\n- Scanner: pedir que lean los códigos de la luz AT OIL TEMP antes/durante, para confirmar que es solo el fluido degradado y no un problema mayor de la transmisión.\n\nBuscar talleres en el Gran Santiago que trabajen Subaru o transmisiones CVT, y cotizar ambos trabajos (CVT + homocinéticas). Pendiente: definir zona/comuna preferida para priorizar cercanía.",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "14:21",
@@ -2056,7 +2056,7 @@
       "driveUrl": "",
       "dueSoonAlertSent": true,
       "overdueAlertSent": true,
-      "mcpUpdatedAt": "2026-06-24T20:31:51.911Z"
+      "mcpUpdatedAt": "2026-06-26T17:14:52.302Z"
     },
     {
       "id": "t1781720722538277",

@@ -1576,7 +1576,7 @@ function renderProjectCards(){
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"
                    ondragleave="taskDragLeave(event)" ondrop="taskDrop(event)" ondragend="taskDragEnd(event)">
         <span class="drag-handle" ontouchstart="startTouchDrag(event,'task','${t.id}')">⠿</span>
-        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;" onblur="editTaskText('${t.id}', this.innerText)" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}" title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>${mcpEditBadge(t)}
+        <input type="checkbox" onchange="toggleTask('${t.id}')"><span class="proj-dot" style="background:${p.color}"></span><div class="task-body"><div class="task-text"><span class="task-text-edit" contenteditable="true" spellcheck="false" draggable="false" style="white-space:pre-wrap;" onblur="editTaskText('${t.id}', this.innerText)" onkeydown="if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault(); this.blur();} else if(event.key==='Escape'){event.preventDefault(); this.blur();}" title="Enter = salto de línea · Ctrl/Cmd+Enter o Esc para terminar">${t.text}</span></div>${due}</div><span class="id-tag" onclick="copyId(event,'${t.id}')" title="ID — clic para copiar"><span class="id-ico">ID</span><span class="id-num">${t.id}</span></span>${mcpEditBadge(t)}
         <button class="task-drive ${t.driveUrl?'drive-on':''}" onclick="openTaskDrive('${t.id}')" title="${t.driveUrl?'Abrir carpeta/documento de Drive':'Vincular carpeta/documento de Drive'}">📁</button>
         ${t.driveUrl ? `<button class="task-drive" onclick="editTaskDrive('${t.id}')" title="Cambiar el link de Drive">✎</button>` : ''}
         <button class="task-drive" onclick="openEditTask('${t.id}')" title="Editar tarea (importancia, proyecto, fecha, hora)">⋯</button>
@@ -2222,7 +2222,7 @@ function renderTasks(){
       <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
       <div class="task-body">
         <div class="task-project">${proj ? proj.name : '—'}</div>
-        <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
+        <div class="task-text">${t.text}</div>
         ${badge}
       </div>
       <button class="task-del" style="color:var(--muted);" onclick="openEditTask('${t.id}')" title="Editar">⋯</button>
@@ -2640,7 +2640,7 @@ function renderDayView(iso){
       <span class="proj-dot" style="background:${proj?proj.color:'var(--muted)'}"></span>
       <div class="task-body">
         <div class="task-project">${proj?proj.name:'—'}</div>
-        <div class="task-text"><span style="margin-right:4px;">${PRIORITY_EMOJI[t.priority||'medium']}</span>${t.text}</div>
+        <div class="task-text">${t.text}</div>
         ${t.dueTime ? `<span class="due-badge ${overdue?'due-overdue':'due-upcoming'}" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;" title="Cambiar fecha">🕒 ${t.dueTime}</span>` : (overdue?`<span class="due-badge due-overdue" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;">Vencida</span>`:`<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);">+ fecha</span>`)}
       </div>
       <button class="task-del" style="color:var(--muted);" onclick="openEditTask('${t.id}')" title="Editar">⋯</button>

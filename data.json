@@ -2017,7 +2017,7 @@
     {
       "id": "t1781720098473190",
       "projectId": "p1781720027768812",
-      "text": "Generar el contenido para la publicación de venta (Chile Autos y Marketplace) del Subaru Forester 2014. Datos a incluir: 170.000 km, CVT automático, 2 dueños, uso familiar, neumáticos nuevos, llantas de la versión full, sin techo, afinamiento hecho, pintura en buen estado y pocos detalles estéticos.",
+      "text": "Generar el contenido para la publicación de venta (Chile Autos y Marketplace) del Subaru Forester 2014. Datos a incluir: 170.000 km, CVT automático, 2 dueños, uso familiar, neumáticos nuevos, llantas de la versión full, sin techo, afinamiento hecho, pintura en buen estado y pocos detalles estéticos.\n\nANTES DE PUBLICAR: hacer primero el cambio de aceite de la caja CVT y apagar/diagnosticar la luz AT OIL TEMP (ver tarea de arreglos mecánicos). El plan es vender el auto ya reparado, no con el problema pendiente. Recordatorio clave del arreglo: el fluido debe ser el CVT específico de Subaru (CVTF / High Torque CVTF), NO aceite común; el fluido equivocado daña la caja.\n\nPendiente también: definir precio (se puede mirar referencia en Chile Autos/Yapo de un Forester 2014 con ~170.000 km).",
       "done": false,
       "dueDate": "2026-06-18",
       "dueTime": "14:14",
@@ -2027,7 +2027,7 @@
       "driveUrl": "",
       "dueSoonAlertSent": true,
       "overdueAlertSent": true,
-      "mcpUpdatedAt": "2026-06-24T20:31:48.007Z"
+      "mcpUpdatedAt": "2026-06-26T17:16:32.975Z"
     },
     {
       "id": "t1781720436507",

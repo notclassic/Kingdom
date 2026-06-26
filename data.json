@@ -294,6 +294,22 @@
       "parentId": "p1781673306507675"
     },
     {
+      "id": "p1781720027768812",
+      "name": "Subaru",
+      "area": "pa3",
+      "desc": "Subaru Forester de un amigo (Oso): dejarlo listo y gestionarle la venta. Tiene encendida la luz AT OIL TEMP, que apunta a un problema de transmisión (probable cambio de aceite de la caja); hay que diagnosticarlo y repararlo antes de vender.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781673306507675",
+      "mcpUpdatedAt": "2026-06-23T21:27:03.584Z"
+    },
+    {
       "id": "p5",
       "color": "#ff3b30",
       "name": "Taller móvil",
@@ -581,22 +597,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781572037505287"
-    },
-    {
-      "id": "p1781720027768812",
-      "name": "Subaru",
-      "area": "pa3",
-      "desc": "Subaru Forester de un amigo (Oso): dejarlo listo y gestionarle la venta. Tiene encendida la luz AT OIL TEMP, que apunta a un problema de transmisión (probable cambio de aceite de la caja); hay que diagnosticarlo y repararlo antes de vender.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": "p1781673306507675",
-      "mcpUpdatedAt": "2026-06-23T21:27:03.584Z"
     },
     {
       "id": "p178218303327465",

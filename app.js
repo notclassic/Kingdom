@@ -204,22 +204,17 @@ function updateAppMenuActive(){
   document.querySelectorAll('.appmenu-item').forEach(b=> b.classList.toggle('active', b.dataset.tab===_currentTab));
 }
 let _lastScrollY = 0, _barTick = false;
+// Achicado automático de la barra inferior y el header DESACTIVADO:
+// provocaba un parpadeo (tiritar) con el scroll que no se pudo estabilizar.
+// La barra y el header quedan siempre en su tamaño normal, quietos.
 function _updateBarShrink(){
-  const y = window.scrollY || document.documentElement.scrollTop || 0;
   const bar = document.getElementById('bottomNav');
   const hdr = document.getElementById('appHeader');
-  // histéresis por posición: achica pasando 140px, vuelve bajo 70px.
-  // La banda ancha (70px) evita que tiemble con micro-movimientos del scroll.
-  if(y > 140){
-    if(bar) bar.classList.add('shrink');
-    if(hdr) hdr.classList.add('collapsed');
-  } else if(y < 70){
-    if(bar) bar.classList.remove('shrink');
-    if(hdr) hdr.classList.remove('collapsed');
-  }
+  if(bar) bar.classList.remove('shrink');
+  if(hdr) hdr.classList.remove('collapsed');
   _barTick = false;
 }
-window.addEventListener('scroll', function(){ if(!_barTick){ _barTick=true; requestAnimationFrame(_updateBarShrink); } }, {passive:true});
+// Se quita el listener de scroll que disparaba el achicado.
 
 /* ====== DATOS INICIALES ====== */
 const DEFAULT_AREAS = [
@@ -1294,26 +1289,43 @@ function mcpEditBadge(item){
   if(!stamp) return '';
   const color = autor==='user' ? '#3b82f6' : '#34c759';  // azul vos / verde Claude
   const quien = autor==='user' ? 'Vos' : 'Claude';
-  // El texto va en data-* y se muestra al tocar (como el ID). Sirve en celular.
-  return `<span class="mcp-edit" onclick="showMcpDate(event)" data-quien="${quien}" data-stamp="${stamp}" title="${quien} · ${stamp}" style="display:inline-flex; align-items:center; gap:4px; font-size:.72rem; color:${color}; opacity:.95; cursor:pointer; flex-shrink:0; white-space:nowrap;"><span class="mcp-ico" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${color};"></span><span class="mcp-txt" style="display:none;"></span></span>`;
+  // Solo un círculo de color. Al tocar, la fecha aparece en un globito flotante
+  // (ver showMcpDate) que se dibuja por encima de todo y NO mueve la fila.
+  return `<span class="mcp-edit" onclick="showMcpDate(event)" data-quien="${quien}" data-stamp="${stamp}" data-color="${color}" title="${quien} · ${stamp}" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${color}; cursor:pointer; flex-shrink:0; vertical-align:middle;"></span>`;
 }
-// Al tocar el reloj: muestra "Quien · dd/mm hh:mm" unos segundos y vuelve al ícono.
+// Al tocar el círculo: muestra "Quien · dd/mm hh:mm" en un globito flotante por
+// encima de la fila (position:fixed, no empuja nada). Se cierra solo o al tocar de nuevo.
 function showMcpDate(e){
   e.stopPropagation();
   const el = e.currentTarget;
-  const ico = el.querySelector('.mcp-ico'), txt = el.querySelector('.mcp-txt');
-  if(!ico || !txt) return;
-  if(el._mcpOpen){ // si ya está abierto, lo cierra
-    txt.style.display='none'; txt.textContent=''; ico.style.display='';
-    el._mcpOpen=false; if(el._mcpTimer) clearTimeout(el._mcpTimer);
+  let tip = document.getElementById('mcpTip');
+  if(!tip){
+    tip = document.createElement('div');
+    tip.id = 'mcpTip';
+    tip.style.cssText = 'position:fixed; z-index:9999; padding:4px 8px; border-radius:6px; font-size:.72rem; line-height:1; color:#fff; box-shadow:0 2px 10px rgba(0,0,0,.2); pointer-events:none; display:none; white-space:nowrap; font-weight:600;';
+    document.body.appendChild(tip);
+  }
+  // si ya está abierto sobre este mismo círculo, lo cierra
+  if(tip._forEl === el && tip.style.display !== 'none'){
+    tip.style.display='none'; tip._forEl=null;
+    if(tip._timer) clearTimeout(tip._timer);
     return;
   }
-  txt.textContent = (el.dataset.quien||'') + ' · ' + (el.dataset.stamp||'');
-  txt.style.display=''; ico.style.display='none'; el._mcpOpen=true;
-  el._mcpTimer = setTimeout(()=>{
-    txt.style.display='none'; txt.textContent=''; ico.style.display='';
-    el._mcpOpen=false;
-  }, 2500);
+  tip.textContent = (el.dataset.quien||'') + ' · ' + (el.dataset.stamp||'');
+  tip.style.background = el.dataset.color || '#333';
+  tip.style.display='block';
+  tip._forEl = el;
+  const r = el.getBoundingClientRect();
+  const tipW = tip.offsetWidth, tipH = tip.offsetHeight;
+  let left = r.left + r.width/2 - tipW/2;
+  let top  = r.top - tipH - 6;            // arriba del círculo
+  if(top < 4) top = r.bottom + 6;          // si no hay lugar arriba, abajo
+  if(left < 4) left = 4;                    // que no se salga por la izquierda
+  if(left + tipW > window.innerWidth - 4) left = window.innerWidth - tipW - 4; // ni por la derecha
+  tip.style.left = left + 'px';
+  tip.style.top  = top + 'px';
+  if(tip._timer) clearTimeout(tip._timer);
+  tip._timer = setTimeout(()=>{ tip.style.display='none'; tip._forEl=null; }, 2500);
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */

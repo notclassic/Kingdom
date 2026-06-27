@@ -1121,8 +1121,10 @@ function saveEditProject(){
   const p = data.projects.find(x=>x.id===id);
   if(!p) return;
   const nm = document.getElementById('ep-name').value.trim();
+  const newDesc = document.getElementById('ep-desc').value.trim();
+  const textoCambio = (nm && nm !== p.name) || (newDesc !== p.desc);  // autor solo si cambia texto
   if(nm) p.name = nm;
-  p.desc = document.getElementById('ep-desc').value.trim();
+  p.desc = newDesc;
   p.color = document.getElementById('ep-color').value;
   const isSub = !!p.parentId && data.projects.some(x=>x.id===p.parentId);
   if(!isSub){
@@ -1136,6 +1138,7 @@ function saveEditProject(){
       if(c){ c.area = areaId; if(ai && ai.context) c.context = ai.context; }
     });
   }
+  if(textoCambio) p.userUpdatedAt = new Date().toISOString();  // autor: vos (cambio de texto)
   save(); renderAll(); closeEditProject();
 }
 function openTaskDrive(taskId){
@@ -1261,22 +1264,37 @@ function renderTotals(){
   `;
 }
 
-/* ====== MARCA DE EDICIÓN POR CLAUDE (MCP) ====== */
-/* Cada tarea/proyecto editado por Claude por la conexión guarda mcpUpdatedAt
-   (campo que solo escribe el MCP). mcpEditBadge() lo muestra como un ícono de
-   reloj chico y tenue dentro de la tarjeta; al pasar el mouse (o mantener
-   pulsado) aparece la fecha y hora completa de la edición. Las ediciones
-   manuales en el dashboard no se marcan. La hora es la del navegador. */
-function mcpEditBadge(item){
-  if(!item || !item.mcpUpdatedAt) return '';
-  const d = new Date(item.mcpUpdatedAt);
+/* ====== MARCA DE ÚLTIMA EDICIÓN DE TEXTO (autor) ====== */
+/* Dos marcas posibles en cada tarea/proyecto:
+   - mcpUpdatedAt : la escribe SOLO la conexión (Claude) al editar.   -> reloj AZUL
+   - userUpdatedAt: la escribe el dashboard cuando VOS editás el texto. -> reloj VERDE
+   mcpEditBadge() muestra un reloj con la fecha de la MÁS RECIENTE de las dos
+   (manda el último que editó el texto) y lo pinta según quién fue. Al pasar el
+   mouse (o mantener pulsado) aparece quién y cuándo. La hora es la del navegador. */
+function _fmtStamp(iso){
+  const d = new Date(iso);
   if(isNaN(d.getTime())) return '';
   const dd = String(d.getDate()).padStart(2,'0');
   const mm = String(d.getMonth()+1).padStart(2,'0');
   const hh = String(d.getHours()).padStart(2,'0');
   const mi = String(d.getMinutes()).padStart(2,'0');
-  const full = `${dd}/${mm} ${hh}:${mi}`;
-  return `<span class="mcp-edit" title="Editado por Claude el ${full}" style="display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; color:var(--muted); opacity:.7; cursor:help; flex-shrink:0;">🕒</span>`;
+  return `${dd}/${mm} ${hh}:${mi}`;
+}
+function mcpEditBadge(item){
+  if(!item) return '';
+  const mcp = item.mcpUpdatedAt || null;   // Claude
+  const usr = item.userUpdatedAt || null;  // vos
+  if(!mcp && !usr) return '';
+  // gana el más reciente (comparación de ISO strings funciona lexicográficamente)
+  let autor, iso;
+  if(mcp && usr){ if(usr >= mcp){ autor='user'; iso=usr; } else { autor='claude'; iso=mcp; } }
+  else if(usr){ autor='user'; iso=usr; }
+  else { autor='claude'; iso=mcp; }
+  const stamp = _fmtStamp(iso);
+  if(!stamp) return '';
+  const color = autor==='user' ? '#34c759' : '#3b82f6';  // verde vos / azul Claude
+  const quien = autor==='user' ? 'vos' : 'Claude';
+  return `<span class="mcp-edit" title="Última edición de texto: ${quien} · ${stamp}" style="display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; color:${color}; opacity:.85; cursor:help; flex-shrink:0;">🕒</span>`;
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */
@@ -1921,6 +1939,7 @@ function editDesc(id, newDesc){
   const p = projectInfo(id);
   if(desc===p.desc) return;
   p.desc = desc;
+  p.userUpdatedAt = new Date().toISOString();  // marca de autor: vos (cambio de texto)
   save(); renderAll();
 }
 function renameProject(id, newName){
@@ -1928,6 +1947,7 @@ function renameProject(id, newName){
   const p = projectInfo(id);
   if(!name || name===p.name){ renderProjectCards(); return; }
   p.name = name;
+  p.userUpdatedAt = new Date().toISOString();  // autor: vos (cambio de texto)
   save(); renderAll();
 }
 function toggleExpand(id){
@@ -2389,6 +2409,7 @@ function editTaskText(id, newText){
   if(!t) return;
   if(!text || text===t.text){ renderProjectCards(); return; }
   t.text = text;
+  t.userUpdatedAt = new Date().toISOString();  // marca de autor: vos (cambio de texto)
   save(); renderAll();
 }
 function formatDate(iso){
@@ -2456,6 +2477,7 @@ function saveEditTask(){
   if(!t) return;
   const text = document.getElementById('et-text').value.trim();
   if(!text){ alert('La tarea no puede quedar sin descripción'); return; }
+  const textoCambio = (text !== t.text);   // marca de autor solo si cambia el texto
   t.projectId = document.getElementById('et-project').value || t.projectId;
   t.text = text;
   const newDue = document.getElementById('et-due').value;
@@ -2464,6 +2486,7 @@ function saveEditTask(){
   t.dueDate = newDue;
   t.dueTime = newTime;
   t.priority = document.getElementById('et-priority').value || 'medium';
+  if(textoCambio) t.userUpdatedAt = new Date().toISOString();  // autor: vos (cambio de texto)
   closeEditTaskModal();
   save(); renderAll();
 }

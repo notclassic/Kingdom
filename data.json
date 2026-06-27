@@ -627,6 +627,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": null
+    },
+    {
+      "id": "p1782523827555366",
+      "name": "Configurar alertas de oportunidades de compra (bajo kilometraje, precio bajo, único dueño, nicho).",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1"
     }
   ],
   "tasks": [
@@ -1056,20 +1071,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t1",
-      "projectId": "p1",
-      "text": "Configurar alertas de oportunidades de compra (bajo kilometraje, precio bajo, único dueño, nicho).",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "emailAlert": false,
-      "alertSent": true,
-      "dueTime": "12:00",
-      "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
     },
     {
       "id": "t2",
@@ -2278,7 +2279,8 @@
     "t1781674357980641",
     "t1781850133121341",
     "t1782183004321456",
-    "t1781595607843694"
+    "t1781595607843694",
+    "t1"
   ],
   "deletedProjectIds": [
     "p1781538739000",

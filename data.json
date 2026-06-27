@@ -642,6 +642,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1782523890480569",
+      "name": "Configurar alertas de información de la industria.",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1"
     }
   ],
   "tasks": [
@@ -1073,20 +1088,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t2",
-      "projectId": "p1",
-      "text": "Configurar alertas de información de la industria.",
-      "done": false,
-      "dueDate": "2026-06-18",
-      "emailAlert": false,
-      "alertSent": true,
-      "dueTime": "12:00",
-      "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t3",
       "projectId": "p2",
       "text": "Generar email de salida.",
@@ -1160,7 +1161,7 @@
       "done": false,
       "dueDate": "2026-06-25",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1197,7 +1198,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1236,7 +1237,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1287,7 +1288,7 @@
       "done": false,
       "dueDate": "2026-06-24",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1299,7 +1300,7 @@
       "done": false,
       "dueDate": "2026-06-26",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1323,7 +1324,7 @@
       "done": false,
       "dueDate": "2026-06-22",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1335,7 +1336,7 @@
       "done": false,
       "dueDate": "2026-06-27",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1386,7 +1387,7 @@
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
       "priority": "medium"
@@ -1467,7 +1468,7 @@
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1479,7 +1480,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1491,7 +1492,7 @@
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1696,7 +1697,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1708,7 +1709,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1720,7 +1721,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -1732,7 +1733,7 @@
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     },
     {
@@ -2159,7 +2160,7 @@
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
     },
@@ -2172,7 +2173,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit?tab=t.0",
       "mcpUpdatedAt": "2026-06-24T20:41:09.794Z"
     },
@@ -2185,7 +2186,7 @@
       "dueTime": "11:18",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
       "mcpUpdatedAt": "2026-06-24T20:41:15.177Z"
     },
@@ -2198,7 +2199,7 @@
       "dueTime": "11:19",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
       "mcpUpdatedAt": "2026-06-24T20:41:19.157Z"
     },
@@ -2211,7 +2212,7 @@
       "dueTime": "00:47",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": true,
+      "alertSent": false,
       "driveUrl": ""
     }
   ],
@@ -2280,7 +2281,8 @@
     "t1781850133121341",
     "t1782183004321456",
     "t1781595607843694",
-    "t1"
+    "t1",
+    "t2"
   ],
   "deletedProjectIds": [
     "p1781538739000",

@@ -1233,14 +1233,15 @@
     {
       "id": "t13",
       "projectId": "p5",
-      "text": "Proponer el modelo de negocio.",
+      "text": "Proponer el modelo de negocio, mejora la propuesta\n.",
       "done": false,
       "dueDate": "2026-06-23",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "userUpdatedAt": "2026-06-27T06:08:14.560Z"
     },
     {
       "id": "t14",

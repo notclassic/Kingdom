@@ -1295,7 +1295,7 @@ function mcpEditBadge(item){
   const color = autor==='user' ? '#3b82f6' : '#34c759';  // azul vos / verde Claude
   const quien = autor==='user' ? 'Vos' : 'Claude';
   // El texto va en data-* y se muestra al tocar (como el ID). Sirve en celular.
-  return `<span class="mcp-edit" onclick="showMcpDate(event)" data-quien="${quien}" data-stamp="${stamp}" title="${quien} · ${stamp}" style="display:inline-flex; align-items:center; gap:4px; font-size:.72rem; color:${color}; opacity:.9; cursor:pointer; flex-shrink:0; white-space:nowrap;"><span class="mcp-ico">🕒</span><span class="mcp-txt" style="display:none;"></span></span>`;
+  return `<span class="mcp-edit" onclick="showMcpDate(event)" data-quien="${quien}" data-stamp="${stamp}" title="${quien} · ${stamp}" style="display:inline-flex; align-items:center; gap:4px; font-size:.72rem; color:${color}; opacity:.95; cursor:pointer; flex-shrink:0; white-space:nowrap;"><span class="mcp-ico" style="display:inline-block; width:10px; height:10px; border-radius:50%; background:${color};"></span><span class="mcp-txt" style="display:none;"></span></span>`;
 }
 // Al tocar el reloj: muestra "Quien · dd/mm hh:mm" unos segundos y vuelve al ícono.
 function showMcpDate(e){

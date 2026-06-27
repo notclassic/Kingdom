@@ -1293,8 +1293,27 @@ function mcpEditBadge(item){
   const stamp = _fmtStamp(iso);
   if(!stamp) return '';
   const color = autor==='user' ? '#3b82f6' : '#34c759';  // azul vos / verde Claude
-  const quien = autor==='user' ? 'vos' : 'Claude';
-  return `<span class="mcp-edit" title="Última edición de texto: ${quien} · ${stamp}" style="display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; color:${color}; opacity:.85; cursor:default; flex-shrink:0;">🕒</span>`;
+  const quien = autor==='user' ? 'Vos' : 'Claude';
+  // El texto va en data-* y se muestra al tocar (como el ID). Sirve en celular.
+  return `<span class="mcp-edit" onclick="showMcpDate(event)" data-quien="${quien}" data-stamp="${stamp}" title="${quien} · ${stamp}" style="display:inline-flex; align-items:center; gap:4px; font-size:.72rem; color:${color}; opacity:.9; cursor:pointer; flex-shrink:0; white-space:nowrap;"><span class="mcp-ico">🕒</span><span class="mcp-txt" style="display:none;"></span></span>`;
+}
+// Al tocar el reloj: muestra "Quien · dd/mm hh:mm" unos segundos y vuelve al ícono.
+function showMcpDate(e){
+  e.stopPropagation();
+  const el = e.currentTarget;
+  const ico = el.querySelector('.mcp-ico'), txt = el.querySelector('.mcp-txt');
+  if(!ico || !txt) return;
+  if(el._mcpOpen){ // si ya está abierto, lo cierra
+    txt.style.display='none'; txt.textContent=''; ico.style.display='';
+    el._mcpOpen=false; if(el._mcpTimer) clearTimeout(el._mcpTimer);
+    return;
+  }
+  txt.textContent = (el.dataset.quien||'') + ' · ' + (el.dataset.stamp||'');
+  txt.style.display=''; ico.style.display='none'; el._mcpOpen=true;
+  el._mcpTimer = setTimeout(()=>{
+    txt.style.display='none'; txt.textContent=''; ico.style.display='';
+    el._mcpOpen=false;
+  }, 2500);
 }
 
 /* ====== RENDER FILTROS DE ÁREA ====== */

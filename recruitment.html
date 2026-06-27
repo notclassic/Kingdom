@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kingdom · Recruitment</title>
+<style>
+  :root{
+    --bg:#f4f5f7; --card:#ffffff; --text:#1f2330; --muted:#8a8f9c;
+    --line:#e7e9ef; --accent:#3b82f6; --green:#34c759; --red:#ef4444;
+    --amber:#f59e0b; --chip:#eef1f6;
+    --shadow:0 1px 3px rgba(20,24,40,.06), 0 1px 2px rgba(20,24,40,.04);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:16px 14px 80px;}
+
+  /* Header */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; margin-bottom:14px; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand h1{font-size:1.25rem; margin:0; letter-spacing:-.02em;}
+  .brand .sub{font-size:.78rem; color:var(--muted);}
+  .back{
+    font-size:.82rem; color:var(--accent); text-decoration:none;
+    border:1px solid var(--line); padding:6px 11px; border-radius:9px; background:var(--card);
+  }
+  .back:hover{background:var(--chip);}
+
+  /* Tabs */
+  .tabs{display:flex; gap:6px; background:var(--card); padding:5px; border-radius:12px;
+        box-shadow:var(--shadow); margin-bottom:12px;}
+  .tab{
+    flex:1; text-align:center; padding:9px 8px; border-radius:9px; cursor:pointer;
+    font-size:.9rem; font-weight:600; color:var(--muted); border:none; background:transparent;
+  }
+  .tab.active{background:var(--accent); color:#fff;}
+  .tab .count{font-weight:500; opacity:.8; font-size:.8rem;}
+
+  /* Toolbar */
+  .toolbar{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;}
+  .toolbar input, .toolbar select{
+    font-size:.9rem; padding:9px 11px; border:1px solid var(--line); border-radius:10px;
+    background:var(--card); color:var(--text); outline:none;
+  }
+  .toolbar input{flex:1; min-width:160px;}
+  .toolbar input:focus, .toolbar select:focus{border-color:var(--accent);}
+
+  /* Cards */
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:13px;
+    padding:13px 14px; margin-bottom:10px; box-shadow:var(--shadow);
+  }
+  .card .top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;}
+  .card .title{font-size:.98rem; font-weight:650; line-height:1.3; margin:0;}
+  .card .company{font-size:.86rem; color:var(--text); margin-top:2px;}
+  .card .meta{display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:8px;}
+  .chip{
+    font-size:.72rem; padding:3px 9px; border-radius:999px; background:var(--chip);
+    color:#4b5160; white-space:nowrap;
+  }
+  .chip.src-linkedin{background:#e8f0fb; color:#1d63c4;}
+  .chip.src-indeed{background:#e9ecfb; color:#3b3fc4;}
+  .chip.src-trabajando{background:#e7f6ee; color:#1f9d57;}
+  .chip.date{background:transparent; color:var(--muted); padding-left:0;}
+  .chip.reason{background:#fdecec; color:#c0392b;}
+
+  .actions{display:flex; gap:7px; flex-wrap:wrap; margin-top:11px;}
+  .btn{
+    font-size:.8rem; font-weight:600; padding:7px 12px; border-radius:9px; cursor:pointer;
+    border:1px solid var(--line); background:var(--card); color:var(--text);
+  }
+  .btn:hover{background:var(--chip);}
+  .btn.open{color:var(--accent); border-color:#cfe0fb;}
+  .btn.discard{color:#b9542f; border-color:#f0d9cd;}
+  .btn.block{color:#c0392b; border-color:#f1cfcf;}
+  .btn.rescue{color:#1f9d57; border-color:#cfeede;}
+  .btn:disabled{opacity:.5; cursor:default;}
+
+  /* Estados */
+  .state{text-align:center; padding:40px 16px; color:var(--muted);}
+  .state .big{font-size:2rem; margin-bottom:6px;}
+  .spinner{
+    width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--accent);
+    border-radius:50%; animation:spin .8s linear infinite; margin:18px auto;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* Config (token) */
+  .config{
+    background:var(--card); border:1px solid var(--line); border-radius:14px;
+    padding:20px; box-shadow:var(--shadow); max-width:420px; margin:30px auto;
+  }
+  .config h2{margin:0 0 6px; font-size:1.05rem;}
+  .config p{font-size:.84rem; color:var(--muted); margin:0 0 14px; line-height:1.45;}
+  .config input{width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:10px;
+                font-size:.92rem; outline:none; margin-bottom:12px;}
+  .config input:focus{border-color:var(--accent);}
+  .config button{width:100%; padding:11px; border:none; border-radius:10px; background:var(--accent);
+                 color:#fff; font-size:.92rem; font-weight:600; cursor:pointer;}
+  .config .err{color:var(--red); font-size:.82rem; margin-bottom:10px;}
+
+  /* Toast */
+  #toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px);
+    background:#1f2330; color:#fff; padding:10px 16px; border-radius:10px; font-size:.85rem;
+    opacity:0; pointer-events:none; transition:.25s; z-index:100; max-width:90%;
+  }
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div>
+        <h1>Recruitment</h1>
+        <div class="sub">Ofertas filtradas desde tus alertas de empleo</div>
+      </div>
+    </div>
+    <a class="back" href="dashboard.html">← Kingdom</a>
+  </header>
+
+  <!-- Panel -->
+  <div id="panel" style="display:none;">
+    <div class="tabs">
+      <button class="tab active" id="tabOfertas" onclick="setTab('ofertas')">
+        Ofertas <span class="count" id="cntOfertas"></span>
+      </button>
+      <button class="tab" id="tabDescartadas" onclick="setTab('descartadas')">
+        Descartadas <span class="count" id="cntDescartadas"></span>
+      </button>
+    </div>
+
+    <div class="toolbar">
+      <input id="search" type="text" placeholder="Buscar por título o empresa…" oninput="render()">
+      <select id="origen" onchange="render()">
+        <option value="todos">Todos los orígenes</option>
+      </select>
+    </div>
+
+    <div id="list"></div>
+  </div>
+
+  <!-- Carga inicial -->
+  <div id="loading" class="state">
+    <div class="spinner"></div>
+    Conectando con tus ofertas…
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const BRIDGE_URL = 'https://script.google.com/macros/s/AKfycby3883JP0Jf3Lhurqhqrx31Chz71a4RAkh9fWki5IOu0GMDM_YD71tBhj6JF_WTJS2k/exec';
+const TOKEN_KEY  = 'kingdom_recruitment_token';
+
+/* ===================== ESTADO ===================== */
+let TOKEN = 'Kingdom_popom';   // token fijo: entrás directo desde cualquier dispositivo
+const estado = { listado:[], descartadas:[], tab:'ofertas' };
+
+/* ===================== JSONP (evita CORS) ===================== */
+function jsonp(params){
+  return new Promise((resolve, reject)=>{
+    const cb = 'cb_' + Math.random().toString(36).slice(2);
+    const s = document.createElement('script');
+    let done = false;
+    const timer = setTimeout(()=>{ if(!done){ cleanup(); reject(new Error('timeout')); } }, 30000);
+    function cleanup(){ done=true; clearTimeout(timer); delete window[cb]; if(s.parentNode) s.parentNode.removeChild(s); }
+    window[cb] = (data)=>{ cleanup(); resolve(data); };
+    const all = Object.assign({}, params, { token:TOKEN, callback:cb });
+    const qs = Object.keys(all).map(k=> encodeURIComponent(k)+'='+encodeURIComponent(all[k])).join('&');
+    s.src = BRIDGE_URL + '?' + qs;
+    s.onerror = ()=>{ cleanup(); reject(new Error('No se pudo conectar con el puente.')); };
+    document.body.appendChild(s);
+  });
+}
+
+/* ===================== INICIO ===================== */
+function init(){
+  cargar();
+}
+function mostrarConfig(err){
+  // Con token fijo no se usa, pero queda por compatibilidad si el token fuera inválido.
+  document.getElementById('loading').innerHTML =
+    '<div class="state"><div class="big">⚠️</div>'+(err||'Token inválido')+'</div>';
+}
+
+/* ===================== CARGAR DATOS ===================== */
+async function cargar(){
+  document.getElementById('loading').style.display='block';
+  document.getElementById('panel').style.display='none';
+  try{
+    const r = await jsonp({ action:'list' });
+    if(!r || r.ok===false){
+      if(r && r.error==='token_invalido'){
+        mostrarConfig('El token del archivo no coincide con el del puente. Revisá que sean iguales.');
+        return;
+      }
+      throw new Error((r && r.error) || 'respuesta vacía');
+    }
+    estado.listado = r.listado || [];
+    estado.descartadas = r.descartadas || [];
+    llenarOrigenes();
+    document.getElementById('loading').style.display='none';
+    document.getElementById('panel').style.display='block';
+    render();
+  }catch(err){
+    document.getElementById('loading').innerHTML =
+      '<div class="state"><div class="big">⚠️</div>No se pudieron cargar las ofertas.<br><small>'+
+      escapar(String(err.message||err))+'</small><br><br>'+
+      '<button class="btn" onclick="cargar()">Reintentar</button></div>';
+  }
+}
+
+function llenarOrigenes(){
+  const sel = document.getElementById('origen');
+  const set = new Set();
+  estado.listado.forEach(o=> o.origen && set.add(o.origen));
+  // limpiar menos la primera opción
+  sel.length = 1;
+  [...set].sort().forEach(o=>{
+    const opt = document.createElement('option'); opt.value=o; opt.textContent=o; sel.appendChild(opt);
+  });
+}
+
+/* ===================== PESTAÑAS ===================== */
+function setTab(t){
+  estado.tab = t;
+  document.getElementById('tabOfertas').classList.toggle('active', t==='ofertas');
+  document.getElementById('tabDescartadas').classList.toggle('active', t==='descartadas');
+  document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
+  render();
+}
+
+/* ===================== RENDER ===================== */
+function render(){
+  document.getElementById('cntOfertas').textContent = '· ' + estado.listado.length;
+  document.getElementById('cntDescartadas').textContent = '· ' + estado.descartadas.length;
+
+  const q = (document.getElementById('search').value||'').trim().toLowerCase();
+  const origen = document.getElementById('origen').value;
+  const cont = document.getElementById('list');
+  cont.innerHTML = '';
+
+  let datos = (estado.tab==='ofertas') ? estado.listado : estado.descartadas;
+
+  datos = datos.filter(o=>{
+    if(estado.tab==='ofertas' && origen!=='todos' && o.origen!==origen) return false;
+    if(q){
+      const txt = ((o.titulo||'')+' '+(o.empresa||'')).toLowerCase();
+      if(!txt.includes(q)) return false;
+    }
+    return true;
+  });
+
+  if(datos.length===0){
+    cont.innerHTML = '<div class="state"><div class="big">🗂️</div>'+
+      (estado.tab==='ofertas' ? 'No hay ofertas que coincidan.' : 'No hay descartadas para mostrar.')+'</div>';
+    return;
+  }
+
+  datos.forEach(o=> cont.appendChild(estado.tab==='ofertas' ? cardOferta(o) : cardDescartada(o)) );
+}
+
+function chipOrigen(origen){
+  const o = (origen||'').toLowerCase();
+  let cls = '';
+  if(o.includes('linkedin')) cls='src-linkedin';
+  else if(o.includes('indeed')) cls='src-indeed';
+  else if(o.includes('trabajando')) cls='src-trabajando';
+  return '<span class="chip '+cls+'">'+escapar(origen||'—')+'</span>';
+}
+
+function cardOferta(o){
+  const div = document.createElement('div');
+  div.className='card';
+  div.innerHTML =
+    '<div class="top"><div>'+
+      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
+    '</div></div>'+
+    '<div class="meta">'+chipOrigen(o.origen)+
+      (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
+    '</div>'+
+    '<div class="actions">'+
+      (o.link?'<a class="btn open" href="'+escapar(o.link)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+      '<button class="btn discard" onclick="accionDescartar(this,\''+jsAttr(o.link)+'\')">No me sirve</button>'+
+      '<button class="btn block" onclick="accionBloquearEmpresa(this,\''+jsAttr(o.empresa)+'\',\''+jsAttr(o.link)+'\')">Bloquear empresa</button>'+
+      '<button class="btn block" onclick="accionBloquearPalabra(this,\''+jsAttr(o.link)+'\')">Bloquear palabra</button>'+
+    '</div>';
+  return div;
+}
+
+function cardDescartada(o){
+  const div = document.createElement('div');
+  div.className='card';
+  div.innerHTML =
+    '<div class="top"><div>'+
+      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
+    '</div></div>'+
+    '<div class="meta">'+
+      (o.motivo?'<span class="chip reason">'+escapar(o.motivo)+'</span>':'')+
+      (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
+    '</div>'+
+    '<div class="actions">'+
+      (o.link?'<a class="btn open" href="'+escapar(o.link)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+      '<button class="btn rescue" onclick="accionRescatar(this,\''+jsAttr(o.link)+'\')">Rescatar</button>'+
+    '</div>';
+  return div;
+}
+
+/* ===================== ACCIONES ===================== */
+async function correr(btn, params, okMsg, alExito){
+  const fila = btn.closest('.card');
+  const botones = fila.querySelectorAll('button, a.btn');
+  botones.forEach(b=> b.disabled=true);
+  btn.textContent = '…';
+  try{
+    const r = await jsonp(params);
+    if(!r || r.ok===false){
+      if(r && r.error==='token_invalido'){ toast('Token inválido: revisá que coincida con el del puente.'); botones.forEach(b=> b.disabled=false); return; }
+      throw new Error((r && r.error) || 'error');
+    }
+    toast(okMsg);
+    if(alExito) alExito();
+    fila.style.transition='.3s'; fila.style.opacity='0'; fila.style.height=fila.offsetHeight+'px';
+    setTimeout(()=>{ render(); }, 280);
+  }catch(err){
+    toast('No se pudo: '+(err.message||err));
+    botones.forEach(b=> b.disabled=false);
+    render();
+  }
+}
+
+function accionDescartar(btn, link){
+  if(!confirm('¿Mandar esta oferta a Descartadas?')) return;
+  const i = estado.listado.findIndex(o=>o.link===link);
+  correr(btn, {action:'descartar', link}, 'Oferta descartada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+}
+
+function accionBloquearEmpresa(btn, empresa, link){
+  if(!empresa){ toast('Esta oferta no tiene empresa para bloquear.'); return; }
+  if(!confirm('Bloquear "'+empresa+'": no te volverán a llegar ofertas de esta empresa. ¿Confirmás?')) return;
+  const i = estado.listado.findIndex(o=>o.link===link);
+  correr(btn, {action:'bloquearEmpresa', empresa, link}, 'Empresa bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+}
+
+function accionBloquearPalabra(btn, link){
+  const palabra = prompt('Escribí la palabra a bloquear (cuidado: bloquea TODA oferta cuyo título la contenga). Por ejemplo: práctica');
+  if(palabra===null) return;
+  const p = palabra.trim();
+  if(!p){ return; }
+  if(!confirm('Bloquear la palabra "'+p+'": no llegarán ofertas con esa palabra en el título. ¿Confirmás?')) return;
+  const i = estado.listado.findIndex(o=>o.link===link);
+  correr(btn, {action:'bloquearPalabra', palabra:p, link}, 'Palabra bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+}
+
+function accionRescatar(btn, link){
+  const i = estado.descartadas.findIndex(o=>o.link===link);
+  correr(btn, {action:'rescatar', link}, 'Oferta rescatada al Listado', ()=>{ if(i>=0) estado.descartadas.splice(i,1); });
+}
+
+/* ===================== HELPERS ===================== */
+function escapar(t){
+  return String(t==null?'':t)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+function jsAttr(t){ return String(t==null?'':t).replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=> t.classList.remove('show'), 2600);
+}
+
+/* arrancar */
+init();
+</script>
+</body>
+</html>

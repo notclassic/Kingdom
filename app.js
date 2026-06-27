@@ -1292,7 +1292,7 @@ function mcpEditBadge(item){
   else { autor='claude'; iso=mcp; }
   const stamp = _fmtStamp(iso);
   if(!stamp) return '';
-  const color = autor==='user' ? '#34c759' : '#3b82f6';  // verde vos / azul Claude
+  const color = autor==='user' ? '#3b82f6' : '#34c759';  // azul vos / verde Claude
   const quien = autor==='user' ? 'vos' : 'Claude';
   return `<span class="mcp-edit" title="Última edición de texto: ${quien} · ${stamp}" style="display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; color:${color}; opacity:.85; cursor:default; flex-shrink:0;">🕒</span>`;
 }

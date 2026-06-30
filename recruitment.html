@@ -196,14 +196,14 @@ function mostrarConfig(err){
 }
 
 /* ===================== CARGAR DATOS ===================== */
-const TANDA = 80;   // cuántas ofertas trae cada vez
+const DIAS = 7;   // mostrar solo ofertas de los últimos 7 días
 
 async function cargar(){
   document.getElementById('loading').style.display='block';
   document.getElementById('panel').style.display='none';
   try{
-    // Primera tanda LIVIANA: las 80 ofertas más recientes.
-    const r = await jsonp({ action:'ofertas', limit:TANDA, offset:0 });
+    // Solo las ofertas de los últimos 7 días, de la más nueva hacia atrás.
+    const r = await jsonp({ action:'ofertas', dias:DIAS });
     if(!r || r.ok===false){
       if(r && r.error==='token_invalido'){
         mostrarConfig('El token del archivo no coincide con el del puente. Revisá que sean iguales.');
@@ -212,8 +212,7 @@ async function cargar(){
       throw new Error((r && r.error) || 'respuesta vacía');
     }
     estado.listado = r.listado || [];
-    estado.totalOfertas = r.total || estado.listado.length;
-    estado.hayMas = !!r.hayMas;
+    estado.totalOfertas = r.total != null ? r.total : estado.listado.length;
     estado.descartadas = null;        // todavía no cargadas
     estado.descCargando = false;
     llenarOrigenes();
@@ -268,25 +267,9 @@ async function cargarDescartadas(){
   render();
 }
 
-async function verMasOfertas(btn){
-  if(btn){ btn.disabled=true; btn.textContent='Cargando…'; }
-  try{
-    const r = await jsonp({ action:'ofertas', limit:TANDA, offset:estado.listado.length });
-    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
-    estado.listado = estado.listado.concat(r.listado || []);
-    estado.hayMas = !!r.hayMas;
-    llenarOrigenes();
-    render();
-  }catch(err){
-    toast('No se pudieron cargar más: '+(err.message||err));
-    if(btn){ btn.disabled=false; btn.textContent='Ver más ofertas'; }
-  }
-}
-
 /* ===================== RENDER ===================== */
 function render(){
-  document.getElementById('cntOfertas').textContent =
-    '· ' + (estado.totalOfertas!=null ? estado.totalOfertas : estado.listado.length);
+  document.getElementById('cntOfertas').textContent = '· ' + estado.listado.length;
   document.getElementById('cntDescartadas').textContent =
     (estado.descartadas===null) ? '' : ('· ' + estado.descartadas.length);
 
@@ -325,14 +308,6 @@ function render(){
   }
 
   datos.forEach(o=> cont.appendChild(estado.tab==='ofertas' ? cardOferta(o) : cardDescartada(o)) );
-
-  // Botón "ver más" solo en la pestaña Ofertas, si hay más por traer y no estás filtrando
-  if(estado.tab==='ofertas' && estado.hayMas && !q && origen==='todos'){
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'text-align:center; padding:6px 0 4px;';
-    wrap.innerHTML = '<button class="btn" onclick="verMasOfertas(this)" style="padding:9px 18px;">Ver más ofertas</button>';
-    cont.appendChild(wrap);
-  }
 }
 
 function chipOrigen(origen){

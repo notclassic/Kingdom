@@ -44,7 +44,7 @@ function manejar(e){
     } else {
       const action = p.action || 'list';
       if      (action === 'list')            out = accionList();
-      else if (action === 'ofertas')         out = accionOfertas(p.limit, p.offset);
+      else if (action === 'ofertas')         out = accionOfertas(p.dias);
       else if (action === 'descartadas')     out = accionDescartadas();
       else if (action === 'descartar')       out = accionDescartar(p.link, p.motivo);
       else if (action === 'bloquearEmpresa') out = accionBloquearEmpresa(p.empresa, p.link);
@@ -131,36 +131,35 @@ function accionList(){
   };
 }
 
-/***** SOLO OFERTAS (liviano) — entrega las más recientes primero, en tandas *****/
-/* params: limit (cuántas, default 80), offset (desde dónde, default 0) */
-function accionOfertas(limit, offset){
-  limit  = parseInt(limit, 10);  if (isNaN(limit)  || limit <= 0) limit = 80;
-  offset = parseInt(offset, 10); if (isNaN(offset) || offset < 0) offset = 0;
+/***** SOLO OFERTAS — solo los últimos DIAS días, de la más nueva hacia atrás *****/
+/* params: dias (default 7). Las ofertas sin fecha válida se incluyen igual,
+   para no perderlas por un dato faltante. */
+function accionOfertas(dias){
+  dias = parseInt(dias, 10); if (isNaN(dias) || dias <= 0) dias = 7;
 
   const sh = hoja(HOJA_LISTADO);
-  const lastRow = sh.getLastRow();
-  const total = Math.max(0, lastRow - 1);
-  if (lastRow <= 1) return { ok:true, listado:[], total:0, offset:0, limit:limit, hayMas:false };
+  const vals = sh.getDataRange().getValues();
 
-  // Las más nuevas están abajo. Leemos desde el final hacia arriba.
-  const finData = lastRow - offset;                 // última fila a incluir
-  if (finData < 2) return { ok:true, listado:[], total:total, offset:offset, limit:limit, hayMas:false };
-  const iniData = Math.max(2, finData - limit + 1); // primera fila a incluir
-  const numFilas = finData - iniData + 1;
-  const lastCol = Math.max(7, sh.getLastColumn());
-  const vals = sh.getRange(iniData, 1, numFilas, lastCol).getValues();
+  // corte: hoy menos 'dias', a medianoche
+  const hoy = new Date();
+  const corte = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() - dias);
 
   const listado = [];
-  for (let i = vals.length - 1; i >= 0; i--) {      // del final (más nuevo) al principio
+  for (let i = 1; i < vals.length; i++) {       // de arriba (viejas) a abajo (nuevas)
     const r = vals[i];
     if (!r[0] && !r[6]) continue;
+    // r[5] es la fecha. Si es Date válida y es anterior al corte, se omite.
+    const f = r[5];
+    if (f && typeof f.getTime === 'function' && !isNaN(f.getTime())) {
+      if (f < corte) continue;                  // más vieja que el corte: fuera
+    }
     listado.push({
       titulo: fmt(r[0]), empresa: fmt(r[1]), origen: fmt(r[2]),
       cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
     });
   }
-  const entregadas = offset + numFilas;
-  return { ok:true, listado:listado, total:total, offset:offset, limit:limit, hayMas: entregadas < total };
+  listado.reverse();   // más nuevas primero
+  return { ok:true, listado:listado, total:listado.length, dias:dias };
 }
 
 /***** SOLO DESCARTADAS (liviano: solo las últimas MAX_DESCARTADAS) *****/

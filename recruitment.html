@@ -166,7 +166,7 @@ const TOKEN_KEY  = 'kingdom_recruitment_token';
 
 /* ===================== ESTADO ===================== */
 let TOKEN = 'Kingdom_popom';   // token fijo: entrás directo desde cualquier dispositivo
-const estado = { listado:[], descartadas:[], tab:'ofertas' };
+const estado = { listado:[], descartadas:null, descCargando:false, tab:'ofertas' };
 
 /* ===================== JSONP (evita CORS) ===================== */
 function jsonp(params){
@@ -200,7 +200,9 @@ async function cargar(){
   document.getElementById('loading').style.display='block';
   document.getElementById('panel').style.display='none';
   try{
-    const r = await jsonp({ action:'list' });
+    // Carga inicial LIVIANA: solo las ofertas. Las descartadas se traen aparte
+    // (cuando entrás a esa pestaña), para que abra rápido también en el celular.
+    const r = await jsonp({ action:'ofertas' });
     if(!r || r.ok===false){
       if(r && r.error==='token_invalido'){
         mostrarConfig('El token del archivo no coincide con el del puente. Revisá que sean iguales.');
@@ -209,7 +211,8 @@ async function cargar(){
       throw new Error((r && r.error) || 'respuesta vacía');
     }
     estado.listado = r.listado || [];
-    estado.descartadas = r.descartadas || [];
+    estado.descartadas = null;        // todavía no cargadas
+    estado.descCargando = false;
     llenarOrigenes();
     document.getElementById('loading').style.display='none';
     document.getElementById('panel').style.display='block';
@@ -239,20 +242,53 @@ function setTab(t){
   document.getElementById('tabOfertas').classList.toggle('active', t==='ofertas');
   document.getElementById('tabDescartadas').classList.toggle('active', t==='descartadas');
   document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
+  // La primera vez que entrás a Descartadas, las traemos del puente.
+  if(t==='descartadas' && estado.descartadas===null && !estado.descCargando){
+    cargarDescartadas();
+    return;
+  }
+  render();
+}
+
+async function cargarDescartadas(){
+  estado.descCargando = true;
+  render();  // muestra "cargando…"
+  try{
+    const r = await jsonp({ action:'descartadas' });
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    estado.descartadas = r.descartadas || [];
+  }catch(err){
+    estado.descartadas = null;
+    toast('No se pudieron cargar las descartadas: '+(err.message||err));
+  }
+  estado.descCargando = false;
   render();
 }
 
 /* ===================== RENDER ===================== */
 function render(){
   document.getElementById('cntOfertas').textContent = '· ' + estado.listado.length;
-  document.getElementById('cntDescartadas').textContent = '· ' + estado.descartadas.length;
+  document.getElementById('cntDescartadas').textContent =
+    (estado.descartadas===null) ? '' : ('· ' + estado.descartadas.length);
 
   const q = (document.getElementById('search').value||'').trim().toLowerCase();
   const origen = document.getElementById('origen').value;
   const cont = document.getElementById('list');
   cont.innerHTML = '';
 
-  let datos = (estado.tab==='ofertas') ? estado.listado : estado.descartadas;
+  // Pestaña Descartadas: estados especiales
+  if(estado.tab==='descartadas'){
+    if(estado.descCargando){
+      cont.innerHTML = '<div class="state"><div class="spinner"></div>Cargando descartadas…</div>';
+      return;
+    }
+    if(estado.descartadas===null){
+      cont.innerHTML = '<div class="state"><div class="big">🗂️</div>Tocá de nuevo "Descartadas" para cargarlas.</div>';
+      return;
+    }
+  }
+
+  let datos = (estado.tab==='ofertas') ? estado.listado : (estado.descartadas||[]);
 
   datos = datos.filter(o=>{
     if(estado.tab==='ofertas' && origen!=='todos' && o.origen!==origen) return false;

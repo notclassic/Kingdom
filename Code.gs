@@ -44,6 +44,8 @@ function manejar(e){
     } else {
       const action = p.action || 'list';
       if      (action === 'list')            out = accionList();
+      else if (action === 'ofertas')         out = accionOfertas();
+      else if (action === 'descartadas')     out = accionDescartadas();
       else if (action === 'descartar')       out = accionDescartar(p.link, p.motivo);
       else if (action === 'bloquearEmpresa') out = accionBloquearEmpresa(p.empresa, p.link);
       else if (action === 'bloquearPalabra') out = accionBloquearPalabra(p.palabra, p.link);
@@ -127,6 +129,45 @@ function accionList(){
     totalDescartadas: totalDesc,
     descartadasMostradas: descartadas.length
   };
+}
+
+/***** SOLO OFERTAS (liviano: no toca Descartadas) *****/
+function accionOfertas(){
+  const L = hoja(HOJA_LISTADO).getDataRange().getValues();
+  const listado = [];
+  for (let i = 1; i < L.length; i++) {
+    const r = L[i];
+    if (!r[0] && !r[6]) continue;
+    listado.push({
+      titulo: fmt(r[0]), empresa: fmt(r[1]), origen: fmt(r[2]),
+      cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
+    });
+  }
+  return { ok:true, listado:listado, totalListado:listado.length };
+}
+
+/***** SOLO DESCARTADAS (liviano: solo las últimas MAX_DESCARTADAS) *****/
+function accionDescartadas(){
+  const shD = hoja(HOJA_DESCARTADAS);
+  const lastRow = shD.getLastRow();
+  const totalDesc = Math.max(0, lastRow - 1);
+  const descartadas = [];
+  if (lastRow > 1) {
+    const desde = Math.max(2, lastRow - MAX_DESCARTADAS + 1);
+    const numFilas = lastRow - desde + 1;
+    const lastCol = Math.max(8, shD.getLastColumn());
+    const D = shD.getRange(desde, 1, numFilas, lastCol).getValues();
+    for (let i = 0; i < D.length; i++) {
+      const r = D[i];
+      if (!r[2] && !r[6]) continue;
+      descartadas.push({
+        fechaProc: fmt(r[0]), motivo: fmt(r[1]), titulo: fmt(r[2]), empresa: fmt(r[3]),
+        sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]), subject: fmt(r[7])
+      });
+    }
+    descartadas.reverse();
+  }
+  return { ok:true, descartadas:descartadas, totalDescartadas:totalDesc, descartadasMostradas:descartadas.length };
 }
 
 /***** DESCARTAR (Listado -> Descartadas) *****/

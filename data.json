@@ -1758,7 +1758,7 @@
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {

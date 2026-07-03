@@ -319,9 +319,26 @@ function chipOrigen(origen){
   return '<span class="chip '+cls+'">'+escapar(origen||'—')+'</span>';
 }
 
+function linkOferta(o){
+  const origen = (o.origen||'').toLowerCase();
+  // Laborum no trae link directo usable, así que armamos una búsqueda en
+  // laborum.cl por el cargo, ordenada por más recientes.
+  if(origen.indexOf('laborum')!==-1){
+    const cargo = (o.titulo||'').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')  // saca acentos
+      .replace(/[^a-z0-9\s-]/g,'')                        // saca símbolos
+      .trim().replace(/\s+/g,'-');                        // espacios -> guiones
+    if(!cargo) return 'https://www.laborum.cl/empleos.html?recientes=true';
+    return 'https://www.laborum.cl/empleos-busqueda-'+cargo+'.html?recientes=true';
+  }
+  // Los demás (Indeed, LinkedIn, Trabajando) usan su link real.
+  return o.link || '';
+}
+
 function cardOferta(o){
   const div = document.createElement('div');
   div.className='card';
+  const url = linkOferta(o);
   div.innerHTML =
     '<div class="top"><div>'+
       '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
@@ -331,7 +348,7 @@ function cardOferta(o){
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-      (o.link?'<a class="btn open" href="'+escapar(o.link)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
       '<button class="btn discard" onclick="accionDescartar(this,\''+jsAttr(o.link)+'\')">No me sirve</button>'+
       '<button class="btn block" onclick="accionBloquearEmpresa(this,\''+jsAttr(o.empresa)+'\',\''+jsAttr(o.link)+'\')">Bloquear empresa</button>'+
       '<button class="btn block" onclick="accionBloquearPalabra(this,\''+jsAttr(o.link)+'\')">Bloquear palabra</button>'+
@@ -342,6 +359,7 @@ function cardOferta(o){
 function cardDescartada(o){
   const div = document.createElement('div');
   div.className='card';
+  const url = linkOferta(o);
   div.innerHTML =
     '<div class="top"><div>'+
       '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
@@ -352,7 +370,7 @@ function cardDescartada(o){
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-      (o.link?'<a class="btn open" href="'+escapar(o.link)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
       '<button class="btn rescue" onclick="accionRescatar(this,\''+jsAttr(o.link)+'\')">Rescatar</button>'+
     '</div>';
   return div;

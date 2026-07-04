@@ -2225,6 +2225,16 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false
+    },
+    {
+      "id": "t1783185928194",
+      "projectId": "inbox",
+      "text": "Tarea: Realizar nota de voz del proyecto Jardín León y programar evento para el domingo a las 21:00, recordatorio para el momento.",
+      "done": false,
+      "dueDate": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false
     }
   ],
   "leads": [
@@ -3322,5 +3332,8 @@
   "deletedAreaIds": [
     "pa5",
     "pa4"
-  ]
+  ],
+  "meta": {
+    "lastOffset": 561760035
+  }
 }

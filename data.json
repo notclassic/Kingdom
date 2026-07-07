@@ -145,21 +145,6 @@
       "parentId": "p1"
     },
     {
-      "id": "p1781582668835650",
-      "name": "WhatsApp",
-      "area": "a1",
-      "desc": "Prospección saliente por WhatsApp: arma el mensaje y el link con el teléfono del contacto para ofrecer el agente de IA al negocio (el saludo va a la empresa, no a una persona).",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
-    },
-    {
       "id": "p1781584127104452",
       "name": "Plan de publicaciones para captación de clientes",
       "area": "a1",
@@ -182,6 +167,21 @@
       "status": "active",
       "hasLeads": false,
       "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781584127104452"
+    },
+    {
+      "id": "p1781582668835650",
+      "name": "WhatsApp",
+      "area": "a1",
+      "desc": "Prospección saliente por WhatsApp: arma el mensaje y el link con el teléfono del contacto para ofrecer el agente de IA al negocio (el saludo va a la empresa, no a una persona).",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
       "icon": "",
       "driveUrl": "",
       "driveFolderId": "",

@@ -1345,20 +1345,6 @@
       "priority": "medium"
     },
     {
-      "id": "t22",
-      "projectId": "p9",
-      "text": "Diseñar presentaciones (PPT).",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "emailAlert": false,
-      "alertSent": true,
-      "dueTime": "14:00",
-      "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t23",
       "projectId": "p9",
       "text": "Gestionar campañas de Google Ads.",
@@ -1370,18 +1356,6 @@
       "driveUrl": "",
       "priority": "medium",
       "dueSoonAlertSent": true
-    },
-    {
-      "id": "t24",
-      "projectId": "p9",
-      "text": "Control y seguimiento de cobros.",
-      "done": false,
-      "dueDate": "2026-06-30",
-      "emailAlert": false,
-      "alertSent": false,
-      "dueTime": "12:00",
-      "driveUrl": "",
-      "priority": "medium"
     },
     {
       "id": "t25",
@@ -2313,7 +2287,9 @@
     "t1781717730685",
     "t1783000834558",
     "t1783400449478",
-    "t1783431048846"
+    "t1783431048846",
+    "t22",
+    "t24"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3437,6 +3413,40 @@
         "parentId": null
       },
       "tasks": []
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:39:38.841Z",
+      "item": {
+        "id": "t22",
+        "projectId": "p9",
+        "text": "Diseñar presentaciones (PPT).",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "emailAlert": false,
+        "alertSent": true,
+        "dueTime": "14:00",
+        "driveUrl": "",
+        "priority": "medium",
+        "dueSoonAlertSent": true,
+        "overdueAlertSent": true
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:39:41.018Z",
+      "item": {
+        "id": "t24",
+        "projectId": "p9",
+        "text": "Control y seguimiento de cobros.",
+        "done": false,
+        "dueDate": "2026-06-30",
+        "emailAlert": false,
+        "alertSent": false,
+        "dueTime": "12:00",
+        "driveUrl": "",
+        "priority": "medium"
+      }
     }
   ],
   "alertConfig": {

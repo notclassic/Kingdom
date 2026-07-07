@@ -600,7 +600,7 @@
     },
     {
       "id": "p178218303327465",
-      "name": "venta de analis de elasiticda de preico en base a la demora de venta",
+      "name": "Venta de análisis de elasticidad de precio según demora de venta",
       "area": "a1",
       "desc": "",
       "status": "active",
@@ -611,7 +611,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1781582993530486"
+      "parentId": "p1781582993530486",
+      "mcpUpdatedAt": "2026-07-07T05:42:18.800Z"
     },
     {
       "id": "p178224152505955",

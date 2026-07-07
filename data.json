@@ -2277,12 +2277,13 @@
       "projectId": "p1783431048845",
       "text": "Limpieza de casa",
       "done": false,
-      "dueDate": "2026-07-08",
+      "dueDate": "2026-07-09",
       "dueTime": "01:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T14:20:40.305Z"
     }
   ],
   "leads": [

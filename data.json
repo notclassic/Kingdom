@@ -2289,7 +2289,8 @@
     "t1783400449478",
     "t1783431048846",
     "t22",
-    "t24"
+    "t24",
+    "t1781841347094366"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3446,6 +3447,22 @@
         "dueTime": "12:00",
         "driveUrl": "",
         "priority": "medium"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:39:45.052Z",
+      "item": {
+        "id": "t1781841347094366",
+        "projectId": "p9",
+        "text": "Manejo de RRSS",
+        "done": false,
+        "dueDate": "2026-06-21",
+        "dueTime": "09:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": ""
       }
     }
   ],

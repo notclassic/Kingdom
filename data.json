@@ -541,6 +541,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1783447605800757",
+      "name": "Armar listado de rubros.",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1783447588062866"
     }
   ],
   "tasks": [
@@ -703,20 +718,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t4",
-      "projectId": "p2",
-      "text": "Armar listado de rubros.",
-      "done": false,
-      "dueDate": "2026-06-15",
-      "emailAlert": false,
-      "alertSent": true,
-      "dueTime": "13:00",
-      "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
     },
     {
       "id": "t6",
@@ -1717,7 +1718,8 @@
     "t1781590678767834",
     "t1781590678767739",
     "t1781590678767659",
-    "t3"
+    "t3",
+    "t4"
   ],
   "deletedProjectIds": [
     "p1781538739000",

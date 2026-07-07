@@ -359,40 +359,10 @@
       "parentId": null
     },
     {
-      "id": "p1781590678767214",
-      "name": "Fase 1 · Recopilación de información",
-      "area": null,
-      "desc": "Recopilación de información del negocio: cuestionario (productos, horarios, políticas, FAQ) y material de base (manuales, guiones, enlaces).",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
-    },
-    {
       "id": "p178159067876735",
       "name": "Fase 2 · Configuración y entrenamiento",
       "area": null,
       "desc": "Estructurar la base de conocimiento, integrar plataformas (web y redes), definir el tono de voz y entrenar el modelo.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
-    },
-    {
-      "id": "p1781590678767753",
-      "name": "Fase 3 · Pruebas y lanzamiento",
-      "area": null,
-      "desc": "Pruebas internas de coherencia y precisión, aprobación del cliente y lanzamiento oficial en los canales designados.",
       "status": "active",
       "hasLeads": false,
       "color": "#8a919e",
@@ -1085,30 +1055,6 @@
       "dueSoonAlertSent": true
     },
     {
-      "id": "t1781590678767528",
-      "projectId": "p1781590678767214",
-      "text": "Completar el cuestionario de ~100 preguntas del negocio (productos, horarios, políticas, FAQ).",
-      "done": false,
-      "dueDate": "2026-06-22",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781590678767890",
-      "projectId": "p1781590678767214",
-      "text": "Reunir material adicional: manuales, FAQ existentes, guiones, políticas y enlaces.",
-      "done": false,
-      "dueDate": "2026-06-23",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781590678767834",
       "projectId": "p178159067876735",
       "text": "Analizar y estructurar la base de conocimiento a partir de la información recibida.",
@@ -1140,42 +1086,6 @@
       "dueDate": "2026-07-04",
       "dueTime": "12:00",
       "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781590678767721",
-      "projectId": "p1781590678767753",
-      "text": "Pruebas internas de coherencia y precisión de respuestas.",
-      "done": false,
-      "dueDate": "2026-07-07",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t178159067876749",
-      "projectId": "p1781590678767753",
-      "text": "Revisión y aprobación del cliente sobre la versión de prueba.",
-      "done": false,
-      "dueDate": "2026-07-10",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781590678767682",
-      "projectId": "p1781590678767753",
-      "text": "Lanzamiento oficial en las plataformas designadas.",
-      "done": false,
-      "dueDate": "2026-07-11",
-      "dueTime": "12:00",
-      "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
@@ -1863,7 +1773,12 @@
     "t178214150332569",
     "t1782141526661249",
     "t1782141553644300",
-    "t5"
+    "t5",
+    "t1781590678767721",
+    "t178159067876749",
+    "t1781590678767682",
+    "t1781590678767528",
+    "t1781590678767890"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1897,7 +1812,9 @@
     "p1781624973628303",
     "p1782160541989891",
     "p1781624973629977",
-    "p1781589327240693"
+    "p1781589327240693",
+    "p1781590678767753",
+    "p1781590678767214"
   ],
   "trash": [
     {
@@ -3876,6 +3793,108 @@
         "dueSoonAlertSent": true,
         "overdueAlertSent": true
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T17:47:55.344Z",
+      "item": {
+        "id": "p1781590678767753",
+        "name": "Fase 3 · Pruebas y lanzamiento",
+        "area": null,
+        "desc": "Pruebas internas de coherencia y precisión, aprobación del cliente y lanzamiento oficial en los canales designados.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#8a919e",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p2"
+      },
+      "tasks": [
+        {
+          "id": "t1781590678767721",
+          "projectId": "p1781590678767753",
+          "text": "Pruebas internas de coherencia y precisión de respuestas.",
+          "done": false,
+          "dueDate": "2026-07-07",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t178159067876749",
+          "projectId": "p1781590678767753",
+          "text": "Revisión y aprobación del cliente sobre la versión de prueba.",
+          "done": false,
+          "dueDate": "2026-07-10",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781590678767682",
+          "projectId": "p1781590678767753",
+          "text": "Lanzamiento oficial en las plataformas designadas.",
+          "done": false,
+          "dueDate": "2026-07-11",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T17:47:57.785Z",
+      "item": {
+        "id": "p1781590678767214",
+        "name": "Fase 1 · Recopilación de información",
+        "area": null,
+        "desc": "Recopilación de información del negocio: cuestionario (productos, horarios, políticas, FAQ) y material de base (manuales, guiones, enlaces).",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#8a919e",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p2"
+      },
+      "tasks": [
+        {
+          "id": "t1781590678767528",
+          "projectId": "p1781590678767214",
+          "text": "Completar el cuestionario de ~100 preguntas del negocio (productos, horarios, políticas, FAQ).",
+          "done": false,
+          "dueDate": "2026-06-22",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781590678767890",
+          "projectId": "p1781590678767214",
+          "text": "Reunir material adicional: manuales, FAQ existentes, guiones, políticas y enlaces.",
+          "done": false,
+          "dueDate": "2026-06-23",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
     }
   ],
   "alertConfig": {

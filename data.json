@@ -2067,18 +2067,6 @@
       "mcpUpdatedAt": "2026-07-07T05:36:18.284Z"
     },
     {
-      "id": "t1781848697877853",
-      "projectId": "p1781572037505287",
-      "text": "Claude design puede mejorar la gráfica de esta apps",
-      "done": false,
-      "dueDate": "2026-06-20",
-      "dueTime": "01:57",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781919048635878",
       "projectId": "p1781572037505287",
       "text": "Corregir el diseño del menú: hoy está alineado a la izquierda y no centrado. Revisar los espacios y aplicar un estilo \"glass\" tipo Mac.",
@@ -2255,7 +2243,8 @@
     "t24",
     "t1781841347094366",
     "t1781675722089858",
-    "t1781848016142721"
+    "t1781848016142721",
+    "t1781848697877853"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3475,6 +3464,22 @@
         "done": false,
         "dueDate": "2026-06-20",
         "dueTime": "01:46",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:41:40.544Z",
+      "item": {
+        "id": "t1781848697877853",
+        "projectId": "p1781572037505287",
+        "text": "Claude design puede mejorar la gráfica de esta apps",
+        "done": false,
+        "dueDate": "2026-06-20",
+        "dueTime": "01:57",
         "priority": "medium",
         "emailAlert": false,
         "alertSent": true,

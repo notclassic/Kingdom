@@ -1,6 +1,16 @@
 /*
  * Kingdom Bot - Módulo AUDIO
  * --------------------------------------------------
+ * Cambios sobre la versión original:
+ *  - El offset de Telegram y los flags de "ya avisé" ya NO viven en
+ *    data.json (el dashboard lo pisa en cada sync). Viven en un archivo
+ *    propio: tg_state.json, que solo tocan estos dos bots.
+ *  - Procesa callback_query (botones inline: completar / posponer).
+ *  - Cuando el bot modifica una tarea existente (done / dueDate), le
+ *    pone mcpUpdatedAt para que el merge del dashboard (app.js) respete
+ *    el cambio en vez de pisarlo con la copia vieja del navegador.
+ *  - Requiere la palabra "check" en algún lugar del audio para crear
+ *    la tarea; si no aparece, avisa y no guarda nada.
  */
 const TELEGRAM_TOKEN   = process.env.TELEGRAM_TOKEN;
 const ASSEMBLYAI_KEY   = process.env.ASSEMBLYAI_KEY;
@@ -8,11 +18,38 @@ const GROQ_KEY         = process.env.GROQ_API_KEY;
 const GH_TOKEN         = process.env.GITHUB_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-const REPO_OWNER = process.env.GITHUB_OWNER || 'notclassic';
-const REPO_NAME  = process.env.GITHUB_REPO || 'Kingdom';
-const BRANCH     = 'main';
-const FILE_PATH  = 'data.json';
+const REPO_OWNER   = process.env.GITHUB_OWNER || 'notclassic';
+const REPO_NAME    = process.env.GITHUB_REPO || 'Kingdom';
+const BRANCH       = 'main';
+const DATA_PATH    = 'data.json';
+const STATE_PATH   = 'tg_state.json';
 const TG = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN;
+const GH_HEADERS = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json' };
+
+function ghUrl(path) {
+  return 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path;
+}
+
+async function getJsonFile(path, fallback) {
+  const r = await fetch(ghUrl(path) + '?ref=' + BRANCH, { headers: GH_HEADERS });
+  if (!r.ok) return { data: fallback, sha: null };
+  const j = await r.json();
+  return { data: JSON.parse(Buffer.from(j.content, 'base64').toString('utf8')), sha: j.sha };
+}
+
+async function putJsonFile(path, data, sha, message) {
+  const body = {
+    message: message,
+    content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
+    branch: BRANCH
+  };
+  if (sha) body.sha = sha;
+  return fetch(ghUrl(path), {
+    method: 'PUT',
+    headers: { ...GH_HEADERS, 'content-type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
 
 async function getUpdates(offset) {
   const r = await fetch(TG + '/getUpdates?timeout=10&offset=' + (offset || ''));
@@ -70,61 +107,152 @@ async function sendMsg(text) {
   });
 }
 
-async function main() {
-  console.log('[AUDIO BOT] Iniciando...');
-  const api = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + FILE_PATH;
-  const headers = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json' };
+async function answerCallback(id, text) {
+  await fetch(TG + '/answerCallbackQuery', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ callback_query_id: id, text: text || '' })
+  });
+}
 
-  let fileSha = null;
-  let data = { tasks: [], meta: { lastOffset: 0 } };
-  const getRes = await fetch(api + '?ref=' + BRANCH, { headers });
-  if (getRes.ok) {
-    const file = await getRes.json();
-    fileSha = file.sha;
-    data = JSON.parse(Buffer.from(file.content, 'base64').toString('utf8'));
+async function editMessage(chatId, messageId, text) {
+  await fetch(TG + '/editMessageText', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      chat_id: chatId,
+      message_id: messageId,
+      text: text,
+      reply_markup: { inline_keyboard: [] }
+    })
+  });
+}
+
+function sumarDias(dueDate, dias) {
+  const partes = dueDate.split('-');
+  const d = new Date(partes[0], partes[1] - 1, partes[2]);
+  d.setDate(d.getDate() + dias);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + dd;
+}
+
+// Devuelve true si modificó data.tasks (para saber si hay que guardar data.json)
+async function handleCallback(cb, data, state) {
+  const [action, taskId] = cb.data.split('_');
+  const task = (data.tasks || []).find(t => t.id === taskId);
+
+  if (!task) {
+    await answerCallback(cb.id, '❌ Tarea no encontrada (¿ya se borró?)');
+    return false;
   }
 
-  let offset = (data.meta && data.meta.lastOffset) ? data.meta.lastOffset : 0;
+  let toast = '';
+  let statusLine = '';
+  const now = new Date().toISOString();
+
+  if (action === 'done') {
+    task.done = true;
+    task.mcpUpdatedAt = now; // para que el dashboard respete este cambio en el próximo sync
+    state.doneAlerted = state.doneAlerted || {};
+    state.doneAlerted[taskId] = true; // evita el "🎉 Bien hecho" duplicado de bot_notificaciones
+    toast = '✅ Tarea completada';
+    statusLine = '✅ Completada';
+  } else if (action === 'postpone1' || action === 'postpone7') {
+    const dias = action === 'postpone1' ? 1 : 7;
+    task.dueDate = sumarDias(task.dueDate, dias);
+    task.mcpUpdatedAt = now;
+    state.dueAlerted = state.dueAlerted || {};
+    delete state.dueAlerted[taskId]; // para que vuelva a avisar en la nueva fecha
+    toast = '📅 Pospuesta a ' + task.dueDate;
+    statusLine = '📅 Pospuesta a ' + task.dueDate;
+  } else {
+    await answerCallback(cb.id, '❌ Acción no reconocida');
+    return false;
+  }
+
+  await answerCallback(cb.id, toast);
+  if (cb.message) {
+    await editMessage(cb.message.chat.id, cb.message.message_id, (cb.message.text || '') + '\n\n' + statusLine);
+  }
+  return true;
+}
+
+async function main() {
+  console.log('[AUDIO BOT] Iniciando...');
+
+  const { data: state, sha: stateSha } = await getJsonFile(STATE_PATH, { lastOffset: 0, dueAlerted: {}, doneAlerted: {} });
+  const { data, sha: dataSha } = await getJsonFile(DATA_PATH, { tasks: [] });
+
+  let offset = state.lastOffset || 0;
   const updates = await getUpdates(offset);
-  let huboCambios = false;
+  let huboCambiosDeDatos = false;
 
   for (const u of updates) {
     offset = u.update_id + 1;
+
+    if (u.callback_query) {
+      const cambio = await handleCallback(u.callback_query, data, state);
+      if (cambio) huboCambiosDeDatos = true;
+      continue;
+    }
+
     const msg = u.message;
     if (!msg || !msg.voice) continue;
 
     try {
       const url = await getVoiceUrl(msg.voice.file_id);
       const raw = await transcribe(url);
-      const taskText = await toTask(raw);
-      
+
+      // Solo se crea la tarea si el audio incluye "check" en cualquier parte.
+      if (!raw.toLowerCase().includes('check')) {
+        await sendMsg('⚠️ No detecté "check" en el audio, no se creó la tarea.\nTranscripción: ' + raw);
+        continue;
+      }
+
+      const rawSinCheck = raw.replace(/check/gi, ' ').replace(/\s+/g, ' ').trim();
+      const taskText = await toTask(rawSinCheck);
+
       data.tasks = data.tasks || [];
       data.tasks.push({
         id: 't' + Date.now(),
         projectId: 'inbox', text: taskText, done: false, dueDate: '',
-        priority: 'medium', emailAlert: false, alertSent: false
+        priority: 'medium', emailAlert: false, alertSent: false, driveUrl: ''
       });
-      
-      huboCambios = true;
+
+      huboCambiosDeDatos = true;
       await sendMsg('✅ Tarea agregada: ' + taskText);
     } catch (e) {
       await sendMsg('⚠️ Error en audio: ' + e.message);
     }
   }
 
-  // Solo guarda en GitHub si agregó algo nuevo (para no pisar el dashboard)
-  if (huboCambios) {
-    data.meta = { lastOffset: offset };
-    const putBody = {
-      message: 'Bot Audio: Nueva tarea por voz',
-      content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
-      branch: BRANCH
-    };
-    if (fileSha) putBody.sha = fileSha;
-    await fetch(api, { method: 'PUT', headers: { ...headers, 'content-type': 'application/json' }, body: JSON.stringify(putBody) });
-    console.log('[AUDIO BOT] Tarea guardada.');
+  // data.json: solo se guarda si de verdad cambió algo (tarea nueva o editada por botón).
+  if (huboCambiosDeDatos) {
+    const putRes = await putJsonFile(DATA_PATH, data, dataSha, 'Bot Audio: actualizar tareas');
+    if (!putRes.ok) {
+      const errBody = await putRes.text();
+      console.error('[AUDIO BOT] Falló el guardado de data.json (' + putRes.status + '): ' + errBody);
+      process.exit(1);
+    }
+    console.log('[AUDIO BOT] data.json actualizado.');
   } else {
-    console.log('[AUDIO BOT] Sin audios nuevos. No se toco data.json.');
+    console.log('[AUDIO BOT] Sin cambios de tareas.');
+  }
+
+  // tg_state.json: se guarda si hubo updates (avanza offset) o si cambiaron los flags de alerta.
+  if (updates.length > 0) {
+    state.lastOffset = offset;
+    const putRes = await putJsonFile(STATE_PATH, state, stateSha, 'Bot Audio: actualizar estado de Telegram');
+    if (!putRes.ok) {
+      const errBody = await putRes.text();
+      console.error('[AUDIO BOT] Falló el guardado de tg_state.json (' + putRes.status + '): ' + errBody);
+      process.exit(1);
+    }
+    console.log('[AUDIO BOT] tg_state.json actualizado (offset=' + offset + ').');
+  } else {
+    console.log('[AUDIO BOT] Sin updates nuevos.');
   }
 }
 

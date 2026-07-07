@@ -1,81 +1,123 @@
 /*
  * Kingdom Bot - Módulo NOTIFICACIONES
  * --------------------------------------------------
+ * Ya no escribe en data.json. El dedup de "ya avisé esta tarea" vivía
+ * antes en task.alertSent dentro de data.json, y ese mismo campo lo usa
+ * también el dashboard (app.js) para su propio sistema de alertas por
+ * email — dos sistemas distintos pisándose el mismo campo. Ahora el
+ * estado de qué se avisó por Telegram vive en tg_state.json, separado
+ * y exclusivo de estos bots.
  */
 const TELEGRAM_TOKEN   = process.env.TELEGRAM_TOKEN;
 const GH_TOKEN         = process.env.GITHUB_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
-const REPO_OWNER = process.env.GITHUB_OWNER || 'notclassic';
-const REPO_NAME  = process.env.GITHUB_REPO || 'Kingdom';
-const BRANCH     = 'main';
-const FILE_PATH  = 'data.json';
+const REPO_OWNER  = process.env.GITHUB_OWNER || 'notclassic';
+const REPO_NAME   = process.env.GITHUB_REPO || 'Kingdom';
+const BRANCH      = 'main';
+const DATA_PATH   = 'data.json';
+const STATE_PATH  = 'tg_state.json';
 const TG = 'https://api.telegram.org/bot' + TELEGRAM_TOKEN;
+const GH_HEADERS = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json' };
 
-async function sendMsg(text) {
+function ghUrl(path) {
+  return 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + path;
+}
+
+async function getJsonFile(path, fallback) {
+  const r = await fetch(ghUrl(path) + '?ref=' + BRANCH, { headers: GH_HEADERS });
+  if (!r.ok) return { data: fallback, sha: null };
+  const j = await r.json();
+  return { data: JSON.parse(Buffer.from(j.content, 'base64').toString('utf8')), sha: j.sha };
+}
+
+async function putJsonFile(path, data, sha, message) {
+  const body = {
+    message: message,
+    content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
+    branch: BRANCH
+  };
+  if (sha) body.sha = sha;
+  return fetch(ghUrl(path), {
+    method: 'PUT',
+    headers: { ...GH_HEADERS, 'content-type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+}
+
+function taskKeyboard(taskId) {
+  return {
+    inline_keyboard: [[
+      { text: '✅ Ya está', callback_data: 'done_' + taskId },
+      { text: '📅 +1 día',  callback_data: 'postpone1_' + taskId },
+      { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
+    ]]
+  };
+}
+
+async function sendMsg(text, replyMarkup) {
+  const body = { chat_id: TELEGRAM_CHAT_ID, text: text };
+  if (replyMarkup) body.reply_markup = replyMarkup;
   await fetch(TG + '/sendMessage', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: text })
+    body: JSON.stringify(body)
   });
 }
 
 async function main() {
   console.log('[NOTIF BOT] Iniciando revision...');
-  const api = 'https://api.github.com/repos/' + REPO_OWNER + '/' + REPO_NAME + '/contents/' + FILE_PATH;
-  const headers = { authorization: 'Bearer ' + GH_TOKEN, accept: 'application/vnd.github+json' };
 
-  const getRes = await fetch(api + '?ref=' + BRANCH, { headers });
-  if (!getRes.ok) { console.log('[NOTIF BOT] No hay data.json aún.'); return; }
-  
-  const file = await getRes.json();
-  const data = JSON.parse(Buffer.from(file.content, 'base64').toString('utf8'));
-  let huboCambios = false;
+  const { data, sha: dataSha } = await getJsonFile(DATA_PATH, null);
+  if (!data) { console.log('[NOTIF BOT] No hay data.json aún.'); return; }
 
+  const { data: state, sha: stateSha } = await getJsonFile(STATE_PATH, { lastOffset: 0, dueAlerted: {}, doneAlerted: {} });
+  state.dueAlerted = state.dueAlerted || {};
+  state.doneAlerted = state.doneAlerted || {};
+
+  let huboCambiosEstado = false;
   const hoy = new Date(); hoy.setHours(0,0,0,0);
 
-  for (let task of (data.tasks || [])) {
+  for (const task of (data.tasks || [])) {
     // 1. Avisar si se completó una tarea
-    if (task.done && !task.alertSent) {
+    if (task.done && !state.doneAlerted[task.id]) {
       await sendMsg('🎉 ¡Bien hecho! Completaste: ' + task.text);
-      task.alertSent = true; // Para no avisar de nuevo
-      huboCambios = true;
+      state.doneAlerted[task.id] = true;
+      huboCambiosEstado = true;
     }
 
     // 2. Avisar sobre fechas de vencimiento
     if (!task.done && task.dueDate && task.dueDate !== '') {
-      // Formato esperado: YYYY-MM-DD
       const partes = task.dueDate.split('-');
       const fechaTarea = new Date(partes[0], partes[1] - 1, partes[2]);
       fechaTarea.setHours(0,0,0,0);
 
       const diffDias = Math.round((fechaTarea - hoy) / (1000 * 60 * 60 * 24));
 
-      if (diffDias < 0 && !task.alertSent) {
-        await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')');
-        task.alertSent = true;
-        huboCambios = true;
-      } else if (diffDias === 0 && !task.alertSent) {
-        await sendMsg('⏰ ¡Vence HOY! ' + task.text);
-        task.alertSent = true;
-        huboCambios = true;
-      } else if (diffDias === 1 && !task.alertSent) {
-        await sendMsg(' Mañana vence: ' + task.text);
-        task.alertSent = true;
-        huboCambios = true;
+      if (diffDias < 0 && !state.dueAlerted[task.id]) {
+        await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')', taskKeyboard(task.id));
+        state.dueAlerted[task.id] = true;
+        huboCambiosEstado = true;
+      } else if (diffDias === 0 && !state.dueAlerted[task.id]) {
+        await sendMsg('⏰ ¡Vence HOY! ' + task.text, taskKeyboard(task.id));
+        state.dueAlerted[task.id] = true;
+        huboCambiosEstado = true;
+      } else if (diffDias === 1 && !state.dueAlerted[task.id]) {
+        await sendMsg('📅 Mañana vence: ' + task.text, taskKeyboard(task.id));
+        state.dueAlerted[task.id] = true;
+        huboCambiosEstado = true;
       }
     }
   }
 
-  if (huboCambios) {
-    const putBody = {
-      message: 'Bot Notif: Estado de alertas actualizado',
-      content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
-      sha: file.sha,
-      branch: BRANCH
-    };
-    await fetch(api, { method: 'PUT', headers: { ...headers, 'content-type': 'application/json' }, body: JSON.stringify(putBody) });
-    console.log('[NOTIF BOT] Notificaciones enviadas y guardadas.');
+  if (huboCambiosEstado) {
+    const putRes = await putJsonFile(STATE_PATH, state, stateSha, 'Bot Notif: estado de alertas actualizado');
+    if (!putRes.ok) {
+      const errBody = await putRes.text();
+      console.error('[NOTIF BOT] Falló el guardado de tg_state.json (' + putRes.status + '): ' + errBody);
+      process.exit(1);
+    }
+    console.log('[NOTIF BOT] Notificaciones enviadas, estado guardado.');
   } else {
     console.log('[NOTIF BOT] Nada nuevo que notificar.');
   }

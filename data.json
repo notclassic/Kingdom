@@ -674,21 +674,6 @@
       "contacts": [],
       "context": "personal",
       "parentId": null
-    },
-    {
-      "id": "p1783431048845",
-      "name": "Limpieza de casa",
-      "area": "pa1",
-      "desc": "Creado por voz desde Telegram.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#ffa50a",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": null
     }
   ],
   "tasks": [
@@ -2271,19 +2256,6 @@
       "alertSent": false,
       "driveUrl": "",
       "dueTime": ""
-    },
-    {
-      "id": "t1783431048846",
-      "projectId": "p1783431048845",
-      "text": "Limpieza de casa",
-      "done": false,
-      "dueDate": "2026-07-09",
-      "dueTime": "01:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-07T14:20:40.305Z"
     }
   ],
   "leads": [
@@ -2355,7 +2327,8 @@
     "t2",
     "t1781717730685",
     "t1783000834558",
-    "t1783400449478"
+    "t1783400449478",
+    "t1783431048846"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2382,7 +2355,8 @@
     "p178159401880768",
     "p1781627471826336",
     "p1781625628409853",
-    "p1781502750840"
+    "p1781502750840",
+    "p1783431048845"
   ],
   "trash": [
     {
@@ -3424,6 +3398,39 @@
         "alertSent": false,
         "driveUrl": ""
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:25:51.920Z",
+      "item": {
+        "id": "p1783431048845",
+        "name": "Limpieza de casa",
+        "area": "pa1",
+        "desc": "Creado por voz desde Telegram.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#ffa50a",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "personal",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1783431048846",
+          "projectId": "p1783431048845",
+          "text": "Limpieza de casa",
+          "done": false,
+          "dueDate": "2026-07-08",
+          "dueTime": "01:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
     }
   ],
   "alertConfig": {

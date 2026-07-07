@@ -1566,7 +1566,7 @@
       "text": "WhatsApp,El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
       "done": false,
       "dueDate": "2026-07-08",
-      "dueTime": null,
+      "dueTime": "14:21",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

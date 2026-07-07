@@ -674,6 +674,21 @@
       "contacts": [],
       "context": "personal",
       "parentId": null
+    },
+    {
+      "id": "p1783431048845",
+      "name": "Limpieza de casa",
+      "area": "pa1",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null
     }
   ],
   "tasks": [
@@ -2256,6 +2271,18 @@
       "alertSent": false,
       "driveUrl": "",
       "dueTime": ""
+    },
+    {
+      "id": "t1783431048846",
+      "projectId": "p1783431048845",
+      "text": "Limpieza de casa",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "01:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

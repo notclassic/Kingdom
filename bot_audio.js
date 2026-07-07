@@ -309,8 +309,9 @@ function sumarDias(dueDate, dias) {
     const partes = dueDate.split('-');
     d = new Date(partes[0], partes[1] - 1, partes[2]);
   } else {
-    d = new Date();
-    d.setHours(0, 0, 0, 0);
+    // "hoy" en zona Chile, no UTC del runner (que a la noche ya va en mañana)
+    const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+    d = new Date(hoyStr + 'T00:00:00');
   }
   d.setDate(d.getDate() + dias);
   const y = d.getFullYear();
@@ -344,8 +345,15 @@ async function handleCallback(cb, data, state) {
     const dias = action === 'postpone1' ? 1 : 7;
     task.dueDate = sumarDias(task.dueDate, dias);
     task.mcpUpdatedAt = now;
+    // Marca de aviso = escalón de la fecha NUEVA (1=mañana, 2=hoy, 3=vencida, 0=lejos).
+    // Así no te repite al instante el aviso del nivel que acabás de elegir
+    // conscientemente, pero los escalones superiores siguen avisando.
     state.dueAlerted = state.dueAlerted || {};
-    delete state.dueAlerted[taskId]; // para que vuelva a avisar en la nueva fecha
+    const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+    const diffNueva = Math.round((new Date(task.dueDate + 'T00:00:00') - new Date(hoyStr + 'T00:00:00')) / 86400000);
+    const escalonNuevo = diffNueva < 0 ? 3 : diffNueva === 0 ? 2 : diffNueva === 1 ? 1 : 0;
+    if (escalonNuevo > 0) state.dueAlerted[taskId] = escalonNuevo;
+    else delete state.dueAlerted[taskId];
     toast = '📅 Pospuesta a ' + task.dueDate;
     statusLine = '📅 Pospuesta a ' + task.dueDate;
   } else {

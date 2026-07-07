@@ -76,7 +76,28 @@ async function main() {
   state.doneAlerted = state.doneAlerted || {};
 
   let huboCambiosEstado = false;
-  const hoy = new Date(); hoy.setHours(0,0,0,0);
+
+  // "Hoy" en zona horaria de Chile. El runner corre en UTC (3-4 hs adelantado):
+  // sin esto, desde las ~20-21 hs de Chile el bot ya cree que es mañana y
+  // manda "vence HOY" / "VENCIDA" un día antes de tiempo.
+  const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+  const hoy = new Date(hoyStr + 'T00:00:00');
+
+  // Escalones de aviso: 1 = "vence mañana", 2 = "vence HOY", 3 = "VENCIDA".
+  // Se avisa solo cuando la tarea SUBE de escalón, así recibís hasta 3 avisos
+  // escalonados por tarea en vez de uno solo para siempre.
+  // Compatibilidad: los valores `true` guardados por la versión anterior se
+  // tratan como escalón 3 (ya totalmente avisada) para no repetir todo.
+  function escalon(diffDias) {
+    if (diffDias < 0) return 3;
+    if (diffDias === 0) return 2;
+    if (diffDias === 1) return 1;
+    return 0;
+  }
+  function escalonGuardado(v) {
+    if (v === true) return 3;
+    return (typeof v === 'number') ? v : 0;
+  }
 
   for (const task of (data.tasks || [])) {
     // 1. Avisar si se completó una tarea
@@ -86,25 +107,25 @@ async function main() {
       huboCambiosEstado = true;
     }
 
-    // 2. Avisar sobre fechas de vencimiento
+    // 2. Avisar sobre fechas de vencimiento, por escalón
     if (!task.done && task.dueDate && task.dueDate !== '') {
       const partes = task.dueDate.split('-');
       const fechaTarea = new Date(partes[0], partes[1] - 1, partes[2]);
       fechaTarea.setHours(0,0,0,0);
 
       const diffDias = Math.round((fechaTarea - hoy) / (1000 * 60 * 60 * 24));
+      const actual = escalon(diffDias);
+      const previo = escalonGuardado(state.dueAlerted[task.id]);
 
-      if (diffDias < 0 && !state.dueAlerted[task.id]) {
-        await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')', taskKeyboard(task.id));
-        state.dueAlerted[task.id] = true;
-        huboCambiosEstado = true;
-      } else if (diffDias === 0 && !state.dueAlerted[task.id]) {
-        await sendMsg('⏰ ¡Vence HOY! ' + task.text, taskKeyboard(task.id));
-        state.dueAlerted[task.id] = true;
-        huboCambiosEstado = true;
-      } else if (diffDias === 1 && !state.dueAlerted[task.id]) {
-        await sendMsg('📅 Mañana vence: ' + task.text, taskKeyboard(task.id));
-        state.dueAlerted[task.id] = true;
+      if (actual > previo) {
+        if (actual === 3) {
+          await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')', taskKeyboard(task.id));
+        } else if (actual === 2) {
+          await sendMsg('⏰ ¡Vence HOY! ' + task.text, taskKeyboard(task.id));
+        } else {
+          await sendMsg('📅 Mañana vence: ' + task.text, taskKeyboard(task.id));
+        }
+        state.dueAlerted[task.id] = actual;
         huboCambiosEstado = true;
       }
     }

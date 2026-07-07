@@ -2072,7 +2072,8 @@
     "p1783431048845",
     "p1783401320934",
     "p1781624973628126",
-    "p1781624973628303"
+    "p1781624973628303",
+    "p1782160541989891"
   ],
   "trash": [
     {
@@ -3605,6 +3606,27 @@
           "overdueAlertSent": true
         }
       ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:42:11.195Z",
+      "item": {
+        "id": "p1782160541989891",
+        "name": "Conectar la web a Claude",
+        "area": "a1",
+        "desc": "Referencia: reel de Instagram con el método para conectar la web a Claude → https://www.instagram.com/reel/DYzKerMKkpu/?igsh=cWRjODdxeWtiNTBv",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#5856d6",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287",
+        "mcpUpdatedAt": "2026-06-23T20:59:16.774Z"
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

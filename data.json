@@ -659,21 +659,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1783401320934",
-      "name": "Dentista León",
-      "area": "pa2",
-      "desc": "Creado por voz desde Telegram.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#2a9d8f",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": null
     }
   ],
   "tasks": [
@@ -2356,7 +2341,8 @@
     "p1781627471826336",
     "p1781625628409853",
     "p1781502750840",
-    "p1783431048845"
+    "p1783431048845",
+    "p1783401320934"
   ],
   "trash": [
     {
@@ -3431,6 +3417,26 @@
           "driveUrl": ""
         }
       ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:30:08.172Z",
+      "item": {
+        "id": "p1783401320934",
+        "name": "Dentista León",
+        "area": "pa2",
+        "desc": "Creado por voz desde Telegram.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#2a9d8f",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "personal",
+        "parentId": null
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

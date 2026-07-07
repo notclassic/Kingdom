@@ -526,6 +526,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1783447832007170",
+      "name": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781582668835650"
     }
   ],
   "tasks": [
@@ -1597,20 +1612,6 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
-    },
-    {
-      "id": "t178158273877926",
-      "projectId": "p1781582668835650",
-      "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "02:04",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
     }
   ],
   "leads": [
@@ -1725,7 +1726,8 @@
     "t1781590678767659",
     "t3",
     "t4",
-    "t6"
+    "t6",
+    "t178158273877926"
   ],
   "deletedProjectIds": [
     "p1781538739000",

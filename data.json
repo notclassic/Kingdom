@@ -526,21 +526,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1783447832007170",
-      "name": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781582668835650"
     }
   ],
   "tasks": [
@@ -1602,6 +1587,18 @@
       "driveUrl": ""
     },
     {
+      "id": "t1783447837728822",
+      "projectId": "p1781584127104452",
+      "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t1783447773140496",
       "projectId": "p1781584127104452",
       "text": "Preparar el bot por rubro.",
@@ -1768,7 +1765,8 @@
     "p1781590678767292",
     "p1783447588062866",
     "p1783447605800757",
-    "p1783447620608429"
+    "p1783447620608429",
+    "p1783447832007170"
   ],
   "trash": [
     {

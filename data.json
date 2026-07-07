@@ -1604,6 +1604,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-07T18:27:05.266Z"
+    },
+    {
+      "id": "t1783453230404272",
+      "projectId": "p1781582993530486",
+      "text": "avergiguar precio final de venta ncon un bot haciendose pasar por humano, manda un mensaje a los clientes que ya no tienen el anuncion y preguntar precio final de venta",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "15:39",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

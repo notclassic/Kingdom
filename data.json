@@ -527,6 +527,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781584127104452"
+    },
+    {
+      "id": "p1783448236015374",
+      "name": "Generar email de salida.",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781584127104452"
     }
   ],
   "tasks": [
@@ -1552,18 +1567,6 @@
       "dueTime": ""
     },
     {
-      "id": "t178344774742994",
-      "projectId": "p1781584127104452",
-      "text": "Generar email de salida.",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1783447766245797",
       "projectId": "p1781584127104452",
       "text": "Armar listado de rubros.",
@@ -1750,7 +1753,8 @@
     "t4",
     "t6",
     "t178158273877926",
-    "t1783447731801354"
+    "t1783447731801354",
+    "t178344774742994"
   ],
   "deletedProjectIds": [
     "p1781538739000",

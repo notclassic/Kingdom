@@ -1539,14 +1539,15 @@
     {
       "id": "t1783447766245797",
       "projectId": "p1781584127104452",
-      "text": "Armar listado de rubros.",
+      "text": "Armar el listado de rubros a prospectar (es el insumo base: de acá salen el bot por rubro y las campañas)",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-07-09",
       "dueTime": null,
-      "priority": "medium",
+      "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T18:26:20.458Z"
     },
     {
       "id": "t178344825507289",

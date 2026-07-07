@@ -88,7 +88,7 @@
       "name": "Kingdom",
       "area": "a1",
       "desc": "Mejoras del dashboard, organizadas por fases (F1 a F5), más notas, registro de tareas hechas y criterios de trabajo.",
-      "status": "active",
+      "status": "done",
       "hasLeads": false,
       "color": "#007aff",
       "icon": "",
@@ -96,7 +96,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": null
+      "parentId": null,
+      "completedAt": 1783435551531
     },
     {
       "id": "p1781624973628982",

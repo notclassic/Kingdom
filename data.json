@@ -778,20 +778,6 @@
       "overdueAlertSent": true
     },
     {
-      "id": "t5",
-      "projectId": "p2",
-      "text": "Buscar leads por rubro.",
-      "done": false,
-      "dueDate": "2026-06-17",
-      "emailAlert": false,
-      "alertSent": true,
-      "dueTime": "12:00",
-      "driveUrl": "",
-      "priority": "medium",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t6",
       "projectId": "p2",
       "text": "Preparar el bot por rubro.",
@@ -1876,7 +1862,8 @@
     "t1781581080020863",
     "t178214150332569",
     "t1782141526661249",
-    "t1782141553644300"
+    "t1782141553644300",
+    "t5"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3871,6 +3858,24 @@
           "mcpUpdatedAt": "2026-06-24T20:41:19.157Z"
         }
       ]
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T17:47:42.347Z",
+      "item": {
+        "id": "t5",
+        "projectId": "p2",
+        "text": "Buscar leads por rubro.",
+        "done": false,
+        "dueDate": "2026-06-17",
+        "emailAlert": false,
+        "alertSent": true,
+        "dueTime": "12:00",
+        "driveUrl": "",
+        "priority": "medium",
+        "dueSoonAlertSent": true,
+        "overdueAlertSent": true
+      }
     }
   ],
   "alertConfig": {

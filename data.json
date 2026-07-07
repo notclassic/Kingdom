@@ -39,6 +39,21 @@
   ],
   "projects": [
     {
+      "id": "p1",
+      "color": "#007aff",
+      "name": "Chileautos",
+      "area": "a1",
+      "desc": "Inteligencia y servicios automotrices sobre los datos de Chileautos: analítica de precios, detección de oportunidades y servicios B2B (SaaS) y B2C. Basado en el plan de negocio unificado y la planificación técnica (en la carpeta de Drive).",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "https://drive.google.com/drive/folders/1DE5tzUIDkvd9JC4iSsoSoYEnUCUiFtgh",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p1781572037505287",
       "name": "Kingdom",
       "area": "a1",
@@ -82,20 +97,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": null
-    },
-    {
-      "id": "p1",
-      "color": "#007aff",
-      "name": "Chileautos",
-      "area": "a1",
-      "desc": "Inteligencia y servicios automotrices sobre los datos de Chileautos: analítica de precios, detección de oportunidades y servicios B2B (SaaS) y B2C. Basado en el plan de negocio unificado y la planificación técnica (en la carpeta de Drive).",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "https://drive.google.com/drive/folders/1DE5tzUIDkvd9JC4iSsoSoYEnUCUiFtgh",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
     },
     {
       "id": "p1781582993530486",

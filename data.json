@@ -538,21 +538,6 @@
       "parentId": "p1781572037505287"
     },
     {
-      "id": "p1781624973628126",
-      "name": "F4 · UX y navegación",
-      "area": "a1",
-      "desc": "Mejoras de interfaz y navegación, sin urgencia técnica.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p1781624973628303",
       "name": "F5 · Cosmético y baja prioridad",
       "area": "a1",
@@ -791,113 +776,6 @@
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781572160041482",
-      "projectId": "p1781624973628126",
-      "text": "Menú móvil deslizable, estilo iPhone.",
-      "done": true,
-      "dueDate": "2026-06-16",
-      "dueTime": "23:09",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781580800586713",
-      "projectId": "p1781624973628126",
-      "text": "Botones desplegables para contraer y expandir.",
-      "done": true,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:33",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781584379119607",
-      "projectId": "p1781624973628126",
-      "text": "Submenús desplegables en \"Todas\"/\"Todos los proyectos\" con filtro por vida, profesional, personal u otro.",
-      "done": false,
-      "dueDate": "2026-06-17",
-      "dueTime": "00:31",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781579686000429",
-      "projectId": "p1781624973628126",
-      "text": "En la tarea: adjuntar fotos/archivos y editar su categoría (familia, hogar, personal u otras).",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:12",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781594560171737",
-      "projectId": "p1781624973628126",
-      "text": "Pegar un pantallazo con Ctrl+V al crear una tarea, para no tener que buscar capturas guardadas al dar instrucciones de mejora.",
-      "done": false,
-      "dueDate": "2026-06-17",
-      "dueTime": "03:21",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781583512115972",
-      "projectId": "p1781624973628126",
-      "text": "Mejorar la pestaña de Leads.",
-      "done": false,
-      "dueDate": "2026-06-17",
-      "dueTime": "00:18",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781582263961958",
-      "projectId": "p1781624973628126",
-      "text": "Botón \"nueva categoría\": agregar opción personal/profesional/otro y darle diseño.",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:57",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
-      "id": "t1781583104106856",
-      "projectId": "p1781624973628126",
-      "text": "Opción de crear subproyecto en el menú de nuevo proyecto (hoy solo por arrastre).",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "02:10",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
       "overdueAlertSent": true
     },
     {
@@ -2232,7 +2110,15 @@
     "t1781675722089858",
     "t1781848016142721",
     "t1781848697877853",
-    "t1781919048635878"
+    "t1781919048635878",
+    "t1781572160041482",
+    "t1781580800586713",
+    "t1781584379119607",
+    "t1781579686000429",
+    "t1781594560171737",
+    "t1781583512115972",
+    "t1781582263961958",
+    "t1781583104106856"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2261,7 +2147,8 @@
     "p1781625628409853",
     "p1781502750840",
     "p1783431048845",
-    "p1783401320934"
+    "p1783401320934",
+    "p1781624973628126"
   ],
   "trash": [
     {
@@ -3490,6 +3377,134 @@
         "driveUrl": "",
         "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:41:57.403Z",
+      "item": {
+        "id": "p1781624973628126",
+        "name": "F4 · UX y navegación",
+        "area": "a1",
+        "desc": "Mejoras de interfaz y navegación, sin urgencia técnica.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": [
+        {
+          "id": "t1781572160041482",
+          "projectId": "p1781624973628126",
+          "text": "Menú móvil deslizable, estilo iPhone.",
+          "done": true,
+          "dueDate": "2026-06-16",
+          "dueTime": "23:09",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781580800586713",
+          "projectId": "p1781624973628126",
+          "text": "Botones desplegables para contraer y expandir.",
+          "done": true,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:33",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781584379119607",
+          "projectId": "p1781624973628126",
+          "text": "Submenús desplegables en \"Todas\"/\"Todos los proyectos\" con filtro por vida, profesional, personal u otro.",
+          "done": false,
+          "dueDate": "2026-06-17",
+          "dueTime": "00:31",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781579686000429",
+          "projectId": "p1781624973628126",
+          "text": "En la tarea: adjuntar fotos/archivos y editar su categoría (familia, hogar, personal u otras).",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:12",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781594560171737",
+          "projectId": "p1781624973628126",
+          "text": "Pegar un pantallazo con Ctrl+V al crear una tarea, para no tener que buscar capturas guardadas al dar instrucciones de mejora.",
+          "done": false,
+          "dueDate": "2026-06-17",
+          "dueTime": "03:21",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781583512115972",
+          "projectId": "p1781624973628126",
+          "text": "Mejorar la pestaña de Leads.",
+          "done": false,
+          "dueDate": "2026-06-17",
+          "dueTime": "00:18",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781582263961958",
+          "projectId": "p1781624973628126",
+          "text": "Botón \"nueva categoría\": agregar opción personal/profesional/otro y darle diseño.",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:57",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781583104106856",
+          "projectId": "p1781624973628126",
+          "text": "Opción de crear subproyecto en el menú de nuevo proyecto (hoy solo por arrastre).",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "02:10",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        }
+      ]
     }
   ],
   "alertConfig": {

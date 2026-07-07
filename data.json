@@ -1515,7 +1515,7 @@
       "text": "Armar el listado de rubros a prospectar (es el insumo base: de acá salen el bot por rubro y las campañas)",
       "done": false,
       "dueDate": "2026-07-09",
-      "dueTime": null,
+      "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,

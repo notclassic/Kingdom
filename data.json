@@ -514,21 +514,6 @@
       "parentId": "p1"
     },
     {
-      "id": "p1783448229858856",
-      "name": "aviso por whatsapp de cliente que responde",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
-    },
-    {
       "id": "p1783448236015374",
       "name": "Generar email de salida.",
       "area": "a1",
@@ -1627,6 +1612,18 @@
       "driveUrl": ""
     },
     {
+      "id": "t1783448246005157",
+      "projectId": "p1781584127104452",
+      "text": "aviso por whatsapp de cliente que responde",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t178344815596589",
       "projectId": "p1781584127104452",
       "text": "indicadores de cuando el cliente responde si o no. en que etapa.",
@@ -1797,7 +1794,8 @@
     "p1783447605800757",
     "p1783447620608429",
     "p1783447832007170",
-    "p1781582668835650"
+    "p1781582668835650",
+    "p1783448229858856"
   ],
   "trash": [
     {

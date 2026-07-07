@@ -1549,18 +1549,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1783447837728822",
-      "projectId": "p1781584127104452",
-      "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1783447842184127",
       "projectId": "p1781584127104452",
       "text": "WhatsApp,El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
@@ -1751,7 +1739,8 @@
     "t6",
     "t178158273877926",
     "t1783447731801354",
-    "t178344774742994"
+    "t178344774742994",
+    "t1783447837728822"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3954,6 +3943,22 @@
         "parentId": "p2"
       },
       "tasks": []
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T18:22:06.879Z",
+      "item": {
+        "id": "t1783447837728822",
+        "projectId": "p1781584127104452",
+        "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
+        "done": false,
+        "dueDate": null,
+        "dueTime": null,
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": ""
+      }
     }
   ],
   "alertConfig": {

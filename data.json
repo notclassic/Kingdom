@@ -2067,18 +2067,6 @@
       "mcpUpdatedAt": "2026-07-07T05:36:18.284Z"
     },
     {
-      "id": "t1781848016142721",
-      "projectId": "p1781572037505287",
-      "text": "Generar auditoría a la programación robusta con varios usuarios",
-      "done": false,
-      "dueDate": "2026-06-20",
-      "dueTime": "01:46",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781848697877853",
       "projectId": "p1781572037505287",
       "text": "Claude design puede mejorar la gráfica de esta apps",
@@ -2266,7 +2254,8 @@
     "t22",
     "t24",
     "t1781841347094366",
-    "t1781675722089858"
+    "t1781675722089858",
+    "t1781848016142721"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3474,6 +3463,22 @@
         "dueSoonAlertSent": true,
         "overdueAlertSent": true,
         "mcpUpdatedAt": "2026-06-23T00:59:52.866Z"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:41:36.106Z",
+      "item": {
+        "id": "t1781848016142721",
+        "projectId": "p1781572037505287",
+        "text": "Generar auditoría a la programación robusta con varios usuarios",
+        "done": false,
+        "dueDate": "2026-06-20",
+        "dueTime": "01:46",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": ""
       }
     }
   ],

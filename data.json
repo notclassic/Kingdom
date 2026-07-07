@@ -1595,14 +1595,15 @@
     {
       "id": "t178344815596589",
       "projectId": "p1781584127104452",
-      "text": "indicadores de cuando el cliente responde si o no. en que etapa.",
+      "text": "Crear indicadores de respuesta en el CRM: quién respondió sí/no y en qué etapa del embudo está cada contacto",
       "done": false,
-      "dueDate": "2026-07-08",
+      "dueDate": "2026-07-17",
       "dueTime": "14:15",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T18:27:05.266Z"
     }
   ],
   "leads": [

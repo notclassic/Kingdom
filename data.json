@@ -2121,13 +2121,14 @@
       "id": "t1781846888794474",
       "projectId": "p1781572037505287",
       "text": "Crear un mcp a kingdom",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-20",
       "dueTime": "01:27",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T05:36:18.284Z"
     },
     {
       "id": "t1781848016142721",

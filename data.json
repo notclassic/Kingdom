@@ -146,7 +146,7 @@
     },
     {
       "id": "p1781584127104452",
-      "name": "Plan de publicaciones para captación de clientes",
+      "name": "CRM",
       "area": "a1",
       "desc": "Canal inbound orgánico: contenido en Instagram (reels que muestran al agente resolviendo casos) para captar clientes que piden el demo por DM.",
       "status": "active",
@@ -157,7 +157,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p2"
+      "parentId": "p2",
+      "userUpdatedAt": "2026-07-07T18:16:08.471Z"
     },
     {
       "id": "p10",

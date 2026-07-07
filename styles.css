@@ -593,3 +593,6 @@ input, select, textarea{
 .mp-box h3{ margin:0 0 12px; font-size:1rem; }
 .mp-box select{ width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.9rem; }
 .mp-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:16px; }
+
+/* El selector de proyecto se abre por encima de cualquier modal (crear o editar) */
+#taskProjPickerOverlay{ z-index:200; }

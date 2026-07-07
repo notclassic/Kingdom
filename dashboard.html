@@ -264,7 +264,11 @@
       <input type="hidden" id="et-id">
       <input type="hidden" id="et-priority" value="medium">
       <label class="row-desc" style="margin-bottom:-2px;">Proyecto</label>
-      <select id="et-project"></select>
+      <input type="hidden" id="et-project-id" value="">
+      <button type="button" class="proj-picker-btn" id="et-project-btn" onclick="openTaskProjectPicker('edit')">
+        <span id="et-project-label" class="pp-placeholder">Elegí proyecto o subproyecto</span>
+        <span class="pp-chevron">▾</span>
+      </button>
       <label class="row-desc" style="margin:6px 0 -2px;">Importancia</label>
       <div class="priority-selector" id="et-priority-group">
         <button type="button" class="priority-btn" data-priority="high"   onclick="selectEditPriority('high')">:( Quedó la caga</button>

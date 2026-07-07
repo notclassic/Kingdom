@@ -1390,7 +1390,9 @@ function setTaskProject(id){
   lbl.textContent = path ? (path + ' › ' + p.name) : p.name;
   lbl.classList.remove('pp-placeholder');
 }
-function openTaskProjectPicker(){
+let _projPickerTarget = 'new'; // 'new' = modal crear tarea, 'edit' = modal editar tarea
+function openTaskProjectPicker(target){
+  _projPickerTarget = (target === 'edit') ? 'edit' : 'new';
   const s = document.getElementById('taskProjPickerSearch'); if(s) s.value = '';
   buildTaskProjList('');
   document.getElementById('taskProjPickerOverlay').classList.add('open');
@@ -1399,10 +1401,24 @@ function openTaskProjectPicker(){
 function closeTaskProjectPicker(){
   const o = document.getElementById('taskProjPickerOverlay'); if(o) o.classList.remove('open');
 }
-function pickTaskProject(id){ setTaskProject(id); closeTaskProjectPicker(); }
+function pickTaskProject(id){
+  if(_projPickerTarget === 'edit') setEditTaskProject(id);
+  else setTaskProject(id);
+  closeTaskProjectPicker();
+}
+// Igual que setTaskProject pero para el modal de EDICION (mover tarea de proyecto)
+function setEditTaskProject(id){
+  document.getElementById('et-project-id').value = id || '';
+  const lbl = document.getElementById('et-project-label');
+  const p = id ? data.projects.find(x=>x.id===id) : null;
+  if(!p){ lbl.textContent = 'Elegí proyecto o subproyecto'; lbl.classList.add('pp-placeholder'); return; }
+  const path = _projPath(p.parentId);
+  lbl.textContent = path ? (path + ' › ' + p.name) : p.name;
+  lbl.classList.remove('pp-placeholder');
+}
 function buildTaskProjList(filter){
   const q = (filter||'').trim().toLowerCase();
-  const cur = document.getElementById('nt-project-id').value;
+  const cur = document.getElementById(_projPickerTarget === 'edit' ? 'et-project-id' : 'nt-project-id').value;
   const ck = '<div class="sheet-check"></div>', em = '<div class="sheet-check-empty"></div>';
   let h = '';
   if(q){
@@ -2432,16 +2448,6 @@ function addTask(){
 }
 
 /* ====== EDITAR TAREA (MODAL) ====== */
-function fillEditProjectSelect(selectedId){
-  const sel = document.getElementById('et-project');
-  const per = data.projects.filter(p=>(p.context||'profesional')==='personal');
-  const pro = data.projects.filter(p=>(p.context||'profesional')!=='personal');
-  let html='';
-  if(pro.length) html += `<optgroup label="💼 Profesional">`+pro.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')+`</optgroup>`;
-  if(per.length) html += `<optgroup label="🏠 Personal">`+per.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')+`</optgroup>`;
-  sel.innerHTML = html;
-  if(selectedId) sel.value = selectedId;
-}
 function selectEditPriority(p){
   document.querySelectorAll('#et-priority-group .priority-btn').forEach(b=>b.classList.toggle('active', b.dataset.priority===p));
   document.getElementById('et-priority').value = p;
@@ -2450,7 +2456,7 @@ function openEditTask(id){
   const t = data.tasks.find(t=>t.id===id);
   if(!t) return;
   document.getElementById('et-id').value = id;
-  fillEditProjectSelect(t.projectId);
+  setEditTaskProject(t.projectId);
   document.getElementById('et-text').value = t.text || '';
   document.getElementById('et-due').value = t.dueDate || '';
   document.getElementById('et-time').value = t.dueTime || '';
@@ -2468,7 +2474,7 @@ function saveEditTask(){
   const text = document.getElementById('et-text').value.trim();
   if(!text){ alert('La tarea no puede quedar sin descripción'); return; }
   const textoCambio = (text !== t.text);   // marca de autor solo si cambia el texto
-  t.projectId = document.getElementById('et-project').value || t.projectId;
+  t.projectId = document.getElementById('et-project-id').value || t.projectId;
   t.text = text;
   const newDue = document.getElementById('et-due').value;
   const newTime = document.getElementById('et-time').value;

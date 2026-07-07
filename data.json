@@ -694,19 +694,6 @@
       "overdueAlertSent": true
     },
     {
-      "id": "t1781581710610850",
-      "projectId": "p1781624973628982",
-      "text": "Conexión con Gmail para enviar correos y agendar videollamadas desde la base de datos, por proyecto.",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:47",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781581080020863",
       "projectId": "p1781624973628982",
       "text": "Enviar correos desde el dashboard.",
@@ -1948,7 +1935,8 @@
     "t1781580951081409",
     "t17815866999337",
     "t1781626726363974",
-    "t1781582476167637"
+    "t1781582476167637",
+    "t1781581710610850"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3825,6 +3813,23 @@
         "done": false,
         "dueDate": "2026-06-16",
         "dueTime": "02:00",
+        "priority": "high",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "overdueAlertSent": true
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:43:36.936Z",
+      "item": {
+        "id": "t1781581710610850",
+        "projectId": "p1781624973628982",
+        "text": "Conexión con Gmail para enviar correos y agendar videollamadas desde la base de datos, por proyecto.",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "dueTime": "01:47",
         "priority": "high",
         "emailAlert": false,
         "alertSent": true,

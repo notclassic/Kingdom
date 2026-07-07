@@ -1,0 +1,53 @@
+# kingdom-bots.yml -> va en .github/workflows/
+# ---------------------------------------------------------------
+# UN solo workflow que corre los dos bots EN SECUENCIA (audio primero,
+# notificaciones después). Esto reemplaza a los workflows separados:
+# si hoy tenés dos archivos .yml (uno por bot), BORRALOS y dejá solo este.
+# Dos workflows en paralelo escriben tg_state.json al mismo tiempo y se
+# pisan (conflicto de sha) -> el offset no avanza -> botones "muertos".
+#
+# IMPORTANTE: revisá que los nombres de los secrets (secrets.XXX) coincidan
+# con los que ya tenés configurados en Settings > Secrets del repo.
+# ---------------------------------------------------------------
+name: Kingdom Bots
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'   # cada 5 min (GitHub puede demorarlo unos minutos más)
+  workflow_dispatch:         # botón "Run workflow" para probar a mano
+
+# Evita que dos corridas se superpongan si una tarda más que el intervalo.
+concurrency:
+  group: kingdom-bots
+  cancel-in-progress: false
+
+permissions:
+  contents: write            # necesario para escribir data.json y tg_state.json
+
+jobs:
+  bots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Bot audio (voz + botones)
+        run: node bot_audio.js
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ASSEMBLYAI_KEY:   ${{ secrets.ASSEMBLYAI_KEY }}
+          GROQ_API_KEY:     ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN:     ${{ secrets.GITHUB_TOKEN }}
+
+      # if: always() -> aunque el bot de audio falle, las alertas salen igual.
+      - name: Bot notificaciones (vencimientos)
+        if: always()
+        run: node bot_notificaciones.js
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN:     ${{ secrets.GITHUB_TOKEN }}

@@ -51,6 +51,33 @@ async function putJsonFile(path, data, sha, message) {
   });
 }
 
+// Guarda tg_state.json tolerando que el OTRO bot lo haya escrito entre nuestra
+// lectura y nuestro guardado (conflicto de sha: GitHub responde 409/422).
+// En ese caso: relee la versión fresca, fusiona y reintenta UNA vez.
+// Sin esto, el conflicto mataba el proceso con exit(1), el offset no avanzaba
+// y los botones apretados quedaban sin procesar (botón "muerto").
+// Límite conocido del merge: si nosotros BORRAMOS una clave de dueAlerted
+// (al reprogramar) y el otro bot la tenía, el merge puede resucitarla y
+// generar a lo sumo un aviso repetido. Es el costo de no perder estado.
+async function putStateConReintento(state, sha, message) {
+  let r = await putJsonFile(STATE_PATH, state, sha, message);
+  if (r.status === 409 || r.status === 422) {
+    console.log('[AUDIO BOT] Conflicto guardando tg_state.json; releyendo y fusionando...');
+    const fresco = await getJsonFile(STATE_PATH, {});
+    const remoto = fresco.data || {};
+    const merged = {
+      ...remoto,
+      ...state,
+      lastOffset: Math.max(remoto.lastOffset || 0, state.lastOffset || 0),
+      dueAlerted: { ...(remoto.dueAlerted || {}), ...(state.dueAlerted || {}) },
+      doneAlerted: { ...(remoto.doneAlerted || {}), ...(state.doneAlerted || {}) },
+      alertMsgs: { ...(remoto.alertMsgs || {}), ...(state.alertMsgs || {}) }
+    };
+    r = await putJsonFile(STATE_PATH, merged, fresco.sha, message + ' (merge por conflicto)');
+  }
+  return r;
+}
+
 async function getUpdates(offset) {
   const r = await fetch(TG + '/getUpdates?timeout=10&offset=' + (offset || ''));
   const j = await r.json();
@@ -337,10 +364,65 @@ function taskKeyboard(taskId) {
         { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
       ],
       [
-        { text: '📅 Otra fecha (respondé a este mensaje)', callback_data: 'pickdate_' + taskId }
+        { text: '📅 Elegir fecha y hora', callback_data: 'pickdate_' + taskId }
       ]
     ]
   };
+}
+
+// ---------- Selector de fecha y hora por botones ----------
+// Flujo: [📅 Elegir fecha y hora] -> grilla de fechas -> grilla de horas -> listo.
+// Cada tap se procesa en la SIGUIENTE corrida del cron (no es instantáneo).
+// El callback_data de este flujo usa '|' como separador para no chocar con
+// el parseo por '_' de los botones viejos: pdD|taskId|fecha, pdT|taskId|fecha|hora.
+
+function hoyChileDate() {
+  const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+  return new Date(hoyStr + 'T12:00:00');
+}
+
+function fmtYMD(d) {
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+function etiquetaDia(d) {
+  const w = d.toLocaleDateString('es-CL', { weekday: 'short' }); // "jue."
+  const wLimpio = w.replace('.', '');
+  return wLimpio.charAt(0).toUpperCase() + wLimpio.slice(1) + ' ' + d.getDate() + '/' + (d.getMonth() + 1);
+}
+
+function dateKeyboard(taskId) {
+  const hoy = hoyChileDate();
+  function plus(n) { const d = new Date(hoy); d.setDate(d.getDate() + n); return d; }
+  function btn(text, d) { return { text: text, callback_data: 'pdD|' + taskId + '|' + fmtYMD(d) }; }
+  return {
+    inline_keyboard: [
+      [btn('Hoy', plus(0)), btn('Mañana', plus(1)), btn('Pasado', plus(2))],
+      [btn(etiquetaDia(plus(3)), plus(3)), btn(etiquetaDia(plus(4)), plus(4)), btn(etiquetaDia(plus(5)), plus(5))],
+      [btn('+1 sem', plus(7)), btn('+2 sem', plus(14)), btn('+1 mes', plus(30))],
+      [{ text: '✍️ Otra fecha (respondé con texto)', callback_data: 'picktext_' + taskId }],
+      [{ text: '← Volver', callback_data: 'pdB|' + taskId }]
+    ]
+  };
+}
+
+function timeKeyboard(taskId, fecha) {
+  function btn(text, hora) { return { text: text, callback_data: 'pdT|' + taskId + '|' + fecha + '|' + hora }; }
+  return {
+    inline_keyboard: [
+      [btn('Sin hora', '-'), btn('09:00', '09:00'), btn('12:00', '12:00')],
+      [btn('15:00', '15:00'), btn('18:00', '18:00'), btn('20:00', '20:00')],
+      [{ text: '← Cambiar fecha', callback_data: 'pickdate_' + taskId }]
+    ]
+  };
+}
+
+async function editKeyboard(chatId, messageId, replyMarkup) {
+  await fetch(TG + '/editMessageReplyMarkup', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ chat_id: chatId, message_id: messageId, reply_markup: replyMarkup })
+  });
 }
 
 // Escalón de aviso para una fecha (mismo criterio que bot_notificaciones):
@@ -423,7 +505,56 @@ function registrarMsgTarea(state, messageId, taskId) {
 
 // Devuelve true si modificó data.tasks (para saber si hay que guardar data.json)
 async function handleCallback(cb, data, state) {
-  const [action, taskId] = cb.data.split('_');
+  const raw = cb.data || '';
+
+  // --- Selector de fecha/hora (callbacks con separador '|') ---
+  if (raw.startsWith('pdD|') || raw.startsWith('pdT|') || raw.startsWith('pdB|')) {
+    const partes = raw.split('|');
+    const tId = partes[1];
+    const t = (data.tasks || []).find(x => x.id === tId);
+    if (!t) {
+      await answerCallback(cb.id, '❌ Tarea no encontrada (¿ya se borró?)');
+      return false;
+    }
+
+    // Volver a los botones originales
+    if (raw.startsWith('pdB|')) {
+      try { await answerCallback(cb.id, ''); } catch (_) {}
+      if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, taskKeyboard(tId));
+      return false;
+    }
+
+    // Eligió fecha -> mostrar grilla de horas
+    if (raw.startsWith('pdD|')) {
+      const fecha = partes[2];
+      try { await answerCallback(cb.id, 'Fecha ' + fecha + ' — ahora la hora'); } catch (_) {}
+      if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, timeKeyboard(tId, fecha));
+      return false;
+    }
+
+    // Eligió hora ('-' = sin hora) -> aplicar y cerrar
+    const fecha = partes[2];
+    const hora = (partes[3] && partes[3] !== '-') ? partes[3] : '';
+    t.dueDate = fecha;
+    t.dueTime = hora;
+    t.mcpUpdatedAt = new Date().toISOString();
+    state.dueAlerted = state.dueAlerted || {};
+    const esc = escalonDeFecha(fecha);
+    if (esc > 0) state.dueAlerted[tId] = esc;
+    else delete state.dueAlerted[tId];
+    try {
+      await answerCallback(cb.id, '📅 ' + fecha + (hora ? ' ' + hora : ''));
+      if (cb.message) {
+        await editMessage(cb.message.chat.id, cb.message.message_id,
+          (cb.message.text || '') + '\n\n📅 Reprogramada: ' + t.text + '\nNuevo vencimiento: ' + fecha + (hora ? ' a las ' + hora : ''));
+      }
+    } catch (e) {
+      console.error('[AUDIO BOT] Cambio aplicado pero falló la confirmación en Telegram: ' + e.message);
+    }
+    return true;
+  }
+
+  const [action, taskId] = raw.split('_');
   const task = (data.tasks || []).find(t => t.id === taskId);
 
   if (!task) {
@@ -436,11 +567,19 @@ async function handleCallback(cb, data, state) {
   const now = new Date().toISOString();
 
   if (action === 'pickdate') {
-    // No cambia la tarea: registra este mensaje como vinculado a la tarea y
-    // le explica al usuario cómo responder con la fecha. Los botones se
-    // conservan por si prefiere usar los rápidos igual.
+    // Muestra la grilla de fechas. Se registra el vínculo mensaje->tarea
+    // igual, así también funciona responder al mensaje con una fecha escrita.
     registrarMsgTarea(state, cb.message && cb.message.message_id, taskId);
-    await answerCallback(cb.id, 'Respondé a ese mensaje con la fecha');
+    try { await answerCallback(cb.id, 'Elegí la fecha'); } catch (_) {}
+    if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, dateKeyboard(taskId));
+    return false; // no cambió data.json; el estado se guarda igual porque hubo updates
+  }
+
+  if (action === 'picktext') {
+    // Flujo por texto: registra este mensaje como vinculado a la tarea y
+    // explica cómo responder con la fecha escrita.
+    registrarMsgTarea(state, cb.message && cb.message.message_id, taskId);
+    try { await answerCallback(cb.id, 'Respondé a ese mensaje con la fecha'); } catch (_) {}
     if (cb.message) {
       const yaExplicado = (cb.message.text || '').includes('Respondé a ESTE mensaje');
       if (!yaExplicado) {
@@ -450,13 +589,13 @@ async function handleCallback(cb, data, state) {
           body: JSON.stringify({
             chat_id: cb.message.chat.id,
             message_id: cb.message.message_id,
-            text: (cb.message.text || '') + '\n\n✍️ Respondé a ESTE mensaje (deslizalo a la izquierda) con la nueva fecha. Ejemplos: "15/07", "mañana 18:00", "viernes".',
+            text: (cb.message.text || '') + '\n\n✍️ Respondé a ESTE mensaje (deslizalo a la izquierda) con la nueva fecha y hora. Ejemplos: "15/07", "mañana 18:00", "viernes".',
             reply_markup: taskKeyboard(taskId)
           })
         });
       }
     }
-    return false; // no cambió data.json; el estado se guarda igual porque hubo updates
+    return false;
   }
 
   if (action === 'done') {
@@ -678,7 +817,7 @@ async function main() {
   // tg_state.json: se guarda si hubo updates (avanza offset) o si cambiaron los flags de alerta.
   if (updates.length > 0) {
     state.lastOffset = offset;
-    const putRes = await putJsonFile(STATE_PATH, state, stateSha, 'Bot Audio: actualizar estado de Telegram');
+    const putRes = await putStateConReintento(state, stateSha, 'Bot Audio: actualizar estado de Telegram');
     if (!putRes.ok) {
       const errBody = await putRes.text();
       console.error('[AUDIO BOT] Falló el guardado de tg_state.json (' + putRes.status + '): ' + errBody);

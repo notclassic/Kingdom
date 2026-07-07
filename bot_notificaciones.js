@@ -45,6 +45,28 @@ async function putJsonFile(path, data, sha, message) {
   });
 }
 
+// Guarda tg_state.json tolerando que el bot de audio lo haya escrito entre
+// nuestra lectura y nuestro guardado (conflicto de sha -> 409/422): relee,
+// fusiona y reintenta una vez. Evita perder el offset o los flags de aviso.
+async function putStateConReintento(state, sha, message) {
+  let r = await putJsonFile(STATE_PATH, state, sha, message);
+  if (r.status === 409 || r.status === 422) {
+    console.log('[NOTIF BOT] Conflicto guardando tg_state.json; releyendo y fusionando...');
+    const fresco = await getJsonFile(STATE_PATH, {});
+    const remoto = fresco.data || {};
+    const merged = {
+      ...remoto,
+      ...state,
+      lastOffset: Math.max(remoto.lastOffset || 0, state.lastOffset || 0),
+      dueAlerted: { ...(remoto.dueAlerted || {}), ...(state.dueAlerted || {}) },
+      doneAlerted: { ...(remoto.doneAlerted || {}), ...(state.doneAlerted || {}) },
+      alertMsgs: { ...(remoto.alertMsgs || {}), ...(state.alertMsgs || {}) }
+    };
+    r = await putJsonFile(STATE_PATH, merged, fresco.sha, message + ' (merge por conflicto)');
+  }
+  return r;
+}
+
 function taskKeyboard(taskId) {
   return {
     inline_keyboard: [
@@ -54,7 +76,7 @@ function taskKeyboard(taskId) {
         { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
       ],
       [
-        { text: '📅 Otra fecha (respondé a este mensaje)', callback_data: 'pickdate_' + taskId }
+        { text: '📅 Elegir fecha y hora', callback_data: 'pickdate_' + taskId }
       ]
     ]
   };
@@ -154,7 +176,7 @@ async function main() {
   }
 
   if (huboCambiosEstado) {
-    const putRes = await putJsonFile(STATE_PATH, state, stateSha, 'Bot Notif: estado de alertas actualizado');
+    const putRes = await putStateConReintento(state, stateSha, 'Bot Notif: estado de alertas actualizado');
     if (!putRes.ok) {
       const errBody = await putRes.text();
       console.error('[NOTIF BOT] Falló el guardado de tg_state.json (' + putRes.status + '): ' + errBody);

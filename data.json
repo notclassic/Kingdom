@@ -1990,20 +1990,6 @@
       "mcpUpdatedAt": "2026-06-23T01:00:40.126Z"
     },
     {
-      "id": "t1781717730685",
-      "projectId": "inbox",
-      "text": "agendar hora al dentista",
-      "done": true,
-      "dueDate": "2026-06-18",
-      "dueTime": "16:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781717736940",
       "projectId": "p1781583210289147",
       "text": "Agenda otra hora",
@@ -2329,7 +2315,8 @@
     "t1782183004321456",
     "t1781595607843694",
     "t1",
-    "t2"
+    "t2",
+    "t1781717730685"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3347,6 +3334,24 @@
         "dueSoonAlertSent": true,
         "overdueAlertSent": true,
         "mcpUpdatedAt": "2026-06-23T01:00:00.830Z"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T04:19:32.835Z",
+      "item": {
+        "id": "t1781717730685",
+        "projectId": "inbox",
+        "text": "agendar hora al dentista",
+        "done": true,
+        "dueDate": "2026-06-18",
+        "dueTime": "16:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "dueSoonAlertSent": true,
+        "overdueAlertSent": true
       }
     }
   ],

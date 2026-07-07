@@ -1782,7 +1782,7 @@
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
-      "alertSent": false,
+      "alertSent": true,
       "driveUrl": ""
     },
     {

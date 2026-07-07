@@ -2237,6 +2237,18 @@
       "alertSent": false,
       "driveUrl": "",
       "dueTime": ""
+    },
+    {
+      "id": "t1783400449478",
+      "projectId": "inbox",
+      "text": "Agendar proyecto o crear proyecto de llamar a León el día de mañana a las 3 de la tarde para ir al dentista, con nueva tarea de llamar a María Juana. .",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

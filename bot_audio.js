@@ -89,14 +89,29 @@ async function toTask(rawText) {
     headers: { authorization: 'Bearer ' + GROQ_KEY, 'content-type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.1-8b-instant',
+      temperature: 0,
+      max_tokens: 100,
       messages: [
-        { role: 'system', content: 'Converti la nota de voz en una sola tarea breve y clara, en español. Devolve solo el texto de la tarea.' },
+        { role: 'system', content: 'Sos un conversor de notas de voz a tareas. Reglas estrictas:\n' +
+          '1. Devolvé SOLO el texto de la tarea, en una sola línea, en español.\n' +
+          '2. NO expliques, NO definas términos, NO agregues introducciones ni comentarios.\n' +
+          '3. NO inventes contenido que no esté en la nota. Si la nota es confusa, devolvela tal cual, apenas limpiada.\n' +
+          '4. Máximo 20 palabras.\n' +
+          'Ejemplo entrada: "eh... tengo que llamar al contador mañana por el tema de las facturas"\n' +
+          'Ejemplo salida: Llamar al contador mañana por las facturas' },
         { role: 'user', content: rawText }
       ]
     })
   });
   const j = await r.json();
-  return (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || rawText).trim();
+  const out = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || '').trim();
+
+  // Validación anti-divague: si Groq devolvió algo vacío, con saltos de
+  // línea (señal de que está "explicando"), o bastante más largo que la
+  // transcripción original, se descarta y se usa la transcripción cruda.
+  // Mejor una tarea literal que una alucinación guardada como tarea.
+  const sospechoso = !out || out.includes('\n') || out.length > rawText.length * 1.5 + 30;
+  return sospechoso ? rawText : out;
 }
 
 async function sendMsg(text) {
@@ -129,8 +144,16 @@ async function editMessage(chatId, messageId, text) {
 }
 
 function sumarDias(dueDate, dias) {
-  const partes = dueDate.split('-');
-  const d = new Date(partes[0], partes[1] - 1, partes[2]);
+  // Si la tarea no tiene fecha válida (ej: creada por audio con dueDate ''),
+  // el postponer parte desde hoy. Sin este guard, '' produce 'NaN-NaN-NaN'.
+  let d;
+  if (dueDate && /^\d{4}-\d{2}-\d{2}$/.test(dueDate)) {
+    const partes = dueDate.split('-');
+    d = new Date(partes[0], partes[1] - 1, partes[2]);
+  } else {
+    d = new Date();
+    d.setHours(0, 0, 0, 0);
+  }
   d.setDate(d.getDate() + dias);
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -172,9 +195,17 @@ async function handleCallback(cb, data, state) {
     return false;
   }
 
-  await answerCallback(cb.id, toast);
-  if (cb.message) {
-    await editMessage(cb.message.chat.id, cb.message.message_id, (cb.message.text || '') + '\n\n' + statusLine);
+  // La mutación del dato ya está hecha en este punto. La mensajería a
+  // Telegram (toast + edición del mensaje) va en su propio try/catch:
+  // si falla — por ejemplo un callback viejo cuyo toast Telegram ya
+  // expiró — el cambio en la tarea se guarda igual.
+  try {
+    await answerCallback(cb.id, toast);
+    if (cb.message) {
+      await editMessage(cb.message.chat.id, cb.message.message_id, (cb.message.text || '') + '\n\n' + statusLine);
+    }
+  } catch (e) {
+    console.error('[AUDIO BOT] Cambio aplicado pero falló la confirmación en Telegram: ' + e.message);
   }
   return true;
 }
@@ -193,8 +224,17 @@ async function main() {
     offset = u.update_id + 1;
 
     if (u.callback_query) {
-      const cambio = await handleCallback(u.callback_query, data, state);
-      if (cambio) huboCambiosDeDatos = true;
+      // try/catch por callback: si uno falla (dato corrupto, error de red),
+      // se avisa y se sigue con los demás. Antes, una excepción acá mataba
+      // el proceso entero sin guardar offset ni los cambios ya aplicados,
+      // dejando toda la tanda de botones sin procesar.
+      try {
+        const cambio = await handleCallback(u.callback_query, data, state);
+        if (cambio) huboCambiosDeDatos = true;
+      } catch (e) {
+        console.error('[AUDIO BOT] Error en callback ' + (u.callback_query.data || '?') + ': ' + e.message);
+        try { await answerCallback(u.callback_query.id, '⚠️ Error procesando este botón'); } catch (_) {}
+      }
       continue;
     }
 
@@ -222,7 +262,7 @@ async function main() {
       });
 
       huboCambiosDeDatos = true;
-      await sendMsg('✅ Tarea agregada: ' + taskText);
+      await sendMsg('✅ Tarea agregada: ' + taskText + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
     } catch (e) {
       await sendMsg('⚠️ Error en audio: ' + e.message);
     }

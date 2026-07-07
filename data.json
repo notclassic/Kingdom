@@ -2203,18 +2203,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1783000834558",
-      "projectId": "inbox",
-      "text": "Llamar a Coque mañana a las 4 de la tarde para discutir proyecto \"Umbrella\": Subproyecto \"Plantación\"",
-      "done": true,
-      "dueDate": "",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "dueTime": "",
-      "driveUrl": ""
-    },
-    {
       "id": "t1783185928194",
       "projectId": "inbox",
       "text": "Tarea: Realizar nota de voz del proyecto Jardín León y programar evento para el domingo a las 21:00, recordatorio para el momento.",
@@ -2316,7 +2304,8 @@
     "t1781595607843694",
     "t1",
     "t2",
-    "t1781717730685"
+    "t1781717730685",
+    "t1783000834558"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3352,6 +3341,22 @@
         "driveUrl": "",
         "dueSoonAlertSent": true,
         "overdueAlertSent": true
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T04:19:36.920Z",
+      "item": {
+        "id": "t1783000834558",
+        "projectId": "inbox",
+        "text": "Llamar a Coque mañana a las 4 de la tarde para discutir proyecto \"Umbrella\": Subproyecto \"Plantación\"",
+        "done": true,
+        "dueDate": "",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "dueTime": "",
+        "driveUrl": ""
       }
     }
   ],

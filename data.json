@@ -512,21 +512,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1783448236015374",
-      "name": "Generar email de salida.",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
     }
   ],
   "tasks": [
@@ -1630,6 +1615,18 @@
       "done": false,
       "dueDate": "2026-07-08",
       "dueTime": "14:15",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t178344825507289",
+      "projectId": "p1781584127104452",
+      "text": "Generar email de salida.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

@@ -100,21 +100,6 @@
       "completedAt": 1783435551531
     },
     {
-      "id": "p1781624973628982",
-      "name": "F3 · Email y CRM",
-      "area": "a1",
-      "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p1781582993530486",
       "name": "Plataforma",
       "area": "a1",
@@ -662,18 +647,6 @@
       "driveUrl": "",
       "dueSoonAlertSent": true,
       "overdueAlertSent": true
-    },
-    {
-      "id": "t1781581108973528",
-      "projectId": "p1781624973628982",
-      "text": "Agregar tareas (Por 3) vía correo.",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     },
     {
       "id": "t7",
@@ -1743,7 +1716,8 @@
     "t178158273877926",
     "t1783447731801354",
     "t178344774742994",
-    "t1783447837728822"
+    "t1783447837728822",
+    "t1781581108973528"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1788,7 +1762,8 @@
     "p1783447832007170",
     "p1781582668835650",
     "p1783448229858856",
-    "p1783448236015374"
+    "p1783448236015374",
+    "p1781624973628982"
   ],
   "trash": [
     {
@@ -3962,6 +3937,39 @@
         "alertSent": false,
         "driveUrl": ""
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T18:26:21.886Z",
+      "item": {
+        "id": "p1781624973628982",
+        "name": "F3 · Email y CRM",
+        "area": "a1",
+        "desc": "Correo y CRM. Es un bloque grande; conviene atacarlo junto.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": [
+        {
+          "id": "t1781581108973528",
+          "projectId": "p1781624973628982",
+          "text": "Agregar tareas (Por 3) vía correo.",
+          "done": false,
+          "dueDate": null,
+          "dueTime": null,
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
     }
   ],
   "alertConfig": {

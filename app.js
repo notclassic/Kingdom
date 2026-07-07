@@ -1619,7 +1619,7 @@ function renderProjectCards(){
       const dotColor = isOverdue ? '#e63946' : (isToday ? '#f5a623' : '');
       const dueDot = dotColor ? `<span class="due-dot" style="background:${dotColor};"></span>` : '';
       const due = t.dueDate
-        ? `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer; background:var(--panel); border:1px solid var(--border); color:var(--text);" title="Tocar para cambiar fecha">${dueDot}${fmtShort(t.dueDate)}</span>`
+        ? `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer; background:var(--panel); border:1px solid var(--border); color:var(--text);" title="Tocar para cambiar fecha">${dueDot}${fmtShort(t.dueDate)}${t.dueTime ? ' · '+t.dueTime : ''}</span>`
         : `<span class="due-badge" onclick="editTaskDate('${t.id}', this)" style="cursor:pointer;background:transparent;border:1px dashed var(--border);color:var(--muted);" title="Agregar fecha">+ fecha</span>`;
       return `<div class="task" draggable="true" data-task-id="${t.id}"
                    ondragstart="taskDragStart(event)" ondragover="taskDragOver(event)"

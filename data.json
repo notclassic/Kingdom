@@ -1936,7 +1936,8 @@
     "t17815866999337",
     "t1781626726363974",
     "t1781582476167637",
-    "t1781581710610850"
+    "t1781581710610850",
+    "t1781581080020863"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3831,6 +3832,23 @@
         "dueDate": "2026-06-16",
         "dueTime": "01:47",
         "priority": "high",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "overdueAlertSent": true
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:43:39.747Z",
+      "item": {
+        "id": "t1781581080020863",
+        "projectId": "p1781624973628982",
+        "text": "Enviar correos desde el dashboard.",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "dueTime": "01:37",
+        "priority": "medium",
         "emailAlert": false,
         "alertSent": true,
         "driveUrl": "",

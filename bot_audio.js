@@ -98,6 +98,20 @@ function normalizar(s) {
   return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
 }
 
+// Valida fecha YYYY-MM-DD dentro de [ayer, +365 días]. Devuelve '' si no vale.
+function validarFecha(fecha, hoy) {
+  if (typeof fecha !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return '';
+  const f = new Date(fecha + 'T12:00:00');
+  const h = new Date(hoy + 'T12:00:00');
+  const diff = (f - h) / 86400000;
+  return (diff >= -1 && diff <= 365) ? fecha : '';
+}
+
+// Valida hora HH:MM 24hs. Devuelve '' si no vale.
+function validarHora(hora) {
+  return (typeof hora === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(hora)) ? hora : '';
+}
+
 // Convierte la transcripción en una acción estructurada usando Groq:
 //   { accion: 'tarea',       text, dueDate, dueTime }
 //   { accion: 'proyecto',    nombre, descripcion, areaNombre }
@@ -126,10 +140,10 @@ async function parseAudio(rawText, data) {
       messages: [
         { role: 'system', content: 'Convertís notas de voz en acciones para un gestor de tareas. Hoy es ' + diaSemanaEnChile() + ' ' + hoy + ' (zona horaria de Chile).\n' +
           'Respondé SOLO un objeto JSON.\n' +
-          'Si la nota pide explícitamente CREAR UN PROYECTO (dice "crear proyecto" o "nuevo proyecto"):\n' +
-          '{"accion":"proyecto","nombre":"...","descripcion":"..." o null,"area":"una de: ' + nombresAreas + '" o null}\n' +
+          'Si la nota pide explícitamente CREAR UN PROYECTO (dice "crear proyecto" o "nuevo proyecto" o "agregar proyecto"):\n' +
+          '{"accion":"proyecto","nombre":"...","descripcion":"..." o null,"area":"una de: ' + nombresAreas + '" o null,"tarea":"si además menciona una acción concreta a hacer" o null,"fecha":"YYYY-MM-DD si menciona fecha" o null,"hora":"HH:MM si menciona hora" o null}\n' +
           'Si pide explícitamente CREAR UN SUBPROYECTO dentro de otro proyecto (dice "crear subproyecto X en Y" o similar):\n' +
-          '{"accion":"subproyecto","nombre":"...","descripcion":"..." o null,"proyecto_padre":"nombre del proyecto padre mencionado"}\n' +
+          '{"accion":"subproyecto","nombre":"...","descripcion":"..." o null,"proyecto_padre":"nombre del proyecto padre mencionado","tarea":"..." o null,"fecha":"..." o null,"hora":"..." o null}\n' +
           'En CUALQUIER otro caso es una tarea:\n' +
           '{"accion":"tarea","tarea":"texto breve, máx 20 palabras, sin explicaciones ni inventos","proyecto":"nombre del proyecto si la nota dice a qué proyecto va (ej: \'agregar tarea a Kingdom\', \'para el proyecto X\')" o null,"fecha":"YYYY-MM-DD" o null,"hora":"HH:MM" o null}\n' +
           'Reglas: "mañana" = ' + manana + '. "4 de la tarde" = "16:00". No inventes nada que no esté en la nota. Sacá del texto de la tarea las fechas/horas y el nombre del proyecto ya extraídos.\n' +
@@ -151,7 +165,10 @@ async function parseAudio(rawText, data) {
       accion: 'proyecto',
       nombre: p.nombre.trim().slice(0, 80),
       descripcion: (typeof p.descripcion === 'string' ? p.descripcion.trim().slice(0, 300) : ''),
-      areaNombre: (typeof p.area === 'string' ? p.area.trim() : '')
+      areaNombre: (typeof p.area === 'string' ? p.area.trim() : ''),
+      tarea: (typeof p.tarea === 'string' ? p.tarea.trim().slice(0, 200) : ''),
+      dueDate: validarFecha(p.fecha, hoy),
+      dueTime: validarHora(p.hora)
     };
   }
 
@@ -160,7 +177,10 @@ async function parseAudio(rawText, data) {
       accion: 'subproyecto',
       nombre: p.nombre.trim().slice(0, 80),
       descripcion: (typeof p.descripcion === 'string' ? p.descripcion.trim().slice(0, 300) : ''),
-      proyectoPadre: p.proyecto_padre.trim()
+      proyectoPadre: p.proyecto_padre.trim(),
+      tarea: (typeof p.tarea === 'string' ? p.tarea.trim().slice(0, 200) : ''),
+      dueDate: validarFecha(p.fecha, hoy),
+      dueTime: validarHora(p.hora)
     };
   }
 
@@ -168,21 +188,9 @@ async function parseAudio(rawText, data) {
   let text = (typeof p.tarea === 'string' ? p.tarea.trim() : '');
   if (!text || text.includes('\n') || text.length > rawText.length * 1.5 + 30) text = rawText;
 
-  let dueDate = '';
-  if (typeof p.fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p.fecha)) {
-    const f = new Date(p.fecha + 'T12:00:00');
-    const h = new Date(hoy + 'T12:00:00');
-    const diff = (f - h) / 86400000;
-    if (diff >= -1 && diff <= 365) dueDate = p.fecha;
-  }
-
-  let dueTime = '';
-  if (typeof p.hora === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.hora)) {
-    dueTime = p.hora;
-  }
-
   return {
-    accion: 'tarea', text: text, dueDate: dueDate, dueTime: dueTime,
+    accion: 'tarea', text: text,
+    dueDate: validarFecha(p.fecha, hoy), dueTime: validarHora(p.hora),
     proyecto: (typeof p.proyecto === 'string' ? p.proyecto.trim() : '')
   };
 }
@@ -376,6 +384,24 @@ async function handleCallback(cb, data, state) {
   return true;
 }
 
+// Si el audio de creación de proyecto/subproyecto mencionó una tarea o fecha,
+// crea la tarea inicial adentro. Sin tarea explícita pero con fecha, la tarea
+// toma el nombre del proyecto. Devuelve la línea de confirmación o ''.
+function crearTareaInicial(data, proyecto, parsed) {
+  if (!parsed.tarea && !parsed.dueDate) return '';
+  const texto = parsed.tarea || proyecto.name;
+  data.tasks = data.tasks || [];
+  data.tasks.push({
+    id: 't' + Date.now(),
+    projectId: proyecto.id, text: texto, done: false,
+    dueDate: parsed.dueDate || '', dueTime: parsed.dueTime || '',
+    priority: 'medium', emailAlert: false, alertSent: false, driveUrl: ''
+  });
+  let linea = '✅ Tarea adentro: ' + texto;
+  if (parsed.dueDate) linea += '\n📅 Vence: ' + parsed.dueDate + (parsed.dueTime ? ' a las ' + parsed.dueTime : '');
+  return linea;
+}
+
 async function main() {
   console.log('[AUDIO BOT] Iniciando...');
 
@@ -427,7 +453,10 @@ async function main() {
           continue;
         }
         huboCambiosDeDatos = true;
-        await sendMsg('📁 Proyecto creado: ' + res.proyecto.name + '\n🗂️ Área: ' + res.areaNombre + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+        const lineaTarea = crearTareaInicial(data, res.proyecto, parsed);
+        await sendMsg('📁 Proyecto creado: ' + res.proyecto.name + '\n🗂️ Área: ' + res.areaNombre +
+          (lineaTarea ? '\n' + lineaTarea : '') +
+          '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
         continue;
       }
 
@@ -447,7 +476,10 @@ async function main() {
             continue;
           }
           huboCambiosDeDatos = true;
-          await sendMsg('🆕 Proyecto NUEVO creado: ' + padreNuevo.proyecto.name + ' (área ' + padreNuevo.areaNombre + ')\n📂 Subproyecto creado adentro: ' + res.proyecto.name + '\nSi el nombre quedó mal transcripto, corregilo en el dashboard.\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+          const lineaTareaNuevo = crearTareaInicial(data, res.proyecto, parsed);
+          await sendMsg('🆕 Proyecto NUEVO creado: ' + padreNuevo.proyecto.name + ' (área ' + padreNuevo.areaNombre + ')\n📂 Subproyecto creado adentro: ' + res.proyecto.name +
+            (lineaTareaNuevo ? '\n' + lineaTareaNuevo : '') +
+            '\nSi el nombre quedó mal transcripto, corregilo en el dashboard.\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
           continue;
         }
         if (res.error === 'ambiguo') {
@@ -455,7 +487,10 @@ async function main() {
           continue;
         }
         huboCambiosDeDatos = true;
-        await sendMsg('📂 Subproyecto creado: ' + res.proyecto.name + '\n📁 Dentro de: ' + res.padre.name + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+        const lineaTareaSub = crearTareaInicial(data, res.proyecto, parsed);
+        await sendMsg('📂 Subproyecto creado: ' + res.proyecto.name + '\n📁 Dentro de: ' + res.padre.name +
+          (lineaTareaSub ? '\n' + lineaTareaSub : '') +
+          '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
         continue;
       }
 

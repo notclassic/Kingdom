@@ -1549,6 +1549,18 @@
       "driveUrl": ""
     },
     {
+      "id": "t178344825507289",
+      "projectId": "p1781584127104452",
+      "text": "Generar email de salida.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t1783447842184127",
       "projectId": "p1781584127104452",
       "text": "WhatsApp,El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
@@ -1608,18 +1620,6 @@
       "done": false,
       "dueDate": "2026-07-08",
       "dueTime": "14:15",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t178344825507289",
-      "projectId": "p1781584127104452",
-      "text": "Generar email de salida.",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

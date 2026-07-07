@@ -526,21 +526,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1783447620608429",
-      "name": "Preparar el bot por rubro.",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
     }
   ],
   "tasks": [
@@ -1614,6 +1599,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1783447773140496",
+      "projectId": "p1781584127104452",
+      "text": "Preparar el bot por rubro.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1768,7 +1765,8 @@
     "p178159067876735",
     "p1781590678767292",
     "p1783447588062866",
-    "p1783447605800757"
+    "p1783447605800757",
+    "p1783447620608429"
   ],
   "trash": [
     {

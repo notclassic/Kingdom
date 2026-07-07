@@ -2067,19 +2067,6 @@
       "mcpUpdatedAt": "2026-07-07T05:36:18.284Z"
     },
     {
-      "id": "t1781919048635878",
-      "projectId": "p1781572037505287",
-      "text": "Corregir el diseño del menú: hoy está alineado a la izquierda y no centrado. Revisar los espacios y aplicar un estilo \"glass\" tipo Mac.",
-      "done": false,
-      "dueDate": "2026-06-22",
-      "dueTime": "09:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
-    },
-    {
       "id": "t178214150332569",
       "projectId": "p1781589327240693",
       "text": "Arreglar el script de Indeed (BuscaPegaBot-Indeed): lee los correos de Indeed, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit",
@@ -2244,7 +2231,8 @@
     "t1781841347094366",
     "t1781675722089858",
     "t1781848016142721",
-    "t1781848697877853"
+    "t1781848697877853",
+    "t1781919048635878"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3484,6 +3472,23 @@
         "emailAlert": false,
         "alertSent": true,
         "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:41:46.313Z",
+      "item": {
+        "id": "t1781919048635878",
+        "projectId": "p1781572037505287",
+        "text": "Corregir el diseño del menú: hoy está alineado a la izquierda y no centrado. Revisar los espacios y aplicar un estilo \"glass\" tipo Mac.",
+        "done": false,
+        "dueDate": "2026-06-22",
+        "dueTime": "09:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": "",
+        "mcpUpdatedAt": "2026-06-23T00:59:57.222Z"
       }
     }
   ],

@@ -554,21 +554,6 @@
       "mcpUpdatedAt": "2026-06-23T20:59:16.774Z"
     },
     {
-      "id": "p1781624973629977",
-      "name": "Notas y criterios",
-      "area": "a1",
-      "desc": "No son tareas de desarrollo: criterios y recordatorios.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781572037505287"
-    },
-    {
       "id": "p178218303327465",
       "name": "Venta de análisis de elasticidad de precio según demora de venta",
       "area": "a1",
@@ -3816,6 +3801,26 @@
         "dueSoonAlertSent": true,
         "overdueAlertSent": true
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:42:48.734Z",
+      "item": {
+        "id": "p1781624973629977",
+        "name": "Notas y criterios",
+        "area": "a1",
+        "desc": "No son tareas de desarrollo: criterios y recordatorios.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

@@ -410,9 +410,8 @@ function timeKeyboard(taskId, fecha) {
   function btn(text, hora) { return { text: text, callback_data: 'pdT|' + taskId + '|' + fecha + '|' + hora }; }
   return {
     inline_keyboard: [
-      [btn('Sin hora', '-'), btn('09:00', '09:00'), btn('12:00', '12:00')],
-      [btn('15:00', '15:00'), btn('18:00', '18:00'), btn('20:00', '20:00')],
-      [{ text: '← Cambiar fecha', callback_data: 'pickdate_' + taskId }]
+      [btn('09:00', '09:00'), btn('12:00', '12:00'), btn('15:00', '15:00')],
+      [btn('18:00', '18:00'), btn('20:00', '20:00'), { text: '✔️ Listo', callback_data: 'pdOK|' + taskId }]
     ]
   };
 }
@@ -508,7 +507,7 @@ async function handleCallback(cb, data, state) {
   const raw = cb.data || '';
 
   // --- Selector de fecha/hora (callbacks con separador '|') ---
-  if (raw.startsWith('pdD|') || raw.startsWith('pdT|') || raw.startsWith('pdB|')) {
+  if (raw.startsWith('pdD|') || raw.startsWith('pdT|') || raw.startsWith('pdB|') || raw.startsWith('pdOK|')) {
     const partes = raw.split('|');
     const tId = partes[1];
     const t = (data.tasks || []).find(x => x.id === tId);
@@ -517,36 +516,64 @@ async function handleCallback(cb, data, state) {
       return false;
     }
 
-    // Volver a los botones originales
+    // Volver a los botones originales sin tocar nada
     if (raw.startsWith('pdB|')) {
       try { await answerCallback(cb.id, ''); } catch (_) {}
       if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, taskKeyboard(tId));
       return false;
     }
 
-    // Eligió fecha -> mostrar grilla de horas
-    if (raw.startsWith('pdD|')) {
-      const fecha = partes[2];
-      try { await answerCallback(cb.id, 'Fecha ' + fecha + ' — ahora la hora'); } catch (_) {}
-      if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, timeKeyboard(tId, fecha));
+    // "Listo": cerrar el selector (la fecha ya quedó aplicada en el paso anterior)
+    if (raw.startsWith('pdOK|')) {
+      try { await answerCallback(cb.id, '✔️'); } catch (_) {}
+      if (cb.message) await editKeyboard(cb.message.chat.id, cb.message.message_id, { inline_keyboard: [] });
       return false;
     }
 
-    // Eligió hora ('-' = sin hora) -> aplicar y cerrar
+    // Eligió fecha -> SE APLICA YA, conservando la hora original de la tarea.
+    // La grilla de horas que queda es OPCIONAL: solo para cambiar la hora.
+    if (raw.startsWith('pdD|')) {
+      const fecha = partes[2];
+      t.dueDate = fecha;
+      // t.dueTime NO se toca: se mantiene la hora original (pedido explícito).
+      t.mcpUpdatedAt = new Date().toISOString();
+      state.dueAlerted = state.dueAlerted || {};
+      const esc = escalonDeFecha(fecha);
+      if (esc > 0) state.dueAlerted[tId] = esc;
+      else delete state.dueAlerted[tId];
+      try {
+        await answerCallback(cb.id, '📅 ' + fecha + ' guardada');
+        if (cb.message) {
+          await fetch(TG + '/editMessageText', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              chat_id: cb.message.chat.id,
+              message_id: cb.message.message_id,
+              text: (cb.message.text || '') + '\n\n📅 Reprogramada: ' + t.text +
+                '\nNuevo vencimiento: ' + fecha + (t.dueTime ? ' a las ' + t.dueTime + ' (hora original)' : '') +
+                '\n🕐 Si querés cambiar la hora, tocá una. Si no, tocá ✔️ Listo.',
+              reply_markup: timeKeyboard(tId, fecha)
+            })
+          });
+        }
+      } catch (e) {
+        console.error('[AUDIO BOT] Fecha aplicada pero falló la confirmación en Telegram: ' + e.message);
+      }
+      return true; // la fecha ya cambió: hay que guardar data.json
+    }
+
+    // Eligió hora (opcional): solo actualiza la hora; la fecha ya quedó en el paso anterior
     const fecha = partes[2];
     const hora = (partes[3] && partes[3] !== '-') ? partes[3] : '';
-    t.dueDate = fecha;
-    t.dueTime = hora;
+    if (fecha) t.dueDate = fecha; // idempotente por si este callback llega antes que el de fecha
+    if (hora) t.dueTime = hora;
     t.mcpUpdatedAt = new Date().toISOString();
-    state.dueAlerted = state.dueAlerted || {};
-    const esc = escalonDeFecha(fecha);
-    if (esc > 0) state.dueAlerted[tId] = esc;
-    else delete state.dueAlerted[tId];
     try {
-      await answerCallback(cb.id, '📅 ' + fecha + (hora ? ' ' + hora : ''));
+      await answerCallback(cb.id, '🕐 ' + (hora || t.dueTime || ''));
       if (cb.message) {
         await editMessage(cb.message.chat.id, cb.message.message_id,
-          (cb.message.text || '') + '\n\n📅 Reprogramada: ' + t.text + '\nNuevo vencimiento: ' + fecha + (hora ? ' a las ' + hora : ''));
+          (cb.message.text || '') + '\n\n🕐 Hora actualizada: ' + t.dueDate + (t.dueTime ? ' a las ' + t.dueTime : ''));
       }
     } catch (e) {
       console.error('[AUDIO BOT] Cambio aplicado pero falló la confirmación en Telegram: ' + e.message);

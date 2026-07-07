@@ -338,37 +338,11 @@
 
 <div id="tab-settings" style="display:none;">
 <div class="config-banner" id="emailConfigBanner"></div>
+
+<!-- ============ 1. LO QUE SE USA SEGUIDO ============ -->
 <section>
-  <h2>🔗 Google Drive</h2>
-  <div class="config-banner" id="googleConfigBanner"></div>
-  <div id="googleDriveStatus"></div>
-</section>
-<section>
-  <h2>🔄 Sincronización con GitHub (Kingdom)</h2>
-  <div class="row-desc" style="margin-bottom:10px;">
-    Guardá tus datos (proyectos, tareas, leads) en el archivo <code>data.json</code> del repo
-    <code>notclassic/Kingdom</code>, para que estén disponibles desde cualquier dispositivo
-    que abra <code>dashboard.html</code> con este mismo token configurado.
-  </div>
-  <div class="row2">
-    <input type="password" id="githubTokenInput" placeholder="Pegá tu Personal Access Token (github_pat_...)">
-    <button class="btn-toggle" style="margin-top:0;" onclick="saveGithubToken()">Guardar token</button>
-  </div>
-  <div class="row2" style="margin-top:8px;">
-    <button class="btn-primary" onclick="pushToGitHub()">⬆️ Subir datos ahora</button>
-    <button class="btn-toggle" style="margin-top:0;" onclick="pullFromGitHub()">⬇️ Descargar última versión</button>
-  </div>
-  <div class="row-desc" id="githubAutoSyncInfo" style="margin-top:8px;"></div>
-  <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
-</section>
-<section>
-  <h2>🗑 Eliminados</h2>
-  <div class="row-desc" style="margin-bottom:10px;">Lo que borrás (tareas o proyectos) queda acá, como la papelera del correo. Podés restaurarlo o borrarlo del todo. Se vacía solo a los 30 días.</div>
-  <button class="btn-toggle" style="margin-top:0;" onclick="openTrash()">🗑 Abrir Eliminados</button>
-</section>
-<section>
-  <h2>⏰ Anticipación de avisos por importancia</h2>
-  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot por Telegram según la importancia de cada tarea. El aviso sale en la próxima revisión del bot (cada ~5 min), así que es aproximado, no exacto.</div>
+  <h2>⏰ Avisos por Telegram</h2>
+  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot según la importancia de cada tarea. El aviso sale en la próxima pasada del bot (cada ~5 min), así que es aproximado.</div>
   <div class="alert-cfg-row">
     <div class="alert-cfg-label">🔴 Urgente <span class="hint">(:( Quedó la caga)</span></div>
     <select id="alertLeadHigh" onchange="setAlertLead('high', this.value)"></select>
@@ -382,45 +356,72 @@
     <select id="alertLeadLow" onchange="setAlertLead('low', this.value)"></select>
   </div>
 </section>
+
 <section>
-  <h2>💾 Respaldo de datos</h2>
-  <div class="row-desc" style="margin-bottom:10px;">
-    Exportá todo (proyectos, tareas, leads, configuración) a un archivo .json para guardarlo como respaldo,
-    o importalo para restaurar/transferir a otro navegador o dispositivo.
+  <h2>🗂 Áreas y proyectos</h2>
+  <div class="row-desc" style="margin-bottom:6px; font-weight:700;">Categorías (áreas)</div>
+  <div id="areaSettings"></div>
+  <div class="row-desc" style="margin:16px 0 6px; font-weight:700;">Color y contactos por proyecto</div>
+  <div id="projectColorSettings"></div>
+</section>
+
+<!-- ============ 2. DATOS: TODO LO QUE GUARDA Y RECUPERA, EN UN SOLO LUGAR ============ -->
+<section>
+  <h2>☁️ Tus datos: sincronización, respaldo y papelera</h2>
+
+  <div class="row-desc" style="margin-bottom:6px; font-weight:700;">Sincronización con GitHub</div>
+  <div class="row-desc" style="margin-bottom:10px;">Guarda todo (proyectos, tareas, leads) en <code>data.json</code> del repo <code>notclassic/Kingdom</code>. Cualquier dispositivo con este mismo token ve lo mismo.</div>
+  <div class="row2">
+    <input type="password" id="githubTokenInput" placeholder="Pegá tu Personal Access Token (github_pat_...)">
+    <button class="btn-toggle" style="margin-top:0;" onclick="saveGithubToken()">Guardar token</button>
   </div>
+  <div class="row2" style="margin-top:8px;">
+    <button class="btn-primary" onclick="pushToGitHub()">⬆️ Subir datos ahora</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="pullFromGitHub()">⬇️ Descargar última versión</button>
+  </div>
+  <div class="row-desc" id="githubAutoSyncInfo" style="margin-top:8px;"></div>
+  <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
+
+  <div class="row-desc" style="margin:18px 0 6px; font-weight:700;">Respaldo local (.json)</div>
+  <div class="row-desc" style="margin-bottom:8px;">Copia completa en un archivo, para guardar aparte o pasar a otro navegador. Independiente de GitHub.</div>
   <div class="row2">
     <button class="btn-primary" onclick="exportData()">⬇️ Exportar datos (.json)</button>
     <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importFile').click()">⬆️ Importar datos</button>
   </div>
   <input type="file" id="importFile" accept="application/json" style="display:none;" onchange="importData(event)">
-  <div class="row-desc" style="margin:16px 0 6px; font-weight:700;">🤖 Asistente IA (Gemini)</div>
-  <div class="row-desc" style="margin-bottom:8px;">Exportá tus proyectos a Markdown para mejorarlos con una IA (ortografía, redacción, sugerencias de tareas y subproyectos) y volvé a importar el resultado. La IA debe conservar los marcadores [[id]].</div>
+
+  <div class="row-desc" style="margin:18px 0 6px; font-weight:700;">Papelera</div>
+  <div class="row-desc" style="margin-bottom:8px;">Lo que borrás queda 30 días acá, con buscador y orden por fecha.</div>
+  <button class="btn-toggle" style="margin-top:0;" onclick="openTrash()">🗑 Abrir Eliminados</button>
+</section>
+
+<section>
+  <h2>🔗 Google Drive</h2>
+  <div class="config-banner" id="googleConfigBanner"></div>
+  <div id="googleDriveStatus"></div>
+</section>
+
+<!-- ============ 3. IA (un solo lugar, con guía de cuál usar) ============ -->
+<section>
+  <h2>🤖 Mejorar proyectos con IA</h2>
+  <div class="row-desc" style="margin-bottom:8px;">
+    El flujo: exportás tus proyectos a Markdown, se los das a una IA para mejorarlos
+    (debe conservar los marcadores [[id]]) y volvés a traer el resultado.
+    Para aplicar cambios lo más seguro es <strong>🛠 Gestionar cambios</strong> (botón del encabezado):
+    hace lo mismo que importar, pero mostrando antes qué va a cambiar y guardando un respaldo automático.
+  </div>
   <div class="row2">
     <button class="btn-primary" onclick="exportMarkdown()">⬇️ Exportar a Markdown (.md)</button>
     <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importMdFile').click()">⬆️ Importar Markdown mejorado</button>
   </div>
   <input type="file" id="importMdFile" accept=".md,text/markdown,text/plain" style="display:none;" onchange="importMarkdown(event)">
-  <button class="btn-toggle" style="margin-top:8px;" onclick="openAiPaste()">📋 Pegar sugerencias de IA</button>
+  <button class="btn-toggle" style="margin-top:8px;" onclick="openAiPaste()">📋 Pegar sugerencias de IA (agrega solo tareas nuevas [[new]])</button>
 </section>
+
+<!-- ============ 4. PENDIENTES: nota compacta, sin botones muertos ============ -->
 <section>
-  <h2>⚙️ Configuración de categorías (áreas)</h2>
-  <div id="areaSettings"></div>
-</section>
-<section>
-  <h2>🎨 Proyectos: color y contactos</h2>
-  <div id="projectColorSettings"></div>
-</section>
-<section>
-  <h2>🚧 Próximos módulos (pendiente)</h2>
-  <div class="row-desc" style="margin-bottom:10px;">
-    Estos botones son recordatorios de funciones planeadas. No están activos todavía
-    (requieren hosting https y configuración aparte, ver MANUAL_ARQUITECTURA.md).
-  </div>
-  <div class="addbox" style="border-top:none; padding-top:0;">
-    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">📧 Conectar Gmail (pendiente)</button>
-    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">📅 Conectar Calendar con notificaciones (pendiente)</button>
-    <button class="btn-toggle" disabled style="opacity:.5; cursor:not-allowed;">🎤 Configurar envío de audios (pendiente)</button>
-  </div>
+  <h2>🚧 En preparación</h2>
+  <div class="row-desc">Enviar correos (Gmail) y agendar reuniones (Calendar) desde Kingdom — el código del Worker ya está escrito; falta la configuración de acceso de Google y el despliegue. También: configuración de envío de audios. Cuando estén activos van a aparecer acá como secciones propias.</div>
 </section>
 </div>
 

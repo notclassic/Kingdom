@@ -119,14 +119,6 @@ function deleteArea(id){
   if(!data.deletedAreaIds.includes(id)) data.deletedAreaIds.push(id);
   save(); renderAll(); renderAreaSettings();
 }
-function editProjectArea(id, areaId){
-  const p = data.projects.find(x=>x.id===id);
-  if(!p) return;
-  p.area = areaId;
-  const ai = areaInfo(areaId);
-  if(ai && ai.context) p.context = ai.context;
-  save(); renderAll();
-}
 function _areaOptions(sel){
   const ctxs = [['profesional','Profesional'],['personal','Personal'],['otro','Otro']];
   let html = '';
@@ -204,16 +196,6 @@ function updateAppMenuActive(){
   document.querySelectorAll('.appmenu-item').forEach(b=> b.classList.toggle('active', b.dataset.tab===_currentTab));
 }
 let _lastScrollY = 0, _barTick = false;
-// Achicado automático de la barra inferior y el header DESACTIVADO:
-// provocaba un parpadeo (tiritar) con el scroll que no se pudo estabilizar.
-// La barra y el header quedan siempre en su tamaño normal, quietos.
-function _updateBarShrink(){
-  const bar = document.getElementById('bottomNav');
-  const hdr = document.getElementById('appHeader');
-  if(bar) bar.classList.remove('shrink');
-  if(hdr) hdr.classList.remove('collapsed');
-  _barTick = false;
-}
 // Se quita el listener de scroll que disparaba el achicado.
 
 /* ====== DATOS INICIALES ====== */
@@ -793,7 +775,8 @@ function importMarkdown(event){
   const reader = new FileReader();
   reader.onload = (e)=>{
     try{
-      if(!confirm('Voy a aplicar el archivo: actualizo lo existente por su id y agrego lo marcado como [[new]]. No borro nada. ¿Continuar?')){ return; }
+      if(!confirm('Voy a aplicar el archivo: actualizo lo existente por su id y agrego lo marcado como [[new]]. No borro nada. Guardo un respaldo de la versión actual antes. ¿Continuar?')){ return; }
+      saveBackupSnapshot('antes de importar Markdown');
       const r = _applyMarkdown(e.target.result);
       save(); renderAll(); if(typeof renderAreaSettings==='function') renderAreaSettings();
       alert('Listo. Actualizados: '+r.upd+' · Nuevos: '+r.cre + (r.skip?(' · Líneas ignoradas: '+r.skip):''));
@@ -1057,18 +1040,6 @@ function setProjectIcon(id){
   }
   p.icon = choice.trim();
   save(); renderAll();
-}
-function openDrive(id){
-  const p = projectInfo(id);
-  if(p.driveUrl){
-    window.open(p.driveUrl, '_blank');
-  }else{
-    promptDriveUrl(p);
-  }
-}
-function editDrive(id){
-  const p = projectInfo(id);
-  promptDriveUrl(p);
 }
 function promptDriveUrl(obj){
   const url = prompt('Pegá el link de la carpeta o documento de Google Drive (dejalo vacío para quitar el vínculo):', obj.driveUrl||'');
@@ -1526,10 +1497,6 @@ function closeChipEdit(){
   document.getElementById('chipEditOverlay').classList.remove('open');
 }
 
-function toggleMsDropdown(){}
-function toggleProjectDropdown(){}
-function toggleProjectDropdown2(){}
-
 function updateSheetLabels(){
   const label = activeProjects.size===0 ? 'Todos los proyectos'
     : activeProjects.size===1 ? projectInfo([...activeProjects][0]).name
@@ -1545,11 +1512,6 @@ function renderProjectFilters(){ updateSheetLabels(); }
 let showDoneProjects = false;
 let shownDoneTasks = new Set();
 let showCompletedInline = (typeof localStorage!=='undefined' && localStorage.getItem('kingdom_showCompleted')==='1');
-function toggleCompletedInline(){
-  showCompletedInline = !showCompletedInline;
-  try{ localStorage.setItem('kingdom_showCompleted', showCompletedInline?'1':'0'); }catch(_){}
-  renderProjectCards();
-}
 function copyId(e, id){
   e.stopPropagation();
   try{ navigator.clipboard.writeText(id); }catch(_){}
@@ -2025,9 +1987,6 @@ function updateTreeButton(){
     ][_treeLevel-1];
   }
 }
-// compatibilidad por si quedaron llamadas a las funciones viejas
-function collapseAllProjects(){ _treeLevel = 1; applyTreeLevel(true, true); }
-function expandAllProjects(){ _treeLevel = 2; applyTreeLevel(true, true); }
 function toggleHasLeads(id){
   const p = projectInfo(id);
   p.hasLeads = !p.hasLeads;
@@ -2542,11 +2501,6 @@ function populateSelects(){
   document.getElementById('nl-project').innerHTML = '<option value="">Sin proyecto vinculado</option>' + projOptions;
   const npParent = document.getElementById('np-parent');
   if(npParent){ const cur = npParent.value; npParent.innerHTML = '<option value="">Proyecto principal (sin padre)</option>' + projOptions; npParent.value = cur; }
-}
-function _rootOf(id){
-  let p = data.projects.find(x=>x.id===id);
-  while(p && p.parentId){ const par = data.projects.find(x=>x.id===p.parentId); if(!par) break; p = par; }
-  return p ? p.id : id;
 }
 function _projOptionsHierarchy(){
   const out = [];

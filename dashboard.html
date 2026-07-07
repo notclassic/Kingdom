@@ -11,6 +11,28 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Portafolio">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* ---- Mejoras del modal Eliminados (tamaño, legibilidad, herramientas) ---- */
+#trashModalOverlay .modal{
+  width:min(780px,96vw) !important;
+  max-width:96vw !important;
+  max-height:92vh !important;
+}
+#trashModalOverlay #trashList{
+  font-size:.95rem;
+  max-height:58vh;
+  overflow:auto;
+}
+#trashModalOverlay .trash-tools{ display:flex; gap:8px; margin:0 0 10px; flex-wrap:wrap; }
+#trashModalOverlay .trash-tools input{
+  flex:1; min-width:180px; padding:10px 12px; border:1px solid var(--border);
+  border-radius:10px; background:var(--panel); color:var(--text); font-size:.9rem;
+}
+#trashModalOverlay .trash-tools select{
+  padding:10px; border:1px solid var(--border); border-radius:10px;
+  background:var(--panel); color:var(--text); font-size:.9rem;
+}
+</style>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -273,6 +295,14 @@
     </div>
     <div class="addbox" style="border-top:none; padding-top:0;">
       <div class="row-desc" style="margin-bottom:8px;">Restaurá lo que borraste por error o borralo definitivamente. Lo que quede más de 30 días se borra solo.</div>
+      <div class="trash-tools">
+        <input type="text" id="trashSearch" placeholder="🔎 Buscar por nombre…" oninput="applyTrashView()">
+        <select id="trashSort" onchange="applyTrashView()">
+          <option value="recent">Más recientes primero</option>
+          <option value="oldest">Más antiguos primero</option>
+          <option value="name">Nombre A→Z</option>
+        </select>
+      </div>
       <div id="trashList"></div>
       <button class="btn-toggle" style="margin-top:10px; border-color:var(--red); color:var(--red);" onclick="emptyTrash()">Vaciar todo</button>
     </div>
@@ -395,6 +425,66 @@
 </div>
 
 <script src="app.js"></script>
+<script>
+/* ---- Buscador y orden del modal Eliminados ----
+   La lista la dibuja app.js dentro de #trashList. Este bloque NO toca app.js:
+   filtra y reordena los elementos ya dibujados. El MutationObserver re-aplica
+   el filtro/orden cada vez que app.js redibuja (abrir, restaurar, borrar).
+   El observer se desconecta mientras reordenamos para no observarse a sí
+   mismo y entrar en bucle. */
+(function(){
+  var obs = null;
+
+  function norm(s){
+    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // Extrae la fecha de eliminación del texto del ítem: "15-06-2026" o "2026-06-15".
+  function fechaDe(el){
+    var t = el.textContent || '';
+    var m = t.match(/(\d{2})-(\d{2})-(\d{4})/);
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1]).getTime();
+    m = t.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]).getTime();
+    return 0;
+  }
+
+  window.applyTrashView = function(){
+    var list = document.getElementById('trashList');
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.children);
+    if (!items.length) return;
+
+    if (obs) obs.disconnect(); // no observarnos a nosotros mismos
+
+    var q = norm((document.getElementById('trashSearch') || {}).value);
+    var modo = ((document.getElementById('trashSort') || {}).value) || 'recent';
+
+    items.forEach(function(el){
+      el.style.display = (!q || norm(el.textContent).indexOf(q) !== -1) ? '' : 'none';
+    });
+
+    items.sort(function(a, b){
+      if (modo === 'name') return norm(a.textContent) < norm(b.textContent) ? -1 : 1;
+      var da = fechaDe(a), db = fechaDe(b);
+      return modo === 'oldest' ? da - db : db - da;
+    });
+    items.forEach(function(el){ list.appendChild(el); });
+
+    if (obs) obs.observe(list, { childList: true });
+  };
+
+  function iniciar(){
+    var list = document.getElementById('trashList');
+    if (!list || !window.MutationObserver) return;
+    obs = new MutationObserver(function(){ window.applyTrashView(); });
+    obs.observe(list, { childList: true });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
+</script>
 <div id="chipEditOverlay" class="mp-overlay" onclick="if(event.target===this)closeChipEdit()">
   <div class="mp-box">
     <h3>Editar categoría</h3>

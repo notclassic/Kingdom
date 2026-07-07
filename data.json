@@ -175,21 +175,6 @@
       "parentId": "p1781584127104452"
     },
     {
-      "id": "p1783447605800757",
-      "name": "Armar listado de rubros.",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
-    },
-    {
       "id": "p10",
       "color": "#8e8e93",
       "name": "NotClassic",
@@ -1617,6 +1602,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1783447766245797",
+      "projectId": "p1781584127104452",
+      "text": "Armar listado de rubros.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1770,7 +1767,8 @@
     "p1781590678767214",
     "p178159067876735",
     "p1781590678767292",
-    "p1783447588062866"
+    "p1783447588062866",
+    "p1783447605800757"
   ],
   "trash": [
     {

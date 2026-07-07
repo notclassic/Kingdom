@@ -81,6 +81,9 @@
   .btn.discard{color:#b9542f; border-color:#f0d9cd;}
   .btn.block{color:#c0392b; border-color:#f1cfcf;}
   .btn.rescue{color:#1f9d57; border-color:#cfeede;}
+  .btn.apply{color:#fff; background:var(--green); border-color:var(--green); font-weight:700;}
+  .btn.apply:hover{background:#2eb350;}
+  .chip.applied{background:#e7f6ee; color:#1f9d57;}
   .btn:disabled{opacity:.5; cursor:default;}
 
   /* Estados */
@@ -134,6 +137,9 @@
       <button class="tab active" id="tabOfertas" onclick="setTab('ofertas')">
         Ofertas <span class="count" id="cntOfertas"></span>
       </button>
+      <button class="tab" id="tabPostuladas" onclick="setTab('postuladas')">
+        Postuladas <span class="count" id="cntPostuladas"></span>
+      </button>
       <button class="tab" id="tabDescartadas" onclick="setTab('descartadas')">
         Descartadas <span class="count" id="cntDescartadas"></span>
       </button>
@@ -166,7 +172,7 @@ const TOKEN_KEY  = 'kingdom_recruitment_token';
 
 /* ===================== ESTADO ===================== */
 let TOKEN = 'Kingdom_popom';   // token fijo: entrás directo desde cualquier dispositivo
-const estado = { listado:[], totalOfertas:null, hayMas:false, descartadas:null, descCargando:false, tab:'ofertas' };
+const estado = { listado:[], totalOfertas:null, hayMas:false, descartadas:null, descCargando:false, postuladas:null, postCargando:false, tab:'ofertas' };
 
 /* ===================== JSONP (evita CORS) ===================== */
 function jsonp(params){
@@ -242,13 +248,33 @@ function llenarOrigenes(){
 function setTab(t){
   estado.tab = t;
   document.getElementById('tabOfertas').classList.toggle('active', t==='ofertas');
+  document.getElementById('tabPostuladas').classList.toggle('active', t==='postuladas');
   document.getElementById('tabDescartadas').classList.toggle('active', t==='descartadas');
   document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
-  // La primera vez que entrás a Descartadas, las traemos del puente.
+  // La primera vez que entrás a Descartadas o Postuladas, las traemos del puente.
   if(t==='descartadas' && estado.descartadas===null && !estado.descCargando){
     cargarDescartadas();
     return;
   }
+  if(t==='postuladas' && estado.postuladas===null && !estado.postCargando){
+    cargarPostuladas();
+    return;
+  }
+  render();
+}
+
+async function cargarPostuladas(){
+  estado.postCargando = true;
+  render();
+  try{
+    const r = await jsonp({ action:'postuladas' });
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    estado.postuladas = r.postuladas || [];
+  }catch(err){
+    estado.postuladas = null;
+    toast('No se pudieron cargar las postuladas: '+(err.message||err));
+  }
+  estado.postCargando = false;
   render();
 }
 
@@ -270,6 +296,8 @@ async function cargarDescartadas(){
 /* ===================== RENDER ===================== */
 function render(){
   document.getElementById('cntOfertas').textContent = '· ' + estado.listado.length;
+  document.getElementById('cntPostuladas').textContent =
+    (estado.postuladas===null) ? '' : ('· ' + estado.postuladas.length);
   document.getElementById('cntDescartadas').textContent =
     (estado.descartadas===null) ? '' : ('· ' + estado.descartadas.length);
 
@@ -290,7 +318,21 @@ function render(){
     }
   }
 
-  let datos = (estado.tab==='ofertas') ? estado.listado : (estado.descartadas||[]);
+  // Pestaña Postuladas: estados especiales
+  if(estado.tab==='postuladas'){
+    if(estado.postCargando){
+      cont.innerHTML = '<div class="state"><div class="spinner"></div>Cargando postuladas…</div>';
+      return;
+    }
+    if(estado.postuladas===null){
+      cont.innerHTML = '<div class="state"><div class="big">👔</div>Tocá de nuevo "Postuladas" para cargarlas.</div>';
+      return;
+    }
+  }
+
+  let datos = (estado.tab==='ofertas') ? estado.listado
+            : (estado.tab==='postuladas') ? (estado.postuladas||[])
+            : (estado.descartadas||[]);
 
   datos = datos.filter(o=>{
     if(estado.tab==='ofertas' && origen!=='todos' && o.origen!==origen) return false;
@@ -303,11 +345,17 @@ function render(){
 
   if(datos.length===0){
     cont.innerHTML = '<div class="state"><div class="big">🗂️</div>'+
-      (estado.tab==='ofertas' ? 'No hay ofertas que coincidan.' : 'No hay descartadas para mostrar.')+'</div>';
+      (estado.tab==='ofertas' ? 'No hay ofertas que coincidan.'
+       : estado.tab==='postuladas' ? 'Todavía no registraste postulaciones.'
+       : 'No hay descartadas para mostrar.')+'</div>';
     return;
   }
 
-  datos.forEach(o=> cont.appendChild(estado.tab==='ofertas' ? cardOferta(o) : cardDescartada(o)) );
+  datos.forEach(o=> cont.appendChild(
+    estado.tab==='ofertas' ? cardOferta(o)
+    : estado.tab==='postuladas' ? cardPostulada(o)
+    : cardDescartada(o)
+  ));
 }
 
 function chipOrigen(origen){
@@ -349,9 +397,29 @@ function cardOferta(o){
     '</div>'+
     '<div class="actions">'+
       (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+      '<button class="btn apply" onclick="accionPostular(this,\''+jsAttr(o.link)+'\')">✅ Postulé</button>'+
       '<button class="btn discard" onclick="accionDescartar(this,\''+jsAttr(o.link)+'\')">No me sirve</button>'+
       '<button class="btn block" onclick="accionBloquearEmpresa(this,\''+jsAttr(o.empresa)+'\',\''+jsAttr(o.link)+'\')">Bloquear empresa</button>'+
       '<button class="btn block" onclick="accionBloquearPalabra(this,\''+jsAttr(o.link)+'\')">Bloquear palabra</button>'+
+    '</div>';
+  return div;
+}
+
+function cardPostulada(o){
+  const div = document.createElement('div');
+  div.className='card';
+  const url = linkOferta(o);
+  div.innerHTML =
+    '<div class="top"><div>'+
+      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
+    '</div></div>'+
+    '<div class="meta">'+chipOrigen(o.origen)+
+      (o.fechaPostulacion?'<span class="chip applied">Postulado: '+escapar(o.fechaPostulacion)+'</span>':'')+
+      (o.fecha?'<span class="chip date">Oferta: '+escapar(o.fecha)+'</span>':'')+
+    '</div>'+
+    '<div class="actions">'+
+      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
     '</div>';
   return div;
 }
@@ -397,6 +465,18 @@ async function correr(btn, params, okMsg, alExito){
     botones.forEach(b=> b.disabled=false);
     render();
   }
+}
+
+function accionPostular(btn, link){
+  const i = estado.listado.findIndex(o=>o.link===link);
+  const oferta = i>=0 ? estado.listado[i] : null;
+  correr(btn, {action:'postular', link}, 'Postulación registrada 👔', ()=>{
+    if(i>=0) estado.listado.splice(i,1);
+    // Si la pestaña Postuladas ya se cargó alguna vez, la actualizamos localmente.
+    if(estado.postuladas!==null && oferta){
+      estado.postuladas.unshift(Object.assign({}, oferta, { fechaPostulacion: new Date().toISOString().slice(0,10) }));
+    }
+  });
 }
 
 function accionDescartar(btn, link){

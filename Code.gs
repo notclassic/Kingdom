@@ -29,6 +29,7 @@ const MAX_DESCARTADAS = 400;            // cuántas descartadas (las más recien
 const HOJA_LISTADO     = 'Listado';
 const HOJA_DESCARTADAS = 'Descartadas';
 const HOJA_FILTROS     = 'Filtros';
+const HOJA_POSTULADAS  = 'Postuladas';
 
 /***** PUNTOS DE ENTRADA (el navegador llama acá) *****/
 function doGet(e)  { return manejar(e); }
@@ -50,6 +51,8 @@ function manejar(e){
       else if (action === 'bloquearEmpresa') out = accionBloquearEmpresa(p.empresa, p.link);
       else if (action === 'bloquearPalabra') out = accionBloquearPalabra(p.palabra, p.link);
       else if (action === 'rescatar')        out = accionRescatar(p.link);
+      else if (action === 'postular')        out = accionPostular(p.link);
+      else if (action === 'postuladas')      out = accionPostuladas();
       else                                   out = { ok:false, error:'accion_desconocida:' + action };
     }
   } catch (err) {
@@ -222,6 +225,55 @@ function accionRescatar(link){
     }
   }
   return { ok:false, error:'no_encontrada_en_descartadas' };
+}
+
+/***** POSTULAR (Listado -> Postuladas) *****/
+/* La hoja Postuladas se crea sola la primera vez, con cabecera:
+   FechaPostulacion | Titulo | Empresa | Origen | sueldo | FechaOferta | Link */
+function hojaPostuladas(){
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  let sh = ss.getSheetByName(HOJA_POSTULADAS);
+  if (!sh) {
+    sh = ss.insertSheet(HOJA_POSTULADAS);
+    sh.appendRow(['FechaPostulacion','Titulo','Empresa','Origen','sueldo','FechaOferta','Link']);
+  }
+  return sh;
+}
+
+function accionPostular(link){
+  if (!link) return { ok:false, error:'falta_link' };
+  const sh = hoja(HOJA_LISTADO);
+  const vals = sh.getDataRange().getValues();
+  for (let i = 1; i < vals.length; i++) {
+    if (String(vals[i][6]) === String(link)) {
+      const r = vals[i];
+      hojaPostuladas().appendRow([
+        ahora(), r[0], r[1], r[2], r[4], fmt(r[5]), r[6]
+      ]);
+      sh.deleteRow(i + 1);
+      return { ok:true, accion:'postulada', link:link };
+    }
+  }
+  // Si no está en el Listado (quizás ya fue descartada o postulada antes),
+  // se registra igual con lo mínimo, para no perder el registro de postulación.
+  hojaPostuladas().appendRow([ahora(), '', '', '', '', '', link]);
+  return { ok:true, accion:'postulada_sin_datos', link:link };
+}
+
+function accionPostuladas(){
+  const sh = hojaPostuladas();
+  const vals = sh.getDataRange().getValues();
+  const postuladas = [];
+  for (let i = 1; i < vals.length; i++) {
+    const r = vals[i];
+    if (!r[1] && !r[6]) continue;
+    postuladas.push({
+      fechaPostulacion: fmt(r[0]), titulo: fmt(r[1]), empresa: fmt(r[2]),
+      origen: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
+    });
+  }
+  postuladas.reverse();  // más recientes primero
+  return { ok:true, postuladas:postuladas, total:postuladas.length };
 }
 
 /***** BLOQUEAR EMPRESA (a Filtros, col Empresas = 2) + descartar la oferta *****/

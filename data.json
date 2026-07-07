@@ -778,19 +778,6 @@
       "overdueAlertSent": true
     },
     {
-      "id": "t1781580925539583",
-      "projectId": "p1781624973629977",
-      "text": "Revisar pantallazos para ver los cambios (parte del proceso).",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:35",
-      "priority": "low",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781580951081409",
       "projectId": "p1781624973629977",
       "text": "Criterio: primero la vista de celular, luego la app.",
@@ -3782,6 +3769,23 @@
           "overdueAlertSent": true
         }
       ]
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:42:29.255Z",
+      "item": {
+        "id": "t1781580925539583",
+        "projectId": "p1781624973629977",
+        "text": "Revisar pantallazos para ver los cambios (parte del proceso).",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "dueTime": "01:35",
+        "priority": "low",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "overdueAlertSent": true
+      }
     }
   ],
   "alertConfig": {

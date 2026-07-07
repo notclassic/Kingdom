@@ -497,6 +497,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1783453235785100",
+      "name": "avergiguar precio final de venta ncon un bot haciendose pasar por humano, manda un mensaje a los clientes que ya no tienen el anuncion y preguntar precio final de venta",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781582993530486"
     }
   ],
   "tasks": [
@@ -1604,18 +1619,6 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-07T18:27:05.266Z"
-    },
-    {
-      "id": "t1783453230404272",
-      "projectId": "p1781582993530486",
-      "text": "avergiguar precio final de venta ncon un bot haciendose pasar por humano, manda un mensaje a los clientes que ya no tienen el anuncion y preguntar precio final de venta",
-      "done": false,
-      "dueDate": "2026-07-08",
-      "dueTime": "15:39",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1735,7 +1738,8 @@
     "t1783447731801354",
     "t178344774742994",
     "t1783447837728822",
-    "t1781581108973528"
+    "t1781581108973528",
+    "t1783453230404272"
   ],
   "deletedProjectIds": [
     "p1781538739000",

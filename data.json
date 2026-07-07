@@ -512,6 +512,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1783448229858856",
+      "name": "aviso por whatsapp de cliente que responde",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1781584127104452"
     }
   ],
   "tasks": [
@@ -1537,18 +1552,6 @@
       "dueTime": ""
     },
     {
-      "id": "t1783447731801354",
-      "projectId": "p1781584127104452",
-      "text": "aviso por whatsapp de cliente que responde",
-      "done": false,
-      "dueDate": "2026-07-08",
-      "dueTime": "14:08",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t178344774742994",
       "projectId": "p1781584127104452",
       "text": "Generar email de salida.",
@@ -1746,7 +1749,8 @@
     "t3",
     "t4",
     "t6",
-    "t178158273877926"
+    "t178158273877926",
+    "t1783447731801354"
   ],
   "deletedProjectIds": [
     "p1781538739000",

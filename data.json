@@ -148,7 +148,7 @@
       "id": "p1781584127104452",
       "name": "CRM",
       "area": "a1",
-      "desc": "Canal inbound orgánico: contenido en Instagram (reels que muestran al agente resolviendo casos) para captar clientes que piden el demo por DM.",
+      "desc": "Mejoras a implemtar y tareas a realizar",
       "status": "active",
       "hasLeads": false,
       "color": "#5856d6",
@@ -158,7 +158,7 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p2",
-      "userUpdatedAt": "2026-07-07T18:16:08.471Z"
+      "userUpdatedAt": "2026-07-07T18:17:03.921Z"
     },
     {
       "id": "p10",

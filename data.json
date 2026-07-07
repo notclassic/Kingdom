@@ -2244,7 +2244,7 @@
       "id": "t1783396238640",
       "projectId": "inbox",
       "text": "Notificar que la tasa de voz es una unidad de medida utilizada en la acústica y la fonética para describir la frecuencia de una voz humana, en la tarea podría ser: \n\nDeterminar la frecuencia de mi vocecilla.",
-      "done": false,
+      "done": true,
       "dueDate": "",
       "priority": "medium",
       "emailAlert": false,

@@ -657,6 +657,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
+    },
+    {
+      "id": "p1783401320934",
+      "name": "Dentista León",
+      "area": "pa2",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#2a9d8f",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null
     }
   ],
   "tasks": [
@@ -2195,12 +2210,13 @@
       "projectId": "p1",
       "text": "poner unn costo de capital por tiempo en venderse, un auto que se demora en venderdese dos mesetienee un costo financiero vs uno que se vende en el dia. un  500.000 en un dias quizas es mejor que 800.000 en 4 meses de tiempo en venderse+",
       "done": false,
-      "dueDate": "2026-06-24",
+      "dueDate": "2026-07-08",
       "dueTime": "00:47",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T05:15:21.926Z"
     },
     {
       "id": "t1783185928194",

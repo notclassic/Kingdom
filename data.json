@@ -1554,14 +1554,15 @@
     {
       "id": "t1783447773140496",
       "projectId": "p1781584127104452",
-      "text": "Preparar el bot por rubro.",
+      "text": "Preparar la configuración del bot por rubro (tono, ejemplos y respuestas específicas por tipo de negocio, según el listado de rubros)",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-07-13",
       "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T18:26:39.897Z"
     },
     {
       "id": "t1783448079507388",

@@ -1993,7 +1993,7 @@
       "id": "t1781717730685",
       "projectId": "inbox",
       "text": "agendar hora al dentista",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-18",
       "dueTime": "16:00",
       "priority": "medium",

@@ -615,7 +615,7 @@
     },
     {
       "id": "p178224152505955",
-      "name": "Festauto Logidtica",
+      "name": "Festauto Logística",
       "area": "a2",
       "desc": "Ver la posibilidad de arrendar los autos",
       "status": "active",
@@ -626,7 +626,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": null
+      "parentId": null,
+      "mcpUpdatedAt": "2026-07-07T05:36:22.329Z"
     },
     {
       "id": "p1782523827555366",

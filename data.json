@@ -145,21 +145,6 @@
       "parentId": "p1"
     },
     {
-      "id": "p1781590678767292",
-      "name": "Bot Atención al Cliente",
-      "area": null,
-      "desc": "Implementación y lanzamiento del agente para cada cliente, en tres fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
-    },
-    {
       "id": "p1781582668835650",
       "name": "WhatsApp",
       "area": "a1",
@@ -1767,7 +1752,8 @@
     "p1781589327240693",
     "p1781590678767753",
     "p1781590678767214",
-    "p178159067876735"
+    "p178159067876735",
+    "p1781590678767292"
   ],
   "trash": [
     {
@@ -3905,6 +3891,26 @@
           "driveUrl": ""
         }
       ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T18:06:20.199Z",
+      "item": {
+        "id": "p1781590678767292",
+        "name": "Bot Atención al Cliente",
+        "area": null,
+        "desc": "Implementación y lanzamiento del agente para cada cliente, en tres fases: recopilación de información, configuración/entrenamiento y pruebas/lanzamiento.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#8a919e",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p2"
+      },
+      "tasks": []
     }
   ],
   "alertConfig": {

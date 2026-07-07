@@ -1591,7 +1591,7 @@
     {
       "id": "t1783448246005157",
       "projectId": "p1781584127104452",
-      "text": "aviso por whatsapp de cliente que responde, ya se",
+      "text": "aviso por whatsapp de cliente que responde, ya se por correo o whatsapp",
       "done": false,
       "dueDate": null,
       "dueTime": null,
@@ -1599,7 +1599,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "userUpdatedAt": "2026-07-07T18:22:40.072Z"
+      "userUpdatedAt": "2026-07-07T18:22:48.744Z"
     },
     {
       "id": "t178344815596589",

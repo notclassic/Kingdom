@@ -694,19 +694,6 @@
       "overdueAlertSent": true
     },
     {
-      "id": "t1781582476167637",
-      "projectId": "p1781624973628982",
-      "text": "Separar Portafolio de CRM; dejar el CRM más profesional y conectado a Gmail.",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "02:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781581710610850",
       "projectId": "p1781624973628982",
       "text": "Conexión con Gmail para enviar correos y agendar videollamadas desde la base de datos, por proyecto.",
@@ -1960,7 +1947,8 @@
     "t1781580925539583",
     "t1781580951081409",
     "t17815866999337",
-    "t1781626726363974"
+    "t1781626726363974",
+    "t1781582476167637"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3826,6 +3814,23 @@
         "mcpUpdatedAt": "2026-06-23T20:59:16.774Z"
       },
       "tasks": []
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:43:16.750Z",
+      "item": {
+        "id": "t1781582476167637",
+        "projectId": "p1781624973628982",
+        "text": "Separar Portafolio de CRM; dejar el CRM más profesional y conectado a Gmail.",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "dueTime": "02:00",
+        "priority": "high",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "overdueAlertSent": true
+      }
     }
   ],
   "alertConfig": {

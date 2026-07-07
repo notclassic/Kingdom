@@ -160,21 +160,6 @@
       "parentId": "p2"
     },
     {
-      "id": "p1781582668835650",
-      "name": "WhatsApp",
-      "area": "a1",
-      "desc": "Prospección saliente por WhatsApp: arma el mensaje y el link con el teléfono del contacto para ofrecer el agente de IA al negocio (el saludo va a la empresa, no a una persona).",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
-    },
-    {
       "id": "p10",
       "color": "#8e8e93",
       "name": "NotClassic",
@@ -1599,6 +1584,18 @@
       "driveUrl": ""
     },
     {
+      "id": "t1783447842184127",
+      "projectId": "p1781584127104452",
+      "text": "WhatsApp",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
       "id": "t1783447773140496",
       "projectId": "p1781584127104452",
       "text": "Preparar el bot por rubro.",
@@ -1766,7 +1763,8 @@
     "p1783447588062866",
     "p1783447605800757",
     "p1783447620608429",
-    "p1783447832007170"
+    "p1783447832007170",
+    "p1781582668835650"
   ],
   "trash": [
     {

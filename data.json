@@ -234,21 +234,6 @@
       "parentId": "p6"
     },
     {
-      "id": "p1781589327240693",
-      "name": "Script correo",
-      "area": "pa1",
-      "desc": "Arreglar el script de correos, utilizo estos script para reviar mi correo gmail y de esta manera ver las ofertas laborales que me llegan. pero no estan funcionando bien, poruqe llegan ofertas duplicadas y con mucha demora. El script de búsqueda está en los archivos de Drive. \nCada una de estas tareas contine el link de un script",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#ffa50a",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": null
-    },
-    {
       "id": "p6",
       "color": "#00c7be",
       "name": "Activación NotClassic",
@@ -1741,45 +1726,6 @@
       "mcpUpdatedAt": "2026-07-07T05:36:18.284Z"
     },
     {
-      "id": "t178214150332569",
-      "projectId": "p1781589327240693",
-      "text": "Arreglar el script de Indeed (BuscaPegaBot-Indeed): lee los correos de Indeed, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit",
-      "done": false,
-      "dueDate": "2026-06-23",
-      "dueTime": "11:18",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit?tab=t.0",
-      "mcpUpdatedAt": "2026-06-24T20:41:09.794Z"
-    },
-    {
-      "id": "t1782141526661249",
-      "projectId": "p1781589327240693",
-      "text": "Arreglar el script de LinkedIn (BuscaPegaBot-LinkedIn): lee los correos de LinkedIn, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit",
-      "done": false,
-      "dueDate": "2026-06-23",
-      "dueTime": "11:18",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
-      "mcpUpdatedAt": "2026-06-24T20:41:15.177Z"
-    },
-    {
-      "id": "t1782141553644300",
-      "projectId": "p1781589327240693",
-      "text": "(Duplicada del script de LinkedIn — es la misma que la otra tarea. Se puede borrar desde la papelera del dashboard.)",
-      "done": true,
-      "dueDate": "2026-06-23",
-      "dueTime": "11:19",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
-      "mcpUpdatedAt": "2026-06-24T20:41:19.157Z"
-    },
-    {
       "id": "t1782190127885284",
       "projectId": "p1",
       "text": "poner unn costo de capital por tiempo en venderse, un auto que se demora en venderdese dos mesetienee un costo financiero vs uno que se vende en el dia. un  500.000 en un dias quizas es mejor que 800.000 en 4 meses de tiempo en venderse+",
@@ -1926,7 +1872,10 @@
     "t1781626726363974",
     "t1781582476167637",
     "t1781581710610850",
-    "t1781581080020863"
+    "t1781581080020863",
+    "t178214150332569",
+    "t1782141526661249",
+    "t1782141553644300"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1959,7 +1908,8 @@
     "p1781624973628126",
     "p1781624973628303",
     "p1782160541989891",
-    "p1781624973629977"
+    "p1781624973629977",
+    "p1781589327240693"
   ],
   "trash": [
     {
@@ -3860,6 +3810,66 @@
         "driveUrl": "",
         "overdueAlertSent": true
       }
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:45:49.423Z",
+      "item": {
+        "id": "p1781589327240693",
+        "name": "Script correo",
+        "area": "pa1",
+        "desc": "Arreglar el script de correos, utilizo estos script para reviar mi correo gmail y de esta manera ver las ofertas laborales que me llegan. pero no estan funcionando bien, poruqe llegan ofertas duplicadas y con mucha demora. El script de búsqueda está en los archivos de Drive. \nCada una de estas tareas contine el link de un script",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#ffa50a",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "personal",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t178214150332569",
+          "projectId": "p1781589327240693",
+          "text": "Arreglar el script de Indeed (BuscaPegaBot-Indeed): lee los correos de Indeed, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit",
+          "done": false,
+          "dueDate": "2026-06-23",
+          "dueTime": "11:18",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "https://docs.google.com/document/d/1nyfE_kKhcpHkLvTZWlGNSfGbCJVOmkJKSgFD9YZ4BOs/edit?tab=t.0",
+          "mcpUpdatedAt": "2026-06-24T20:41:09.794Z"
+        },
+        {
+          "id": "t1782141526661249",
+          "projectId": "p1781589327240693",
+          "text": "Arreglar el script de LinkedIn (BuscaPegaBot-LinkedIn): lee los correos de LinkedIn, filtra las ofertas según los criterios del Sheet y las guarda/envía. Doc: https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit",
+          "done": false,
+          "dueDate": "2026-06-23",
+          "dueTime": "11:18",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+          "mcpUpdatedAt": "2026-06-24T20:41:15.177Z"
+        },
+        {
+          "id": "t1782141553644300",
+          "projectId": "p1781589327240693",
+          "text": "(Duplicada del script de LinkedIn — es la misma que la otra tarea. Se puede borrar desde la papelera del dashboard.)",
+          "done": true,
+          "dueDate": "2026-06-23",
+          "dueTime": "11:19",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": "https://docs.google.com/document/d/1MbhD0Oe9d9HKx3nv4tLDc3JpV3FOBIzvIf-Afi_m-CI/edit?tab=t.0",
+          "mcpUpdatedAt": "2026-06-24T20:41:19.157Z"
+        }
+      ]
     }
   ],
   "alertConfig": {

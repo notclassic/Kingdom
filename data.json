@@ -2256,18 +2256,6 @@
       "alertSent": false,
       "driveUrl": "",
       "dueTime": ""
-    },
-    {
-      "id": "t1783400449478",
-      "projectId": "inbox",
-      "text": "Agendar proyecto o crear proyecto de llamar a León el día de mañana a las 3 de la tarde para ir al dentista, con nueva tarea de llamar a María Juana. .",
-      "done": false,
-      "dueDate": "",
-      "dueTime": "",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -2338,7 +2326,8 @@
     "t1",
     "t2",
     "t1781717730685",
-    "t1783000834558"
+    "t1783000834558",
+    "t1783400449478"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3389,6 +3378,22 @@
         "emailAlert": false,
         "alertSent": false,
         "dueTime": "",
+        "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T06:04:57.406Z",
+      "item": {
+        "id": "t1783400449478",
+        "projectId": "inbox",
+        "text": "Agendar proyecto o crear proyecto de llamar a León el día de mañana a las 3 de la tarde para ir al dentista, con nueva tarea de llamar a María Juana. .",
+        "done": false,
+        "dueDate": "",
+        "dueTime": "",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
         "driveUrl": ""
       }
     }

@@ -1575,18 +1575,6 @@
       "driveUrl": ""
     },
     {
-      "id": "t1783447766245797",
-      "projectId": "p1781584127104452",
-      "text": "Armar listado de rubros.",
-      "done": false,
-      "dueDate": null,
-      "dueTime": null,
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t178158273877926",
       "projectId": "p1781582668835650",
       "text": "El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
@@ -1599,6 +1587,18 @@
       "driveUrl": "",
       "dueSoonAlertSent": true,
       "overdueAlertSent": true
+    },
+    {
+      "id": "t1783447766245797",
+      "projectId": "p1781584127104452",
+      "text": "Armar listado de rubros.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     },
     {
       "id": "t1783447773140496",

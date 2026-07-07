@@ -2255,7 +2255,7 @@
       "id": "t1783396848398",
       "projectId": "inbox",
       "text": "Crear proyecto León Dentista a las 4 de la tarde.",
-      "done": false,
+      "done": true,
       "dueDate": "",
       "priority": "medium",
       "emailAlert": false,

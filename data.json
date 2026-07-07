@@ -694,19 +694,6 @@
       "overdueAlertSent": true
     },
     {
-      "id": "t1781581080020863",
-      "projectId": "p1781624973628982",
-      "text": "Enviar correos desde el dashboard.",
-      "done": false,
-      "dueDate": "2026-06-16",
-      "dueTime": "01:37",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "overdueAlertSent": true
-    },
-    {
       "id": "t1781635855125",
       "projectId": "p1781572037505287",
       "text": "Agregar un botón para contraer y expandir proyectos y subproyectos.",
@@ -3841,6 +3828,23 @@
     {
       "type": "task",
       "deletedAt": "2026-07-07T14:43:39.747Z",
+      "item": {
+        "id": "t1781581080020863",
+        "projectId": "p1781624973628982",
+        "text": "Enviar correos desde el dashboard.",
+        "done": false,
+        "dueDate": "2026-06-16",
+        "dueTime": "01:37",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "overdueAlertSent": true
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:43:46.840Z",
       "item": {
         "id": "t1781581080020863",
         "projectId": "p1781624973628982",

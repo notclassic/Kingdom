@@ -359,21 +359,6 @@
       "parentId": null
     },
     {
-      "id": "p178159067876735",
-      "name": "Fase 2 · Configuración y entrenamiento",
-      "area": null,
-      "desc": "Estructurar la base de conocimiento, integrar plataformas (web y redes), definir el tono de voz y entrenar el modelo.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#8a919e",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p2"
-    },
-    {
       "id": "p1781591737916116",
       "name": "Pipeline Comercial y Leads",
       "area": "a1",
@@ -1053,42 +1038,6 @@
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true
-    },
-    {
-      "id": "t1781590678767834",
-      "projectId": "p178159067876735",
-      "text": "Analizar y estructurar la base de conocimiento a partir de la información recibida.",
-      "done": false,
-      "dueDate": "2026-06-26",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781590678767739",
-      "projectId": "p178159067876735",
-      "text": "Configuración inicial: integrar plataformas (web, redes), definir tono de voz y flujos comunes.",
-      "done": false,
-      "dueDate": "2026-06-30",
-      "dueTime": "12:00",
-      "priority": "high",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
-      "id": "t1781590678767659",
-      "projectId": "p178159067876735",
-      "text": "Entrenar el modelo de lenguaje con la base de conocimiento.",
-      "done": false,
-      "dueDate": "2026-07-04",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     },
     {
       "id": "t1781591737916675",
@@ -1778,7 +1727,10 @@
     "t178159067876749",
     "t1781590678767682",
     "t1781590678767528",
-    "t1781590678767890"
+    "t1781590678767890",
+    "t1781590678767834",
+    "t1781590678767739",
+    "t1781590678767659"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1814,7 +1766,8 @@
     "p1781624973629977",
     "p1781589327240693",
     "p1781590678767753",
-    "p1781590678767214"
+    "p1781590678767214",
+    "p178159067876735"
   ],
   "trash": [
     {
@@ -3888,6 +3841,63 @@
           "text": "Reunir material adicional: manuales, FAQ existentes, guiones, políticas y enlaces.",
           "done": false,
           "dueDate": "2026-06-23",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T17:48:00.374Z",
+      "item": {
+        "id": "p178159067876735",
+        "name": "Fase 2 · Configuración y entrenamiento",
+        "area": null,
+        "desc": "Estructurar la base de conocimiento, integrar plataformas (web y redes), definir el tono de voz y entrenar el modelo.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#8a919e",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p2"
+      },
+      "tasks": [
+        {
+          "id": "t1781590678767834",
+          "projectId": "p178159067876735",
+          "text": "Analizar y estructurar la base de conocimiento a partir de la información recibida.",
+          "done": false,
+          "dueDate": "2026-06-26",
+          "dueTime": "12:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781590678767739",
+          "projectId": "p178159067876735",
+          "text": "Configuración inicial: integrar plataformas (web, redes), definir tono de voz y flujos comunes.",
+          "done": false,
+          "dueDate": "2026-06-30",
+          "dueTime": "12:00",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        },
+        {
+          "id": "t1781590678767659",
+          "projectId": "p178159067876735",
+          "text": "Entrenar el modelo de lenguaje con la base de conocimiento.",
+          "done": false,
+          "dueDate": "2026-07-04",
           "dueTime": "12:00",
           "priority": "medium",
           "emailAlert": false,

@@ -1606,6 +1606,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1783448079507388",
+      "projectId": "p1781584127104452",
+      "text": "medicion de si prueba el bot, quien lo hizo de la bbdd",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "14:12",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

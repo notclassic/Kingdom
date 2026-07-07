@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kingdom</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1d4ed8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Portafolio">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ---- Mejoras del modal Eliminados (tamaño, legibilidad, herramientas) ---- */
+#trashModalOverlay .modal{
+  width:min(780px,96vw) !important;
+  max-width:96vw !important;
+  max-height:92vh !important;
+}
+#trashModalOverlay #trashList{
+  font-size:.95rem;
+  max-height:58vh;
+  overflow:auto;
+}
+#trashModalOverlay .trash-tools{ display:flex; gap:8px; margin:0 0 10px; flex-wrap:wrap; }
+#trashModalOverlay .trash-tools input{
+  flex:1; min-width:180px; padding:10px 12px; border:1px solid var(--border);
+  border-radius:10px; background:var(--panel); color:var(--text); font-size:.9rem;
+}
+#trashModalOverlay .trash-tools select{
+  padding:10px; border:1px solid var(--border); border-radius:10px;
+  background:var(--panel); color:var(--text); font-size:.9rem;
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser/dist/email.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+<div id="appHeader" style="display:flex; align-items:center; justify-content:center; gap:8px; margin-bottom:6px; position:relative;">
+  <div style="display:flex; align-items:center; gap:10px;">
+    <img src="logo-light.png" alt="Kingdom" class="app-logo app-logo-light" onclick="toggleTheme()" title="Tocar el logo: cambiar tema claro/oscuro"><img src="logo-dark.png" alt="Kingdom" class="app-logo app-logo-dark" onclick="toggleTheme()" title="Tocar el logo: cambiar tema claro/oscuro">
+    
+  </div>
+</div>
+
+<div class="appmenu-overlay" id="appMenuOverlay" onclick="closeAppMenu()"></div>
+<nav class="appmenu" id="appMenu" aria-label="Secciones">
+  <button class="appmenu-item" data-tab="main" onclick="setTabFromMenu('main')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+    <span>Portafolio y CRM</span>
+  </button>
+  <button class="appmenu-item" data-tab="tasks" onclick="setTabFromMenu('tasks')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></svg>
+    <span>Calendario y Tareas</span>
+    <span id="overdueBadge" class="menu-badge"></span>
+  </button>
+  <button class="appmenu-item" data-tab="leads" onclick="setTabFromMenu('leads')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>
+    <span>Leads</span>
+  </button>
+  <a class="appmenu-item" href="recruitment.html" style="text-decoration:none;">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1.6 4.2L15.2 17 12 21l-3.2-4 1.8-9.8L9 3z"/><path d="M9 3l3 3 3-3"/></svg>
+    <span>Recruitment</span>
+  </a>
+  <button class="appmenu-item" data-tab="settings" onclick="setTabFromMenu('settings')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H2a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 3.6 8a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H8a1.65 1.65 0 0 0 1-1.51V2a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V8a1.65 1.65 0 0 0 1.51 1H22a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    <span>Configuración</span>
+  </button>
+</nav>
+
+<div class="tabs" id="bottomNav">
+  <button class="act-ico ai-filter" id="projectSheetTrigger" onclick="openFilterModal()" title="Filtros (ámbito, categoría, proyecto)" aria-label="Filtros">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 7h14M8 12h8M11 17h2"/></svg>
+    <span id="filterBtnLabel" style="display:none;"></span>
+  </button>
+  <button class="act-ico ai-manage" onclick="openManage()" title="Gestionar / actualizar datos" aria-label="Actualizar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6a1 1 0 0 1 1 1 1 1 0 0 1-1 1H9a1 1 0 0 1-1-1 1 1 0 0 1 1-1zM8 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 11h6M9 15h4"/></svg>
+  </button>
+  <button class="act-ico ai-new" id="newSheetTrigger" onclick="openNew()" title="Crear nuevo (tarea o proyecto)" aria-label="Nuevo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+  <button class="act-ico ai-tree" id="treeLevelBtn" onclick="cycleTreeLevel()" title="Nivel de detalle del árbol" aria-label="Expandir">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6l5 5 5-5M7 11l5 5 5-5"/></svg>
+    <span class="tree-badge" id="treeLevelBadge">2</span>
+  </button>
+  <button class="act-ico ai-recruit" onclick="window.location.href='recruitment.html'" title="Recruitment (panel de ofertas)" aria-label="Recruitment">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6l-1.6 4.2L15.2 17 12 21l-3.2-4 1.8-9.8L9 3z"/><path d="M9 3l3 3 3-3"/></svg>
+  </button>
+  <button id="hamburgerBtn" class="act-ico ai-menu" onclick="toggleAppMenu(event)" title="Menú (secciones)" aria-label="Menú">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    <span id="hamburgerDot" class="hamburger-dot"></span>
+  </button>
+</div>
+
+<div id="tab-main">
+<!-- PORTAFOLIO -->
+<section>
+  <!-- Las acciones (filtro, actualizar, nuevo, expandir) ahora viven en la barra inferior. -->
+  <div class="filters" id="areaFilters" style="display:none;"></div>
+  <div class="totals" id="totals"></div>
+  <div class="cards" id="projectCards"></div>
+</section>
+</div>
+
+<div id="tab-leads" style="display:none;">
+<!-- CRM -->
+<section>
+  <h2>🎯 Embudo de Leads</h2>
+  <div class="glass-dropdown" id="leadsProjectDropdown">
+    <button class="glass-trigger" onclick="toggleLeadsDropdown()">
+      <span id="leadsDropdownLabel">Todos los proyectos</span>
+      <span class="glass-chevron">▾</span>
+    </button>
+    <div class="glass-panel" id="leadsDropdownPanel"></div>
+  </div>
+  <div class="cards" id="leadProjectCards" style="margin-bottom:14px;"></div>
+  <div class="kanban" id="kanban"></div>
+  <button class="btn-toggle" onclick="toggle('addLeadBox')">+ Agregar lead</button>
+  <div class="addbox collapsed" id="addLeadBox">
+    <input type="text" id="nl-name" placeholder="Nombre del lead / cliente">
+    <select id="nl-project"><option value="">Sin proyecto vinculado</option></select>
+    <select id="nl-stage"></select>
+    <button class="btn-primary" onclick="addLead()">Guardar lead</button>
+  </div>
+</section>
+</div>
+
+<div id="tab-tasks" style="display:none;">
+<!-- TASKS -->
+<section>
+  <h2>✅ Consola de Enfoque Diario</h2>
+  <div style="margin-bottom:12px;">
+    <button class="proj-sheet-trigger" id="projectSheetTrigger2" onclick="openFilterModal()">
+      <span id="projectSheetLabel2">Todos los proyectos</span><span style="color:var(--muted); font-size:.7rem;">▾</span>
+    </button>
+  </div>
+  <div class="task-filters">
+    <div class="chip active" data-tf="pending" onclick="setTaskFilter('pending')">Pendientes</div>
+    <div class="chip" data-tf="all" onclick="setTaskFilter('all')">Todas</div>
+    <div class="chip" data-tf="done" onclick="setTaskFilter('done')">Completadas</div>
+    <input type="date" class="chip" id="dayPicker" onchange="openDayView(this.value)" style="text-align:center;">
+    <div class="chip" onclick="toggleView()" id="viewToggle">📋 Ver detalle</div>
+    <div class="chip" onclick="toggleTaskSort()" id="sortToggle" title="Ordenar">📅 Fecha</div>
+  </div>
+  <div class="task-list" id="taskList" style="display:none;"></div>
+  <div id="calendarView"></div>
+  <div id="dayView" style="display:none;"></div>
+  <button class="btn-primary" onclick="openTaskModal()" style="width:100%;">➕ Nueva tarea</button>
+</section>
+</div>
+
+<!-- MODAL DE FILTROS -->
+<div class="modal-overlay" id="filterModalOverlay" onclick="if(event.target===this) closeFilterModal()">
+  <div class="modal">
+    <div class="modal-header" style="justify-content:flex-end; margin-bottom:6px;">
+      <button class="modal-close" onclick="closeFilterModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <div id="filterModalBody"></div>
+      <button class="btn-primary" onclick="closeFilterModal()">Listo</button>
+    </div>
+  </div>
+</div>
+
+<!-- SELECTOR DE PROYECTO/SUBPROYECTO PARA NUEVA TAREA -->
+<div class="modal-overlay" id="taskProjPickerOverlay" style="z-index:1500;" onclick="if(event.target===this) closeTaskProjectPicker()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">Elegí dónde va</h2>
+      <button class="modal-close" onclick="closeTaskProjectPicker()">✕</button>
+    </div>
+    <input type="text" id="taskProjPickerSearch" class="pp-search" placeholder="Buscar proyecto o subproyecto…" oninput="buildTaskProjList(this.value)">
+    <div class="filter-list" id="taskProjPickerList" style="max-height:46vh;"></div>
+  </div>
+</div>
+
+
+<!-- MODAL NUEVA TAREA -->
+<div class="modal-overlay" id="taskModalOverlay" onclick="if(event.target===this) closeTaskModal()">
+  <div class="modal">
+    <div class="modal-header" style="gap:10px;">
+      <div class="priority-selector" style="margin:0; flex:1;">
+        <button type="button" class="priority-btn active" data-area-ctx="" style="flex:1;">✅ Nueva tarea</button>
+        <button type="button" class="priority-btn" data-area-ctx="" style="flex:1;" onclick="switchNew('project')">📁 Nuevo proyecto</button>
+      </div>
+      <button class="modal-close" onclick="closeTaskModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="nt-project-id" value="">
+      <button type="button" class="proj-picker-btn" id="nt-project-btn" onclick="openTaskProjectPicker()">
+        <span id="nt-project-label" class="pp-placeholder">Elegí proyecto o subproyecto</span>
+        <span class="pp-chevron">▾</span>
+      </button>
+      <div class="priority-selector" id="nt-priority-group">
+        <button type="button" class="priority-btn active" data-priority="high"   onclick="selectPriority('high')">:( Quedó la caga</button>
+        <button type="button" class="priority-btn"        data-priority="medium" onclick="selectPriority('medium')">:/ Pa mañana</button>
+        <button type="button" class="priority-btn"        data-priority="low"    onclick="selectPriority('low')">:) No pasa nada</button>
+      </div>
+      <textarea id="nt-text" placeholder="Descripción de la tarea" rows="3" style="resize:vertical; min-height:72px;"></textarea>
+      <div class="row2">
+        <input type="date" id="nt-due">
+        <input type="time" id="nt-time">
+      </div>
+      <input type="checkbox" id="nt-alert" style="display:none">
+      <button class="btn-primary" onclick="addTask()">Guardar tarea</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR PROYECTO -->
+<div class="modal-overlay" id="editProjectOverlay" onclick="if(event.target===this) closeEditProject()">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h2 style="margin:0;">✎ Editar proyecto</h2>
+      <button class="modal-close" onclick="closeEditProject()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="ep-id">
+      <label class="ep-label">Nombre</label>
+      <input type="text" id="ep-name">
+      <label class="ep-label">Descripción</label>
+      <textarea id="ep-desc" rows="2" style="resize:vertical;"></textarea>
+      <div id="ep-cat-wrap">
+        <label class="ep-label">Categoría</label>
+        <select id="ep-area"></select>
+      </div>
+      <div id="ep-cat-note" class="row-desc" style="display:none; margin-top:4px;">La categoría la hereda del proyecto padre.</div>
+      <label class="ep-label">Color</label>
+      <input type="color" id="ep-color" style="width:60px; height:36px; padding:0; border:none; background:none; cursor:pointer;">
+      <button class="btn-primary" style="margin-top:14px;" onclick="saveEditProject()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CARPETA DRIVE -->
+<div class="modal-overlay" id="driveOverlay" onclick="if(event.target===this) closeDrive()">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header">
+      <h2 style="margin:0;">📁 Carpeta de Drive</h2>
+      <button class="modal-close" onclick="closeDrive()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="dr-id">
+      <div class="row-desc" style="margin-bottom:6px;">Pegá el link de la carpeta o documento de Google Drive.</div>
+      <input type="text" id="dr-url" placeholder="https://drive.google.com/...">
+      <div style="display:flex; gap:8px; margin-top:12px;">
+        <button class="btn-toggle" style="margin-top:0;" onclick="openDriveLink()">↗ Abrir carpeta</button>
+        <button class="btn-primary" onclick="saveDrive()">Guardar link</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR TAREA -->
+<div class="modal-overlay" id="editTaskModalOverlay" onclick="if(event.target===this) closeEditTaskModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">✎ Editar tarea</h2>
+      <button class="modal-close" onclick="closeEditTaskModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <input type="hidden" id="et-id">
+      <input type="hidden" id="et-priority" value="medium">
+      <label class="row-desc" style="margin-bottom:-2px;">Proyecto</label>
+      <select id="et-project"></select>
+      <label class="row-desc" style="margin:6px 0 -2px;">Importancia</label>
+      <div class="priority-selector" id="et-priority-group">
+        <button type="button" class="priority-btn" data-priority="high"   onclick="selectEditPriority('high')">:( Quedó la caga</button>
+        <button type="button" class="priority-btn" data-priority="medium" onclick="selectEditPriority('medium')">:/ Pa mañana</button>
+        <button type="button" class="priority-btn" data-priority="low"    onclick="selectEditPriority('low')">:) No pasa nada</button>
+      </div>
+      <label class="row-desc" style="margin:6px 0 -2px;">Descripción</label>
+      <textarea id="et-text" placeholder="Descripción de la tarea" rows="3" style="resize:vertical; min-height:72px;"></textarea>
+      <div class="row2">
+        <input type="date" id="et-due">
+        <input type="time" id="et-time">
+      </div>
+      <div class="row2" style="margin-top:6px;">
+        <button class="btn-primary" onclick="saveEditTask()">Guardar cambios</button>
+        <button class="btn-toggle" style="margin-top:0; border-color:var(--red); color:var(--red); flex:0 0 auto;" onclick="deleteTaskFromModal()" title="Mover a Eliminados">🗑</button>
+      </div>
+      <button class="btn-toggle" style="margin-top:6px;" onclick="convertTaskFromModal()" title="Crear un proyecto a partir de esta tarea">📁 Convertir en proyecto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL ELIMINADOS / PAPELERA -->
+<div class="modal-overlay" id="trashModalOverlay" onclick="if(event.target===this) closeTrash()">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 style="margin:0;">🗑 Eliminados (<span id="trashCount">0</span>)</h2>
+      <button class="modal-close" onclick="closeTrash()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <div class="row-desc" style="margin-bottom:8px;">Restaurá lo que borraste por error o borralo definitivamente. Lo que quede más de 30 días se borra solo.</div>
+      <div class="trash-tools">
+        <input type="text" id="trashSearch" placeholder="🔎 Buscar por nombre…" oninput="applyTrashView()">
+        <select id="trashSort" onchange="applyTrashView()">
+          <option value="recent">Más recientes primero</option>
+          <option value="oldest">Más antiguos primero</option>
+          <option value="name">Nombre A→Z</option>
+        </select>
+      </div>
+      <div id="trashList"></div>
+      <button class="btn-toggle" style="margin-top:10px; border-color:var(--red); color:var(--red);" onclick="emptyTrash()">Vaciar todo</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVO PROYECTO -->
+<div class="modal-overlay" id="projectModalOverlay" onclick="if(event.target===this) closeProjectModal()">
+  <div class="modal">
+    <div class="modal-header" style="gap:10px;">
+      <div class="priority-selector" style="margin:0; flex:1;">
+        <button type="button" class="priority-btn" data-area-ctx="" style="flex:1;" onclick="switchNew('task')">✅ Nueva tarea</button>
+        <button type="button" class="priority-btn active" data-area-ctx="" style="flex:1;">📁 Nuevo proyecto</button>
+      </div>
+      <button class="modal-close" onclick="closeProjectModal()">✕</button>
+    </div>
+    <div class="addbox" style="border-top:none; padding-top:0;">
+      <div class="priority-selector" id="np-context-selector" style="margin-bottom:8px;">
+        <button type="button" class="priority-btn active" data-ctx="profesional" onclick="selectProjectContext('profesional')" style="flex:1;">💼 Profesional</button>
+        <button type="button" class="priority-btn" data-ctx="personal" onclick="selectProjectContext('personal')" style="flex:1;">🏠 Personal</button>
+        <button type="button" class="priority-btn" data-ctx="otro" onclick="selectProjectContext('otro')" style="flex:1;">💡 Otro</button>
+      </div>
+      <input type="hidden" id="np-context" value="profesional">
+      <input type="text" id="np-name" placeholder="Nombre del proyecto">
+      <select id="np-area"></select>
+      <select id="np-parent" onchange="npParentChanged()"><option value="">Proyecto principal (sin padre)</option></select>
+      <div id="np-parent-note" style="display:none; font-size:.78rem; color:var(--muted); margin:-2px 2px 0;">Hereda área y contexto del proyecto padre.</div>
+      <textarea id="np-desc" placeholder="Descripción breve" rows="2"></textarea>
+      <button class="btn-primary" onclick="addProject()">Guardar proyecto</button>
+    </div>
+  </div>
+</div>
+
+<div id="tab-settings" style="display:none;">
+<div class="config-banner" id="emailConfigBanner"></div>
+
+<!-- ============ 1. LO QUE SE USA SEGUIDO ============ -->
+<section>
+  <h2>⏰ Avisos por Telegram</h2>
+  <div class="row-desc" style="margin-bottom:10px;">Cuánto antes te avisa el bot según la importancia de cada tarea. El aviso sale en la próxima pasada del bot (cada ~5 min), así que es aproximado.</div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🔴 Urgente <span class="hint">(:( Quedó la caga)</span></div>
+    <select id="alertLeadHigh" onchange="setAlertLead('high', this.value)"></select>
+  </div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🟡 Normal <span class="hint">(:/ Pa mañana)</span></div>
+    <select id="alertLeadMedium" onchange="setAlertLead('medium', this.value)"></select>
+  </div>
+  <div class="alert-cfg-row">
+    <div class="alert-cfg-label">🟢 Puede esperar <span class="hint">(:) No pasa nada)</span></div>
+    <select id="alertLeadLow" onchange="setAlertLead('low', this.value)"></select>
+  </div>
+</section>
+
+<section>
+  <h2>🗂 Áreas y proyectos</h2>
+  <div class="row-desc" style="margin-bottom:6px; font-weight:700;">Categorías (áreas)</div>
+  <div id="areaSettings"></div>
+  <div class="row-desc" style="margin:16px 0 6px; font-weight:700;">Color y contactos por proyecto</div>
+  <div id="projectColorSettings"></div>
+</section>
+
+<!-- ============ 2. DATOS: TODO LO QUE GUARDA Y RECUPERA, EN UN SOLO LUGAR ============ -->
+<section>
+  <h2>☁️ Tus datos: sincronización, respaldo y papelera</h2>
+
+  <div class="row-desc" style="margin-bottom:6px; font-weight:700;">Sincronización con GitHub</div>
+  <div class="row-desc" style="margin-bottom:10px;">Guarda todo (proyectos, tareas, leads) en <code>data.json</code> del repo <code>notclassic/Kingdom</code>. Cualquier dispositivo con este mismo token ve lo mismo.</div>
+  <div class="row2">
+    <input type="password" id="githubTokenInput" placeholder="Pegá tu Personal Access Token (github_pat_...)">
+    <button class="btn-toggle" style="margin-top:0;" onclick="saveGithubToken()">Guardar token</button>
+  </div>
+  <div class="row2" style="margin-top:8px;">
+    <button class="btn-primary" onclick="pushToGitHub()">⬆️ Subir datos ahora</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="pullFromGitHub()">⬇️ Descargar última versión</button>
+  </div>
+  <div class="row-desc" id="githubAutoSyncInfo" style="margin-top:8px;"></div>
+  <div class="row-desc" id="githubSyncStatus" style="margin-top:8px;"></div>
+
+  <div class="row-desc" style="margin:18px 0 6px; font-weight:700;">Respaldo local (.json)</div>
+  <div class="row-desc" style="margin-bottom:8px;">Copia completa en un archivo, para guardar aparte o pasar a otro navegador. Independiente de GitHub.</div>
+  <div class="row2">
+    <button class="btn-primary" onclick="exportData()">⬇️ Exportar datos (.json)</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importFile').click()">⬆️ Importar datos</button>
+  </div>
+  <input type="file" id="importFile" accept="application/json" style="display:none;" onchange="importData(event)">
+
+  <div class="row-desc" style="margin:18px 0 6px; font-weight:700;">Papelera</div>
+  <div class="row-desc" style="margin-bottom:8px;">Lo que borrás queda 30 días acá, con buscador y orden por fecha.</div>
+  <button class="btn-toggle" style="margin-top:0;" onclick="openTrash()">🗑 Abrir Eliminados</button>
+</section>
+
+<section>
+  <h2>🔗 Google Drive</h2>
+  <div class="config-banner" id="googleConfigBanner"></div>
+  <div id="googleDriveStatus"></div>
+</section>
+
+<!-- ============ 3. IA (un solo lugar, con guía de cuál usar) ============ -->
+<section>
+  <h2>🤖 Mejorar proyectos con IA</h2>
+  <div class="row-desc" style="margin-bottom:8px;">
+    El flujo: exportás tus proyectos a Markdown, se los das a una IA para mejorarlos
+    (debe conservar los marcadores [[id]]) y volvés a traer el resultado.
+    Para aplicar cambios lo más seguro es <strong>🛠 Gestionar cambios</strong> (botón del encabezado):
+    hace lo mismo que importar, pero mostrando antes qué va a cambiar y guardando un respaldo automático.
+  </div>
+  <div class="row2">
+    <button class="btn-primary" onclick="exportMarkdown()">⬇️ Exportar a Markdown (.md)</button>
+    <button class="btn-toggle" style="margin-top:0;" onclick="document.getElementById('importMdFile').click()">⬆️ Importar Markdown mejorado</button>
+  </div>
+  <input type="file" id="importMdFile" accept=".md,text/markdown,text/plain" style="display:none;" onchange="importMarkdown(event)">
+  <button class="btn-toggle" style="margin-top:8px;" onclick="openAiPaste()">📋 Pegar sugerencias de IA (agrega solo tareas nuevas [[new]])</button>
+</section>
+
+<!-- ============ 4. PENDIENTES: nota compacta, sin botones muertos ============ -->
+<section>
+  <h2>🚧 En preparación</h2>
+  <div class="row-desc">Enviar correos (Gmail) y agendar reuniones (Calendar) desde Kingdom — el código del Worker ya está escrito; falta la configuración de acceso de Google y el despliegue. También: configuración de envío de audios. Cuando estén activos van a aparecer acá como secciones propias.</div>
+</section>
+</div>
+
+<script src="app.js"></script>
+<script>
+/* ---- Buscador y orden del modal Eliminados ----
+   La lista la dibuja app.js dentro de #trashList. Este bloque NO toca app.js:
+   filtra y reordena los elementos ya dibujados. El MutationObserver re-aplica
+   el filtro/orden cada vez que app.js redibuja (abrir, restaurar, borrar).
+   El observer se desconecta mientras reordenamos para no observarse a sí
+   mismo y entrar en bucle. */
+(function(){
+  var obs = null;
+
+  function norm(s){
+    return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // Extrae la fecha de eliminación del texto del ítem: "15-06-2026" o "2026-06-15".
+  function fechaDe(el){
+    var t = el.textContent || '';
+    var m = t.match(/(\d{2})-(\d{2})-(\d{4})/);
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1]).getTime();
+    m = t.match(/(\d{4})-(\d{2})-(\d{2})/);
+    if (m) return new Date(+m[1], +m[2] - 1, +m[3]).getTime();
+    return 0;
+  }
+
+  window.applyTrashView = function(){
+    var list = document.getElementById('trashList');
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.children);
+    if (!items.length) return;
+
+    if (obs) obs.disconnect(); // no observarnos a nosotros mismos
+
+    var q = norm((document.getElementById('trashSearch') || {}).value);
+    var modo = ((document.getElementById('trashSort') || {}).value) || 'recent';
+
+    items.forEach(function(el){
+      el.style.display = (!q || norm(el.textContent).indexOf(q) !== -1) ? '' : 'none';
+    });
+
+    items.sort(function(a, b){
+      if (modo === 'name') return norm(a.textContent) < norm(b.textContent) ? -1 : 1;
+      var da = fechaDe(a), db = fechaDe(b);
+      return modo === 'oldest' ? da - db : db - da;
+    });
+    items.forEach(function(el){ list.appendChild(el); });
+
+    if (obs) obs.observe(list, { childList: true });
+  };
+
+  function iniciar(){
+    var list = document.getElementById('trashList');
+    if (!list || !window.MutationObserver) return;
+    obs = new MutationObserver(function(){ window.applyTrashView(); });
+    obs.observe(list, { childList: true });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
+</script>
+<div id="chipEditOverlay" class="mp-overlay" onclick="if(event.target===this)closeChipEdit()">
+  <div class="mp-box">
+    <h3>Editar categoría</h3>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <input type="color" id="chipEditColor" class="color-dot" style="width:30px; height:30px;" title="Color">
+      <input type="text" id="chipEditName" placeholder="Nombre de la categoría"
+             style="flex:1; min-width:0; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.95rem;"
+             onkeydown="if(event.key==='Enter'){event.preventDefault(); saveChipEdit();}">
+    </div>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeChipEdit()">Cerrar</button>
+      <button class="btn-primary" onclick="saveChipEdit()">Guardar</button>
+    </div>
+  </div>
+</div>
+<div id="aiPasteOverlay" class="mp-overlay" onclick="if(event.target===this)closeAiPaste()">
+  <div class="mp-box" style="width:min(560px,94vw);">
+    <h3>Pegar sugerencias de IA</h3>
+    <div class="row-desc" style="margin-bottom:8px;">Pegá lo que te devolvió la IA. Importo solo las líneas marcadas con [[new]] como tareas nuevas en "💡 Sugerencias IA".</div>
+    <textarea id="aiPasteText" rows="10" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.85rem; resize:vertical; box-sizing:border-box;"></textarea>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeAiPaste()">Cancelar</button>
+      <button class="btn-primary" onclick="importAISuggestions()">Importar sugerencias</button>
+    </div>
+  </div>
+</div>
+<div id="manageOverlay" class="mp-overlay" onclick="if(event.target===this)closeManage()">
+  <div class="mp-box" style="width:min(620px,94vw); max-height:88vh; overflow:auto;">
+    <h3>🛠 Gestionar cambios</h3>
+    <div class="row-desc" style="margin-bottom:8px;">Pegá acá el Markdown que te paso. Previsualizá qué va a cambiar y aplicá. Antes de aplicar se guarda un respaldo automático.</div>
+    <textarea id="manageMdInput" rows="10" placeholder="Pegá el Markdown con los [[id]]…" style="width:100%; padding:10px; border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--text); font-size:.85rem; resize:vertical; box-sizing:border-box;"></textarea>
+    <div id="managePreview" style="margin:8px 0; min-height:18px;"></div>
+    <div class="mp-actions">
+      <button class="btn-toggle" style="margin-top:0;" onclick="closeManage()">Cerrar</button>
+      <button class="btn-toggle" style="margin-top:0;" onclick="previewManage()">👁 Previsualizar</button>
+      <button class="btn-primary" onclick="applyManage()">✓ Aplicar</button>
+    </div>
+    <div class="row-desc" style="margin:14px 0 6px; font-weight:700;">🗂 Respaldos (últimos 10)</div>
+    <div id="manageBackups"></div>
+  </div>
+</div>
+</body>
+</html>

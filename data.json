@@ -1608,6 +1608,18 @@
       "alertSent": false,
       "driveUrl": "",
       "dueTime": ""
+    },
+    {
+      "id": "t1783447731801354",
+      "projectId": "p1781584127104452",
+      "text": "aviso por whatsapp de cliente que responde",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "14:08",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -51,6 +51,48 @@ async function putJsonFile(path, data, sha, message) {
   });
 }
 
+// Guarda data.json tolerando que OTRO escritor (el dashboard abierto o el MCP)
+// lo haya modificado entre nuestra lectura y nuestro guardado (409/422).
+// Antes ese choque terminaba en exit(1) sin avanzar el offset: si la ventana de
+// actividad seguía (ediciones en el dashboard, escrituras del MCP), el botón
+// apretado en Telegram quedaba "muerto" corrida tras corrida.
+// Estrategia: releer la versión fresca y volcar encima SOLO lo que esta corrida
+// cambió (tareas nuevas/modificadas y proyectos nuevos), detectado contra el
+// snapshot tomado al leer. Si el mismo ítem lo tocaron los dos, gana el botón
+// del usuario (su intención es la más reciente).
+async function putDataConReintento(dataLocal, sha, snapshotJson, message) {
+  let r = await putJsonFile(DATA_PATH, dataLocal, sha, message);
+  for (let intento = 0; (r.status === 409 || r.status === 422) && intento < 2; intento++) {
+    console.log('[AUDIO BOT] Conflicto guardando data.json; releyendo y fusionando (intento ' + (intento + 1) + ')...');
+    const orig = JSON.parse(snapshotJson);
+    const fresco = await getJsonFile(DATA_PATH, null);
+    if (!fresco.data) return r;
+
+    // tareas que esta corrida creó o modificó (difieren del snapshot)
+    const origPorId = {};
+    (orig.tasks || []).forEach(t => { origPorId[t.id] = JSON.stringify(t); });
+    const nuestras = (dataLocal.tasks || []).filter(t => origPorId[t.id] !== JSON.stringify(t));
+
+    fresco.data.tasks = fresco.data.tasks || [];
+    const idxFresco = {};
+    fresco.data.tasks.forEach((t, i) => { idxFresco[t.id] = i; });
+    nuestras.forEach(t => {
+      if (idxFresco[t.id] != null) fresco.data.tasks[idxFresco[t.id]] = t;
+      else fresco.data.tasks.push(t);
+    });
+
+    // proyectos creados por esta corrida (el bot puede crear el proyecto destino de un audio)
+    const origProj = new Set((orig.projects || []).map(p => p.id));
+    fresco.data.projects = fresco.data.projects || [];
+    (dataLocal.projects || []).forEach(p => {
+      if (!origProj.has(p.id) && !fresco.data.projects.some(x => x.id === p.id)) fresco.data.projects.push(p);
+    });
+
+    r = await putJsonFile(DATA_PATH, fresco.data, fresco.sha, message + ' (merge por conflicto)');
+  }
+  return r;
+}
+
 // Guarda tg_state.json tolerando que el OTRO bot lo haya escrito entre nuestra
 // lectura y nuestro guardado (conflicto de sha: GitHub responde 409/422).
 // En ese caso: relee la versión fresca, fusiona y reintenta UNA vez.
@@ -690,6 +732,9 @@ async function main() {
 
   const { data: state, sha: stateSha } = await getJsonFile(STATE_PATH, { lastOffset: 0, dueAlerted: {}, doneAlerted: {} });
   const { data, sha: dataSha } = await getJsonFile(DATA_PATH, { tasks: [] });
+  // Foto del estado inicial: permite saber, al guardar, qué tareas/proyectos
+  // cambió ESTA corrida, para fusionarlos si otro escribió data.json en el medio.
+  const dataSnapshot = JSON.stringify(data);
 
   let offset = state.lastOffset || 0;
   const updates = await getUpdates(offset);
@@ -830,7 +875,7 @@ async function main() {
 
   // data.json: solo se guarda si de verdad cambió algo (tarea nueva o editada por botón).
   if (huboCambiosDeDatos) {
-    const putRes = await putJsonFile(DATA_PATH, data, dataSha, 'Bot Audio: actualizar tareas');
+    const putRes = await putDataConReintento(data, dataSha, dataSnapshot, 'Bot Audio: actualizar tareas');
     if (!putRes.ok) {
       const errBody = await putRes.text();
       console.error('[AUDIO BOT] Falló el guardado de data.json (' + putRes.status + '): ' + errBody);

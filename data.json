@@ -1618,6 +1618,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t178344815596589",
+      "projectId": "p1781584127104452",
+      "text": "indicadores de cuando el cliente responde si o no. en que etapa.",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "14:15",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

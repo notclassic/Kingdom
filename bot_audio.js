@@ -83,35 +83,193 @@ async function transcribe(audioUrl) {
   throw new Error('La transcripcion tardo demasiado.');
 }
 
-async function toTask(rawText) {
+// Fecha actual en zona horaria de Chile (el runner de GitHub Actions corre
+// en UTC, 3-4 hs adelantado; sin esto, "mañana" dicho a la noche resuelve mal).
+function hoyEnChile() {
+  return new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' }); // YYYY-MM-DD
+}
+
+function diaSemanaEnChile() {
+  return new Date().toLocaleDateString('es-CL', { timeZone: 'America/Santiago', weekday: 'long' });
+}
+
+// Normaliza para comparar nombres: minúsculas y sin tildes.
+function normalizar(s) {
+  return (s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
+
+// Convierte la transcripción en una acción estructurada usando Groq:
+//   { accion: 'tarea',       text, dueDate, dueTime }
+//   { accion: 'proyecto',    nombre, descripcion, areaNombre }
+//   { accion: 'subproyecto', nombre, descripcion, proyectoPadre }
+// Si el JSON no parsea o no valida, cae a tarea con la transcripción cruda.
+async function parseAudio(rawText, data) {
+  const hoy = hoyEnChile();
+  const fallback = { accion: 'tarea', text: rawText, dueDate: '', dueTime: '' };
+
+  // "mañana" para el ejemplo del prompt, con aritmética real de fechas
+  // (sumar 1 al string rompería a fin de mes: 2026-07-32).
+  const mananaDate = new Date(hoy + 'T12:00:00');
+  mananaDate.setDate(mananaDate.getDate() + 1);
+  const manana = mananaDate.getFullYear() + '-' + String(mananaDate.getMonth() + 1).padStart(2, '0') + '-' + String(mananaDate.getDate()).padStart(2, '0');
+
+  const nombresAreas = (data.areas || []).map(a => a.name).join(', ');
+
   const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: { authorization: 'Bearer ' + GROQ_KEY, 'content-type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.1-8b-instant',
       temperature: 0,
-      max_tokens: 100,
+      max_tokens: 200,
+      response_format: { type: 'json_object' },
       messages: [
-        { role: 'system', content: 'Sos un conversor de notas de voz a tareas. Reglas estrictas:\n' +
-          '1. Devolvé SOLO el texto de la tarea, en una sola línea, en español.\n' +
-          '2. NO expliques, NO definas términos, NO agregues introducciones ni comentarios.\n' +
-          '3. NO inventes contenido que no esté en la nota. Si la nota es confusa, devolvela tal cual, apenas limpiada.\n' +
-          '4. Máximo 20 palabras.\n' +
-          'Ejemplo entrada: "eh... tengo que llamar al contador mañana por el tema de las facturas"\n' +
-          'Ejemplo salida: Llamar al contador mañana por las facturas' },
+        { role: 'system', content: 'Convertís notas de voz en acciones para un gestor de tareas. Hoy es ' + diaSemanaEnChile() + ' ' + hoy + ' (zona horaria de Chile).\n' +
+          'Respondé SOLO un objeto JSON.\n' +
+          'Si la nota pide explícitamente CREAR UN PROYECTO (dice "crear proyecto" o "nuevo proyecto"):\n' +
+          '{"accion":"proyecto","nombre":"...","descripcion":"..." o null,"area":"una de: ' + nombresAreas + '" o null}\n' +
+          'Si pide explícitamente CREAR UN SUBPROYECTO dentro de otro proyecto (dice "crear subproyecto X en Y" o similar):\n' +
+          '{"accion":"subproyecto","nombre":"...","descripcion":"..." o null,"proyecto_padre":"nombre del proyecto padre mencionado"}\n' +
+          'En CUALQUIER otro caso es una tarea:\n' +
+          '{"accion":"tarea","tarea":"texto breve, máx 20 palabras, sin explicaciones ni inventos","proyecto":"nombre del proyecto si la nota dice a qué proyecto va (ej: \'agregar tarea a Kingdom\', \'para el proyecto X\')" o null,"fecha":"YYYY-MM-DD" o null,"hora":"HH:MM" o null}\n' +
+          'Reglas: "mañana" = ' + manana + '. "4 de la tarde" = "16:00". No inventes nada que no esté en la nota. Sacá del texto de la tarea las fechas/horas y el nombre del proyecto ya extraídos.\n' +
+          'Ejemplo entrada: "llamar al contador mañana a las 4 de la tarde por las facturas"\n' +
+          'Ejemplo salida: {"accion":"tarea","tarea":"Llamar al contador por las facturas","fecha":"' + manana + '","hora":"16:00"}' },
         { role: 'user', content: rawText }
       ]
     })
   });
   const j = await r.json();
   const out = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || '').trim();
+  if (!out) return fallback;
 
-  // Validación anti-divague: si Groq devolvió algo vacío, con saltos de
-  // línea (señal de que está "explicando"), o bastante más largo que la
-  // transcripción original, se descarta y se usa la transcripción cruda.
-  // Mejor una tarea literal que una alucinación guardada como tarea.
-  const sospechoso = !out || out.includes('\n') || out.length > rawText.length * 1.5 + 30;
-  return sospechoso ? rawText : out;
+  let p;
+  try { p = JSON.parse(out); } catch (_) { return fallback; }
+
+  if (p.accion === 'proyecto' && typeof p.nombre === 'string' && p.nombre.trim()) {
+    return {
+      accion: 'proyecto',
+      nombre: p.nombre.trim().slice(0, 80),
+      descripcion: (typeof p.descripcion === 'string' ? p.descripcion.trim().slice(0, 300) : ''),
+      areaNombre: (typeof p.area === 'string' ? p.area.trim() : '')
+    };
+  }
+
+  if (p.accion === 'subproyecto' && typeof p.nombre === 'string' && p.nombre.trim() && typeof p.proyecto_padre === 'string' && p.proyecto_padre.trim()) {
+    return {
+      accion: 'subproyecto',
+      nombre: p.nombre.trim().slice(0, 80),
+      descripcion: (typeof p.descripcion === 'string' ? p.descripcion.trim().slice(0, 300) : ''),
+      proyectoPadre: p.proyecto_padre.trim()
+    };
+  }
+
+  // Tarea (default para todo lo demás)
+  let text = (typeof p.tarea === 'string' ? p.tarea.trim() : '');
+  if (!text || text.includes('\n') || text.length > rawText.length * 1.5 + 30) text = rawText;
+
+  let dueDate = '';
+  if (typeof p.fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p.fecha)) {
+    const f = new Date(p.fecha + 'T12:00:00');
+    const h = new Date(hoy + 'T12:00:00');
+    const diff = (f - h) / 86400000;
+    if (diff >= -1 && diff <= 365) dueDate = p.fecha;
+  }
+
+  let dueTime = '';
+  if (typeof p.hora === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(p.hora)) {
+    dueTime = p.hora;
+  }
+
+  return {
+    accion: 'tarea', text: text, dueDate: dueDate, dueTime: dueTime,
+    proyecto: (typeof p.proyecto === 'string' ? p.proyecto.trim() : '')
+  };
+}
+
+// Resuelve el proyecto destino de una tarea según la regla acordada:
+//  - sin mención de proyecto -> inbox (Ideas)
+//  - mención que matchea exactamente 1 proyecto -> ese
+//  - mención que matchea varios -> inbox, avisando los candidatos
+//  - mención que no matchea ninguno -> se CREA el proyecto y va ahí
+function resolverProyectoDestino(data, nombreMencionado) {
+  if (!nombreMencionado) return { projectId: 'inbox', nota: '' };
+
+  const buscado = normalizar(nombreMencionado);
+  const candidatos = (data.projects || []).filter(p =>
+    p.status !== 'archived' &&
+    (normalizar(p.name).includes(buscado) || buscado.includes(normalizar(p.name)))
+  );
+
+  if (candidatos.length === 1) {
+    return { projectId: candidatos[0].id, nota: '📁 Proyecto: ' + candidatos[0].name };
+  }
+  if (candidatos.length > 1) {
+    return { projectId: 'inbox', nota: '⚠️ "' + nombreMencionado + '" coincide con varios proyectos (' + candidatos.map(p => p.name).slice(0, 4).join(', ') + '). La dejé en Ideas — movela desde el dashboard.' };
+  }
+  // No existe: se crea el proyecto y la tarea va adentro.
+  const res = crearProyecto(data, nombreMencionado, '', '');
+  if (!res) return { projectId: 'inbox', nota: '⚠️ No pude crear el proyecto, la dejé en Ideas.' };
+  return { projectId: res.proyecto.id, nota: '🆕 Proyecto NUEVO creado: ' + res.proyecto.name + ' (área ' + res.areaNombre + '). Si el nombre quedó mal transcripto, corregilo en el dashboard.', creado: true };
+}
+
+// Crea un proyecto raíz. Área: la que dijo Groq si matchea una real;
+// si no, la primera área profesional; si no hay, la primera que exista.
+function crearProyecto(data, nombre, descripcion, areaNombre) {
+  const areas = data.areas || [];
+  let area = areas.find(a => normalizar(a.name) === normalizar(areaNombre));
+  if (!area) area = areas.find(a => a.context === 'profesional') || areas[0];
+  if (!area) return null;
+
+  const proyecto = {
+    id: 'p' + Date.now(),
+    name: nombre,
+    area: area.id,
+    desc: descripcion || 'Creado por voz desde Telegram.',
+    status: 'active',
+    hasLeads: false,
+    color: area.color || '#007aff',
+    icon: '',
+    driveUrl: '',
+    driveFolderId: '',
+    contacts: [],
+    context: area.context || 'profesional',
+    parentId: null
+  };
+  data.projects = data.projects || [];
+  data.projects.push(proyecto);
+  return { proyecto: proyecto, areaNombre: area.name };
+}
+
+// Crea un subproyecto. El padre se busca por coincidencia parcial de nombre;
+// si no se encuentra, devuelve null y NO se crea nada.
+function crearSubproyecto(data, nombre, descripcion, nombrePadre) {
+  const buscado = normalizar(nombrePadre);
+  const candidatos = (data.projects || []).filter(p =>
+    !p.parentId && p.status !== 'archived' &&
+    (normalizar(p.name).includes(buscado) || buscado.includes(normalizar(p.name)))
+  );
+  if (candidatos.length !== 1) return { error: candidatos.length === 0 ? 'no-encontrado' : 'ambiguo', candidatos: candidatos.map(p => p.name) };
+
+  const padre = candidatos[0];
+  const sub = {
+    id: 'p' + Date.now(),
+    name: nombre,
+    area: padre.area,
+    desc: descripcion || 'Creado por voz desde Telegram.',
+    status: 'active',
+    hasLeads: false,
+    color: padre.color || '#007aff',
+    icon: '',
+    driveUrl: '',
+    driveFolderId: '',
+    contacts: [],
+    context: padre.context || 'profesional',
+    parentId: padre.id
+  };
+  data.projects = data.projects || [];
+  data.projects.push(sub);
+  return { proyecto: sub, padre: padre };
 }
 
 async function sendMsg(text) {
@@ -252,17 +410,65 @@ async function main() {
       }
 
       const rawSinCheck = raw.replace(/check/gi, ' ').replace(/\s+/g, ' ').trim();
-      const taskText = await toTask(rawSinCheck);
+      const parsed = await parseAudio(rawSinCheck, data);
+
+      if (parsed.accion === 'proyecto') {
+        const res = crearProyecto(data, parsed.nombre, parsed.descripcion, parsed.areaNombre);
+        if (!res) {
+          await sendMsg('⚠️ No pude crear el proyecto: no hay áreas definidas en el dashboard.');
+          continue;
+        }
+        huboCambiosDeDatos = true;
+        await sendMsg('📁 Proyecto creado: ' + res.proyecto.name + '\n🗂️ Área: ' + res.areaNombre + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+        continue;
+      }
+
+      if (parsed.accion === 'subproyecto') {
+        let res = crearSubproyecto(data, parsed.nombre, parsed.descripcion, parsed.proyectoPadre);
+        if (res.error === 'no-encontrado') {
+          // Regla acordada: si el padre no existe, se crea primero.
+          const padreNuevo = crearProyecto(data, parsed.proyectoPadre, '', '');
+          if (!padreNuevo) {
+            await sendMsg('⚠️ No pude crear el proyecto padre "' + parsed.proyectoPadre + '" (no hay áreas definidas).');
+            continue;
+          }
+          res = crearSubproyecto(data, parsed.nombre, parsed.descripcion, padreNuevo.proyecto.name);
+          if (res.error) {
+            await sendMsg('⚠️ Creé el proyecto "' + padreNuevo.proyecto.name + '" pero no pude crear el subproyecto adentro. Revisá el dashboard.');
+            huboCambiosDeDatos = true;
+            continue;
+          }
+          huboCambiosDeDatos = true;
+          await sendMsg('🆕 Proyecto NUEVO creado: ' + padreNuevo.proyecto.name + ' (área ' + padreNuevo.areaNombre + ')\n📂 Subproyecto creado adentro: ' + res.proyecto.name + '\nSi el nombre quedó mal transcripto, corregilo en el dashboard.\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+          continue;
+        }
+        if (res.error === 'ambiguo') {
+          await sendMsg('⚠️ No creé el subproyecto "' + parsed.nombre + '": "' + parsed.proyectoPadre + '" coincide con varios proyectos (' + res.candidatos.join(', ') + '). Decilo de nuevo con el nombre completo.');
+          continue;
+        }
+        huboCambiosDeDatos = true;
+        await sendMsg('📂 Subproyecto creado: ' + res.proyecto.name + '\n📁 Dentro de: ' + res.padre.name + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+        continue;
+      }
+
+      // Acción por defecto: tarea. Destino según proyecto mencionado (o Ideas).
+      const destino = resolverProyectoDestino(data, parsed.proyecto);
 
       data.tasks = data.tasks || [];
       data.tasks.push({
         id: 't' + Date.now(),
-        projectId: 'inbox', text: taskText, done: false, dueDate: '',
+        projectId: destino.projectId, text: parsed.text, done: false,
+        dueDate: parsed.dueDate, dueTime: parsed.dueTime,
         priority: 'medium', emailAlert: false, alertSent: false, driveUrl: ''
       });
 
       huboCambiosDeDatos = true;
-      await sendMsg('✅ Tarea agregada: ' + taskText + '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"');
+      let confirmacion = '✅ Tarea agregada: ' + parsed.text;
+      if (destino.nota) confirmacion += '\n' + destino.nota;
+      if (parsed.dueDate) confirmacion += '\n📅 Vence: ' + parsed.dueDate + (parsed.dueTime ? ' a las ' + parsed.dueTime : '');
+      else confirmacion += '\n📅 Sin fecha (agregala en el dashboard si hace falta)';
+      confirmacion += '\n\n🎙️ Lo que escuché: "' + rawSinCheck + '"';
+      await sendMsg(confirmacion);
     } catch (e) {
       await sendMsg('⚠️ Error en audio: ' + e.message);
     }

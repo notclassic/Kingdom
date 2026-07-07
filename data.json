@@ -160,21 +160,6 @@
       "parentId": "p2"
     },
     {
-      "id": "p1783447588062866",
-      "name": "Generar email de salida.",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
-    },
-    {
       "id": "p1781582668835650",
       "name": "WhatsApp",
       "area": "a1",
@@ -1620,6 +1605,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t178344774742994",
+      "projectId": "p1781584127104452",
+      "text": "Generar email de salida.",
+      "done": false,
+      "dueDate": null,
+      "dueTime": null,
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1772,7 +1769,8 @@
     "p1781590678767753",
     "p1781590678767214",
     "p178159067876735",
-    "p1781590678767292"
+    "p1781590678767292",
+    "p1783447588062866"
   ],
   "trash": [
     {

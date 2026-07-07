@@ -1347,7 +1347,7 @@
     {
       "id": "t23",
       "projectId": "p9",
-      "text": "Gestionar campañas de Google Ads.",
+      "text": "Seguimiento a correo de gestionar campañas de Google Ads y RRSS.",
       "done": false,
       "dueDate": "2026-06-19",
       "emailAlert": false,
@@ -1355,7 +1355,8 @@
       "dueTime": "14:00",
       "driveUrl": "",
       "priority": "medium",
-      "dueSoonAlertSent": true
+      "dueSoonAlertSent": true,
+      "userUpdatedAt": "2026-07-07T14:41:08.645Z"
     },
     {
       "id": "t25",

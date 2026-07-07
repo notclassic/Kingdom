@@ -2044,18 +2044,6 @@
       "mcpUpdatedAt": "2026-06-24T20:31:56.041Z"
     },
     {
-      "id": "t1781841347094366",
-      "projectId": "p9",
-      "text": "Manejo de RRSS",
-      "done": false,
-      "dueDate": "2026-06-21",
-      "dueTime": "09:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": ""
-    },
-    {
       "id": "t1781846779879411",
       "projectId": "p7",
       "text": "Publicaciones en IG",
@@ -3454,6 +3442,22 @@
     {
       "type": "task",
       "deletedAt": "2026-07-07T14:39:45.052Z",
+      "item": {
+        "id": "t1781841347094366",
+        "projectId": "p9",
+        "text": "Manejo de RRSS",
+        "done": false,
+        "dueDate": "2026-06-21",
+        "dueTime": "09:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:41:23.946Z",
       "item": {
         "id": "t1781841347094366",
         "projectId": "p9",

@@ -328,6 +328,99 @@ function sumarDias(dueDate, dias) {
   return y + '-' + m + '-' + dd;
 }
 
+function taskKeyboard(taskId) {
+  return {
+    inline_keyboard: [
+      [
+        { text: '✅ Ya está', callback_data: 'done_' + taskId },
+        { text: '📅 +1 día',  callback_data: 'postpone1_' + taskId },
+        { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
+      ],
+      [
+        { text: '📅 Otra fecha (respondé a este mensaje)', callback_data: 'pickdate_' + taskId }
+      ]
+    ]
+  };
+}
+
+// Escalón de aviso para una fecha (mismo criterio que bot_notificaciones):
+// 3=vencida, 2=hoy, 1=mañana, 0=más adelante.
+function escalonDeFecha(dueDate) {
+  const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+  const diff = Math.round((new Date(dueDate + 'T00:00:00') - new Date(hoyStr + 'T00:00:00')) / 86400000);
+  return diff < 0 ? 3 : diff === 0 ? 2 : diff === 1 ? 1 : 0;
+}
+
+// Parsea una fecha escrita por el usuario en respuesta a una alerta.
+// Acepta: "15/07", "15-07-2026", "hoy", "mañana", "pasado mañana",
+// días de semana ("viernes"), y hora opcional ("18:00", "18.30").
+// Devuelve { dueDate, dueTime } o null si no se entiende.
+function parseFechaTexto(texto) {
+  const t = (texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  const hoyStr = new Date().toLocaleDateString('en-CA', { timeZone: 'America/Santiago' });
+  const hoy = new Date(hoyStr + 'T12:00:00');
+
+  // hora opcional: 18:00 / 18.30
+  let dueTime = '';
+  const mHora = t.match(/\b(\d{1,2})[:.](\d{2})\b/);
+  if (mHora) {
+    const h = parseInt(mHora[1], 10), min = parseInt(mHora[2], 10);
+    if (h <= 23 && min <= 59) dueTime = String(h).padStart(2, '0') + ':' + String(min).padStart(2, '0');
+  }
+
+  function fmt(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  // palabras clave
+  if (/\bhoy\b/.test(t)) return { dueDate: fmt(hoy), dueTime: dueTime };
+  if (/\bpasado\s*manana\b/.test(t)) { const d = new Date(hoy); d.setDate(d.getDate() + 2); return { dueDate: fmt(d), dueTime: dueTime }; }
+  if (/\bmanana\b/.test(t)) { const d = new Date(hoy); d.setDate(d.getDate() + 1); return { dueDate: fmt(d), dueTime: dueTime }; }
+
+  // día de semana -> la próxima ocurrencia (1 a 7 días adelante)
+  const dias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  for (let i = 0; i < 7; i++) {
+    if (new RegExp('\\b' + dias[i] + '\\b').test(t)) {
+      const d = new Date(hoy);
+      let delta = (i - d.getDay() + 7) % 7;
+      if (delta === 0) delta = 7;
+      d.setDate(d.getDate() + delta);
+      return { dueDate: fmt(d), dueTime: dueTime };
+    }
+  }
+
+  // dd/mm o dd-mm, con año opcional. Cuidado de no confundir con la hora:
+  // se busca un separador / o - explícito.
+  const mFecha = t.match(/\b(\d{1,2})[\/\-](\d{1,2})(?:[\/\-](\d{2,4}))?\b/);
+  if (mFecha) {
+    const dd = parseInt(mFecha[1], 10), mm = parseInt(mFecha[2], 10);
+    let yy = mFecha[3] ? parseInt(mFecha[3], 10) : hoy.getFullYear();
+    if (yy < 100) yy += 2000;
+    if (dd >= 1 && dd <= 31 && mm >= 1 && mm <= 12) {
+      let d = new Date(yy, mm - 1, dd, 12);
+      if (d.getDate() !== dd || d.getMonth() !== mm - 1) return null; // fecha inexistente (31/02)
+      // sin año explícito y la fecha ya pasó -> asumir el año que viene
+      if (!mFecha[3] && d < hoy) d = new Date(yy + 1, mm - 1, dd, 12);
+      // sanity: no más de un año adelante
+      if ((d - hoy) / 86400000 > 370) return null;
+      return { dueDate: fmt(d), dueTime: dueTime };
+    }
+  }
+
+  return null;
+}
+
+// Registra mensaje->tarea (mismo mecanismo que bot_notificaciones).
+function registrarMsgTarea(state, messageId, taskId) {
+  if (!messageId) return;
+  state.alertMsgs = state.alertMsgs || {};
+  state.alertMsgs[messageId] = taskId;
+  const keys = Object.keys(state.alertMsgs);
+  if (keys.length > 150) {
+    keys.slice(0, keys.length - 150).forEach(k => delete state.alertMsgs[k]);
+  }
+}
+
 // Devuelve true si modificó data.tasks (para saber si hay que guardar data.json)
 async function handleCallback(cb, data, state) {
   const [action, taskId] = cb.data.split('_');
@@ -341,6 +434,30 @@ async function handleCallback(cb, data, state) {
   let toast = '';
   let statusLine = '';
   const now = new Date().toISOString();
+
+  if (action === 'pickdate') {
+    // No cambia la tarea: registra este mensaje como vinculado a la tarea y
+    // le explica al usuario cómo responder con la fecha. Los botones se
+    // conservan por si prefiere usar los rápidos igual.
+    registrarMsgTarea(state, cb.message && cb.message.message_id, taskId);
+    await answerCallback(cb.id, 'Respondé a ese mensaje con la fecha');
+    if (cb.message) {
+      const yaExplicado = (cb.message.text || '').includes('Respondé a ESTE mensaje');
+      if (!yaExplicado) {
+        await fetch(TG + '/editMessageText', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: cb.message.chat.id,
+            message_id: cb.message.message_id,
+            text: (cb.message.text || '') + '\n\n✍️ Respondé a ESTE mensaje (deslizalo a la izquierda) con la nueva fecha. Ejemplos: "15/07", "mañana 18:00", "viernes".',
+            reply_markup: taskKeyboard(taskId)
+          })
+        });
+      }
+    }
+    return false; // no cambió data.json; el estado se guarda igual porque hubo updates
+  }
 
   if (action === 'done') {
     task.done = true;
@@ -431,7 +548,35 @@ async function main() {
     }
 
     const msg = u.message;
-    if (!msg || !msg.voice) continue;
+    if (!msg) continue;
+
+    // Respuesta a un mensaje del bot vinculado a una tarea -> reprogramar
+    // con la fecha escrita ("15/07", "mañana 18:00", "viernes"...).
+    if (msg.text && msg.reply_to_message && state.alertMsgs && state.alertMsgs[msg.reply_to_message.message_id]) {
+      const taskId = state.alertMsgs[msg.reply_to_message.message_id];
+      const task = (data.tasks || []).find(t => t.id === taskId);
+      if (!task) {
+        await sendMsg('⚠️ Esa tarea ya no existe (¿se borró?).');
+        continue;
+      }
+      const parsed = parseFechaTexto(msg.text);
+      if (!parsed) {
+        await sendMsg('⚠️ No entendí la fecha "' + msg.text + '". Probá con: "15/07", "mañana 18:00", "viernes", "pasado mañana".');
+        continue;
+      }
+      task.dueDate = parsed.dueDate;
+      if (parsed.dueTime) task.dueTime = parsed.dueTime;
+      task.mcpUpdatedAt = new Date().toISOString();
+      state.dueAlerted = state.dueAlerted || {};
+      const esc = escalonDeFecha(parsed.dueDate);
+      if (esc > 0) state.dueAlerted[taskId] = esc;
+      else delete state.dueAlerted[taskId];
+      huboCambiosDeDatos = true;
+      await sendMsg('📅 Reprogramada: ' + task.text + '\nNuevo vencimiento: ' + parsed.dueDate + (parsed.dueTime ? ' a las ' + parsed.dueTime : ''));
+      continue;
+    }
+
+    if (!msg.voice) continue;
 
     try {
       const url = await getVoiceUrl(msg.voice.file_id);

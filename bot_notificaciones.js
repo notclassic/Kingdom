@@ -47,22 +47,42 @@ async function putJsonFile(path, data, sha, message) {
 
 function taskKeyboard(taskId) {
   return {
-    inline_keyboard: [[
-      { text: '✅ Ya está', callback_data: 'done_' + taskId },
-      { text: '📅 +1 día',  callback_data: 'postpone1_' + taskId },
-      { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
-    ]]
+    inline_keyboard: [
+      [
+        { text: '✅ Ya está', callback_data: 'done_' + taskId },
+        { text: '📅 +1 día',  callback_data: 'postpone1_' + taskId },
+        { text: '📅 +1 sem',  callback_data: 'postpone7_' + taskId }
+      ],
+      [
+        { text: '📅 Otra fecha (respondé a este mensaje)', callback_data: 'pickdate_' + taskId }
+      ]
+    ]
   };
 }
 
+// Envía y devuelve el message_id (o null), para poder vincular respuestas.
 async function sendMsg(text, replyMarkup) {
   const body = { chat_id: TELEGRAM_CHAT_ID, text: text };
   if (replyMarkup) body.reply_markup = replyMarkup;
-  await fetch(TG + '/sendMessage', {
+  const r = await fetch(TG + '/sendMessage', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body)
   });
+  const j = await r.json().catch(() => null);
+  return (j && j.ok && j.result) ? j.result.message_id : null;
+}
+
+// Registra mensaje->tarea en el estado para que una respuesta al mensaje
+// pueda reprogramar la tarea. Se podan los más viejos para no crecer infinito.
+function registrarMsgTarea(state, messageId, taskId) {
+  if (!messageId) return;
+  state.alertMsgs = state.alertMsgs || {};
+  state.alertMsgs[messageId] = taskId;
+  const keys = Object.keys(state.alertMsgs);
+  if (keys.length > 150) {
+    keys.slice(0, keys.length - 150).forEach(k => delete state.alertMsgs[k]);
+  }
 }
 
 async function main() {
@@ -118,13 +138,15 @@ async function main() {
       const previo = escalonGuardado(state.dueAlerted[task.id]);
 
       if (actual > previo) {
+        let msgId = null;
         if (actual === 3) {
-          await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')', taskKeyboard(task.id));
+          msgId = await sendMsg('🚨 ¡TAREA VENCIDA! ' + task.text + ' (Venció el ' + task.dueDate + ')', taskKeyboard(task.id));
         } else if (actual === 2) {
-          await sendMsg('⏰ ¡Vence HOY! ' + task.text, taskKeyboard(task.id));
+          msgId = await sendMsg('⏰ ¡Vence HOY! ' + task.text, taskKeyboard(task.id));
         } else {
-          await sendMsg('📅 Mañana vence: ' + task.text, taskKeyboard(task.id));
+          msgId = await sendMsg('📅 Mañana vence: ' + task.text, taskKeyboard(task.id));
         }
+        registrarMsgTarea(state, msgId, task.id);
         state.dueAlerted[task.id] = actual;
         huboCambiosEstado = true;
       }

@@ -2041,7 +2041,11 @@
     "t1781584626491281",
     "t1781581543159671",
     "t1781580759092852",
-    "t1781572146539102"
+    "t1781572146539102",
+    "t1781580925539583",
+    "t1781580951081409",
+    "t17815866999337",
+    "t1781626726363974"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -2073,7 +2077,8 @@
     "p1783401320934",
     "p1781624973628126",
     "p1781624973628303",
-    "p1782160541989891"
+    "p1782160541989891",
+    "p1781624973629977"
   ],
   "trash": [
     {
@@ -3627,6 +3632,81 @@
         "mcpUpdatedAt": "2026-06-23T20:59:16.774Z"
       },
       "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-07T14:42:14.745Z",
+      "item": {
+        "id": "p1781624973629977",
+        "name": "Notas y criterios",
+        "area": "a1",
+        "desc": "No son tareas de desarrollo: criterios y recordatorios.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1781572037505287"
+      },
+      "tasks": [
+        {
+          "id": "t1781580925539583",
+          "projectId": "p1781624973629977",
+          "text": "Revisar pantallazos para ver los cambios (parte del proceso).",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:35",
+          "priority": "low",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781580951081409",
+          "projectId": "p1781624973629977",
+          "text": "Criterio: primero la vista de celular, luego la app.",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "01:35",
+          "priority": "low",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t17815866999337",
+          "projectId": "p1781624973629977",
+          "text": "Que la IA ayude como asistente y cree tareas por proyecto (es lo que estamos haciendo).",
+          "done": false,
+          "dueDate": "2026-06-17",
+          "dueTime": "01:11",
+          "priority": "low",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        },
+        {
+          "id": "t1781626726363974",
+          "projectId": "p1781624973629977",
+          "text": "Recordatorio: los límites y el método de trabajo con IA están documentados en el proyecto \"Flujo de mejoras con IA\".",
+          "done": false,
+          "dueDate": "2026-06-16",
+          "dueTime": "14:18",
+          "priority": "high",
+          "emailAlert": false,
+          "alertSent": true,
+          "driveUrl": "",
+          "dueSoonAlertSent": true,
+          "overdueAlertSent": true
+        }
+      ]
     }
   ],
   "alertConfig": {

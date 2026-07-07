@@ -1893,21 +1893,6 @@
       "mcpUpdatedAt": "2026-06-23T01:00:16.582Z"
     },
     {
-      "id": "t1781675722089858",
-      "projectId": "p1781572037505287",
-      "text": "Mantener la regla de dimensiones: espaciado de tareas, iconos y subproyectos, ubicación del icono de ID y simetría en el diseño.",
-      "done": false,
-      "dueDate": "2026-06-18",
-      "dueTime": "01:55",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": true,
-      "driveUrl": "",
-      "dueSoonAlertSent": true,
-      "overdueAlertSent": true,
-      "mcpUpdatedAt": "2026-06-23T00:59:52.866Z"
-    },
-    {
       "id": "t1781676760577201",
       "projectId": "p1781572037505287",
       "text": "Falta un menú de hamburguesa.",
@@ -2280,7 +2265,8 @@
     "t1783431048846",
     "t22",
     "t24",
-    "t1781841347094366"
+    "t1781841347094366",
+    "t1781675722089858"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3469,6 +3455,25 @@
         "emailAlert": false,
         "alertSent": true,
         "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-07T14:41:31.570Z",
+      "item": {
+        "id": "t1781675722089858",
+        "projectId": "p1781572037505287",
+        "text": "Mantener la regla de dimensiones: espaciado de tareas, iconos y subproyectos, ubicación del icono de ID y simetría en el diseño.",
+        "done": false,
+        "dueDate": "2026-06-18",
+        "dueTime": "01:55",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": true,
+        "driveUrl": "",
+        "dueSoonAlertSent": true,
+        "overdueAlertSent": true,
+        "mcpUpdatedAt": "2026-06-23T00:59:52.866Z"
       }
     }
   ],

@@ -175,6 +175,21 @@
       "parentId": "p2"
     },
     {
+      "id": "p1783447588062866",
+      "name": "Generar email de salida.",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#5856d6",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p2"
+    },
+    {
       "id": "p10",
       "color": "#8e8e93",
       "name": "NotClassic",
@@ -526,21 +541,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1"
-    },
-    {
-      "id": "p1783447588062866",
-      "name": "Generar email de salida.",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#5856d6",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781584127104452"
     }
   ],
   "tasks": [

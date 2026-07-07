@@ -1525,14 +1525,15 @@
     {
       "id": "t178344825507289",
       "projectId": "p1781584127104452",
-      "text": "Generar email de salida.",
+      "text": "Redactar la plantilla del email de salida (primer contacto): asunto, cuerpo corto y llamado a la acción para probar el bot",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-07-10",
       "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-07T18:26:32.428Z"
     },
     {
       "id": "t1783447842184127",

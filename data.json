@@ -1565,13 +1565,15 @@
       "projectId": "p1781584127104452",
       "text": "WhatsApp,El mensaje saluda a la empresa, no al nombre del usuario: \"Hola, vinoteca: tenemos una noticia importante para darte, una IA para tu negocio\".",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-07-08",
       "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "userUpdatedAt": "2026-07-07T18:21:47.097Z"
+      "userUpdatedAt": "2026-07-07T18:21:47.097Z",
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     },
     {
       "id": "t1783447773140496",

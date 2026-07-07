@@ -1581,15 +1581,16 @@
     {
       "id": "t1783448246005157",
       "projectId": "p1781584127104452",
-      "text": "aviso por whatsapp de cliente que responde, ya se por correo o whatsapp",
+      "text": "Configurar aviso inmediato cuando un cliente responde (por WhatsApp o por correo, según el canal donde contestó)",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-07-16",
       "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "userUpdatedAt": "2026-07-07T18:22:48.744Z"
+      "userUpdatedAt": "2026-07-07T18:22:48.744Z",
+      "mcpUpdatedAt": "2026-07-07T18:26:55.339Z"
     },
     {
       "id": "t178344815596589",

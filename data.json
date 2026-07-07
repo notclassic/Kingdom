@@ -1567,15 +1567,16 @@
     {
       "id": "t1783448079507388",
       "projectId": "p1781584127104452",
-      "text": "medicion en el crm creado para bot,si el cliente prueba el bot, quien lo hizo de la bbdd",
+      "text": "Agregar medición en el CRM: registrar si el cliente prueba el bot y desde qué contacto de la BBDD llegó",
       "done": false,
-      "dueDate": "2026-07-08",
+      "dueDate": "2026-07-15",
       "dueTime": "14:12",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "userUpdatedAt": "2026-07-07T18:22:37.379Z"
+      "userUpdatedAt": "2026-07-07T18:22:37.379Z",
+      "mcpUpdatedAt": "2026-07-07T18:26:47.205Z"
     },
     {
       "id": "t1783448246005157",

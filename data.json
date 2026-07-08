@@ -512,6 +512,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781582993530486"
+    },
+    {
+      "id": "p1783472864864",
+      "name": "Juntarme con el contador",
+      "area": "a1",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
     }
   ],
   "tasks": [
@@ -1640,6 +1655,18 @@
       "done": false,
       "dueDate": "2026-07-08",
       "dueTime": "10:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
+    },
+    {
+      "id": "t1783472864864",
+      "projectId": "p1783472864864",
+      "text": "Llamar al contador",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

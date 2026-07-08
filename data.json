@@ -1619,6 +1619,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-07T19:47:41.788Z"
+    },
+    {
+      "id": "t1783471718256",
+      "projectId": "inbox",
+      "text": "Agregar proyecto, revisar Telegram para mañana a las 10 de la mañana. .",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

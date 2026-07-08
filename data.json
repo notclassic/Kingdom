@@ -512,21 +512,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781582993530486"
-    },
-    {
-      "id": "p1783472864864",
-      "name": "Juntarme con el contador",
-      "area": "a1",
-      "desc": "Creado por voz desde Telegram.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
     }
   ],
   "tasks": [
@@ -1660,18 +1645,6 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-08T01:08:19.243Z"
-    },
-    {
-      "id": "t1783472864864",
-      "projectId": "p1783472864864",
-      "text": "Llamar al contador",
-      "done": false,
-      "dueDate": "2026-07-08",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -1792,7 +1765,8 @@
     "t178344774742994",
     "t1783447837728822",
     "t1781581108973528",
-    "t1783453230404272"
+    "t1783453230404272",
+    "t1783472864864"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -1838,7 +1812,8 @@
     "p1781582668835650",
     "p1783448229858856",
     "p1783448236015374",
-    "p1781624973628982"
+    "p1781624973628982",
+    "p1783472864864"
   ],
   "trash": [
     {
@@ -4039,6 +4014,39 @@
           "done": false,
           "dueDate": null,
           "dueTime": null,
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-07-08T01:11:15.651Z",
+      "item": {
+        "id": "p1783472864864",
+        "name": "Juntarme con el contador",
+        "area": "a1",
+        "desc": "Creado por voz desde Telegram.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1783472864864",
+          "projectId": "p1783472864864",
+          "text": "Llamar al contador",
+          "done": false,
+          "dueDate": "2026-07-08",
+          "dueTime": "12:00",
           "priority": "medium",
           "emailAlert": false,
           "alertSent": false,

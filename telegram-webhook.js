@@ -380,10 +380,14 @@ async function parseAudio(C, rawText, data) {
   });
   const j = await r.json();
   const out = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content || '').trim();
-  if (!out) return fallback;
+  if (!out) {
+    // Groq no devolvio texto: casi siempre es clave invalida o error de API.
+    fallback.motivoFallback = (j.error && (j.error.message || j.error.code)) ? String(j.error.message || j.error.code).slice(0, 120) : 'respuesta vacia de Groq';
+    return fallback;
+  }
 
   let p;
-  try { p = JSON.parse(out); } catch (_) { return fallback; }
+  try { p = JSON.parse(out); } catch (_) { fallback.motivoFallback = 'la IA devolvio un formato invalido'; return fallback; }
 
   if (p.accion === 'proyecto' && typeof p.nombre === 'string' && p.nombre.trim()) {
     return {
@@ -667,6 +671,7 @@ async function procesarUpdate(C, u) {
         });
         huboCambiosDeDatos = true;
         let conf = '✅ Tarea agregada: ' + parsed.text;
+        if (parsed.motivoFallback) conf += '\n⚠️ No pude interpretar el audio con la IA (' + parsed.motivoFallback + '): guardé el texto tal cual, sin fecha ni proyecto.';
         if (destino.nota) conf += '\n' + destino.nota;
         if (parsed.dueDate) conf += '\n📅 Vence: ' + parsed.dueDate + (parsed.dueTime ? ' a las ' + parsed.dueTime : '');
         else conf += '\n📅 Sin fecha (agregala en el dashboard si hace falta)';

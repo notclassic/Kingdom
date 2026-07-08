@@ -1621,19 +1621,6 @@
       "mcpUpdatedAt": "2026-07-07T19:47:41.788Z"
     },
     {
-      "id": "t1783471718256",
-      "projectId": "inbox",
-      "text": "Revisar Telegram (mañana 10:00)",
-      "done": false,
-      "dueDate": "2026-07-08",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-08T00:52:45.031Z"
-    },
-    {
       "id": "t1783472686008",
       "projectId": "inbox",
       "text": "Llamar dentista",
@@ -1766,7 +1753,8 @@
     "t1783447837728822",
     "t1781581108973528",
     "t1783453230404272",
-    "t1783472864864"
+    "t1783472864864",
+    "t1783471718256"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -4053,6 +4041,23 @@
           "driveUrl": ""
         }
       ]
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-08T01:11:27.760Z",
+      "item": {
+        "id": "t1783471718256",
+        "projectId": "inbox",
+        "text": "Revisar Telegram (mañana 10:00)",
+        "done": false,
+        "dueDate": "2026-07-08",
+        "dueTime": "12:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": "",
+        "mcpUpdatedAt": "2026-07-08T00:52:45.031Z"
+      }
     }
   ],
   "alertConfig": {

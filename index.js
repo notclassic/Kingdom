@@ -4,9 +4,16 @@
 //  Conecta Claude (conector personalizado) con tu data.json de Kingdom.
 //  La IA que genera el trabajo es Claude; este Worker solo lee/escribe datos.
 //
+//  Ademas expone el WEBHOOK DE TELEGRAM en /<KINGDOM_SECRET>/telegram
+//  (ver telegram-webhook.js): botones, fechas por texto y audios "check".
+//
 //  Secrets/vars que se cargan en Cloudflare (NO aca):
 //    GITHUB_TOKEN    -> token fino de GitHub con Contents: Read and write sobre Kingdom
 //    KINGDOM_SECRET  -> texto largo e impredecible; va en la URL del conector
+//    TELEGRAM_TOKEN  -> token del bot de Telegram (webhook)
+//    TELEGRAM_CHAT_ID-> chat autorizado del bot (webhook)
+//    ASSEMBLYAI_KEY  -> transcripcion de audios (webhook)
+//    GROQ_API_KEY    -> interpretacion de audios (webhook)
 //    GITHUB_OWNER    -> (opcional) por defecto "notclassic"
 //    GITHUB_REPO     -> (opcional) por defecto "Kingdom"
 //    GITHUB_BRANCH   -> (opcional) por defecto "main"
@@ -18,6 +25,7 @@
 import { createMcpHandler } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
+import { handleTelegramWebhook } from "./telegram-webhook.js";
 
 // ---------------------------------------------------------------------------
 //  base64 UTF-8 sin depender de Buffer (nativo de Workers)
@@ -449,7 +457,8 @@ function buildServer(env) {
 }
 
 // ---------------------------------------------------------------------------
-//  Worker fetch: salud, auth por secreto en la URL, y delega al handler MCP
+//  Worker fetch: salud, auth por secreto en la URL, webhook de Telegram
+//  y delega al handler MCP
 // ---------------------------------------------------------------------------
 export default {
   async fetch(request, env, ctx) {
@@ -465,6 +474,12 @@ export default {
 
     // Reescribir la URL quitando el secreto: el handler ve "/mcp".
     const rest = url.pathname.slice(prefix.length); // "mcp"
+
+    // Webhook de Telegram (botones, fechas por texto, audios "check").
+    if (rest === "telegram") {
+      return handleTelegramWebhook(request, env, ctx, url.pathname);
+    }
+
     const newUrl = new URL(request.url);
     newUrl.pathname = "/" + rest;
     const rewritten = new Request(newUrl.toString(), request);

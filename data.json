@@ -1632,6 +1632,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-08T01:08:19.243Z"
+    },
+    {
+      "id": "t1783474815366105",
+      "projectId": "p1781572037505287",
+      "text": "Paridad V2 (registro): mejoras hechas en producción que el Kingdom multi-tenant debe replicar — se van acumulando en el resultado de esta tarea",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-08T01:40:15.366Z"
     }
   ],
   "leads": [

@@ -1626,7 +1626,7 @@
       "text": "Revisar Telegram (mañana 10:00)",
       "done": false,
       "dueDate": "2026-07-08",
-      "dueTime": "",
+      "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,

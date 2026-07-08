@@ -1632,6 +1632,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-08T00:52:45.031Z"
+    },
+    {
+      "id": "t1783472686008",
+      "projectId": "inbox",
+      "text": "Llamar dentista",
+      "done": false,
+      "dueDate": "2026-07-08",
+      "dueTime": "10:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

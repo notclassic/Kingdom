@@ -1,5 +1,6 @@
 # Kingdom MCP en Cloudflare Workers (gratis, sin dormirse)
 
+
 Conecta Claude con tu `data.json` de Kingdom mediante un conector personalizado.
 La IA que genera el trabajo es Claude; este Worker solo lee/escribe datos.
 Corre en el plan gratis de Cloudflare, sin Durable Objects y sin dormirse.

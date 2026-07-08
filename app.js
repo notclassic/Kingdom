@@ -604,7 +604,10 @@ async function pushToGitHub(silent){
     }
     if(banner) banner.textContent = silent ? '✓ Sincronizado con GitHub.' : '✓ Datos subidos a GitHub correctamente.';
     try{ localStorage.setItem('kingdom_dirty','0'); }catch(_){}
+    pushRetryCount = 0;
+    if(pushRetryTimer){ clearTimeout(pushRetryTimer); pushRetryTimer = null; }
   }catch(err){
+    schedulePushRetry();
     const m = (err.message||'');
     let txt;
     if(m.includes('401') || m.includes('403')){
@@ -616,15 +619,47 @@ async function pushToGitHub(silent){
   }
 }
 let autoPushTimer = null;
+let _avisoSinToken = false;
 function scheduleAutoPush(){
-  if(!getGithubToken()) return;
+  if(!getGithubToken()){
+    // Sin token, los cambios viven SOLO en este navegador. Avisar una vez.
+    if(!_avisoSinToken){
+      _avisoSinToken = true;
+      const banner = document.getElementById('githubSyncStatus');
+      if(banner) banner.textContent = '⚠️ Tus cambios quedan solo en este navegador: pegá el token de GitHub en Configuración para sincronizar.';
+    }
+    return;
+  }
   if(autoPushTimer) clearTimeout(autoPushTimer);
   autoPushTimer = setTimeout(()=>{ autoPushTimer=null; pushToGitHub(true); }, 600);
+}
+
+// Reintento automático cuando un push falla (conflicto, red caída):
+// hasta 5 intentos cada 30 s; cualquier save() posterior lo reinicia.
+let pushRetryTimer = null;
+let pushRetryCount = 0;
+function schedulePushRetry(){
+  if(!getGithubToken()) return;
+  if(pushRetryTimer || pushRetryCount >= 5) return;
+  pushRetryTimer = setTimeout(()=>{
+    pushRetryTimer = null;
+    pushRetryCount++;
+    pushToGitHub(true);
+  }, 30000);
 }
 function flushAutoPush(){
   if(autoPushTimer){ clearTimeout(autoPushTimer); autoPushTimer=null; if(getGithubToken()) pushToGitHub(true); }
 }
-document.addEventListener('visibilitychange', ()=>{ if(document.hidden) flushAutoPush(); });
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ flushAutoPush(); return; }
+  // Al VOLVER a la pestaña: si quedó un cambio sin subir, reintentar.
+  try{ if(localStorage.getItem('kingdom_dirty')==='1' && getGithubToken()) scheduleAutoPush(); }catch(_){}
+});
+// Al ABRIR el dashboard: si la sesión anterior dejó cambios sin subir
+// (push fallido, pestaña cerrada a mitad), subirlos ahora.
+setTimeout(()=>{
+  try{ if(localStorage.getItem('kingdom_dirty')==='1' && getGithubToken()) pushToGitHub(true); }catch(_){}
+}, 3000);
 window.addEventListener('pagehide', flushAutoPush);
 
 /* ====== RESPALDO: EXPORTAR / IMPORTAR ====== */
@@ -1059,6 +1094,31 @@ function openDriveLink(){
   const u = document.getElementById('dr-url').value.trim();
   if(u) window.open(u, '_blank');
   else alert('No hay link guardado. Pegá uno y tocá Guardar.');
+}
+// Copia el link de Drive al portapapeles, con confirmación en el botón.
+// Fallback con execCommand por si el navegador bloquea la Clipboard API.
+function copyDriveLink(){
+  const u = document.getElementById('dr-url').value.trim();
+  if(!u){ alert('No hay link para copiar. Pegá uno primero.'); return; }
+  const btn = document.getElementById('dr-copy-btn');
+  const confirmar = () => {
+    if(!btn) return;
+    const original = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  };
+  const fallback = () => {
+    const inp = document.getElementById('dr-url');
+    inp.select(); inp.setSelectionRange(0, 99999);
+    try { document.execCommand('copy'); confirmar(); }
+    catch(_) { alert('No pude copiar automáticamente. Seleccioná el texto y copialo con Ctrl+C.'); }
+    window.getSelection().removeAllRanges();
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(u).then(confirmar).catch(fallback);
+  } else {
+    fallback();
+  }
 }
 function saveDrive(){
   const id = document.getElementById('dr-id').value;

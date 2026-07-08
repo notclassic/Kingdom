@@ -1653,12 +1653,13 @@
       "projectId": "inbox",
       "text": "Llamar dentista",
       "done": false,
-      "dueDate": "2026-07-08",
+      "dueDate": "2026-07-15",
       "dueTime": "10:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-08T01:08:19.243Z"
     },
     {
       "id": "t1783472864864",

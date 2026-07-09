@@ -706,7 +706,7 @@
       "id": "t1781571878665580",
       "projectId": "p4",
       "text": "Coordinar reunión con Carranza.",
-      "done": false,
+      "done": true,
       "dueDate": "2026-06-19",
       "dueTime": "12:00",
       "priority": "low",

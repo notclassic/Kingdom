@@ -1670,7 +1670,7 @@
       "id": "t1783626658030",
       "projectId": "p1783626658030",
       "text": "Llamar a Pepe",
-      "done": false,
+      "done": true,
       "dueDate": "2026-07-10",
       "dueTime": "16:00",
       "priority": "medium",

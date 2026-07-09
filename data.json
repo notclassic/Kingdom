@@ -1555,7 +1555,7 @@
       "projectId": "p1781584127104452",
       "text": "Ajustar el saludo del mensaje de WhatsApp: dirigido a la empresa, no al nombre de la persona (ej.: \"Hola, [vinoteca]: tenemos una noticia importante para tu negocio, una IA\")",
       "done": false,
-      "dueDate": "2026-07-09",
+      "dueDate": "2026-07-10",
       "dueTime": "14:21",
       "priority": "medium",
       "emailAlert": false,
@@ -1564,7 +1564,7 @@
       "userUpdatedAt": "2026-07-07T18:21:47.097Z",
       "dueSoonAlertSent": false,
       "overdueAlertSent": false,
-      "mcpUpdatedAt": "2026-07-07T19:05:16.615Z"
+      "mcpUpdatedAt": "2026-07-09T04:01:21.791Z"
     },
     {
       "id": "t1783447773140496",

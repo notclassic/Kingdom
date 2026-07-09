@@ -1225,12 +1225,13 @@
       "projectId": "p1781592426198305",
       "text": "Definir política de privacidad y mecanismo \"No Molestar\" (Ley 19.628 y 21.719).",
       "done": false,
-      "dueDate": "2026-07-10",
+      "dueDate": "2026-07-11",
       "dueTime": "15:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-09T04:01:32.745Z"
     },
     {
       "id": "t1781592426198266",

@@ -527,6 +527,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": null
+    },
+    {
+      "id": "p1783640334123",
+      "name": "Incorporar alertas según especificaciones del usuario",
+      "area": "pa3",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781673306507675"
     }
   ],
   "tasks": [

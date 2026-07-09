@@ -1182,7 +1182,8 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-09T04:01:40.571Z"
     },
     {
       "id": "t1781592426198148",

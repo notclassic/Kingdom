@@ -512,6 +512,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1781582993530486"
+    },
+    {
+      "id": "p1783626658030",
+      "name": "CRM",
+      "area": "a2",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#05081f",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
     }
   ],
   "tasks": [
@@ -1650,6 +1665,18 @@
       "result": "REGISTRO DE PARIDAD PRODUCCIÓN → V2 (multi-tenant)\nConvención: cada mejora entregada al Kingdom actual se anota acá con fecha. Al construir la pantalla equivalente en V2, se marca [OK].\n\n2026-07-07 · Dashboard:\n- [ ] Modal \"Carpeta de Drive\": botón 📋 Copiar link (con confirmación ✓ y fallback si el navegador bloquea el portapapeles)\n- [ ] Modal \"Editar tarea\": selector de proyecto con buscador y jerarquía (mover tareas entre proyectos/subproyectos); excluye pausados\n- [ ] Pestaña Eliminados: buscador insensible a tildes + orden por fecha/nombre, modal ancho\n- [ ] Configuración reorganizada en 6 secciones por frecuencia de uso; flujos IA unificados con respaldo automático antes de importar Markdown\n- [ ] Limpieza: sin funciones muertas ni CSS huérfano (criterio de higiene para V2 desde el día uno)\n- [ ] Sincronización autocurable: reintento automático de push fallido (5x cada 30 s), push de pendientes al abrir y al volver a la pestaña, y aviso visible cuando el navegador no tiene token — en V2 lo resuelve el login por diseño (sin tokens por dispositivo)\n\n2026-07-07 · Telegram:\n- [ ] Webhook instantáneo en Worker (botones ~1 s, audios ~15-20 s) — en V2 nace así por diseño\n- [ ] Selector de fecha/hora por botones que conserva la hora original al reprogramar\n- [ ] Guardado con fusión ante escritores concurrentes — en V2 lo resuelve D1 por diseño\n- [ ] Mensaje de audio informa el motivo cuando la IA no pudo interpretar (modo crudo)",
       "resultType": "registro_paridad",
       "resultAt": "2026-07-08T13:23:43.876Z"
+    },
+    {
+      "id": "t1783626658030",
+      "projectId": "p1783626658030",
+      "text": "Llamar a Pepe",
+      "done": false,
+      "dueDate": "2026-07-10",
+      "dueTime": "16:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -543,6 +543,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": null
+    },
+    {
+      "id": "p1783642383558810",
+      "name": "Ia automotriz",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
     }
   ],
   "tasks": [

@@ -435,12 +435,27 @@ function crearProyecto(data, nombre, descripcion, areaNombre) {
   return { proyecto, areaNombre: area.name };
 }
 
-function crearSubproyecto(data, nombre, descripcion, nombrePadre) {
-  const buscado = normalizar(nombrePadre);
-  const candidatos = (data.projects || []).filter(p =>
-    !p.parentId && p.status !== 'archived' &&
-    (normalizar(p.name).includes(buscado) || buscado.includes(normalizar(p.name)))
+// Clave de comparacion de nombres: minusculas, sin tildes y SIN ESPACIOS.
+// "Chile Autos" (como suena) y "Chileautos" (como se escribe) son el mismo proyecto.
+function claveNombre(s) { return normalizar(s).replace(/\s+/g, ''); }
+
+// Busca proyectos por nombre: primero coincidencia EXACTA (sin espacios);
+// solo si no hay ninguna, cae a coincidencia parcial.
+function buscarProyectosPorNombre(data, nombre, soloRaiz) {
+  const clave = claveNombre(nombre);
+  const pool = (data.projects || []).filter(p =>
+    p.status !== 'archived' && (!soloRaiz || !p.parentId)
   );
+  const exactos = pool.filter(p => claveNombre(p.name) === clave);
+  if (exactos.length) return exactos;
+  return pool.filter(p => {
+    const c = claveNombre(p.name);
+    return c.includes(clave) || clave.includes(c);
+  });
+}
+
+function crearSubproyecto(data, nombre, descripcion, nombrePadre) {
+  const candidatos = buscarProyectosPorNombre(data, nombrePadre, true);
   if (candidatos.length !== 1) return { error: candidatos.length === 0 ? 'no-encontrado' : 'ambiguo', candidatos: candidatos.map(p => p.name) };
   const padre = candidatos[0];
   const sub = {
@@ -456,11 +471,7 @@ function crearSubproyecto(data, nombre, descripcion, nombrePadre) {
 
 function resolverProyectoDestino(data, nombreMencionado) {
   if (!nombreMencionado) return { projectId: 'inbox', nota: '' };
-  const buscado = normalizar(nombreMencionado);
-  const candidatos = (data.projects || []).filter(p =>
-    p.status !== 'archived' &&
-    (normalizar(p.name).includes(buscado) || buscado.includes(normalizar(p.name)))
-  );
+  const candidatos = buscarProyectosPorNombre(data, nombreMencionado, false);
   if (candidatos.length === 1) return { projectId: candidatos[0].id, nota: '📁 Proyecto: ' + candidatos[0].name };
   if (candidatos.length > 1) return { projectId: 'inbox', nota: '⚠️ "' + nombreMencionado + '" coincide con varios proyectos (' + candidatos.map(p => p.name).slice(0, 4).join(', ') + '). La dejé en Ideas — movela desde el dashboard.' };
   const res = crearProyecto(data, nombreMencionado, '', '');

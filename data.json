@@ -1724,6 +1724,19 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1783642728229842",
+      "projectId": "p1783642550128383",
+      "text": "Fase 0 — Validación: armar lista de 10 locatarios de la red y agendar 5-10 conversaciones (criterio de avance: 3 que digan \"lo quiero ya\")",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-10T00:18:48.229Z"
     }
   ],
   "leads": [

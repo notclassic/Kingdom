@@ -1736,7 +1736,10 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-10T00:18:48.229Z"
+      "mcpUpdatedAt": "2026-07-10T00:19:07.433Z",
+      "result": "RESUMEN EJECUTIVO — Plan de negocio IA Automotriz (completo en archivo plan-negocio-ia-automotriz.md, 09/07/2026)\n\nTESIS: partir por el producto B2B (tasador para locatarios), no por el B2C. Usa la ventaja injusta existente: Sistema Chileautos (scraping+análisis diario) + modelo de elasticidad (Festauto) + red comercial de 17 años.\n\nPRODUCTO MVP: bot WhatsApp para locatario suscrito. Entrada: marca/modelo/año/km/precio ofrecido. Salida: precio mercado hoy (rango), precio máximo de compra para margen objetivo, días estimados de venta a 2-3 precios (elasticidad), señales de alerta.\n\nMODELO: suscripción por local. Base ~1 UF/mes (validar), Pro 2-3 UF (+radar personalizado). 10 clientes = valida; 30 = rentable; 100 = producto principal NotClassic. B2C en fase 2 como lead-gen hacia los locatarios suscritos.\n\nFASES: (0) 2-3 sem: 5-10 entrevistas a locatarios — avance solo si 3 dicen \"lo quiero ya\". (1) 3-4 sem: MVP Wizard-of-Oz con 3 pilotos. (2) 4-6 sem paralelo: motor de rotación (registrar avisos desaparecidos = curva días-de-venta; el activo estratégico). (3) mes 3-4: cobro real.\n\nRIESGOS CLAVE: dependencia del scraping (DataDome, cambio de portal) → diversificar fuentes, el valor migra a la serie histórica propia; tasación errada visible → rangos + control de calidad manual inicial; zona gris legal de datos scrapeados para uso comercial → revisar antes de cobrar; COMPETENCIA POR TU TIEMPO con Kingdom V2 — decidir cuál va primero.\n\nPASO YA: activar en el scraping el registro de fecha alta/baja de cada aviso — el motor de rotación necesita historia y cada semana sin registrar cuesta un mes después.",
+      "resultType": "plan_negocio",
+      "resultAt": "2026-07-10T00:19:07.433Z"
     }
   ],
   "leads": [

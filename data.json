@@ -530,9 +530,9 @@
     },
     {
       "id": "p1783640334123",
-      "name": "Incorporar alertas según especificaciones del usuario",
+      "name": "Alertas personalizadas por criterios de búsqueda",
       "area": "pa3",
-      "desc": "Creado por voz desde Telegram.",
+      "desc": "Que el Sistema Chileautos avise automáticamente cuando aparezca una publicación que cumpla criterios definidos por el usuario (ej.: Subaru Forester año 2008, con tope de kilometraje y rango de precio). Base: el radar de oportunidades existente. ⚠️ PENDIENTE: este subproyecto quedó por error dentro de \"Autos\" — borrarlo acá y recrearlo dentro de Chileautos.",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -541,7 +541,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": "p1781673306507675"
+      "parentId": "p1781673306507675",
+      "mcpUpdatedAt": "2026-07-10T00:11:30.178Z"
     }
   ],
   "tasks": [

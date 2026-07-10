@@ -206,6 +206,22 @@
       "parentId": null
     },
     {
+      "id": "p1783640334123",
+      "name": "Alertas personalizadas por criterios de búsqueda",
+      "area": "pa3",
+      "desc": "Que el Sistema Chileautos avise automáticamente cuando aparezca una publicación que cumpla criterios definidos por el usuario (ej.: Subaru Forester año 2008, con tope de kilometraje y rango de precio). Base: el radar de oportunidades existente. ⚠️ PENDIENTE: este subproyecto quedó por error dentro de \"Autos\" — borrarlo acá y recrearlo dentro de Chileautos.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null,
+      "mcpUpdatedAt": "2026-07-10T00:11:30.178Z"
+    },
+    {
       "id": "p1781673306507675",
       "name": "Autos",
       "area": "pa3",
@@ -527,22 +543,6 @@
       "contacts": [],
       "context": "profesional",
       "parentId": null
-    },
-    {
-      "id": "p1783640334123",
-      "name": "Alertas personalizadas por criterios de búsqueda",
-      "area": "pa3",
-      "desc": "Que el Sistema Chileautos avise automáticamente cuando aparezca una publicación que cumpla criterios definidos por el usuario (ej.: Subaru Forester año 2008, con tope de kilometraje y rango de precio). Base: el radar de oportunidades existente. ⚠️ PENDIENTE: este subproyecto quedó por error dentro de \"Autos\" — borrarlo acá y recrearlo dentro de Chileautos.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": "p1781673306507675",
-      "mcpUpdatedAt": "2026-07-10T00:11:30.178Z"
     }
   ],
   "tasks": [

@@ -561,9 +561,9 @@
     },
     {
       "id": "p1783642550128383",
-      "name": "experto automotrzi que recomiende autos,\nel wn busca sedan 4 puertas eperto, en base precio equoipmaiento etc........\n\nasientente en compra, me oferecine tanl auto a tan precios, te entrega la info de precio precio mercado, precios para ganar tanto, yt el timepo estimado vrenta se gun elasticidad, un asistente de compra para locatatio\n\nIa 0 km",
+      "name": "Asistente IA de compra/venta (asesor B2C + tasador B2B para locatarios)",
       "area": "a1",
-      "desc": "",
+      "desc": "Dos productos: (A) asesor de compra B2C — el comprador describe qué busca (ej. sedán 4 puertas, presupuesto) y la IA recomienda por precio/equipamiento; (B) asistente de compra B2B para locatarios — ante una oferta (\"me ofrecen tal auto a tal precio\") entrega precio de mercado, precio de compra para el margen objetivo y días estimados de venta según elasticidad. Estrategia: partir por B (usa el Sistema Chileautos y la experiencia de elasticidad de Festauto), B2C después como generador de leads. Plan de negocio completo generado el 09/07 (ver tarea con resultado en este subproyecto).",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -572,7 +572,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1783642383558810"
+      "parentId": "p1783642383558810",
+      "mcpUpdatedAt": "2026-07-10T00:18:39.604Z"
     }
   ],
   "tasks": [

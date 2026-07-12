@@ -1769,6 +1769,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:44:56.341Z"
+    },
+    {
+      "id": "t1783899903760508",
+      "projectId": "p1783899778621860",
+      "text": "2. Levantar métricas reales de la plataforma: usuarios, visitas, búsquedas mensuales. Sin esto no hay argumento de venta",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:45:03.760Z"
     }
   ],
   "leads": [

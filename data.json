@@ -1875,6 +1875,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:45:52.177Z"
+    },
+    {
+      "id": "t1783900515051",
+      "projectId": "inbox",
+      "text": "Llamar a Francisco por Pancho",
+      "done": false,
+      "dueDate": "2026-07-13",
+      "dueTime": "14:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

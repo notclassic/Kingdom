@@ -574,6 +574,21 @@
       "context": "profesional",
       "parentId": "p1783642383558810",
       "mcpUpdatedAt": "2026-07-10T00:18:39.604Z"
+    },
+    {
+      "id": "p1783899778621860",
+      "name": "espacio publciiatrio",
+      "area": "a1",
+      "desc": "dnetro de la apps o web tener banner de asupiciadores",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1"
     }
   ],
   "tasks": [

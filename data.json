@@ -1782,6 +1782,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:45:03.760Z"
+    },
+    {
+      "id": "t1783899913293164",
+      "projectId": "p1783899778621860",
+      "text": "3. Definir tarifario y paquetes: precio piloto/fundador mensual fijo (no CPM al inicio, no hay volumen), duración mínima 3 meses",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:45:13.293Z"
     }
   ],
   "leads": [

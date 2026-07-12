@@ -1888,6 +1888,19 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1783900547716615",
+      "projectId": "p1783900232379",
+      "text": "Diseñar la asignación inteligente de fecha/hora al crear tareas (analiza carga de proyectos activos + calendario, reparte en huecos, sin tope de horario)",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:55:47.716Z"
     }
   ],
   "leads": [

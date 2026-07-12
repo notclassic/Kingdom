@@ -1795,6 +1795,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:45:13.293Z"
+    },
+    {
+      "id": "t1783899922527149",
+      "projectId": "p1783899778621860",
+      "text": "4. Armar media kit de 1 página: qué es la plataforma, audiencia, métricas, formatos disponibles, precios piloto",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:45:22.527Z"
     }
   ],
   "leads": [

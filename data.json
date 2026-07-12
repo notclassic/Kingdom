@@ -1821,6 +1821,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:45:29.459Z"
+    },
+    {
+      "id": "t1783899937230840",
+      "projectId": "p1783899778621860",
+      "text": "6. Implementar sistema mínimo de banners: carga de creatividad, rotación, vigencia, conteo de impresiones y clics. Sin métricas por auspiciador no hay renovación",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:45:37.230Z"
     }
   ],
   "leads": [

@@ -590,6 +590,21 @@
       "context": "profesional",
       "parentId": "p1",
       "mcpUpdatedAt": "2026-07-12T23:43:57.961Z"
+    },
+    {
+      "id": "p1783900232379",
+      "name": "Kingdom",
+      "area": "a1",
+      "desc": "Creado por voz desde Telegram.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
     }
   ],
   "tasks": [

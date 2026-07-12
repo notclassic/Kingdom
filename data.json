@@ -577,9 +577,9 @@
     },
     {
       "id": "p1783899778621860",
-      "name": "espacio publciiatrio",
+      "name": "Espacio publicitario",
       "area": "a1",
-      "desc": "dnetro de la apps o web tener banner de asupiciadores",
+      "desc": "Monetización vía banners de auspiciadores dentro de la app/web de Chileautos. Alcance: definir formatos y ubicaciones (home, resultados de búsqueda, ficha de auto), modelo de cobro (tarifa fija mensual vs CPM/CPC), perfil de auspiciadores objetivo (seguros, financiamiento automotriz, talleres, accesorios) y sistema de gestión de campañas (carga de creatividades, vigencia, métricas de impresiones y clics). Requisito previo: tráfico mínimo medible para poder vender.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -588,7 +588,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1"
+      "parentId": "p1",
+      "mcpUpdatedAt": "2026-07-12T23:43:57.961Z"
     }
   ],
   "tasks": [

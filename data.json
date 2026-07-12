@@ -1717,19 +1717,6 @@
       "mcpUpdatedAt": "2026-07-07T19:47:41.788Z"
     },
     {
-      "id": "t1783472686008",
-      "projectId": "inbox",
-      "text": "Llamar dentista",
-      "done": false,
-      "dueDate": "2026-07-15",
-      "dueTime": "10:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-08T01:08:19.243Z"
-    },
-    {
       "id": "t1783474815366105",
       "projectId": "p1781572037505287",
       "text": "Paridad V2 (registro): mejoras hechas en producción que el Kingdom multi-tenant debe replicar — se van acumulando en el resultado de esta tarea",
@@ -1878,18 +1865,6 @@
       "mcpUpdatedAt": "2026-07-12T23:45:52.177Z"
     },
     {
-      "id": "t1783900515051",
-      "projectId": "inbox",
-      "text": "Llamar a Francisco por Pancho",
-      "done": false,
-      "dueDate": "2026-07-13",
-      "dueTime": "14:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1783900547716615",
       "projectId": "p1783900232379",
       "text": "Diseñar la asignación inteligente de fecha/hora al crear tareas (analiza carga de proyectos activos + calendario, reparte en huecos, sin tope de horario)",
@@ -2027,7 +2002,9 @@
     "t1783453230404272",
     "t1783472864864",
     "t1783471718256",
-    "t1783642544063591"
+    "t1783642544063591",
+    "t1783472686008",
+    "t1783900515051"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -4330,6 +4307,39 @@
         "alertSent": false,
         "driveUrl": "",
         "mcpUpdatedAt": "2026-07-08T00:52:45.031Z"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-12T23:56:09.430Z",
+      "item": {
+        "id": "t1783472686008",
+        "projectId": "inbox",
+        "text": "Llamar dentista",
+        "done": false,
+        "dueDate": "2026-07-15",
+        "dueTime": "10:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": "",
+        "mcpUpdatedAt": "2026-07-08T01:08:19.243Z"
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-12T23:56:11.539Z",
+      "item": {
+        "id": "t1783900515051",
+        "projectId": "inbox",
+        "text": "Llamar a Francisco por Pancho",
+        "done": false,
+        "dueDate": "2026-07-13",
+        "dueTime": "14:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": ""
       }
     }
   ],

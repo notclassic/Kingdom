@@ -1847,6 +1847,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-12T23:45:45.112Z"
+    },
+    {
+      "id": "t1783899952177313",
+      "projectId": "p1783899778621860",
+      "text": "8. Cerrar 2-3 auspiciadores piloto, publicar sus banners y enviar reporte mensual de impresiones/clics. Con esos casos, subir precio a la segunda tanda",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-12T23:45:52.177Z"
     }
   ],
   "leads": [

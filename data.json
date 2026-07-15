@@ -1905,6 +1905,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:00.508Z"
+    },
+    {
+      "id": "t1784145788482778",
+      "projectId": "p1781592426198782",
+      "text": "Optimizar el doble limpiar() en motor.py: la línea que arma cada captura histórica llama a limpiar() DOS veces sobre las mismas ~50 mil filas. Con 15 capturas son 15 limpiezas de más por corrida. Fix trivial: calcular una vez y reusar. Se reconoce en el log porque \"Km abreviado interpretado\" y \"Generaciones asignadas\" se repiten. Baja el tiempo de cada recálculo.",
+      "done": false,
+      "dueDate": "2026-07-18",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:08.482Z"
     }
   ],
   "leads": [

@@ -1996,6 +1996,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:27:34.077Z"
+    },
+    {
+      "id": "t1784148558839895",
+      "projectId": "p1781592426198782",
+      "text": "Analizar factibilidad de aplicar regex al clasificador de comentarios. Contexto: el motor tiene un parche (\"Etiquetas saneadas contra negaciones\") que existe porque el clasificador marca por keyword sin ver el \"no\" de adelante (\"precio NO conversable\" queda como conversable). Ese parche cubre solo 2 casos con listas fijas de frases exactas; cualquier otra variante pasa derecho. Un regex con ventana de negación —\\b(no|sin|nunca|jamás|ni)\\b[^.,;]{0,25}?(palabra)— generalizaría a cualquier etiqueta y es local (no gasta IP ni pedidos). PERO regex no entiende contexto (\"el auto no tiene detalles, precio conversable\" = negación en otra cláusula). PASOS: (1) subir y revisar clasificar_comentarios.py, que no se llegó a leer; (2) MEDIR sobre los 1.943 comentarios ya clasificados cuántas etiquetas están mal por negaciones y de qué tipo — si son ~200 el regex vale, si son 5 no tocar nada; (3) pregunta de fondo: ya hay IA en el proceso (Groq) y la IA maneja negaciones bien, así que evaluar por qué hay una capa de keywords compitiendo con ella en vez de ser su respaldo.",
+      "done": false,
+      "dueDate": "2026-07-28",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:49:18.839Z"
     }
   ],
   "leads": [

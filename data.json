@@ -1944,6 +1944,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:35.971Z"
+    },
+    {
+      "id": "t1784145822879667",
+      "projectId": "p1781592426198782",
+      "text": "Doble-check equipamiento ↔ versión (idea original): cruzar el equipamiento observado de cada aviso contra el equipamiento típico de la versión que declara, para detectar inconsistencias (\"dice XEI pero le falta lo que tienen los otros 30 XEI\"). Ya entra el dato desde el fix del parser. Diseño acordado: se enciende solo, versión por versión, cuando cada una junta masa crítica de fichas con equipamiento (ej. 10+). Las versiones populares se activan antes; las raras esperan.",
+      "done": false,
+      "dueDate": "2026-08-20",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:42.879Z"
     }
   ],
   "leads": [

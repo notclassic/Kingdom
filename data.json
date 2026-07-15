@@ -1892,6 +1892,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:02:52.465Z"
+    },
+    {
+      "id": "t1784145780508356",
+      "projectId": "p1781592426198972",
+      "text": "Confirmar que el \"revisado\" (ticket) persiste tras F5. Reemplazar panel.py (trae los endpoints /revisar y /revisados que faltaban) y CERRAR + REABRIR el panel: uno ya abierto sigue con el código viejo en memoria. Después marcar una oferta, F5, y verificar que sigue marcada. Guarda en revisados.json por ID, así sobrevive a las dos bajadas diarias.",
+      "done": false,
+      "dueDate": "2026-07-16",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:00.508Z"
     }
   ],
   "leads": [

@@ -1879,6 +1879,19 @@
       "result": "TRANSCRIPCIÓN ORIGINAL DEL AUDIO (12/07, rescatada): \"Crea un proyecto o subproyecto para que cuando uno crea una tarea, las tareas vengan con fechas. Le di la orden de crear tareas y me dijiste que no podías crear sus proyectos. Entonces también revisa que podamos crear sus proyectos, pero es importante que las tareas se creen con fecha y hora analizando todos los proyectos que están en Kingdom y el calendario ya establecido en Kingdom. No es la idea de que programes tareas y tenga tope de horario.\"\n\nDESGLOSE EN REQUERIMIENTOS:\n1. Toda tarea nueva (por voz o por MCP) debe nacer con fecha Y hora — nada sin fecha.\n2. La fecha/hora se asigna analizando: carga actual de todos los proyectos activos + calendario ya establecido en Kingdom (tareas con fecha existentes).\n3. Repartir en huecos disponibles; sin tope de horario rígido (no encajonar en 9-18).\n4. Habilitar creación de proyectos/subproyectos vía MCP (gap actual: update_project no crea, create_project no existe).",
       "resultType": "requerimiento",
       "resultAt": "2026-07-12T23:56:01.535Z"
+    },
+    {
+      "id": "t1784145772465365",
+      "projectId": "p1781592426198972",
+      "text": "Apretar \"Recalcular dashboard\" para que entren los datos reconstruidos (12.031 contadores de bajas + 62.263 precios iniciales). Ojo: armar.py NO recalcula, solo rearma con el datos.json viejo. Hasta hacerlo, la columna VECES sigue vacía y el INICIAL muestra el precio de la captura anterior en vez del primero real.",
+      "done": false,
+      "dueDate": "2026-07-15",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:02:52.465Z"
     }
   ],
   "leads": [

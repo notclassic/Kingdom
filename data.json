@@ -1931,6 +1931,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:28.197Z"
+    },
+    {
+      "id": "t178414581597166",
+      "projectId": "p1781592426198782",
+      "text": "Armar el reporte de elasticidad por modelo: cada cuánto baja un modelo, cuánto baja, y si al bajar sale del mercado. Antes estaba bloqueado (solo 14 bajas en total); ahora hay 12.031 avisos con fecha de baja y contador reconstruidos desde las 15 capturas. Requiere que haya varias bajas CON FECHA por modelo para que el número signifique algo — revisar volumen por modelo antes de construir.",
+      "done": false,
+      "dueDate": "2026-08-05",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:35.971Z"
     }
   ],
   "leads": [

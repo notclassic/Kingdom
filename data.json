@@ -1918,6 +1918,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:08.482Z"
+    },
+    {
+      "id": "t1784145808197515",
+      "projectId": "p1781592426198782",
+      "text": "Medir los 16.948 avisos sin segmento (28% del total, salen como \"—\" en el cruce rápido). Primero determinar si NO tienen ficha bajada (entonces se llenan solos con las tandas de specs, no hay nada que arreglar) o si tienen ficha pero el motor no deriva el segmento (bug real). Recién con ese dato decidir si vale la pena la tabla dinámica expandible (segmento → marca → modelo → autos) para reclasificar.",
+      "done": false,
+      "dueDate": "2026-07-22",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:28.197Z"
     }
   ],
   "leads": [

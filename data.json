@@ -1970,6 +1970,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:51.742Z"
+    },
+    {
+      "id": "t1784145838790889",
+      "projectId": "p1781592426198283",
+      "text": "Reactivar el backup a GitHub (hoy desactivado en ver_comentarios.py porque el git push colgaba el proceso: sin timeout + GitHub rechaza archivos pesados, dashboard.html pesa 62 MB). Para reactivarlo: .gitignore de dashboard.html, datos.json, capturas/ y un_aviso.html, después git rm --cached de esos, y ahí el push va liviano. Bonus: un_aviso.html quedó commiteado por error (basura de diagnóstico).",
+      "done": false,
+      "dueDate": "2026-07-31",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:58.790Z"
     }
   ],
   "leads": [

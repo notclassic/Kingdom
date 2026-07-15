@@ -1957,6 +1957,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:03:42.879Z"
+    },
+    {
+      "id": "t1784145831742916",
+      "projectId": "p1781592426198283",
+      "text": "Repoblar de a poco las ~1.083 fichas bajadas antes del fix del parser: no tienen equipamiento ni región. Usar \"Specs antiguas\" (Rellenar antiguos) en tandas chicas con la IP descansada. Es la razón por la que la región aparece en algunos avisos y no en todos — es lo esperado, no un bug. Habilita el doble-check equipamiento↔versión a medida que se pueble. Cerrar Excel antes de correr (los ~$*.xlsx causan PermissionError).",
+      "done": false,
+      "dueDate": "2026-08-15",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-15T20:03:51.742Z"
     }
   ],
   "leads": [

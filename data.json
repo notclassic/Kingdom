@@ -2009,6 +2009,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:49:18.839Z"
+    },
+    {
+      "id": "t1784502550710",
+      "projectId": "p1783900232379",
+      "text": "Llamar a Anita, Luisa, María, Juanita Pérez",
+      "done": false,
+      "dueDate": "2026-07-20",
+      "dueTime": "12:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

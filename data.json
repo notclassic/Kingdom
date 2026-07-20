@@ -2013,15 +2013,15 @@
     {
       "id": "t178457942158135",
       "projectId": "p1781592426198972",
-      "text": "Ver la base de cálculo del tasador: agregar (como el modal de comparables que ya existe en las ofertas del radar) una vista que muestre los avisos base y el algoritmo con que se llegó al precio tasado. Eduardo lo pidió explícitamente. Reusar el patrón del modal de comparables. Es función nueva, no arreglo.",
+      "text": "Modal de comparables para el tasador (como el que ya existe en las ofertas del radar). Al tasar, poder abrir una vista que muestre: (a) los avisos base usados; (b) el algoritmo/cálculo con que se llegó al precio — precio justo original vs recalculado, ajuste por año y km, n comparables, chips de año/versión para filtrar; (c) mejor presentación general de la info del tasador. Reusar el patrón del modal de comparables del radar. BLOQUEADO hasta que Eduardo instale la plantilla v69 + motor nuevo: hoy sigue con v68 (tasador viejo: \"solo modelo\", años salteados, precio clavado sin proyección). Construir encima de la v69 una vez confirmada la instalación, o es trabajo sobre un archivo que no se ve.",
       "done": false,
       "dueDate": "2026-07-18",
       "dueTime": "",
-      "priority": "medium",
+      "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-20T20:30:21.581Z"
+      "mcpUpdatedAt": "2026-07-20T20:40:09.596Z"
     }
   ],
   "leads": [

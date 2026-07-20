@@ -2009,18 +2009,6 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-15T20:49:18.839Z"
-    },
-    {
-      "id": "t1784502550710",
-      "projectId": "p1783900232379",
-      "text": "Llamar a Anita, Luisa, María, Juanita Pérez",
-      "done": false,
-      "dueDate": "2026-07-20",
-      "dueTime": "12:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
     }
   ],
   "leads": [
@@ -2146,7 +2134,8 @@
     "t1783471718256",
     "t1783642544063591",
     "t1783472686008",
-    "t1783900515051"
+    "t1783900515051",
+    "t1784502550710"
   ],
   "deletedProjectIds": [
     "p1781538739000",
@@ -3555,6 +3544,22 @@
         "done": false,
         "dueDate": "2026-07-13",
         "dueTime": "14:00",
+        "priority": "medium",
+        "emailAlert": false,
+        "alertSent": false,
+        "driveUrl": ""
+      }
+    },
+    {
+      "type": "task",
+      "deletedAt": "2026-07-20T16:58:36.293Z",
+      "item": {
+        "id": "t1784502550710",
+        "projectId": "p1783900232379",
+        "text": "Llamar a Anita, Luisa, María, Juanita Pérez",
+        "done": false,
+        "dueDate": "2026-07-20",
+        "dueTime": "12:00",
         "priority": "medium",
         "emailAlert": false,
         "alertSent": false,

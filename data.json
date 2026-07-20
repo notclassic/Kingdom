@@ -1987,7 +1987,7 @@
     {
       "id": "t1784147254077559",
       "projectId": "p1781592426198782",
-      "text": "Depreciación por marca en el algoritmo de precio justo (MUY IMPORTANTE, idea de Eduardo). Hoy el ajuste por diferencia de año usa un % único para todas las marcas, pero no todas se deprecian igual (una alemana premium cae distinto que una japonesa o una china). El precio base ya captura la marca porque los comparables son del mismo modelo; el error está en el AJUSTE cuando el auto tasado tiene distinto año que sus comparables. Calcular la curva de depreciación por marca (o por modelo si hay volumen) desde los datos propios, con fallback al % global cuando no hay muestra suficiente.",
+      "text": "Depreciación por marca en el PRECIO JUSTO (idea de Eduardo, alta prioridad). NOTA: ya está IMPLEMENTADA en el tasador (el motor calcula dep_marca de los datos propios y el tasador la usa). Falta llevarla al precio justo, que es donde más impacta. Hoy calcular_precio_justo usa DEP_ANIO_GLOBAL=0.065 para todas las marcas al normalizar comparables de otro año. El precio base ya captura la marca (comparables del mismo modelo); el error está en el AJUSTE cuando el auto tiene distinto año que sus comparables. El motor ya calcula y exporta dep_marca: falta usarlo dentro de _calc. OJO: mueve TODOS los números del dashboard, verificar antes/después, sesión propia.",
       "done": false,
       "dueDate": "2026-07-25",
       "dueTime": "",
@@ -1995,7 +1995,7 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-15T20:27:34.077Z"
+      "mcpUpdatedAt": "2026-07-20T20:43:41.412Z"
     },
     {
       "id": "t1784148558839895",

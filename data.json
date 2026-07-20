@@ -2022,6 +2022,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-20T20:40:09.596Z"
+    },
+    {
+      "id": "t1784580236437468",
+      "projectId": "p1781592426198972",
+      "text": "CONFIRMAR INSTALACIÓN v69 + motor nuevo + recalcular (bloqueante de toda la sesión del 20/07). Durante toda la sesión Eduardo veía la v68 vieja: el tasador nuevo, las regiones y la depreciación por marca no aparecían porque los archivos no llegaban a C:\\-chileautos-sistema\\ (quedaban en Descargas o como \"(1)\"). Al final dijo que ya está en v69. PASO 1: correr el diagnóstico —  python -c \"import re,json,os; t=open('plantilla_dashboard.html',encoding='utf-8').read(); print('plantilla:', re.search(r'plantilla v\\d+',t).group(0)); print('motor nuevo:', '_region_romano' in open('motor.py',encoding='utf-8').read()); d=json.load(open('datos.json',encoding='utf-8')); ops=d.get('oportunidades',[]); print('ops con region:', sum(1 for o in ops if o.get('region')), 'de', len(ops)); print('tasador_cfg:', 'tasador_cfg' in d)\"  — debe dar v69 / True / región>0 / True. PASO 2: si tasador_cfg=False o región=0, falta \"Recalcular dashboard\" (NO armar.py: el motor tiene que correr para generar región, dep_marca y tasador_cfg). Recién con esto confirmado se puede construir el modal de comparables del tasador.",
+      "done": false,
+      "dueDate": "2026-07-21",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-07-20T20:43:56.437Z"
     }
   ],
   "leads": [

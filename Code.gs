@@ -23,7 +23,7 @@
 
 /***** CONFIGURACIÓN — lo único que tenés que tocar *****/
 const SHEET_ID = '1STE-3G5-6fNOTuJrOEUqGJ48UiAmXJTuPd8RvlUY7_o';
-const TOKEN    = 'CAMBIA_ESTE_TOKEN';   // <<< poné acá una palabra secreta tuya
+const TOKEN    = 'Kingdom_popom';   // <<< poné acá una palabra secreta tuya
 const MAX_DESCARTADAS = 400;            // cuántas descartadas (las más recientes) devuelve
 
 const HOJA_LISTADO     = 'Listado';

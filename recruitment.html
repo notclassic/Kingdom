@@ -72,16 +72,23 @@
     transition:box-shadow .15s, transform .15s; overflow:hidden;
   }
   .card:hover{box-shadow:var(--shadow-lg);}
-  /* franja de color a la izquierda según origen */
+  /* color por origen: franja izquierda + fondo tenue del mismo color */
   .card::before{
-    content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--muted);
+    content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:var(--muted);
   }
+  .card.o-linkedin  {background:#f2f7fd; border-color:#d3e3f6;}
+  .card.o-indeed    {background:#f3f2fd; border-color:#dcd9f7;}
+  .card.o-trabajando{background:#f0faf3; border-color:#cfe9d8;}
+  .card.o-laborum   {background:#f6f1fe; border-color:#e1d5f8;}
   .card.o-linkedin::before{background:var(--li);}
   .card.o-indeed::before{background:var(--ind);}
   .card.o-trabajando::before{background:var(--tra);}
   .card.o-laborum::before{background:var(--lab);}
   .card .top{display:flex; justify-content:space-between; gap:10px; align-items:flex-start;}
   .card .title{font-size:1rem; font-weight:680; line-height:1.32; margin:0; letter-spacing:-.01em;}
+  .card .title a{color:var(--text); text-decoration:none; border-bottom:1.5px solid transparent; transition:border-color .15s, color .15s;}
+  .card .title a:hover{color:var(--accent); border-bottom-color:var(--accent);}
+  .card .title a::after{content:" ↗"; font-size:.85em; color:var(--muted);}
   .card .company{font-size:.87rem; color:#5b6270; margin-top:3px;}
   .card .loc{font-size:.8rem; color:var(--muted); margin-top:3px;}
   .card .meta{display:flex; gap:7px; flex-wrap:wrap; align-items:center; margin-top:10px;}
@@ -428,7 +435,7 @@ function cardOferta(o){
   const url = linkOferta(o);
   div.innerHTML =
     '<div class="top"><div>'+
-      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<p class="title">'+(url?'<a href="'+escapar(url)+'" target="_blank" rel="noopener">'+escapar(o.titulo||'(sin título)')+'</a>':escapar(o.titulo||'(sin título)'))+'</p>'+
       '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
       (o.ubicacion?'<div class="loc">📍 '+escapar(o.ubicacion)+'</div>':'')+
     '</div></div>'+
@@ -436,7 +443,7 @@ function cardOferta(o){
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+
       '<button class="btn apply" onclick="accionPostular(this,\''+jsAttr(o.link)+'\')">✅ Postulé</button>'+
       '<button class="btn discard" onclick="accionDescartar(this,\''+jsAttr(o.link)+'\')">Ocultar</button>'+
       '<button class="btn block" onclick="accionBloquearEmpresa(this,\''+jsAttr(o.empresa)+'\',\''+jsAttr(o.link)+'\')">Bloquear empresa</button>'+
@@ -451,7 +458,7 @@ function cardPostulada(o){
   const url = linkOferta(o);
   div.innerHTML =
     '<div class="top"><div>'+
-      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<p class="title">'+(url?'<a href="'+escapar(url)+'" target="_blank" rel="noopener">'+escapar(o.titulo||'(sin título)')+'</a>':escapar(o.titulo||'(sin título)'))+'</p>'+
       '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
       (o.ubicacion?'<div class="loc">📍 '+escapar(o.ubicacion)+'</div>':'')+
     '</div></div>'+
@@ -460,7 +467,7 @@ function cardPostulada(o){
       (o.fecha?'<span class="chip date">Oferta: '+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+
     '</div>';
   return div;
 }
@@ -471,7 +478,7 @@ function cardDescartada(o){
   const url = linkOferta(o);
   div.innerHTML =
     '<div class="top"><div>'+
-      '<p class="title">'+escapar(o.titulo||'(sin título)')+'</p>'+
+      '<p class="title">'+(url?'<a href="'+escapar(url)+'" target="_blank" rel="noopener">'+escapar(o.titulo||'(sin título)')+'</a>':escapar(o.titulo||'(sin título)'))+'</p>'+
       '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
       (o.ubicacion?'<div class="loc">📍 '+escapar(o.ubicacion)+'</div>':'')+
     '</div></div>'+
@@ -480,7 +487,7 @@ function cardDescartada(o){
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-      (url?'<a class="btn open" href="'+escapar(url)+'" target="_blank" rel="noopener">Ver oferta ↗</a>':'')+
+
       '<button class="btn rescue" onclick="accionRescatar(this,\''+jsAttr(o.link)+'\')">Rescatar</button>'+
     '</div>';
   return div;

@@ -2036,6 +2036,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-07-20T20:43:56.437Z"
+    },
+    {
+      "id": "t1787050196291",
+      "projectId": "inbox",
+      "text": "Llamar, llamar al Mono Proyecto Telegram, , implementar.",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

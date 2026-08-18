@@ -2053,6 +2053,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-08-18T11:48:27.674Z"
+    },
+    {
+      "id": "t1787054107147594",
+      "projectId": "p2",
+      "text": "Proyecto Telegram — llamar al Mono para revisar alcance e implementación (detalle pendiente de completar por Eduardo)",
+      "done": false,
+      "dueDate": "2026-08-19",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-08-18T11:55:07.147Z"
     }
   ],
   "leads": [

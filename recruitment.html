@@ -487,6 +487,7 @@ function cardDescartada(o){
 }
 
 /* ===================== ACCIONES ===================== */
+// Modo NORMAL (bloqueos): espera la respuesta antes de quitar la tarjeta.
 async function correr(btn, params, okMsg, alExito){
   const fila = btn.closest('.card');
   const botones = fila.querySelectorAll('button, a.btn');
@@ -509,22 +510,57 @@ async function correr(btn, params, okMsg, alExito){
   }
 }
 
-function accionPostular(btn, link){
-  const i = estado.listado.findIndex(o=>o.link===link);
-  const oferta = i>=0 ? estado.listado[i] : null;
-  correr(btn, {action:'postular', link}, 'Postulación registrada 👔', ()=>{
-    if(i>=0) estado.listado.splice(i,1);
-    // Si la pestaña Postuladas ya se cargó alguna vez, la actualizamos localmente.
-    if(estado.postuladas!==null && oferta){
-      estado.postuladas.unshift(Object.assign({}, oferta, { fechaPostulacion: new Date().toISOString().slice(0,10) }));
+// Modo OPTIMISTA (Ocultar / Postulé): la tarjeta se va AL INSTANTE y la
+// llamada al puente sigue por detrás. Si falla, la oferta vuelve con aviso.
+// Así no esperás los ~4s de Apps Script en cada toque.
+function correrOptimista(btn, params, okMsg, aplicar, deshacer){
+  const fila = btn.closest('.card');
+  // 1) reflejar el cambio ya
+  aplicar();
+  fila.style.transition='.25s'; fila.style.opacity='0'; fila.style.transform='translateX(20px)';
+  setTimeout(()=>{ render(); }, 200);
+  toast(okMsg);
+  // 2) mandar al puente en segundo plano
+  jsonp(params).then(r=>{
+    if(!r || r.ok===false){
+      const e = (r && r.error) || 'error';
+      if(e==='token_invalido') toast('Token inválido: revisá que coincida con el del puente.');
+      else toast('No se pudo guardar, la oferta volvió: '+e);
+      deshacer(); render();
     }
+  }).catch(err=>{
+    toast('Sin conexión, la oferta volvió: '+(err.message||err));
+    deshacer(); render();
   });
 }
 
-function accionDescartar(btn, link){
-  if(!confirm('¿Mandar esta oferta a Descartadas?')) return;
+function accionPostular(btn, link){
   const i = estado.listado.findIndex(o=>o.link===link);
-  correr(btn, {action:'descartar', link}, 'Oferta descartada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+  if(i<0) return;
+  const oferta = estado.listado[i];
+  correrOptimista(btn, {action:'postular', link}, 'Postulación registrada 👔',
+    ()=>{
+      estado.listado.splice(i,1);
+      if(estado.postuladas!==null){
+        estado.postuladas.unshift(Object.assign({}, oferta, { fechaPostulacion: new Date().toISOString().slice(0,10) }));
+      }
+    },
+    ()=>{
+      estado.listado.splice(i,0,oferta);
+      if(estado.postuladas!==null){ const j=estado.postuladas.findIndex(o=>o.link===link); if(j>=0) estado.postuladas.splice(j,1); }
+    }
+  );
+}
+
+function accionDescartar(btn, link){
+  // Sin confirmación: es reversible con "Rescatar" en Descartadas.
+  const i = estado.listado.findIndex(o=>o.link===link);
+  if(i<0) return;
+  const oferta = estado.listado[i];
+  correrOptimista(btn, {action:'descartar', link}, 'Oferta ocultada',
+    ()=>{ estado.listado.splice(i,1); },
+    ()=>{ estado.listado.splice(i,0,oferta); }
+  );
 }
 
 function accionBloquearEmpresa(btn, empresa, link){

@@ -17,7 +17,21 @@
     --sans:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     --mono:"Space Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
     --tap:50px; --r:12px;
+    --surface:#ffffff; --tabs-bg:#eaecf1; --toast-bg:#14161c; --toast-ink:#fff;
   }
+  /* ---------- MODO OSCURO (botón corbata) ---------- */
+  html[data-theme="dark"]{
+    --bg:#0f1115; --card:#171a21; --surface:#171a21; --ink:#e8eaf0; --ink-2:#b4bac8; --muted:#7c8391;
+    --line:#262a34; --line-2:#1e222b; --accent:#e8eaf0; --tabs-bg:#1c2028;
+    --toast-bg:#e8eaf0; --toast-ink:#14161c;
+    --li:#4d8ff0; --ind:#9b6bff; --tra:#3ec47a; --lab:#d75fc7;
+    color-scheme:dark;
+  }
+  html[data-theme="dark"] .card.o-linkedin  {background:#141a26; border-color:#1f2b3f;}
+  html[data-theme="dark"] .card.o-indeed    {background:#181528; border-color:#2b2442;}
+  html[data-theme="dark"] .card.o-trabajando{background:#12201a; border-color:#1d3328;}
+  html[data-theme="dark"] .card.o-laborum   {background:#1f1526; border-color:#35223f;}
+  html[data-theme="dark"] .tab.active{box-shadow:none;}
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html{-webkit-text-size-adjust:100%;}
   body{
@@ -29,11 +43,11 @@
 
   /* ---------- Barra superior ---------- */
   .topbar{
-    position:sticky; top:0; z-index:20; background:#fff;
+    position:sticky; top:0; z-index:20; background:var(--surface);
     border-bottom:1px solid var(--line);
     padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
   }
-  .topbar-inner{max-width:780px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px;}
+  .topbar-inner{max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px;}
   .brand h1{
     font-size:1.22rem; margin:0; font-weight:600; letter-spacing:-.035em; line-height:1.1;
   }
@@ -46,17 +60,27 @@
     display:inline-flex; align-items:center; justify-content:center; gap:6px;
     min-height:40px; min-width:40px; padding:0 12px; border-radius:11px;
     font-size:.82rem; font-weight:500; text-decoration:none; color:var(--ink-2);
-    background:#fff; border:1px solid var(--line); transition:background .15s,border-color .15s;
+    background:var(--surface); border:1px solid var(--line); transition:background .15s,border-color .15s;
   }
   .head-actions a:active{background:var(--bg);}
   .xls{color:var(--tra) !important;}
+  .theme-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    height:56px; padding:0 4px; border-radius:12px; line-height:0;
+    background:transparent; border:none; cursor:pointer;
+    transition:transform .15s, opacity .15s; flex-shrink:0;
+  }
+  .theme-btn:hover{opacity:.8;}
+  .theme-btn:active{transform:scale(.94);}
+  .theme-btn .tie{display:block; color:var(--ink);}
+  .theme-btn:hover .tie{color:var(--ink-2);}
 
-  .wrap{max-width:780px; margin:0 auto; padding:16px 16px calc(48px + env(safe-area-inset-bottom));}
+  .wrap{max-width:1180px; margin:0 auto; padding:16px 16px calc(48px + env(safe-area-inset-bottom));}
 
   /* ---------- Pestañas ---------- */
   .tabs{
     display:grid; grid-template-columns:repeat(3,1fr); gap:2px;
-    background:#eaecf1; padding:3px; border-radius:13px; margin-bottom:10px;
+    background:var(--tabs-bg); padding:3px; border-radius:13px; margin-bottom:10px;
   }
   .tab{
     min-height:44px; padding:6px 4px; border:none; background:transparent; cursor:pointer;
@@ -64,7 +88,7 @@
     border-radius:10px; display:flex; align-items:center; justify-content:center; gap:5px;
     line-height:1.15; letter-spacing:-.01em; transition:background .18s, color .18s;
   }
-  .tab.active{background:#fff; color:var(--ink); font-weight:600; box-shadow:0 1px 2px rgba(20,22,28,.06);}
+  .tab.active{background:var(--surface); color:var(--ink); font-weight:600; box-shadow:0 1px 2px rgba(20,22,28,.06);}
   .tab .count{font-family:var(--mono); font-size:.7rem; font-weight:400; color:var(--muted);}
   .tab.active .count{color:var(--ink-2);}
 
@@ -72,7 +96,7 @@
   .toolbar{display:flex; gap:8px; align-items:stretch; margin-bottom:18px;}
   .toolbar input, .toolbar select{
     font-family:var(--sans); font-size:1rem; min-height:46px; padding:0 14px; width:100%;
-    border:1px solid var(--line); border-radius:var(--r); background:#fff; color:var(--ink);
+    border:1px solid var(--line); border-radius:var(--r); background:var(--surface); color:var(--ink);
     outline:none; appearance:none; -webkit-appearance:none;
   }
   .toolbar input{flex:1 1 auto; min-width:0;}
@@ -121,19 +145,20 @@
   .chip.applied{background:#e6f5ec; color:var(--tra);}
 
   /* ---------- Acciones ---------- */
-  .actions{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:16px;}
+  .actions{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px;}
+  .actions .btn{min-height:50px; font-size:.95rem; font-weight:600;}
   .actions:empty{display:none; margin:0;}
   .btn{
     font-family:var(--sans); font-size:.88rem; font-weight:500; letter-spacing:-.01em;
     min-height:var(--tap); padding:8px 10px; border-radius:11px; cursor:pointer;
-    border:1px solid var(--line); background:#fff; color:var(--ink-2);
+    border:1px solid var(--line); background:var(--surface); color:var(--ink-2);
     display:flex; align-items:center; justify-content:center; gap:6px; text-align:center; line-height:1.2;
     transition:background .15s, border-color .15s, transform .1s;
   }
   .btn:active{transform:scale(.985); background:var(--bg);}
   .btn::before{font-size:1.02em; line-height:1; color:var(--muted); flex:0 0 auto;}
   .btn.open, .btn.discard, .btn.block, .btn.rescue, .btn.apply{
-    color:var(--ink-2); background:#fff; border-color:var(--line); font-weight:500;
+    color:var(--ink-2); background:var(--surface); border-color:var(--line); font-weight:500;
   }
   .btn.discard::before{content:"\2715";}
   .btn.block::before{content:"\2298";}
@@ -145,7 +170,7 @@
   /* ---------- Estados ---------- */
   .state{
     text-align:center; padding:56px 20px; color:var(--muted); font-size:.92rem;
-    background:#fff; border:1px solid var(--line); border-radius:14px;
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
   }
   .state .big{font-size:1.6rem; margin-bottom:8px; opacity:.7;}
   .state .btn{display:inline-flex; margin:14px auto 0; min-width:150px;}
@@ -156,7 +181,7 @@
   @keyframes spin{to{transform:rotate(360deg);}}
 
   /* ---------- Config (token) ---------- */
-  .config{background:#fff; border:1px solid var(--line); border-radius:14px; padding:22px; max-width:420px; margin:30px auto;}
+  .config{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:22px; max-width:420px; margin:30px auto;}
   .config h2{margin:0 0 6px; font-size:1.05rem; font-weight:600; letter-spacing:-.02em;}
   .config p{font-size:.88rem; color:var(--muted); margin:0 0 14px;}
   .config input{width:100%; min-height:46px; padding:0 14px; border:1px solid var(--line);
@@ -170,7 +195,7 @@
   #toast{
     position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom));
     transform:translateX(-50%) translateY(16px);
-    background:var(--ink); color:#fff; padding:12px 18px; border-radius:11px;
+    background:var(--toast-bg); color:var(--toast-ink); padding:12px 18px; border-radius:11px;
     font-size:.88rem; opacity:0; pointer-events:none; transition:.22s; z-index:100;
     max-width:calc(100% - 32px); text-align:center;
   }
@@ -181,15 +206,28 @@
     .topbar{padding:18px 24px;}
     .brand h1{font-size:1.45rem;}
     .wrap{padding:22px 24px 64px;}
-    .tabs{max-width:420px; margin-bottom:14px;}
-    .tab{font-size:.9rem;}
-    .toolbar select{flex:0 0 200px; max-width:200px;}
-    .card{padding:20px 22px;}
+    /* pestañas y buscador centrados */
+    .tabs{max-width:560px; margin:0 auto 16px;}
+    .tab{font-size:.95rem; padding:11px 8px;}
+    .toolbar{max-width:900px; margin:0 auto 16px;}
+    .toolbar select{flex:0 0 240px; max-width:240px;}
+    /* tarjetas: una sola fila arriba (cargo · empresa · origen · fecha),
+       botones centrados abajo */
+    .card{padding:20px 26px 18px; display:flex; flex-wrap:wrap; align-items:center; column-gap:16px; row-gap:6px;}
     .card:hover{border-color:#d3d7df;}
-    .card .title{font-size:1.12rem;}
+    .card .top{flex:1 1 auto; min-width:0; display:block;}
+    .card .top > div{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+    .card .title{font-size:1.15rem; margin:0;}
     .card .title a:hover{color:var(--ink-2);}
-    .actions{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; max-width:560px;}
-    .btn{min-height:42px; font-size:.84rem; padding:0 10px;}
+    .card .company{margin-top:0; font-size:1rem;}
+    .card .company::before{content:"·"; margin-right:10px; color:var(--muted);}
+    .card .loc{flex-basis:100%; margin-top:2px;}
+    /* origen y fecha a la derecha, en la misma fila */
+    .card .meta{margin-top:0; flex:0 0 auto; margin-left:auto;}
+    /* botones: fila completa, centrados y grandes */
+    .actions{flex-basis:100%; display:flex; justify-content:center; flex-wrap:wrap; gap:10px; max-width:none; margin-top:12px;}
+    .actions .btn{flex:0 0 auto; min-width:170px; padding:0 28px;}
+    .btn{min-height:48px; font-size:.98rem; font-weight:600;}
     .btn:hover{background:var(--bg);}
     .head-actions a:hover{background:var(--bg);}
   }
@@ -203,6 +241,11 @@
       <h1>Recruitment</h1>
       <div class="sub">Ofertas filtradas</div>
     </div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Modo oscuro / claro" title="Tocar la corbata: cambiar tema claro/oscuro">
+      <svg class="tie" viewBox="0 0 24 24" width="52" height="52" aria-hidden="true">
+        <path d="M9.5 3h5l-1.4 3.2h-2.2L9.5 3zm1.4 4.2h2.2l2.9 10.2L12 21.5 8 17.4l2.9-10.2z" fill="currentColor"/>
+      </svg>
+    </button>
     <div class="head-actions">
       <a class="xls" href="https://docs.google.com/spreadsheets/d/1STE-3G5-6fNOTuJrOEUqGJ48UiAmXJTuPd8RvlUY7_o/edit" target="_blank" rel="noopener" aria-label="Abrir Excel">▦</a>
       <a class="back" href="dashboard.html">← Kingdom</a>
@@ -250,6 +293,20 @@
 /* ===================== CONFIG ===================== */
 const BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbwdb0XiUcWS0VRPJ6ipHpP73I3qlfcmjlPIg7hTIDDL5ZvAvXdvIMRjoRTur3Lko5Z6/exec';
 const TOKEN_KEY  = 'kingdom_recruitment_token';
+const THEME_KEY  = 'kingdom_recruitment_theme';
+// Tema: se aplica antes de pintar para no parpadear.
+(function(){
+  try{
+    const t = localStorage.getItem(THEME_KEY);
+    if(t==='dark') document.documentElement.setAttribute('data-theme','dark');
+  }catch(e){}
+})();
+function toggleTheme(){
+  const html = document.documentElement;
+  const dark = html.getAttribute('data-theme')==='dark';
+  if(dark) html.removeAttribute('data-theme'); else html.setAttribute('data-theme','dark');
+  try{ localStorage.setItem(THEME_KEY, dark ? 'light' : 'dark'); }catch(e){}
+}
 
 /* ===================== ESTADO ===================== */
 let TOKEN = 'Kingdom_popom';   // token fijo: entrás directo desde cualquier dispositivo

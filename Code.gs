@@ -98,7 +98,8 @@ function accionList(){
     if (!r[0] && !r[6]) continue;  // fila vacía
     listado.push({
       titulo: fmt(r[0]), empresa: fmt(r[1]), origen: fmt(r[2]),
-      cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
+      cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]),
+      ubicacion: fmt(r[7])
     });
   }
 
@@ -111,14 +112,15 @@ function accionList(){
   if (lastRow > 1) {
     const desde = Math.max(2, lastRow - MAX_DESCARTADAS + 1);
     const numFilas = lastRow - desde + 1;
-    const lastCol = Math.max(8, shD.getLastColumn());
+    const lastCol = Math.max(9, shD.getLastColumn());
     const D = shD.getRange(desde, 1, numFilas, lastCol).getValues();
     for (let i = 0; i < D.length; i++) {
       const r = D[i];
       if (!r[2] && !r[6]) continue;
       descartadas.push({
         fechaProc: fmt(r[0]), motivo: fmt(r[1]), titulo: fmt(r[2]), empresa: fmt(r[3]),
-        sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]), subject: fmt(r[7])
+        sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]), subject: fmt(r[7]),
+        ubicacion: fmt(r[8])
       });
     }
     descartadas.reverse();  // las más recientes primero
@@ -158,7 +160,8 @@ function accionOfertas(dias){
     }
     listado.push({
       titulo: fmt(r[0]), empresa: fmt(r[1]), origen: fmt(r[2]),
-      cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
+      cargo: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]),
+      ubicacion: fmt(r[7])
     });
   }
   listado.reverse();   // más nuevas primero
@@ -174,14 +177,15 @@ function accionDescartadas(){
   if (lastRow > 1) {
     const desde = Math.max(2, lastRow - MAX_DESCARTADAS + 1);
     const numFilas = lastRow - desde + 1;
-    const lastCol = Math.max(8, shD.getLastColumn());
+    const lastCol = Math.max(9, shD.getLastColumn());
     const D = shD.getRange(desde, 1, numFilas, lastCol).getValues();
     for (let i = 0; i < D.length; i++) {
       const r = D[i];
       if (!r[2] && !r[6]) continue;
       descartadas.push({
         fechaProc: fmt(r[0]), motivo: fmt(r[1]), titulo: fmt(r[2]), empresa: fmt(r[3]),
-        sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]), subject: fmt(r[7])
+        sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]), subject: fmt(r[7]),
+        ubicacion: fmt(r[8])
       });
     }
     descartadas.reverse();
@@ -200,7 +204,7 @@ function accionDescartar(link, motivo){
       hoja(HOJA_DESCARTADAS).appendRow([
         ahora(),
         motivo || 'Descartada manual (panel)',
-        r[0], r[1], r[4], fmt(r[5]), r[6], 'panel'
+        r[0], r[1], r[4], fmt(r[5]), r[6], 'panel', fmt(r[7])
       ]);
       sh.deleteRow(i + 1);  // getValues es base 0; las filas del Sheet empiezan en 1
       return { ok:true, accion:'descartada', link:link };
@@ -218,7 +222,7 @@ function accionRescatar(link){
     if (String(vals[i][6]) === String(link)) {
       const r = vals[i];
       hoja(HOJA_LISTADO).appendRow([
-        r[2], r[3], 'Rescatada manual (panel)', r[2], r[4], fmt(r[5]), r[6]
+        r[2], r[3], 'Rescatada manual (panel)', r[2], r[4], fmt(r[5]), r[6], fmt(r[8])
       ]);
       sh.deleteRow(i + 1);
       return { ok:true, accion:'rescatada', link:link };
@@ -248,7 +252,7 @@ function accionPostular(link){
     if (String(vals[i][6]) === String(link)) {
       const r = vals[i];
       hojaPostuladas().appendRow([
-        ahora(), r[0], r[1], r[2], r[4], fmt(r[5]), r[6]
+        ahora(), r[0], r[1], r[2], r[4], fmt(r[5]), r[6], fmt(r[7])
       ]);
       sh.deleteRow(i + 1);
       return { ok:true, accion:'postulada', link:link };
@@ -269,7 +273,8 @@ function accionPostuladas(){
     if (!r[1] && !r[6]) continue;
     postuladas.push({
       fechaPostulacion: fmt(r[0]), titulo: fmt(r[1]), empresa: fmt(r[2]),
-      origen: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6])
+      origen: fmt(r[3]), sueldo: fmt(r[4]), fecha: fmt(r[5]), link: fmt(r[6]),
+      ubicacion: fmt(r[7])
     });
   }
   postuladas.reverse();  // más recientes primero

@@ -2045,14 +2045,14 @@
       "id": "t1787050196291",
       "projectId": "inbox",
       "text": "Llamar al Mono para ver el proyecto Telegram (implementación)",
-      "done": false,
+      "done": true,
       "dueDate": "",
       "dueTime": "",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-08-18T11:48:27.674Z"
+      "mcpUpdatedAt": "2026-08-18T11:55:13.088Z"
     },
     {
       "id": "t1787054107147594",

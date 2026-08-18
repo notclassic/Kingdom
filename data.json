@@ -1066,12 +1066,13 @@
       "projectId": "p1781591737916116",
       "text": "Personal Shopper: informes de historial legal/mecánico y detección de anomalías geo-sociales.",
       "done": false,
-      "dueDate": "2026-07-28",
+      "dueDate": "2026-09-16",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-08-18T01:43:33.871Z"
     },
     {
       "id": "t1781591737916862",

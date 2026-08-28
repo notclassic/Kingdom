@@ -2241,24 +2241,7 @@
     "p1781624973628982",
     "p1783472864864"
   ],
-  "trash": [
-    {
-      "type": "task",
-      "deletedAt": "2026-07-20T16:58:36.293Z",
-      "item": {
-        "id": "t1784502550710",
-        "projectId": "p1783900232379",
-        "text": "Llamar a Anita, Luisa, María, Juanita Pérez",
-        "done": false,
-        "dueDate": "2026-07-20",
-        "dueTime": "12:00",
-        "priority": "medium",
-        "emailAlert": false,
-        "alertSent": false,
-        "driveUrl": ""
-      }
-    }
-  ],
+  "trash": [],
   "alertConfig": {
     "high": 60,
     "medium": 180,

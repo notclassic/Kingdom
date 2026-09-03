@@ -209,8 +209,9 @@
     /* pestañas y buscador centrados */
     .tabs{max-width:560px; margin:0 auto 16px;}
     .tab{font-size:.95rem; padding:11px 8px;}
-    .toolbar{max-width:900px; margin:0 auto 16px;}
-    .toolbar select{flex:0 0 240px; max-width:240px;}
+    .toolbar{max-width:900px; margin:0 auto 16px; flex-wrap:nowrap;}
+    .toolbar input{flex:1 1 auto;}
+    .toolbar select{flex:0 0 210px; max-width:210px;}
     /* tarjetas: una sola fila arriba (cargo · empresa · origen · fecha),
        botones centrados abajo */
     .card{padding:20px 26px 18px; display:flex; flex-wrap:wrap; align-items:center; column-gap:16px; row-gap:6px;}
@@ -298,7 +299,7 @@
 
 <script>
 /* ===================== CONFIG ===================== */
-const BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbwdb0XiUcWS0VRPJ6ipHpP73I3qlfcmjlPIg7hTIDDL5ZvAvXdvIMRjoRTur3Lko5Z6/exec';
+const BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbzFy2Qu9irlJFo4hnhrgeEBeUAMwIYKJndHfuRQmC1f85jd2zMQPat8HfRg6gIWje5r/exec';
 const TOKEN_KEY  = 'kingdom_recruitment_token';
 const THEME_KEY  = 'kingdom_recruitment_theme';
 // Tema: se aplica antes de pintar para no parpadear.
@@ -318,6 +319,20 @@ function toggleTheme(){
 /* ===================== ESTADO ===================== */
 let TOKEN = 'Kingdom_popom';   // token fijo: entrás directo desde cualquier dispositivo
 const estado = { listado:[], totalOfertas:null, hayMas:false, descartadas:null, descCargando:false, postuladas:null, postCargando:false, tab:'ofertas' };
+
+/* ===== ID interno por oferta (para identificarla aunque no tenga link) ===== */
+let _idSeq = 1;
+function asignarIds(arr){ (arr||[]).forEach(o=>{ if(o && o._id==null) o._id = _idSeq++; }); }
+// Arma los parámetros que van al puente: link + título + empresa + ubicación,
+// así el puente puede encontrar la oferta aunque el link esté vacío.
+function paramsDe(o, extra){
+  return Object.assign({
+    link: o.link || '',
+    titulo: o.titulo || '',
+    empresa: o.empresa || '',
+    ubicacion: o.ubicacion || ''
+  }, extra || {});
+}
 
 /* ===================== JSONP (evita CORS) ===================== */
 function jsonp(params){
@@ -380,6 +395,7 @@ async function cargar(){
       throw new Error((r && r.error) || 'respuesta vacía');
     }
     estado.listado = r.listado || [];
+    asignarIds(estado.listado);
     estado.totalOfertas = r.total != null ? r.total : estado.listado.length;
     estado.descartadas = null;        // todavía no cargadas
     estado.descCargando = false;
@@ -435,6 +451,7 @@ async function cargarPostuladas(){
     const r = await jsonp({ action:'postuladas' });
     if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
     estado.postuladas = r.postuladas || [];
+    asignarIds(estado.postuladas);
   }catch(err){
     estado.postuladas = null;
     toast('No se pudieron cargar las postuladas: '+(err.message||err));
@@ -450,6 +467,7 @@ async function cargarDescartadas(){
     const r = await jsonp({ action:'descartadas' });
     if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
     estado.descartadas = r.descartadas || [];
+    asignarIds(estado.descartadas);
   }catch(err){
     estado.descartadas = null;
     toast('No se pudieron cargar las descartadas: '+(err.message||err));
@@ -575,10 +593,10 @@ function cardOferta(o){
     '</div>'+
     '<div class="actions">'+
 
-      '<button class="btn apply" onclick="accionPostular(this,\''+jsAttr(o.link)+'\')">Postulé</button>'+
-      '<button class="btn discard" onclick="accionDescartar(this,\''+jsAttr(o.link)+'\')">Ocultar</button>'+
-      '<button class="btn block" onclick="accionBloquearEmpresa(this,\''+jsAttr(o.empresa)+'\',\''+jsAttr(o.link)+'\')">Empresa</button>'+
-      '<button class="btn block" onclick="accionBloquearPalabra(this,\''+jsAttr(o.link)+'\')">Palabra</button>'+
+      '<button class="btn apply" onclick="accionPostular(this,'+o._id+')">Postulé</button>'+
+      '<button class="btn discard" onclick="accionDescartar(this,'+o._id+')">Ocultar</button>'+
+      '<button class="btn block" onclick="accionBloquearEmpresa(this,'+o._id+')">Empresa</button>'+
+      '<button class="btn block" onclick="accionBloquearPalabra(this,'+o._id+')">Palabra</button>'+
     '</div>';
   return div;
 }
@@ -619,7 +637,7 @@ function cardDescartada(o){
     '</div>'+
     '<div class="actions">'+
 
-      '<button class="btn rescue" onclick="accionRescatar(this,\''+jsAttr(o.link)+'\')">Rescatar</button>'+
+      '<button class="btn rescue" onclick="accionRescatar(this,'+o._id+')">Rescatar</button>'+
     '</div>';
   return div;
 }
@@ -672,11 +690,11 @@ function correrOptimista(btn, params, okMsg, aplicar, deshacer){
   });
 }
 
-function accionPostular(btn, link){
-  const i = estado.listado.findIndex(o=>o.link===link);
+function accionPostular(btn, id){
+  const i = estado.listado.findIndex(o=>o._id===id);
   if(i<0) return;
   const oferta = estado.listado[i];
-  correrOptimista(btn, {action:'postular', link}, 'Postulación registrada 👔',
+  correrOptimista(btn, paramsDe(oferta, {action:'postular'}), 'Postulación registrada 👔',
     ()=>{
       estado.listado.splice(i,1);
       if(estado.postuladas!==null){
@@ -685,42 +703,49 @@ function accionPostular(btn, link){
     },
     ()=>{
       estado.listado.splice(i,0,oferta);
-      if(estado.postuladas!==null){ const j=estado.postuladas.findIndex(o=>o.link===link); if(j>=0) estado.postuladas.splice(j,1); }
+      if(estado.postuladas!==null){ const j=estado.postuladas.findIndex(o=>o._id===oferta._id); if(j>=0) estado.postuladas.splice(j,1); }
     }
   );
 }
 
-function accionDescartar(btn, link){
+function accionDescartar(btn, id){
   // Sin confirmación: es reversible con "Rescatar" en Descartadas.
-  const i = estado.listado.findIndex(o=>o.link===link);
+  const i = estado.listado.findIndex(o=>o._id===id);
   if(i<0) return;
   const oferta = estado.listado[i];
-  correrOptimista(btn, {action:'descartar', link}, 'Oferta ocultada',
+  correrOptimista(btn, paramsDe(oferta, {action:'descartar'}), 'Oferta ocultada',
     ()=>{ estado.listado.splice(i,1); },
     ()=>{ estado.listado.splice(i,0,oferta); }
   );
 }
 
-function accionBloquearEmpresa(btn, empresa, link){
+function accionBloquearEmpresa(btn, id){
+  const i = estado.listado.findIndex(o=>o._id===id);
+  if(i<0) return;
+  const oferta = estado.listado[i];
+  const empresa = oferta.empresa;
   if(!empresa){ toast('Esta oferta no tiene empresa para bloquear.'); return; }
   if(!confirm('Bloquear "'+empresa+'": no te volverán a llegar ofertas de esta empresa. ¿Confirmás?')) return;
-  const i = estado.listado.findIndex(o=>o.link===link);
-  correr(btn, {action:'bloquearEmpresa', empresa, link}, 'Empresa bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+  correr(btn, paramsDe(oferta, {action:'bloquearEmpresa', empresa:empresa}), 'Empresa bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
 }
 
-function accionBloquearPalabra(btn, link){
+function accionBloquearPalabra(btn, id){
+  const i = estado.listado.findIndex(o=>o._id===id);
+  if(i<0) return;
+  const oferta = estado.listado[i];
   const palabra = prompt('Escribí la palabra a bloquear (cuidado: bloquea TODA oferta cuyo título la contenga). Por ejemplo: práctica');
   if(palabra===null) return;
   const p = palabra.trim();
   if(!p){ return; }
   if(!confirm('Bloquear la palabra "'+p+'": no llegarán ofertas con esa palabra en el título. ¿Confirmás?')) return;
-  const i = estado.listado.findIndex(o=>o.link===link);
-  correr(btn, {action:'bloquearPalabra', palabra:p, link}, 'Palabra bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+  correr(btn, paramsDe(oferta, {action:'bloquearPalabra', palabra:p}), 'Palabra bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
 }
 
-function accionRescatar(btn, link){
-  const i = estado.descartadas.findIndex(o=>o.link===link);
-  correr(btn, {action:'rescatar', link}, 'Oferta rescatada al Listado', ()=>{ if(i>=0) estado.descartadas.splice(i,1); });
+function accionRescatar(btn, id){
+  const i = estado.descartadas.findIndex(o=>o._id===id);
+  if(i<0) return;
+  const oferta = estado.descartadas[i];
+  correr(btn, paramsDe(oferta, {action:'rescatar'}), 'Oferta rescatada al Listado', ()=>{ if(i>=0) estado.descartadas.splice(i,1); });
 }
 
 /* ===================== HELPERS ===================== */

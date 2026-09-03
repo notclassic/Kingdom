@@ -93,16 +93,16 @@
   .tab.active .count{color:var(--ink-2);}
 
   /* ---------- Buscador + filtro ---------- */
-  .toolbar{display:flex; gap:8px; align-items:stretch; margin-bottom:18px;}
+  .toolbar{display:flex; gap:8px; align-items:stretch; margin-bottom:18px; flex-wrap:wrap;}
   .toolbar input, .toolbar select{
     font-family:var(--sans); font-size:1rem; min-height:46px; padding:0 14px; width:100%;
     border:1px solid var(--line); border-radius:var(--r); background:var(--surface); color:var(--ink);
     outline:none; appearance:none; -webkit-appearance:none;
   }
-  .toolbar input{flex:1 1 auto; min-width:0;}
+  .toolbar input{flex:1 1 100%; min-width:0;}
   .toolbar input::placeholder{color:var(--muted);}
   .toolbar select{
-    flex:0 0 38%; max-width:190px; font-size:.88rem; font-weight:500; color:var(--ink-2); padding-right:32px;
+    flex:1 1 140px; max-width:none; font-size:.88rem; font-weight:500; color:var(--ink-2); padding-right:32px;
     background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
     background-position:calc(100% - 18px) 21px, calc(100% - 13px) 21px;
     background-size:5px 5px,5px 5px; background-repeat:no-repeat;
@@ -271,6 +271,13 @@
 
     <div class="toolbar">
       <input id="search" type="text" inputmode="search" placeholder="Buscar título o empresa…" oninput="render()">
+      <select id="dias" onchange="cambiarDias()" title="Mostrar ofertas de los últimos…">
+        <option value="1">Hoy</option>
+        <option value="2">Últimos 2 días</option>
+        <option value="3">Últimos 3 días</option>
+        <option value="7">Últimos 7 días</option>
+        <option value="15">Últimos 15 días</option>
+      </select>
       <select id="origen" onchange="render()">
         <option value="todos">Todos los orígenes</option>
       </select>
@@ -340,14 +347,31 @@ function mostrarConfig(err){
 }
 
 /* ===================== CARGAR DATOS ===================== */
-const DIAS = 7;   // mostrar solo ofertas de los últimos 7 días
+const DIAS_KEY = 'kingdom_recruitment_dias';
+const DIAS_DEFECTO = 3;   // por defecto, mostrar solo los últimos 3 días
+
+// Lee de localStorage el rango de días elegido; si no hay, usa el default.
+function diasElegidos(){
+  try{ const v = parseInt(localStorage.getItem(DIAS_KEY), 10); if(v>0) return v; }catch(e){}
+  return DIAS_DEFECTO;
+}
+// Al cambiar el menú, guarda la elección y recarga desde el puente.
+function cambiarDias(){
+  const sel = document.getElementById('dias');
+  const v = sel ? sel.value : String(DIAS_DEFECTO);
+  try{ localStorage.setItem(DIAS_KEY, v); }catch(e){}
+  cargar();
+}
 
 async function cargar(){
   document.getElementById('loading').style.display='block';
   document.getElementById('panel').style.display='none';
+  const dias = diasElegidos();
+  const selDias = document.getElementById('dias');
+  if(selDias) selDias.value = String(dias);
   try{
-    // Solo las ofertas de los últimos 7 días, de la más nueva hacia atrás.
-    const r = await jsonp({ action:'ofertas', dias:DIAS });
+    // Solo las ofertas de los últimos N días, de la más nueva hacia atrás.
+    const r = await jsonp({ action:'ofertas', dias:dias });
     if(!r || r.ok===false){
       if(r && r.error==='token_invalido'){
         mostrarConfig('El token del archivo no coincide con el del puente. Revisá que sean iguales.');
@@ -391,6 +415,7 @@ function setTab(t){
   document.getElementById('tabPostuladas').classList.toggle('active', t==='postuladas');
   document.getElementById('tabDescartadas').classList.toggle('active', t==='descartadas');
   document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
+  document.getElementById('dias').style.display = (t==='ofertas') ? '' : 'none';
   // La primera vez que entrás a Descartadas o Postuladas, las traemos del puente.
   if(t==='descartadas' && estado.descartadas===null && !estado.descCargando){
     cargarDescartadas();

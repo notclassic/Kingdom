@@ -191,6 +191,27 @@
                  color:#fff; font-size:.95rem; font-weight:600; cursor:pointer; font-family:var(--sans);}
   .config .err{color:var(--red); font-size:.85rem; margin-bottom:10px;}
 
+  /* ---------- Pestaña Perfil ---------- */
+  .tabs{grid-template-columns:repeat(4,1fr);}
+  .perfil{max-width:900px; margin:0 auto;}
+  .perfil .sec{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:12px;}
+  .perfil h3{margin:0 0 4px; font-size:1rem; font-weight:600; letter-spacing:-.02em;}
+  .perfil .hint{font-size:.82rem; color:var(--muted); margin:0 0 10px;}
+  .perfil label{display:block; font-size:.8rem; color:var(--ink-2); margin:10px 0 4px; font-weight:500;}
+  .perfil textarea, .perfil input{
+    width:100%; font-family:var(--sans); font-size:.92rem; padding:10px 12px;
+    border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); outline:none;
+  }
+  .perfil textarea{min-height:96px; resize:vertical; line-height:1.4;}
+  .perfil textarea.alta{min-height:180px;}
+  .perfil textarea:focus, .perfil input:focus{border-color:var(--ink);}
+  .perfil .fila{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .perfil .barra{position:sticky; bottom:calc(10px + env(safe-area-inset-bottom)); display:flex; gap:10px; margin-top:6px;}
+  .perfil .barra .btn{flex:1; background:var(--ink); color:#fff; border-color:var(--ink);}
+  .perfil .barra .btn.sec2{background:var(--surface); color:var(--ink-2); border-color:var(--line);}
+  .perfil .estado{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin:6px 0 0;}
+  @media (max-width:679px){ .perfil .fila{grid-template-columns:1fr;} .tab{font-size:.78rem;} }
+
   /* ---------- Toast ---------- */
   #toast{
     position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom));
@@ -268,6 +289,7 @@
       <button class="tab" id="tabDescartadas" onclick="setTab('descartadas')">
         Ocultas <span class="count" id="cntDescartadas"></span>
       </button>
+      <button class="tab" id="tabPerfil" onclick="setTab('perfil')">Perfil</button>
     </div>
 
     <div class="toolbar">
@@ -285,6 +307,58 @@
     </div>
 
     <div id="list"></div>
+
+    <!-- Pestaña Perfil: lo que el radar y la IA usan para buscar y puntuar -->
+    <div id="perfilPanel" class="perfil" style="display:none;">
+      <div class="sec">
+        <h3>Búsquedas del radar</h3>
+        <p class="hint">Una por línea: <b>portal | nombre | url</b>. Portales: chiletrabajos, trabajando, laborum. En Trabajando el radar ordena por fecha solo.</p>
+        <textarea id="pf_semillas" class="alta" spellcheck="false"></textarea>
+      </div>
+      <div class="sec">
+        <h3>Palabras que DEBE tener el título</h3>
+        <p class="hint">Una por línea. Si el título no contiene ninguna, la oferta se registra pero no te avisa. Acentos y mayúsculas no importan.</p>
+        <textarea id="pf_incluir"></textarea>
+        <h3 style="margin-top:14px">Palabras que descartan (hoja Filtros → Cargo)</h3>
+        <p class="hint">Es la misma lista que usa BuscaPegaBot para los correos. Una por línea.</p>
+        <textarea id="pf_cargos" class="alta"></textarea>
+        <h3 style="margin-top:14px">Empresas excluidas (hoja Filtros → Empresas)</h3>
+        <textarea id="pf_empresas" class="alta"></textarea>
+      </div>
+      <div class="sec">
+        <h3>Perfil para el puntaje IA</h3>
+        <p class="hint">La IA compara cada aviso contra esto. No descarta nada: solo puntúa y destaca. Listas: una por línea.</p>
+        <div class="fila">
+          <div><label>Renta líquida mínima (solo si el aviso la publica)</label><input id="pf_renta" type="number" inputmode="numeric"></div>
+          <div><label>Destacar en Telegram desde puntaje</label><input id="pf_destacar" type="number" inputmode="numeric" min="0" max="100"></div>
+        </div>
+        <div class="fila">
+          <div><label>Modalidad</label><input id="pf_modalidad"></div>
+          <div><label>Ubicación</label><input id="pf_ubicacion"></div>
+        </div>
+        <label>Cargos objetivo</label><textarea id="pf_cargos_objetivo"></textarea>
+        <label>Cargos descartados</label><textarea id="pf_cargos_descartados"></textarea>
+        <label>Rubros de interés</label><textarea id="pf_rubros_interes"></textarea>
+        <label>Rubros excluidos</label><textarea id="pf_rubros_excluidos"></textarea>
+        <label>Experiencia clave (una línea por hito)</label><textarea id="pf_experiencia_clave" class="alta"></textarea>
+        <label>Competencias</label><textarea id="pf_competencias"></textarea>
+        <label>Lo que NO tenés (para detectar excluyentes)</label><textarea id="pf_no_tiene"></textarea>
+        <label>Señales de alarma en un aviso</label><textarea id="pf_senales_alarma"></textarea>
+        <label>Señales positivas</label><textarea id="pf_senales_positivas"></textarea>
+        <div class="fila">
+          <div><label>Título profesional</label><input id="pf_titulo_profesional"></div>
+          <div><label>Años de experiencia</label><input id="pf_anios" type="number" inputmode="numeric"></div>
+        </div>
+        <label>Nivel actual</label><input id="pf_nivel_actual">
+        <label>Idiomas</label><input id="pf_idiomas">
+        <label>Herramientas</label><textarea id="pf_herramientas"></textarea>
+      </div>
+      <div class="barra">
+        <button class="btn" onclick="guardarPerfil()">Guardar</button>
+        <button class="btn sec2" onclick="cargarPerfil(true)">Recargar</button>
+      </div>
+      <p class="estado" id="pf_estado"></p>
+    </div>
   </div>
 
   <!-- Carga inicial -->
@@ -430,8 +504,13 @@ function setTab(t){
   document.getElementById('tabOfertas').classList.toggle('active', t==='ofertas');
   document.getElementById('tabPostuladas').classList.toggle('active', t==='postuladas');
   document.getElementById('tabDescartadas').classList.toggle('active', t==='descartadas');
+  document.getElementById('tabPerfil').classList.toggle('active', t==='perfil');
   document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
   document.getElementById('dias').style.display = (t==='ofertas') ? '' : 'none';
+  document.getElementById('search').style.display = (t==='perfil') ? 'none' : '';
+  document.getElementById('perfilPanel').style.display = (t==='perfil') ? '' : 'none';
+  document.getElementById('list').style.display = (t==='perfil') ? 'none' : '';
+  if(t==='perfil'){ if(!estado.perfilCargado) cargarPerfil(false); return; }
   // La primera vez que entrás a Descartadas o Postuladas, las traemos del puente.
   if(t==='descartadas' && estado.descartadas===null && !estado.descCargando){
     cargarDescartadas();
@@ -476,8 +555,70 @@ async function cargarDescartadas(){
   render();
 }
 
+/* ===================== PERFIL ===================== */
+const PF_LISTAS = ['incluir','cargos_objetivo','cargos_descartados','rubros_interes','rubros_excluidos',
+                   'experiencia_clave','competencias','no_tiene','senales_alarma','senales_positivas','herramientas'];
+const PF_TEXTOS = {renta:'renta_liquida_minima', destacar:'destacar_desde', modalidad:'modalidad', ubicacion:'ubicacion',
+                   titulo_profesional:'titulo_profesional', anios:'anios_experiencia', nivel_actual:'nivel_actual', idiomas:'idiomas'};
+function pfSet(id, v){ const el=document.getElementById('pf_'+id); if(el) el.value = (v==null?'':v); }
+function pfGet(id){ const el=document.getElementById('pf_'+id); return el ? el.value : ''; }
+function lineas(txt){ return String(txt||'').split('\n').map(s=>s.trim()).filter(Boolean); }
+
+async function cargarPerfil(forzar){
+  const est = document.getElementById('pf_estado');
+  est.textContent = 'Cargando…';
+  try{
+    const r = await jsonp({ action:'perfil' });
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    const p = r.perfil || {}, f = r.filtros || {};
+    PF_LISTAS.forEach(k=> pfSet(k, Array.isArray(p[k]) ? p[k].join('\n') : (p[k]||'')));
+    Object.keys(PF_TEXTOS).forEach(id=> pfSet(id, p[PF_TEXTOS[id]]));
+    const sem = Array.isArray(p.semillas) ? p.semillas : [];
+    pfSet('semillas', sem.map(s=> [s.portal||'', s.nombre||'', s.url||''].join(' | ')).join('\n'));
+    pfSet('cargos', (f.cargos||[]).join('\n'));
+    pfSet('empresas', (f.empresas||[]).join('\n'));
+    estado.perfilCargado = true;
+    const vacio = Object.keys(p).length===0;
+    est.textContent = vacio
+      ? 'La hoja Perfil está vacía: el radar la llena con su config la próxima vez que corra, o completá acá y guardá.'
+      : 'Cargado desde la planilla · ' + (r.actualizado||'');
+  }catch(err){
+    est.textContent = 'No se pudo cargar: ' + (err.message||err);
+  }
+}
+
+async function guardarPerfil(){
+  const est = document.getElementById('pf_estado');
+  const datos = {};
+  PF_LISTAS.forEach(k=> datos[k] = lineas(pfGet(k)));
+  Object.keys(PF_TEXTOS).forEach(id=>{
+    const v = pfGet(id).trim();
+    datos[PF_TEXTOS[id]] = (id==='renta'||id==='destacar'||id==='anios') ? (v===''?'':Number(v)) : v;
+  });
+  datos.semillas = lineas(pfGet('semillas')).map(l=>{
+    const t = l.split('|').map(s=>s.trim());
+    const s = { portal:(t[0]||'').toLowerCase(), nombre:t[1]||'', url:t[2]||'' };
+    if(s.portal==='trabajando') s.clicks = ['Ordenar','Fecha más reciente'];
+    return s;
+  }).filter(s=> s.portal && s.url);
+  const filtros = { cargos: lineas(pfGet('cargos')), empresas: lineas(pfGet('empresas')) };
+  est.textContent = 'Guardando…';
+  try{
+    const res = await fetch(BRIDGE_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({ token:TOKEN, action:'guardarPerfil', datos:datos, filtros:filtros }) });
+    const r = await res.json();
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    est.textContent = 'Guardado · ' + (r.cuando||'') + ' · el radar lo toma en su próxima corrida (máx. 20 min).';
+    toast('Perfil guardado');
+  }catch(err){
+    est.textContent = 'No se pudo guardar: ' + (err.message||err);
+    toast('No se pudo guardar el perfil');
+  }
+}
+
 /* ===================== RENDER ===================== */
 function render(){
+  if(estado.tab==='perfil') return;
   document.getElementById('cntOfertas').textContent = '· ' + estado.listado.length;
   document.getElementById('cntPostuladas').textContent =
     (estado.postuladas===null) ? '' : ('· ' + estado.postuladas.length);
@@ -563,9 +704,11 @@ function claseOrigen(origen){
 }
 
 function linkOferta(o){
+  // 10-09-2026: si la oferta trae link real (Radar), se usa siempre.
+  if(o.link) return o.link;
   const origen = (o.origen||'').toLowerCase();
-  // Laborum no trae link directo usable, así que armamos una búsqueda en
-  // laborum.cl por el cargo, ordenada por más recientes.
+  // Laborum por correo no trae link directo usable, así que armamos una
+  // búsqueda en laborum.cl por el cargo, ordenada por más recientes.
   if(origen.indexOf('laborum')!==-1){
     const cargo = (o.titulo||'').toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g,'')  // saca acentos

@@ -781,7 +781,7 @@ function chipScore(o){
 function detalleOferta(o){
   const info = [];
   if(o.modalidad) info.push(escapar(o.modalidad));
-  if(o.jornada)   info.push(escapar(o.jornada));
+  if(o.jornada)   info.push(o.jornada==='completa' ? 'Jornada completa' : escapar(o.jornada));
   if(o.equipo)    info.push('Equipo: '+escapar(o.equipo));
   if(o.sueldo)    info.push('Renta: '+escapar(o.sueldo));
   if(o.fecha_pub) info.push('Publicado '+escapar(o.fecha_pub));

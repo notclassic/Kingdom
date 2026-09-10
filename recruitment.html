@@ -210,6 +210,13 @@
   .card .ia b{color:var(--ink);}
   @media (min-width:680px){ .card .info, .card .resumen, .card details{flex-basis:100%;} }
 
+  .card .borrador{white-space:pre-wrap; font-size:.86rem; line-height:1.45; color:var(--ink); background:var(--surface);
+    border:1px solid var(--line); border-radius:10px; padding:12px; margin-top:8px; max-height:420px; overflow:auto;}
+  .card .desc{white-space:pre-wrap; font-size:.84rem; color:var(--ink-2); margin-top:8px; max-height:260px; overflow:auto;}
+  .btn.prep::before{content:"\270E";}
+  .btn.prep.listo{border-color:var(--green); color:var(--green);}
+  .btn.prep.pedido{opacity:.7;}
+
   /* ---------- Pestaña Perfil ---------- */
   .tabs{grid-template-columns:repeat(4,1fr);}
   .perfil{max-width:900px; margin:0 auto;}
@@ -779,6 +786,7 @@ function detalleOferta(o){
   if(o.sueldo)    info.push('Renta: '+escapar(o.sueldo));
   if(o.fecha_pub) info.push('Publicado '+escapar(o.fecha_pub));
   if(o.rubro)     info.push(escapar(o.rubro));
+  if(o.publica && o.publica!=='directa') info.push(escapar(o.publica));
   let h = '';
   if(info.length) h += '<div class="info">'+info.map(x=>'<span>'+x+'</span>').join('')+'</div>';
   if(o.resumen) h += '<div class="resumen">'+escapar(o.resumen)+'</div>';
@@ -787,9 +795,33 @@ function detalleOferta(o){
     h += '<details><summary>Requisitos y análisis</summary>';
     if(reqs.length) h += '<ul class="req">'+reqs.map(r=>'<li>'+escapar(r)+'</li>').join('')+'</ul>';
     if(o.motivo)    h += '<div class="ia"><b>IA:</b> '+escapar(o.motivo)+'</div>';
+    if(o.borrador){
+      h += '<div class="ia" style="margin-top:10px"><b>Borrador de postulación</b> '+
+           '<button class="btn" style="display:inline-flex;min-height:32px;padding:0 10px;margin-left:8px" onclick="copiarTexto(this)">Copiar</button></div>'+
+           '<div class="borrador">'+escapar(o.borrador)+'</div>';
+    }
+    if(o.descripcion) h += '<details style="margin-top:8px"><summary>Descripción (extracto guardado)</summary><div class="desc">'+escapar(o.descripcion)+'</div></details>';
     h += '</details>';
   }
   return h;
+}
+function copiarTexto(btn){
+  const box = btn.closest('.ia').nextElementSibling;
+  const txt = box ? box.innerText : '';
+  if(navigator.clipboard && txt){ navigator.clipboard.writeText(txt).then(()=>toast('Borrador copiado')); }
+  else toast('No se pudo copiar; seleccioná el texto a mano.');
+}
+function accionPreparar(btn, id){
+  const o = estado.listado.find(x=>x._id===id);
+  if(!o) return;
+  if(o.preparar==='listo'){ toast('El borrador ya está en "Requisitos y análisis"'); return; }
+  btn.disabled = true; btn.textContent = '…';
+  jsonp(paramsDe(o, {action:'preparar'})).then(r=>{
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    o.preparar = r.estado || 'pedido';
+    toast(r.estado==='listo' ? 'Ya había un borrador' : 'Pedido. El radar lo redacta en su próxima corrida (máx. 20 min) y te avisa por Telegram.');
+    render();
+  }).catch(err=>{ toast('No se pudo pedir: '+(err.message||err)); btn.disabled=false; btn.textContent='Preparar'; });
 }
 
 function cardOferta(o){
@@ -812,6 +844,9 @@ function cardOferta(o){
       '<button class="btn discard" onclick="accionDescartar(this,'+o._id+')">Ocultar</button>'+
       '<button class="btn block" onclick="accionBloquearEmpresa(this,'+o._id+')">Empresa</button>'+
       '<button class="btn block" onclick="accionBloquearPalabra(this,'+o._id+')">Palabra</button>'+
+      (o.descripcion || o.puntaje ?
+        '<button class="btn prep '+escapar(o.preparar||'')+'" onclick="accionPreparar(this,'+o._id+')">'+
+        (o.preparar==='listo' ? 'Borrador listo' : (o.preparar==='pedido' ? 'Preparando…' : 'Preparar')) +'</button>' : '')+
     '</div>';
   return div;
 }

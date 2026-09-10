@@ -577,6 +577,9 @@ async function cargarPerfil(forzar){
     pfSet('semillas', sem.map(s=> [s.portal||'', s.nombre||'', s.url||''].join(' | ')).join('\n'));
     pfSet('cargos', (f.cargos||[]).join('\n'));
     pfSet('empresas', (f.empresas||[]).join('\n'));
+    // Copia de lo cargado: al guardar, Filtros solo se escribe si lo editaste
+    // acá (si bloqueaste una palabra desde una oferta, no se pisa).
+    estado.pfFiltrosBase = { cargos: pfGet('cargos'), empresas: pfGet('empresas') };
     estado.perfilCargado = true;
     const vacio = Object.keys(p).length===0;
     est.textContent = vacio
@@ -601,7 +604,10 @@ async function guardarPerfil(){
     if(s.portal==='trabajando') s.clicks = ['Ordenar','Fecha más reciente'];
     return s;
   }).filter(s=> s.portal && s.url);
-  const filtros = { cargos: lineas(pfGet('cargos')), empresas: lineas(pfGet('empresas')) };
+  const base = estado.pfFiltrosBase || {};
+  const filtros = {};
+  if(pfGet('cargos')   !== base.cargos)   filtros.cargos   = lineas(pfGet('cargos'));
+  if(pfGet('empresas') !== base.empresas) filtros.empresas = lineas(pfGet('empresas'));
   est.textContent = 'Guardando…';
   try{
     const res = await fetch(BRIDGE_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
@@ -610,6 +616,7 @@ async function guardarPerfil(){
     if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
     est.textContent = 'Guardado · ' + (r.cuando||'') + ' · el radar lo toma en su próxima corrida (máx. 20 min).';
     toast('Perfil guardado');
+    estado.pfFiltrosBase = { cargos: pfGet('cargos'), empresas: pfGet('empresas') };
   }catch(err){
     est.textContent = 'No se pudo guardar: ' + (err.message||err);
     toast('No se pudo guardar el perfil');

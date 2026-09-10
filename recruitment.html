@@ -191,6 +191,25 @@
                  color:#fff; font-size:.95rem; font-weight:600; cursor:pointer; font-family:var(--sans);}
   .config .err{color:var(--red); font-size:.85rem; margin-bottom:10px;}
 
+  /* ---------- Tarjeta enriquecida (radar + IA) ---------- */
+  .score{
+    font-family:var(--mono); font-size:.72rem; font-weight:700; letter-spacing:.04em;
+    padding:4px 8px; border-radius:7px; color:#fff; background:var(--muted); white-space:nowrap;
+  }
+  .score.alto{background:var(--green);} .score.medio{background:#b7791f;} .score.bajo{background:#8b91a0;}
+  .card .info{display:flex; flex-wrap:wrap; gap:6px 10px; margin-top:8px; font-size:.86rem; color:var(--ink-2);}
+  .card .info span::before{content:"· "; color:var(--muted);} .card .info span:first-child::before{content:"";}
+  .card .resumen{font-size:.9rem; color:var(--ink); margin-top:10px; line-height:1.4;}
+  .card details{margin-top:8px;}
+  .card details summary{cursor:pointer; font-size:.84rem; color:var(--muted); list-style:none; user-select:none;}
+  .card details summary::-webkit-details-marker{display:none;}
+  .card details summary::after{content:" ▾";} .card details[open] summary::after{content:" ▴";}
+  .card .req{margin:8px 0 0; padding-left:18px; font-size:.86rem; color:var(--ink-2);}
+  .card .req li{margin:2px 0;}
+  .card .ia{font-size:.84rem; color:var(--ink-2); margin-top:8px; padding:10px 12px; background:var(--line-2); border-radius:10px; line-height:1.4;}
+  .card .ia b{color:var(--ink);}
+  @media (min-width:680px){ .card .info, .card .resumen, .card details{flex-basis:100%;} }
+
   /* ---------- Pestaña Perfil ---------- */
   .tabs{grid-template-columns:repeat(4,1fr);}
   .perfil{max-width:900px; margin:0 auto;}
@@ -303,6 +322,11 @@
       </select>
       <select id="origen" onchange="render()">
         <option value="todos">Todos los orígenes</option>
+      </select>
+      <select id="orden" onchange="render()" title="Orden">
+        <option value="fecha">Más nuevas primero</option>
+        <option value="ia">Mayor puntaje IA</option>
+        <option value="destacadas">Solo destacadas (IA ≥ 70)</option>
       </select>
     </div>
 
@@ -507,6 +531,7 @@ function setTab(t){
   document.getElementById('tabPerfil').classList.toggle('active', t==='perfil');
   document.getElementById('origen').style.display = (t==='ofertas') ? '' : 'none';
   document.getElementById('dias').style.display = (t==='ofertas') ? '' : 'none';
+  document.getElementById('orden').style.display = (t==='ofertas') ? '' : 'none';
   document.getElementById('search').style.display = (t==='perfil') ? 'none' : '';
   document.getElementById('perfilPanel').style.display = (t==='perfil') ? '' : 'none';
   document.getElementById('list').style.display = (t==='perfil') ? 'none' : '';
@@ -665,14 +690,19 @@ function render(){
             : (estado.tab==='postuladas') ? (estado.postuladas||[])
             : (estado.descartadas||[]);
 
+  const orden = (document.getElementById('orden')||{}).value || 'fecha';
   datos = datos.filter(o=>{
     if(estado.tab==='ofertas' && origen!=='todos' && o.origen!==origen) return false;
+    if(estado.tab==='ofertas' && orden==='destacadas' && !(puntajeDe(o)>=70)) return false;
     if(q){
-      const txt = ((o.titulo||'')+' '+(o.empresa||'')).toLowerCase();
+      const txt = ((o.titulo||'')+' '+(o.empresa||'')+' '+(o.ubicacion||'')+' '+(o.rubro||'')).toLowerCase();
       if(!txt.includes(q)) return false;
     }
     return true;
   });
+  if(estado.tab==='ofertas' && orden==='ia'){
+    datos = datos.slice().sort((a,b)=> (puntajeDe(b)??-1) - (puntajeDe(a)??-1));
+  }
 
   if(datos.length===0){
     cont.innerHTML = '<div class="state"><div class="big">🗂️</div>'+
@@ -696,6 +726,7 @@ function chipOrigen(origen){
   else if(o.includes('indeed')) cls='src-indeed';
   else if(o.includes('trabajando')) cls='src-trabajando';
   else if(o.includes('laborum')) cls='src-laborum';
+  else if(o.includes('chiletrabajos')) cls='src-trabajando';
   const etiqueta = String(origen||'—').replace(/\s*\(gmail\)\s*/ig,' ').trim() || '—';
   return '<span class="chip '+cls+'">'+escapar(etiqueta)+'</span>';
 }
@@ -728,6 +759,39 @@ function linkOferta(o){
   return o.link || '';
 }
 
+function puntajeDe(o){
+  const n = parseInt(o.puntaje, 10);
+  return isNaN(n) ? null : n;
+}
+function chipScore(o){
+  const n = puntajeDe(o);
+  if(n===null) return '';
+  const cls = n>=70 ? 'alto' : (n>=45 ? 'medio' : 'bajo');
+  return '<span class="score '+cls+'" title="Calce con tu perfil según la IA">IA '+n+'</span>';
+}
+// Bloque de detalle (resumen, datos de la ficha, requisitos, motivo IA).
+// Solo aparece si el radar leyó la ficha; las ofertas de correo no lo traen.
+function detalleOferta(o){
+  const info = [];
+  if(o.modalidad) info.push(escapar(o.modalidad));
+  if(o.jornada)   info.push(escapar(o.jornada));
+  if(o.equipo)    info.push('Equipo: '+escapar(o.equipo));
+  if(o.sueldo)    info.push('Renta: '+escapar(o.sueldo));
+  if(o.fecha_pub) info.push('Publicado '+escapar(o.fecha_pub));
+  if(o.rubro)     info.push(escapar(o.rubro));
+  let h = '';
+  if(info.length) h += '<div class="info">'+info.map(x=>'<span>'+x+'</span>').join('')+'</div>';
+  if(o.resumen) h += '<div class="resumen">'+escapar(o.resumen)+'</div>';
+  const reqs = String(o.requisitos||'').split(' · ').map(x=>x.trim()).filter(Boolean);
+  if(reqs.length || o.motivo){
+    h += '<details><summary>Requisitos y análisis</summary>';
+    if(reqs.length) h += '<ul class="req">'+reqs.map(r=>'<li>'+escapar(r)+'</li>').join('')+'</ul>';
+    if(o.motivo)    h += '<div class="ia"><b>IA:</b> '+escapar(o.motivo)+'</div>';
+    h += '</details>';
+  }
+  return h;
+}
+
 function cardOferta(o){
   const div = document.createElement('div');
   div.className=claseOrigen(o.origen);
@@ -738,9 +802,10 @@ function cardOferta(o){
       '<div class="company">'+escapar(o.empresa||'—')+'</div>'+
       (o.ubicacion?'<div class="loc">📍 '+escapar(o.ubicacion)+'</div>':'')+
     '</div></div>'+
-    '<div class="meta">'+chipOrigen(o.origen)+
+    '<div class="meta">'+chipScore(o)+chipOrigen(o.origen)+
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
     '</div>'+
+    detalleOferta(o)+
     '<div class="actions">'+
 
       '<button class="btn apply" onclick="accionPostular(this,'+o._id+')">Postulé</button>'+

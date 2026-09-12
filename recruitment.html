@@ -264,7 +264,12 @@
     font-size:.88rem; opacity:0; pointer-events:none; transition:.22s; z-index:100;
     max-width:calc(100% - 32px); text-align:center;
   }
-  #toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  #toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  #toast .undo{
+    margin-left:12px; padding:7px 14px; border-radius:8px; cursor:pointer; font-family:var(--sans);
+    font-size:.88rem; font-weight:700; border:1px solid var(--toast-ink); background:transparent; color:var(--toast-ink);
+  }
+  #toast .undo:disabled{opacity:.5;}
 
   /* ---------- Pantalla grande ---------- */
   @media (min-width:680px){
@@ -884,7 +889,7 @@ function cardPostulada(o){
       (o.fecha?'<span class="chip date">Oferta: '+escapar(o.fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
-
+      '<button class="btn rescue" onclick="accionDespostular(this,'+o._id+')">No postulé, devolver</button>'+
     '</div>';
   return div;
 }
@@ -937,31 +942,76 @@ async function correr(btn, params, okMsg, alExito){
 // Modo OPTIMISTA (Ocultar / Postulé): la tarjeta se va AL INSTANTE y la
 // llamada al puente sigue por detrás. Si falla, la oferta vuelve con aviso.
 // Así no esperás los ~4s de Apps Script en cada toque.
-function correrOptimista(btn, params, okMsg, aplicar, deshacer){
+/* Devuelve una promesa que resuelve true si el puente guardó, false si no
+   (en ese caso ya se deshizo el cambio local). Sirve para que "Deshacer"
+   espere a que el puente termine antes de mandar la acción inversa. */
+function correrOptimista(btn, params, okMsg, aplicar, deshacer, revertirRemoto){
   const fila = btn.closest('.card');
   // 1) reflejar el cambio ya
   aplicar();
   fila.style.transition='.25s'; fila.style.opacity='0'; fila.style.transform='translateX(20px)';
   setTimeout(()=>{ render(); }, 200);
-  toast(okMsg);
   // 2) mandar al puente en segundo plano
-  jsonp(params).then(r=>{
+  const p = jsonp(params).then(r=>{
     if(!r || r.ok===false){
       const e = (r && r.error) || 'error';
       if(e==='token_invalido') toast('Token inválido: revisá que coincida con el del puente.');
       else toast('No se pudo guardar, la oferta volvió: '+e);
       deshacer(); render();
+      return false;
     }
+    return true;
   }).catch(err=>{
     toast('Sin conexión, la oferta volvió: '+(err.message||err));
     deshacer(); render();
+    return false;
   });
+  if(revertirRemoto){
+    toastDeshacer(okMsg, async ()=>{
+      const guardado = await p;
+      if(!guardado) return;          // nunca llegó al puente: no hay nada que revertir
+      await revertirRemoto();
+      deshacer();
+    });
+  } else {
+    toast(okMsg);
+  }
+  return p;
+}
+
+/* Toast con botón "Deshacer" (8 segundos). */
+function toastDeshacer(msg, revertir){
+  const t = document.getElementById('toast');
+  t.innerHTML = escapar(msg)+' <button type="button" class="undo">Deshacer</button>';
+  t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=> t.classList.remove('show'), 8000);
+  const b = t.querySelector('.undo');
+  b.onclick = async ()=>{
+    b.disabled = true; b.textContent = '…';
+    try{
+      await revertir();
+      toast('Deshecho: la oferta volvió a la lista');
+      render();
+    }catch(err){
+      toast('No se pudo deshacer: '+(err.message||err));
+    }
+  };
+}
+
+async function puente(params){
+  const r = await jsonp(params);
+  if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+  return r;
 }
 
 function accionPostular(btn, id){
   const i = estado.listado.findIndex(o=>o._id===id);
   if(i<0) return;
   const oferta = estado.listado[i];
+  const volver = ()=>{
+    if(!estado.listado.some(o=>o._id===oferta._id)) estado.listado.splice(Math.min(i, estado.listado.length),0,oferta);
+    if(estado.postuladas!==null){ const j=estado.postuladas.findIndex(o=>o._id===oferta._id); if(j>=0) estado.postuladas.splice(j,1); }
+  };
   correrOptimista(btn, paramsDe(oferta, {action:'postular'}), 'Postulación registrada 👔',
     ()=>{
       estado.listado.splice(i,1);
@@ -969,21 +1019,20 @@ function accionPostular(btn, id){
         estado.postuladas.unshift(Object.assign({}, oferta, { fechaPostulacion: new Date().toISOString().slice(0,10) }));
       }
     },
-    ()=>{
-      estado.listado.splice(i,0,oferta);
-      if(estado.postuladas!==null){ const j=estado.postuladas.findIndex(o=>o._id===oferta._id); if(j>=0) estado.postuladas.splice(j,1); }
-    }
+    volver,
+    ()=> puente(paramsDe(oferta, {action:'despostular'}))
   );
 }
 
 function accionDescartar(btn, id){
-  // Sin confirmación: es reversible con "Rescatar" en Descartadas.
   const i = estado.listado.findIndex(o=>o._id===id);
   if(i<0) return;
   const oferta = estado.listado[i];
+  const volver = ()=>{ if(!estado.listado.some(o=>o._id===oferta._id)) estado.listado.splice(Math.min(i, estado.listado.length),0,oferta); };
   correrOptimista(btn, paramsDe(oferta, {action:'descartar'}), 'Oferta ocultada',
     ()=>{ estado.listado.splice(i,1); },
-    ()=>{ estado.listado.splice(i,0,oferta); }
+    volver,
+    ()=> puente(paramsDe(oferta, {action:'rescatar'}))
   );
 }
 
@@ -994,7 +1043,28 @@ function accionBloquearEmpresa(btn, id){
   const empresa = oferta.empresa;
   if(!empresa){ toast('Esta oferta no tiene empresa para bloquear.'); return; }
   if(!confirm('Bloquear "'+empresa+'": no te volverán a llegar ofertas de esta empresa. ¿Confirmás?')) return;
-  correr(btn, paramsDe(oferta, {action:'bloquearEmpresa', empresa:empresa}), 'Empresa bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+  const volver = ()=>{ if(!estado.listado.some(o=>o._id===oferta._id)) estado.listado.splice(Math.min(i, estado.listado.length),0,oferta); };
+  correrOptimista(btn, paramsDe(oferta, {action:'bloquearEmpresa', empresa:empresa}), 'Empresa bloqueada: '+empresa,
+    ()=>{ estado.listado.splice(i,1); },
+    volver,
+    async ()=>{
+      await puente({action:'desbloquearEmpresa', empresa:empresa});
+      await puente(paramsDe(oferta, {action:'rescatar'}));
+    }
+  );
+}
+
+/* Desde la pestaña Postuladas: devolver una oferta a la lista. */
+function accionDespostular(btn, id){
+  const i = (estado.postuladas||[]).findIndex(o=>o._id===id);
+  if(i<0) return;
+  const oferta = estado.postuladas[i];
+  if(!confirm('¿Sacar "'+(oferta.titulo||'')+'" de Postuladas y devolverla a Ofertas?')) return;
+  correr(btn, paramsDe(oferta, {action:'despostular'}), 'Devuelta a Ofertas', ()=>{
+    estado.postuladas.splice(i,1);
+    const copia = Object.assign({}, oferta); delete copia.fechaPostulacion;
+    estado.listado.unshift(copia);
+  });
 }
 
 /* Bloquear palabra: se eligen palabras del título (sin conectores) y se ve
@@ -1067,10 +1137,14 @@ function accionBloquearPalabra(btn, id){
         if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
       }
       cerrar();
-      toast(lista.length>1 ? 'Palabras bloqueadas: '+lista.join(', ') : 'Palabra bloqueada: '+lista[0]);
       const j = estado.listado.findIndex(o=>o._id===id);
       if(j>=0) estado.listado.splice(j,1);
       render();
+      toastDeshacer(lista.length>1 ? 'Palabras bloqueadas: '+lista.join(', ') : 'Palabra bloqueada: '+lista[0], async ()=>{
+        for(const p of lista) await puente({action:'desbloquearPalabra', palabra:p});
+        await puente(paramsDe(oferta, {action:'rescatar'}));
+        if(!estado.listado.some(o=>o._id===oferta._id)) estado.listado.splice(Math.min(j<0?0:j, estado.listado.length),0,oferta);
+      });
     }catch(err){
       toast('No se pudo: '+(err.message||err));
       ok.disabled=false; refrescar();

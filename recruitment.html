@@ -63,6 +63,13 @@
     background:var(--surface); border:1px solid var(--line); transition:background .15s,border-color .15s;
   }
   .head-actions a:active{background:var(--bg);}
+  .head-actions .icon-btn{
+    display:inline-flex; align-items:center; justify-content:center; min-height:40px; min-width:40px; padding:0 10px;
+    border-radius:11px; font-family:var(--sans); font-size:1.05rem; font-weight:600; cursor:pointer;
+    color:var(--ink-2); background:var(--surface); border:1px solid var(--line);
+  }
+  .head-actions .icon-btn:disabled{opacity:.5; cursor:default;}
+  .head-actions .icon-btn.girando{animation:spin 1s linear infinite;}
   .xls{color:var(--tra) !important;}
   .theme-btn{
     display:inline-flex; align-items:center; justify-content:center;
@@ -102,14 +109,13 @@
   .toolbar input{flex:1 1 100%; min-width:0;}
   .toolbar input::placeholder{color:var(--muted);}
   .toolbar select{
-    flex:1 1 140px; max-width:none; font-size:.88rem; font-weight:500; color:var(--ink-2); padding-right:32px;
+    flex:1 1 0; min-width:0; max-width:none; font-size:.82rem; font-weight:500; color:var(--ink-2);
+    padding:0 26px 0 10px; text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
     background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);
-    background-position:calc(100% - 18px) 21px, calc(100% - 13px) 21px;
+    background-position:calc(100% - 14px) 21px, calc(100% - 9px) 21px;
     background-size:5px 5px,5px 5px; background-repeat:no-repeat;
   }
   .toolbar input:focus, .toolbar select:focus{border-color:var(--ink); }
-  .toolbar .btn.reproc{flex:1 1 140px; min-height:46px; font-size:.88rem; white-space:nowrap;}
-  @media (min-width:680px){ .toolbar .btn.reproc{flex:0 0 auto;} }
 
   /* ---------- Tarjetas ---------- */
   .card{
@@ -246,6 +252,8 @@
   .modal h3{margin:0 0 6px; font-size:1.05rem;}
   .modal .sub{color:var(--muted); font-size:.85rem; margin:0 0 12px; line-height:1.4;}
   .wchips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+  .wlbl{font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:2px 0 6px;}
+  .modal .wchips{max-height:40vh; overflow-y:auto;}
   .wchip{font-family:var(--sans); font-size:.92rem; padding:9px 12px; min-height:42px; border-radius:10px; cursor:pointer;
     border:1px solid var(--line); background:var(--surface); color:var(--ink);}
   .wchip span{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin-left:4px;}
@@ -281,9 +289,10 @@
     /* pestañas y buscador centrados */
     .tabs{max-width:560px; margin:0 auto 16px;}
     .tab{font-size:.95rem; padding:11px 8px;}
-    .toolbar{max-width:900px; margin:0 auto 16px; flex-wrap:nowrap;}
-    .toolbar input{flex:1 1 auto;}
-    .toolbar select{flex:0 0 210px; max-width:210px;}
+    .toolbar{max-width:960px; margin:0 auto 16px; flex-wrap:nowrap;}
+    .toolbar input{flex:1 1 240px; min-width:200px;}
+    .toolbar select{flex:0 0 190px; max-width:190px; font-size:.88rem; padding:0 32px 0 14px;
+      background-position:calc(100% - 18px) 21px, calc(100% - 13px) 21px;}
     /* tarjetas: una sola fila arriba (cargo · empresa · origen · fecha),
        botones centrados abajo */
     .card{padding:20px 26px 18px; display:flex; flex-wrap:wrap; align-items:center; column-gap:16px; row-gap:6px;}
@@ -320,6 +329,7 @@
       </svg>
     </button>
     <div class="head-actions">
+      <button class="icon-btn" id="btnReprocesar" onclick="reprocesar(this)" title="Reprocesar: aplica palabras y empresas bloqueadas y la renta mínima a toda la lista" aria-label="Reprocesar ofertas">↻</button>
       <a class="xls" href="https://docs.google.com/spreadsheets/d/1STE-3G5-6fNOTuJrOEUqGJ48UiAmXJTuPd8RvlUY7_o/edit" target="_blank" rel="noopener" aria-label="Abrir Excel">▦</a>
       <a class="back" href="dashboard.html">← Kingdom</a>
     </div>
@@ -347,20 +357,19 @@
       <input id="search" type="text" inputmode="search" placeholder="Buscar título o empresa…" oninput="render()">
       <select id="dias" onchange="cambiarDias()" title="Mostrar ofertas de los últimos…">
         <option value="1">Hoy</option>
-        <option value="2">Últimos 2 días</option>
-        <option value="3">Últimos 3 días</option>
-        <option value="7">Últimos 7 días</option>
-        <option value="15">Últimos 15 días</option>
+        <option value="2">2 días</option>
+        <option value="3">3 días</option>
+        <option value="7">7 días</option>
+        <option value="15">15 días</option>
       </select>
       <select id="origen" onchange="render()">
-        <option value="todos">Todos los orígenes</option>
+        <option value="todos">Origen: todos</option>
       </select>
       <select id="orden" onchange="render()" title="Orden">
-        <option value="fecha">Más nuevas primero</option>
-        <option value="ia">Mayor puntaje IA</option>
-        <option value="destacadas">Solo destacadas (IA ≥ 70)</option>
+        <option value="fecha">Más nuevas</option>
+        <option value="ia">Mayor IA</option>
+        <option value="destacadas">Destacadas (IA ≥ 70)</option>
       </select>
-      <button class="btn reproc" id="btnReprocesar" onclick="reprocesar(this)" title="Aplica palabras, empresas bloqueadas y renta mínima a todo lo que está en la lista">↻ Reprocesar</button>
     </div>
 
     <div id="list"></div>
@@ -1062,7 +1071,9 @@ function accionBloquearEmpresa(btn, id){
    mínima a TODO lo que hay en Listado; lo que cae va a Ocultas con motivo. */
 async function reprocesar(btn){
   if(!confirm('Aplicar los filtros actuales (palabras, empresas bloqueadas y renta mínima) a todas las ofertas de la lista. Las que caigan van a Ocultas, con motivo, y se pueden rescatar. ¿Seguimos?')) return;
-  const txt = btn.textContent; btn.disabled = true; btn.textContent = 'Reprocesando…';
+  const icono = btn.classList.contains('icon-btn');
+  const txt = btn.textContent; btn.disabled = true;
+  if(icono) btn.classList.add('girando'); else btn.textContent = 'Reprocesando…';
   try{
     const r = await jsonp({action:'reprocesar'});
     if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
@@ -1079,7 +1090,7 @@ async function reprocesar(btn){
   }catch(err){
     toast('No se pudo reprocesar: '+(err.message||err));
   }
-  btn.disabled = false; btn.textContent = txt;
+  btn.disabled = false; btn.classList.remove('girando'); btn.textContent = txt;
 }
 
 /* Desde la pestaña Postuladas: devolver una oferta a la lista. */
@@ -1122,17 +1133,26 @@ function accionBloquearPalabra(btn, id){
   if(i<0) return;
   const oferta = estado.listado[i];
   const palabras = palabrasDe(oferta.titulo);
+  const yaVistas = new Set(palabras.map(normPal));
+  // Más candidatas: rubro y resumen de la IA (sin repetir las del título).
+  const otras = [];
+  const agregar = (w)=>{ const n=normPal(w); if(n.length>=4 && !PALABRAS_VACIAS.has(n) && !yaVistas.has(n)){ yaVistas.add(n); otras.push(w); } };
+  if(oferta.rubro) agregar(String(oferta.rubro).trim());
+  String(oferta.resumen||'').split(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+/).forEach(agregar);
   const elegidas = new Set();
+  const chip = (w)=>'<button type="button" class="wchip" data-w="'+escapar(w)+'">'+escapar(w)+' <span>×'+cuantasCaen(w)+'</span></button>';
 
   const fondo = document.createElement('div'); fondo.className='modal-bg';
   fondo.innerHTML =
     '<div class="modal" role="dialog">'+
       '<h3>Bloquear palabra</h3>'+
-      '<p class="sub">Elegí una o más palabras del título. Toda oferta futura cuyo título las contenga no llegará. El número es cuántas ofertas visibles hoy la contienen.</p>'+
+      '<p class="sub">Elegí una o más. El bloqueo se aplica al título de las ofertas futuras. El número es cuántas ofertas visibles hoy la tienen en el título.</p>'+
+      '<div class="wlbl">Del título</div>'+
       '<div class="wchips">'+
-        palabras.map(w=>'<button type="button" class="wchip" data-w="'+escapar(w)+'">'+escapar(w)+' <span>×'+cuantasCaen(w)+'</span></button>').join('')+
-        (palabras.length? '' : '<span class="sub">El título no tiene palabras útiles; escribí una.</span>')+
+        palabras.map(chip).join('')+
+        (palabras.length? '' : '<span class="sub">El título no tiene palabras útiles.</span>')+
       '</div>'+
+      (otras.length ? '<div class="wlbl">Del rubro y el resumen</div><div class="wchips">'+otras.slice(0,14).map(chip).join('')+'</div>' : '')+
       '<input type="text" class="wotra" placeholder="Otra palabra o frase (opcional)">'+
       '<div class="wbar"><button type="button" class="btn sec2 wcancel">Cancelar</button><button type="button" class="btn wok" disabled>Bloquear</button></div>'+
     '</div>';

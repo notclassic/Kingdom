@@ -238,6 +238,24 @@
   .perfil .estado{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin:6px 0 0;}
   @media (max-width:679px){ .perfil .fila{grid-template-columns:1fr;} .tab{font-size:.78rem;} }
 
+  /* ---------- Modal bloquear palabra ---------- */
+  .modal-bg{position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:50; display:flex; align-items:flex-end; justify-content:center; padding:16px;}
+  .modal{background:var(--card); color:var(--ink); border-radius:16px; padding:18px; width:100%; max-width:520px; box-shadow:0 12px 40px rgba(0,0,0,.25);}
+  .modal h3{margin:0 0 6px; font-size:1.05rem;}
+  .modal .sub{color:var(--muted); font-size:.85rem; margin:0 0 12px; line-height:1.4;}
+  .wchips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px;}
+  .wchip{font-family:var(--sans); font-size:.92rem; padding:9px 12px; min-height:42px; border-radius:10px; cursor:pointer;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink);}
+  .wchip span{font-family:var(--mono); font-size:.7rem; color:var(--muted); margin-left:4px;}
+  .wchip.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .wchip.on span{color:#fff; opacity:.75;}
+  .wotra{width:100%; box-sizing:border-box; font-family:var(--sans); font-size:.95rem; padding:11px 12px; border-radius:10px;
+    border:1px solid var(--line); background:var(--surface); color:var(--ink); margin-bottom:12px;}
+  .wbar{display:flex; gap:10px;}
+  .wbar .btn{flex:1; background:var(--ink); color:#fff; border-color:var(--ink); font-weight:600;}
+  .wbar .btn.sec2{background:var(--surface); color:var(--ink-2); border-color:var(--line);}
+  @media (min-width:680px){ .modal-bg{align-items:center;} }
+
   /* ---------- Toast ---------- */
   #toast{
     position:fixed; left:50%; bottom:calc(20px + env(safe-area-inset-bottom));
@@ -979,16 +997,85 @@ function accionBloquearEmpresa(btn, id){
   correr(btn, paramsDe(oferta, {action:'bloquearEmpresa', empresa:empresa}), 'Empresa bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
 }
 
+/* Bloquear palabra: se eligen palabras del título (sin conectores) y se ve
+   cuántas ofertas visibles caerían con cada una. También se puede escribir otra. */
+const PALABRAS_VACIAS = new Set(('de del la el los las y o e u a en para por con sin al un una unos unas se su sus que como es '+
+  'the of and for in to at on or vs con/sin m f h sr jr mf hm ii iii jefe/a lider/a').split(' '));
+
+function normPal(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+function palabrasDe(titulo){
+  const vistas = new Set(); const out = [];
+  String(titulo||'').split(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+/).forEach(w=>{
+    const n = normPal(w);
+    if(n.length<3 || PALABRAS_VACIAS.has(n) || vistas.has(n)) return;
+    vistas.add(n); out.push(w);
+  });
+  return out;
+}
+
+function cuantasCaen(palabra){
+  const n = normPal(palabra);
+  return estado.listado.filter(o=> normPal(o.titulo).indexOf(n)!==-1).length;
+}
+
 function accionBloquearPalabra(btn, id){
   const i = estado.listado.findIndex(o=>o._id===id);
   if(i<0) return;
   const oferta = estado.listado[i];
-  const palabra = prompt('Escribí la palabra a bloquear (cuidado: bloquea TODA oferta cuyo título la contenga). Por ejemplo: práctica');
-  if(palabra===null) return;
-  const p = palabra.trim();
-  if(!p){ return; }
-  if(!confirm('Bloquear la palabra "'+p+'": no llegarán ofertas con esa palabra en el título. ¿Confirmás?')) return;
-  correr(btn, paramsDe(oferta, {action:'bloquearPalabra', palabra:p}), 'Palabra bloqueada', ()=>{ if(i>=0) estado.listado.splice(i,1); });
+  const palabras = palabrasDe(oferta.titulo);
+  const elegidas = new Set();
+
+  const fondo = document.createElement('div'); fondo.className='modal-bg';
+  fondo.innerHTML =
+    '<div class="modal" role="dialog">'+
+      '<h3>Bloquear palabra</h3>'+
+      '<p class="sub">Elegí una o más palabras del título. Toda oferta futura cuyo título las contenga no llegará. El número es cuántas ofertas visibles hoy la contienen.</p>'+
+      '<div class="wchips">'+
+        palabras.map(w=>'<button type="button" class="wchip" data-w="'+escapar(w)+'">'+escapar(w)+' <span>×'+cuantasCaen(w)+'</span></button>').join('')+
+        (palabras.length? '' : '<span class="sub">El título no tiene palabras útiles; escribí una.</span>')+
+      '</div>'+
+      '<input type="text" class="wotra" placeholder="Otra palabra o frase (opcional)">'+
+      '<div class="wbar"><button type="button" class="btn sec2 wcancel">Cancelar</button><button type="button" class="btn wok" disabled>Bloquear</button></div>'+
+    '</div>';
+  document.body.appendChild(fondo);
+  const ok = fondo.querySelector('.wok'), otra = fondo.querySelector('.wotra');
+  const refrescar = ()=>{
+    const n = elegidas.size + (otra.value.trim()?1:0);
+    ok.disabled = n===0;
+    ok.textContent = n>1 ? 'Bloquear '+n+' palabras' : 'Bloquear';
+  };
+  fondo.querySelectorAll('.wchip').forEach(ch=> ch.onclick = ()=>{
+    const w = ch.dataset.w;
+    if(elegidas.has(w)){ elegidas.delete(w); ch.classList.remove('on'); } else { elegidas.add(w); ch.classList.add('on'); }
+    refrescar();
+  });
+  otra.oninput = refrescar;
+  const cerrar = ()=> fondo.remove();
+  fondo.querySelector('.wcancel').onclick = cerrar;
+  fondo.onclick = (e)=>{ if(e.target===fondo) cerrar(); };
+  otra.onkeydown = (e)=>{ if(e.key==='Enter' && !ok.disabled) ok.click(); if(e.key==='Escape') cerrar(); };
+
+  ok.onclick = async ()=>{
+    const lista = Array.from(elegidas);
+    const extra = otra.value.trim(); if(extra) lista.push(extra);
+    if(!lista.length) return;
+    ok.disabled = true; ok.textContent='…';
+    try{
+      for(const p of lista){
+        const r = await jsonp(paramsDe(oferta, {action:'bloquearPalabra', palabra:p}));
+        if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+      }
+      cerrar();
+      toast(lista.length>1 ? 'Palabras bloqueadas: '+lista.join(', ') : 'Palabra bloqueada: '+lista[0]);
+      const j = estado.listado.findIndex(o=>o._id===id);
+      if(j>=0) estado.listado.splice(j,1);
+      render();
+    }catch(err){
+      toast('No se pudo: '+(err.message||err));
+      ok.disabled=false; refrescar();
+    }
+  };
 }
 
 function accionRescatar(btn, id){

@@ -108,6 +108,8 @@
     background-size:5px 5px,5px 5px; background-repeat:no-repeat;
   }
   .toolbar input:focus, .toolbar select:focus{border-color:var(--ink); }
+  .toolbar .btn.reproc{flex:1 1 140px; min-height:46px; font-size:.88rem; white-space:nowrap;}
+  @media (min-width:680px){ .toolbar .btn.reproc{flex:0 0 auto;} }
 
   /* ---------- Tarjetas ---------- */
   .card{
@@ -358,6 +360,7 @@
         <option value="ia">Mayor puntaje IA</option>
         <option value="destacadas">Solo destacadas (IA ≥ 70)</option>
       </select>
+      <button class="btn reproc" id="btnReprocesar" onclick="reprocesar(this)" title="Aplica palabras, empresas bloqueadas y renta mínima a todo lo que está en la lista">↻ Reprocesar</button>
     </div>
 
     <div id="list"></div>
@@ -410,6 +413,7 @@
       <div class="barra">
         <button class="btn" onclick="guardarPerfil()">Guardar</button>
         <button class="btn sec2" onclick="cargarPerfil(true)">Recargar</button>
+        <button class="btn sec2" onclick="reprocesar(this)">↻ Reprocesar ofertas</button>
       </div>
       <p class="estado" id="pf_estado"></p>
     </div>
@@ -1052,6 +1056,30 @@ function accionBloquearEmpresa(btn, id){
       await puente(paramsDe(oferta, {action:'rescatar'}));
     }
   );
+}
+
+/* Reprocesar: el puente aplica palabras y empresas bloqueadas y la renta
+   mínima a TODO lo que hay en Listado; lo que cae va a Ocultas con motivo. */
+async function reprocesar(btn){
+  if(!confirm('Aplicar los filtros actuales (palabras, empresas bloqueadas y renta mínima) a todas las ofertas de la lista. Las que caigan van a Ocultas, con motivo, y se pueden rescatar. ¿Seguimos?')) return;
+  const txt = btn.textContent; btn.disabled = true; btn.textContent = 'Reprocesando…';
+  try{
+    const r = await jsonp({action:'reprocesar'});
+    if(!r || r.ok===false) throw new Error((r && r.error) || 'error');
+    const n = r.movidas || 0;
+    if(n===0){
+      toast('Nada que ocultar: '+r.palabras+' palabras, '+r.empresas+' empresas, mínimo '+(r.minimo||'sin mínimo'));
+    } else {
+      const resumen = {};
+      (r.detalle||[]).forEach(d=>{ const k = d.motivo.split(':')[0]; resumen[k]=(resumen[k]||0)+1; });
+      toast(n+' ofertas a Ocultas ('+Object.keys(resumen).map(k=>resumen[k]+' '+k.toLowerCase()).join(', ')+')');
+      if(estado.descartadas!==null) estado.descartadas = null;   // se recarga al entrar a Ocultas
+      await cargar();
+    }
+  }catch(err){
+    toast('No se pudo reprocesar: '+(err.message||err));
+  }
+  btn.disabled = false; btn.textContent = txt;
 }
 
 /* Desde la pestaña Postuladas: devolver una oferta a la lista. */

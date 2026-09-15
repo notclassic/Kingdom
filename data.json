@@ -82,6 +82,22 @@
       "mcpUpdatedAt": "2026-09-15T23:04:50.980Z"
     },
     {
+      "id": "p1783642383558810",
+      "name": "Ia automotriz",
+      "area": "a1",
+      "desc": "generar un chatbot de atencion vistual por whastapp con la info de nuevos y/o Usados",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1",
+      "userUpdatedAt": "2026-09-15T23:29:02.173Z"
+    },
+    {
       "id": "p2",
       "color": "#5856d6",
       "name": "Agente IA Multinegocio",
@@ -95,22 +111,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "userUpdatedAt": "2026-09-15T23:30:18.890Z"
-    },
-    {
-      "id": "p1783642383558810",
-      "name": "Ia automotriz",
-      "area": "a1",
-      "desc": "generar un chatbot de atencion vistual por whastapp con la info de nuevos y/o Usados",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null,
-      "userUpdatedAt": "2026-09-15T23:29:02.173Z"
     },
     {
       "id": "p4",

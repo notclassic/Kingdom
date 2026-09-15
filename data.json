@@ -138,20 +138,6 @@
       "context": "profesional"
     },
     {
-      "id": "p7",
-      "color": "#a2845e",
-      "name": "Mankeleathers",
-      "area": "a2",
-      "desc": "E-commerce de bolsos de cuero, reactivación.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p8",
       "color": "#ff2d55",
       "name": "Jibplaza",
@@ -221,6 +207,21 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": ""
+    },
+    {
+      "id": "p7",
+      "color": "#a2845e",
+      "name": "Mankeleathers",
+      "area": "a2",
+      "desc": "E-commerce de bolsos de cuero, reactivación.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
     },
     {
       "id": "p1783640334123",

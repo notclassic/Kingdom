@@ -2823,6 +2823,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:48.623Z"
+    },
+    {
+      "id": "t1789513440249588",
+      "projectId": "p1781591737916310",
+      "text": "MARCA Y DOMINIO — Decidido el nombre IAMOTRIZ (10-09). Se descartó AImotriz: el nombre solo funciona con la sigla en español, porque \"IAmotriz\" es \"automotriz\" con el auto cambiado por IA (misma cadencia, el oyente completa el paralelo solo), y \"AI\" no ocupa ese lugar sonoro además de mezclar idiomas. En Chile la sigla que se entiende es IA. Se escribe IAmotriz con las dos primeras en mayúscula; el dominio va en minúscula igual, porque los dominios no distinguen. PENDIENTE: (1) verificar disponibilidad de iamotriz.cl en nic.cl e inscribirlo — es lo único con riesgo real de que lo tome otro; (2) tomar también iamotriz.com aunque no se use, para que nadie lo ocupe; (3) revisar en INAPI que no haya marca registrada parecida en el rubro antes de facturar (el dominio no da derechos sobre el nombre). Kit de marca ya construido a partir del logo original de Eduardo: SVG del símbolo, lockups, favicon .ico multicapa, iconos de app y manifest.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:00.249Z"
     }
   ],
   "leads": [

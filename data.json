@@ -3072,6 +3072,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:49:49.727Z"
+    },
+    {
+      "id": "t1789516192615321",
+      "projectId": "p1",
+      "text": "Los cuatro cambios de pantalla, en una sola pasada sobre plantilla_dashboard.html: (1) vendidos dentro del modal de comparables; (2) filtro de origen por marca (China, Japón, Corea, Europa, EE.UU., India); (3) reordenar Requisitos del buscador, segmentación primero y marca/modelo al final; (4) texto del selector de marcas para que se note que admite varias. Detalle completo en los subproyectos y en PENDIENTES_IAMOTRIZ.md.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:52.615Z"
     }
   ],
   "leads": [

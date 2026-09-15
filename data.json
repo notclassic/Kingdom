@@ -1964,12 +1964,13 @@
       "projectId": "p1781592426198782",
       "text": "Desarrollar el MVP del motor para un segmento (ej. SUVs populares).",
       "done": false,
-      "dueDate": "2026-07-08",
+      "dueDate": "2026-10-16",
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:24.832Z"
     },
     {
       "id": "t1781592426198967",

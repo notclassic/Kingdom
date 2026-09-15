@@ -304,6 +304,21 @@
       "userUpdatedAt": "2026-07-07T18:17:03.921Z"
     },
     {
+      "id": "p1789512267436781",
+      "name": "Asesoría CAVAN Chile (Cenergy)",
+      "area": "a2",
+      "desc": "Asesoría a Consulting and Energy Ltda. (Guido Rietta) para evaluar factibilidad de importar y comercializar en Chile las vans eléctricas CAVAN (grupo Foton): furgón C1/Plus/Max y van de pasajeros LEFU 9 plazas. Modelo Cenergy: leasing operativo. Dos unidades de validación ya embarcadas. Venta vía entidad Hong Kong, FOB Nansha, 30 % anticipo. Estado 15-09-2026: C1 homologable (WVTA sueca e5*2018/858*00544*00, ECE completos, CCS2, GSR2) pendiente copias de certificados; LEFU homologable vía GB pero sin certificado ESC, sin ruido, conector GB/T, sin precio; postventa sin stock local. FOB C1 US$ 16.130-19.000 + RMB 3.054 puerto. Decisiones: 03-09 homologación de modelo (no individual); 07-09 régimen por PBV no por plazas; 15-09 LEFU pasa a segunda fase. Entregables: Plan homologación · Benchmark vans Chile · Guía importación · Ficha CAVAN · Análisis respuestas CAVAN · Cuestionario 46 preguntas.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#34c759",
+      "icon": "",
+      "driveUrl": "https://drive.google.com/drive/folders/1or926Cz2KhikXTVe80Ni5hzmy3pmSaZj",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p1781673306507675",
       "name": "Autos",
       "area": "pa3",
@@ -348,21 +363,6 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "personal",
-      "parentId": "p1781673306507675"
-    },
-    {
-      "id": "p1789512267436781",
-      "name": "Asesoría CAVAN Chile (Cenergy)",
-      "area": "a2",
-      "desc": "Asesoría a Consulting and Energy Ltda. (Guido Rietta) para evaluar factibilidad de importar y comercializar en Chile las vans eléctricas CAVAN (grupo Foton): furgón C1/Plus/Max y van de pasajeros LEFU 9 plazas. Modelo Cenergy: leasing operativo. Dos unidades de validación ya embarcadas. Venta vía entidad Hong Kong, FOB Nansha, 30 % anticipo. Estado 15-09-2026: C1 homologable (WVTA sueca e5*2018/858*00544*00, ECE completos, CCS2, GSR2) pendiente copias de certificados; LEFU homologable vía GB pero sin certificado ESC, sin ruido, conector GB/T, sin precio; postventa sin stock local. FOB C1 US$ 16.130-19.000 + RMB 3.054 puerto. Decisiones: 03-09 homologación de modelo (no individual); 07-09 régimen por PBV no por plazas; 15-09 LEFU pasa a segunda fase. Entregables: Plan homologación · Benchmark vans Chile · Guía importación · Ficha CAVAN · Análisis respuestas CAVAN · Cuestionario 46 preguntas.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#34c759",
-      "icon": "",
-      "driveUrl": "https://drive.google.com/drive/folders/1or926Cz2KhikXTVe80Ni5hzmy3pmSaZj",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
       "parentId": "p1781673306507675"
     },
     {

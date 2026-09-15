@@ -1853,14 +1853,15 @@
     {
       "id": "t1781592426198285",
       "projectId": "p1781592426198283",
-      "text": "Evaluar la API oficial de Chileautos para asegurar continuidad y evitar bloqueos (Datadome).",
-      "done": false,
+      "text": "✅ RESUELTO POR OTRA VÍA (no hizo falta la API oficial). Datadome bloqueó los clientes directos el 31-07. La solución fue navegador real con Playwright: descargador_navegador.py abre Chrome visible con perfil propio (C:\\-chileautos-sistema\\perfil_navegador) y baja comentarios y fichas. COSECHA_AUTO.bat alterna en cada vuelta una tanda por navegador (400) y una por cliente directo (500), así que si el bloqueo se levanta recupera sola la vía rápida. Pendiente aparte: la ventana es visible a propósito porque a veces pide prueba de humano.",
+      "done": true,
       "dueDate": "2026-06-26",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:02:47.632Z"
     },
     {
       "id": "t1781592426198298",

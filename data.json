@@ -1666,13 +1666,14 @@
       "projectId": "p10",
       "text": "Buscar agencias del estilo de BMR para ofrecerles el servicio.",
       "done": false,
-      "dueDate": "2026-06-19",
+      "dueDate": "2026-10-23",
       "dueTime": "12:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:50:37.903Z"
     },
     {
       "id": "t1781570353106594",

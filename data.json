@@ -1924,15 +1924,15 @@
     {
       "id": "t1781592426198967",
       "projectId": "p1781592426198972",
-      "text": "Radar de oportunidades en tiempo real: tarjetas de alerta, tabla filtrable y botón directo a WhatsApp.",
-      "done": false,
+      "text": "✅ HECHO. Radar de oportunidades operativo: tarjetas Platino / Oro / Bajo precio / Bajo kilometraje / Nuevos hoy, cada una con su color y la seleccionada marcada, tabla filtrable por frescura, vendedor, comentarios y estado de revisión, y link directo al aviso. Además cascada automática: si Platino está en 0 pasa a Oro, y así hacia la derecha, para que la primera pantalla nunca salga vacía.",
+      "done": true,
       "dueDate": "2026-07-10",
       "dueTime": "14:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-09T04:01:42.956Z"
+      "mcpUpdatedAt": "2026-09-15T23:02:33.840Z"
     },
     {
       "id": "t1781592426198148",

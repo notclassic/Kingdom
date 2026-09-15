@@ -2745,6 +2745,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:09.720Z"
+    },
+    {
+      "id": "t1789513392783509",
+      "projectId": "p1781592426198972",
+      "text": "🔴 URGENTE — Cambiar la clave de admin@demo.cl antes de compartir el link. Sigue siendo admin1234 y el sitio está publicado en internet por el Funnel. Esa cuenta ve la base completa, la bitácora y el panel de cuentas. Se cambia entrando como admin → \"Cuentas y perfiles\" → resetear clave. Al inversionista pasarle pleno@demo.cl, que ya está probado y lleva marca de agua.",
+      "done": false,
+      "dueDate": "2026-09-16",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:03:12.783Z"
     }
   ],
   "leads": [

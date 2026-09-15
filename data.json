@@ -2784,6 +2784,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:22.557Z"
+    },
+    {
+      "id": "t178951341326655",
+      "projectId": "p1781592426198972",
+      "text": "Reordenar el panel \"Requisitos\" del buscador: primero la segmentación (gama, carrocería, mecánica, origen, tipo de vendedor) y al final marca y modelo. Razón: se busca por características cuando se compra por conveniencia, y la marca es la excepción. Marca y modelo tienen que quedar pegados y últimos porque el bloque de modelos solo aparece una vez elegidas las marcas. Va junto con esto un cambio de una línea: el selector de marca YA admite varias (BQ.marcas es una lista y el filtro deja pasar cualquiera de las elegidas), pero tiene forma de desplegable común y dice \"Todas las marcas\", así que nadie descubre que se pueden marcar varias. Cambiar ese texto por \"Elegí una o varias\" cuando está vacío.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:03:33.266Z"
     }
   ],
   "leads": [

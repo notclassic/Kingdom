@@ -1574,13 +1574,14 @@
       "projectId": "p1781624973628909",
       "text": "Separar en dos bots: uno para alertas y otro para audios.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-09",
       "dueTime": "01:59",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:01.104Z"
     },
     {
       "id": "t1781635855125",

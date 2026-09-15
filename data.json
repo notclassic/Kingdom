@@ -1875,12 +1875,13 @@
       "projectId": "p1781592426198283",
       "text": "Modelar la base con histórico (estado vendido, última actualización) en PostgreSQL + Redis para dedup y alertas.",
       "done": false,
-      "dueDate": "2026-06-24",
+      "dueDate": "2026-10-05",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:05.567Z"
     },
     {
       "id": "t1781592426198356",

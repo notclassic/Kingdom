@@ -1770,12 +1770,13 @@
       "projectId": "p1781591737916116",
       "text": "Calculadora de arbitraje geográfico: spread regional, matriz de costos logísticos y estimador de margen neto.",
       "done": false,
-      "dueDate": "2026-08-01",
+      "dueDate": "2026-11-09",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:31.679Z"
     },
     {
       "id": "t1781591737916627",

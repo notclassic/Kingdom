@@ -111,6 +111,21 @@
       "parentId": null
     },
     {
+      "id": "p4",
+      "color": "#ff9f0a",
+      "name": "Compra y Venta de Autos",
+      "area": "a2",
+      "desc": "Operación de trading alimentada por el Databot.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p9",
       "color": "#af52de",
       "name": "Salvot",
@@ -125,20 +140,6 @@
       "context": "profesional",
       "parentId": null,
       "userUpdatedAt": "2026-09-15T23:12:58.059Z"
-    },
-    {
-      "id": "p4",
-      "color": "#ff9f0a",
-      "name": "Compra y Venta de Autos",
-      "area": "a2",
-      "desc": "Operación de trading alimentada por el Databot.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
     },
     {
       "id": "p3",

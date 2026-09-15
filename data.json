@@ -1345,12 +1345,13 @@
       "projectId": "p6",
       "text": "Captar leads",
       "done": false,
-      "dueDate": "2026-06-21",
+      "dueDate": "2026-11-16",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:47.904Z"
     },
     {
       "id": "t17",

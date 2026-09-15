@@ -1684,14 +1684,15 @@
       "projectId": "p7",
       "text": "Comprar dominio.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-12-07",
       "dueTime": "02:19",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:49:55.479Z"
     },
     {
       "id": "t178158357562599",

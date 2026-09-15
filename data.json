@@ -2941,6 +2941,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:05:07.653Z"
+    },
+    {
+      "id": "t1789513517785372",
+      "projectId": "p1781592426198972",
+      "text": "Que el servidor y el panel arranquen solos al prender el PC. Hoy ninguno de los dos vuelve después de un reinicio: hay que abrir un cmd y lanzarlos a mano (servidor.py desde plataforma\\ y PANEL.bat desde la raíz). Ya pasó dos veces que el link quedó caído dando error 502 sin que nadie se enterara, y con un cliente o un inversionista mirando eso es inaceptable. Dejarlos como tarea del Programador de tareas al inicio de sesión, o como servicio. El Funnel de Tailscale sí vuelve solo, porque su configuración está en la cuenta y no en el proceso.",
+      "done": false,
+      "dueDate": "2026-09-16",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:05:17.785Z"
     }
   ],
   "leads": [

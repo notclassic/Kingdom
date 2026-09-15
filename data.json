@@ -2017,12 +2017,13 @@
       "projectId": "p1781592426198972",
       "text": "Pestaña de normalización con edición asistida por IA (sugerir versión, validar km, detectar único dueño).",
       "done": false,
-      "dueDate": "2026-07-20",
+      "dueDate": "2026-10-02",
       "dueTime": "14:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:53:08.384Z"
     },
     {
       "id": "t178159242619870",

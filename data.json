@@ -340,6 +340,21 @@
       "userUpdatedAt": "2026-07-07T18:17:03.921Z"
     },
     {
+      "id": "p178158196081099",
+      "name": "Ford",
+      "area": "pa3",
+      "desc": "Reparación de la camioneta.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#ffa50a",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "p1781673306507675"
+    },
+    {
       "id": "p1781583210289147",
       "name": "Captiva",
       "area": "pa3",
@@ -354,21 +369,6 @@
       "context": "personal",
       "parentId": "p1781673306507675",
       "mcpUpdatedAt": "2026-06-24T20:22:11.579Z"
-    },
-    {
-      "id": "p178158196081099",
-      "name": "Ford",
-      "area": "pa3",
-      "desc": "Reparación de la camioneta.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#ffa50a",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": "p1781673306507675"
     },
     {
       "id": "p1781720027768812",

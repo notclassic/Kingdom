@@ -2928,6 +2928,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:05:02.097Z"
+    },
+    {
+      "id": "t1789513507653104",
+      "projectId": "p1781592426198283",
+      "text": "Poner en git lo que hoy vive solo en el PC B. No están versionados: armar_cliente.py, servidor.py y panel.html de la plataforma, medir_datos.py, pasar_lista.py, construir_marca.py, rebautizar_panel.py y COSECHA_FICHAS.bat. Si ese disco falla, la plataforma multiusuario completa se pierde. Verificar además dos cosas del repo: que sea privado, y si groq_key.txt fue commiteado alguna vez (si sí, rotar la clave, no alcanza con borrar el archivo). Relacionado: sacar del repo los pesados (dashboard.html de 113 MB, datos.json, capturas/) con .gitignore + git rm --cached, que es lo que hacía colgar el push. Aparte: respaldar la carpeta capturas/ fuera de B.",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:05:07.653Z"
     }
   ],
   "leads": [

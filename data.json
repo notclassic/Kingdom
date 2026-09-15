@@ -840,7 +840,11 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "result": "CUESTIONARIO ENVIADO A GUIDO (46 preguntas, 7 bloques) — respondido por CAVAN el 14-09-2026 en dos planillas (智利 参数表.xlsx y 智利 服务.xlsx), sin adjuntar certificados. Archivos en el ZIP \"Proyecto-CAVAN-Chile\".\n\nLo que CAVAN declaró para el C1 (números, sin copias): WVTA e5*2018/858*00544*00 (Suecia, solo furgón); R100 E49-100R03-03-1080-00; R138 E49-138R02-00-1029-00; R10 E49-10R06-03-1149-00; R13-H E49-13HR01-05-1020-00; R140 E49-140R00-06-1017-00; R94 E49-94R05-00-1008-00; R95 E49-95R05-04-1010-00; R14 E49-14R09-04-1069-00; R16 E49-16R09-01-1170-00; R17 E49-17R11-01-1065-00; R46 E49-46R06-00-1093-00; R43 E49-43R01-11-1082-00; R48 E49-48R08-05-1085-00; R116 E49-116R01-02-1028-00; R51 E49-51R03-10-1098-00. Pedir en ronda 2: copia de cada certificado, CoC de una unidad y listado de variantes que cubre la WVTA (Plus/Max, 50/66 kWh).",
+      "resultType": "email",
+      "resultAt": "2026-09-15T22:45:40.599Z",
+      "mcpUpdatedAt": "2026-09-15T22:45:40.599Z"
     },
     {
       "id": "t1789512267436748",

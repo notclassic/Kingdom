@@ -3100,6 +3100,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:49:59.035Z"
+    },
+    {
+      "id": "t1789516202437597",
+      "projectId": "p1",
+      "text": "Comprar iamotriz.cl en NIC Chile (verificar disponibilidad primero) y tomar también el .com aunque no se use. Es lo único de la marca con riesgo real de que lo gane otro. Después: Cloudflare Tunnel para servir en app.iamotriz.cl en vez del link de Tailscale, que lleva el nombre del PC adentro. Antes de facturar, revisar INAPI.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:50:02.437Z"
     }
   ],
   "leads": [

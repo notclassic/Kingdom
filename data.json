@@ -2771,6 +2771,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:18.020Z"
+    },
+    {
+      "id": "t1789513402557739",
+      "projectId": "p1781592426198972",
+      "text": "Filtro de ORIGEN en el buscador (chips: China, Japón, Corea, Europa, EE.UU., India). Se arma con una tabla de marca → origen, aprovechando la lista MARCAS_CHINAS que motor.py ya usa para el piso de depreciación. Es el filtro con más sentido económico: el origen chino cambia la curva de reventa y los datos propios ya lo reflejan (11% anual contra 9%). LÍMITE REAL: es origen de la MARCA, no país de fabricación de esa unidad — el portal no publica dónde se armó cada auto, así que ese dato no existe y no se puede prometer. Las marcas que no se puedan clasificar con seguridad hay que listarlas para que Eduardo las revise, no asignarlas a dedo.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:03:22.557Z"
     }
   ],
   "leads": [

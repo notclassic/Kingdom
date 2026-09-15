@@ -2915,6 +2915,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:36.009Z"
+    },
+    {
+      "id": "t1789513502097343",
+      "projectId": "p1781592426198972",
+      "text": "Instalar la recuperación de clave. Está escrita y probada (tabla recuperaciones, rutas /api/olvide y /api/nueva-clave, envío por correo con conf_correo, 9 pruebas pasando) pero NO instalada: Eduardo la dejó para después el 10-09 y en panel.html solo quedaron los estilos CSS huérfanos, sin el enlace ni los formularios. Mientras tanto el servidor avisa al arrancar que la recuperación existe, lo que confunde. Decidir: instalarla completa (hace falta correo.json con un servicio de correo) o sacar ese mensaje del arranque. Es requisito para tener clientes reales: hoy si alguien olvida la clave hay que resetearla a mano desde el panel de admin.",
+      "done": false,
+      "dueDate": "2026-09-21",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:05:02.097Z"
     }
   ],
   "leads": [

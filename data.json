@@ -1426,12 +1426,13 @@
       "projectId": "p9",
       "text": "Diseñar presentaciones (PPT)",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-13",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:23.543Z"
     },
     {
       "id": "t23",

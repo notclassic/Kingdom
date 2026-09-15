@@ -2156,14 +2156,15 @@
       "projectId": "p1781583210289147",
       "text": "Agenda otra hora",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-09-28",
       "dueTime": "10:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:20.858Z"
     },
     {
       "id": "t1781720098473190",

@@ -1280,12 +1280,13 @@
       "projectId": "p5",
       "text": "Redactar plan de negocio de pintura",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-12-21",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:29.538Z"
     },
     {
       "id": "t12",

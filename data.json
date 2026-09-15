@@ -1618,14 +1618,15 @@
       "projectId": "p1781583210289147",
       "text": "Revisión técnica de la Captiva.",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-09-23",
       "dueTime": "00:13",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:14.148Z"
     },
     {
       "id": "t1781635534591",

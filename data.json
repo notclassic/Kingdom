@@ -270,21 +270,6 @@
       "completedAt": 1783435551531
     },
     {
-      "id": "p1781582993530486",
-      "name": "Plataforma",
-      "area": "a1",
-      "desc": "Plataforma central de Chileautos: reúne la base de datos, el dashboard y los servicios construidos sobre los datos del mercado.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
       "id": "p1781584127104452",
       "name": "CRM",
       "area": "a1",
@@ -2770,8 +2755,31 @@
     }
   ],
   "deletedTaskIds": [],
-  "deletedProjectIds": [],
-  "trash": [],
+  "deletedProjectIds": [
+    "p1781582993530486"
+  ],
+  "trash": [
+    {
+      "type": "project",
+      "deletedAt": "2026-09-15T23:00:00.327Z",
+      "item": {
+        "id": "p1781582993530486",
+        "name": "Plataforma",
+        "area": "a1",
+        "desc": "Plataforma central de Chileautos: reúne la base de datos, el dashboard y los servicios construidos sobre los datos del mercado.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#007aff",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": "p1"
+      },
+      "tasks": []
+    }
+  ],
   "alertConfig": {
     "high": 30,
     "medium": 60,

@@ -215,6 +215,22 @@
       "driveFolderId": ""
     },
     {
+      "id": "p1781673306507675",
+      "name": "Autos",
+      "area": "pa3",
+      "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": "inbox",
+      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
+    },
+    {
       "id": "p7",
       "color": "#a2845e",
       "name": "Mankeleathers",
@@ -322,22 +338,6 @@
       "context": "profesional",
       "parentId": "p2",
       "userUpdatedAt": "2026-07-07T18:17:03.921Z"
-    },
-    {
-      "id": "p1781673306507675",
-      "name": "Autos",
-      "area": "pa3",
-      "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": null,
-      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
     },
     {
       "id": "p1781583210289147",

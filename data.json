@@ -1136,7 +1136,11 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "result": "ANÁLISIS DE RESPUESTAS CAVAN (15-09-2026) — página: https://claude.ai/artifact/2mzrEWZttMPZJ4iVbuj2Y6\n\nVeredicto: Furgón C1/Plus/Max homologable en el 3CV (WVTA sueca e5*2018/858*00544*00; UN R100/03, R138, R10, R13-H, R140, R94, R95, R14, R16, R17, R43, R46, R48, R116, R51 declarados con números E49; Tipo 2/CCS2; DC 110/90 kW; GSR2 ADAS de serie; PBV 2.900-3.235 kg = mediano; FOB US$ 16.130-19.000 + RMB 3.054 puerto). Pendiente: la fábrica NO adjuntó ningún certificado (solo números); cable de carga \"se compra aparte\" (D.S. 145 lo exige con cada vehículo + autorización SEC); potencia AC monofásica sin responder; columna R12, materiales habitáculo y neumáticos marcados NA.\nLEFU 9 plazas: solo CCC/GB; PBV 2.500 kg = liviano; homologable por vía GB pero faltan certificado ESC (GB/T 30677), informe de ruido (R51/GB 1495), apoyacabezas GB 11550; conector GB/T; 330 km \"WLTP\" no cuadra (probable CLTC); no cotizada. Tratar como segunda fase.\nPostventa: sin stock local, repuestos 45-60 días por mar, motor solo como powertrain 60-70 días; garantía 3 años sin límite km / batería 8 años 400.000 km / tracción 5 años 200.000 km. Insuficiente para leasing operativo sin stock inicial en Chile.\n\n11 pendientes a pedir a CAVAN: 1) copias de certificados (WVTA, CoC, E49); 2) ESC LEFU; 3) ruido LEFU; 4) cargador monofásico; 5) cable de carga IEC 62752 + V2L; 6) conector CCS2 en LEFU y pregunta 6.1; 7) consumo LEFU WLTP; 8) C1: R12, materiales, neumáticos; 9) manual EK2C y hoja de rescate; 10) precio LEFU y lista de repuestos; 11) versión exacta de las 2 unidades de validación.",
+      "resultType": "report",
+      "resultAt": "2026-09-15T22:45:17.208Z",
+      "mcpUpdatedAt": "2026-09-15T22:45:17.208Z"
     },
     {
       "id": "t1789512267436475",

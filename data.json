@@ -71,7 +71,7 @@
       "name": "Chatbot IA",
       "area": "a1",
       "desc": "Desarrollo y prospección por rubro.",
-      "status": "active",
+      "status": "paused",
       "hasLeads": true,
       "driveUrl": "",
       "icon": "",

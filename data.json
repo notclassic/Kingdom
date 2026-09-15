@@ -144,7 +144,7 @@
     },
     {
       "id": "p1781673306507675",
-      "name": "Autos",
+      "name": "Autos Propios",
       "area": "pa3",
       "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
       "status": "active",
@@ -156,7 +156,8 @@
       "contacts": [],
       "context": "personal",
       "parentId": null,
-      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
+      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z",
+      "userUpdatedAt": "2026-09-15T23:29:12.132Z"
     },
     {
       "id": "p3",

@@ -2901,6 +2901,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:30.137Z"
+    },
+    {
+      "id": "t1789513476009345",
+      "projectId": "p1781592426198782",
+      "text": "SESGO CONOCIDO del precio justo, a documentar y eventualmente corregir. El precio justo se calcula contra avisos PUBLICADOS, no contra precios de cierre, y los avisos piden sistemáticamente más de lo que terminan cobrando. Entonces \"17% bajo el precio justo\" significa 17% bajo el precio PEDIDO típico, no bajo el valor real de mercado. Para detectar oportunidades relativas sirve igual, porque el sesgo afecta a todos por parejo; para afirmar \"este auto vale X\" no. Dos caminos: (a) rotularlo honestamente en la interfaz — es lo mínimo, y más aún si lo ve un inversionista; (b) estimar el descuento de cierre a partir del historial de bajas de precio de los avisos que salieron de publicación, y publicar el precio justo con una banda. OTRO LÍMITE menor: el castigo por kilómetro (0,27% cada 1.000 km) es una constante única para todo el catálogo — mil kilómetros no valen lo mismo en una camioneta diésel que en un citycar.",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:36.009Z"
     }
   ],
   "leads": [

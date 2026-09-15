@@ -2584,13 +2584,13 @@
       "projectId": "p1781592426198972",
       "text": "Apretar \"Recalcular dashboard\" para que entren los datos reconstruidos (12.031 contadores de bajas + 62.263 precios iniciales). Ojo: armar.py NO recalcula, solo rearma con el datos.json viejo. Hasta hacerlo, la columna VECES sigue vacía y el INICIAL muestra el precio de la captura anterior en vez del primero real.",
       "done": false,
-      "dueDate": "2026-07-15",
+      "dueDate": "2026-09-28",
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-15T20:02:52.465Z"
+      "mcpUpdatedAt": "2026-09-15T23:53:01.055Z"
     },
     {
       "id": "t1784145780508356",

@@ -1927,12 +1927,13 @@
       "projectId": "p1781592426198782",
       "text": "Perfiles de oportunidad independientes: precio (-15% vs mediana), bajo recorrido, urgencia de venta y único dueño.",
       "done": false,
-      "dueDate": "2026-06-30",
+      "dueDate": "2026-10-14",
       "dueTime": "14:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:21.034Z"
     },
     {
       "id": "t1781592426198775",

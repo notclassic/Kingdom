@@ -1413,12 +1413,13 @@
       "projectId": "p8",
       "text": "Prospectar clientes potenciales",
       "done": false,
-      "dueDate": "2026-06-27",
+      "dueDate": "2026-12-18",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:19.861Z"
     },
     {
       "id": "t22",

@@ -2737,14 +2737,14 @@
       "id": "t1789513389720562",
       "projectId": "p1781592426198972",
       "text": "✅ HECHO (10 al 14-09-2026) — PLATAFORMA MULTIUSUARIO IAMOTRIZ. Hito grande que no estaba registrado acá. servidor.py (57 KB, en C:\\-chileautos-sistema\\plataforma\\) sirve el dashboard con login por correo y clave, tres perfiles (admin / pleno / básico) con vistas y cuota diaria propias, bitácora de cada consulta (quién, cuándo, qué filtro, cuántas filas, desde qué IP), marca de agua con el correo del usuario en todas las vistas menos admin, freno de velocidad por sesión y tope de 50 filas por pedido. armar_cliente.py genera la versión para clientes: recorta lo que es solo de admin, quita la barra de administración, borra toda mención al portal de origen y comprime (72,7 MB → 12,7 MB gzip). Publicado por Tailscale Funnel en https://desktop-vn8q81l.tail201929.ts.net",
-      "done": false,
+      "done": true,
       "dueDate": "",
       "dueTime": "",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-09-15T23:03:09.720Z"
+      "mcpUpdatedAt": "2026-09-15T23:03:28.223Z"
     },
     {
       "id": "t1789513392783509",

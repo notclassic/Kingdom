@@ -1371,12 +1371,13 @@
       "projectId": "p7",
       "text": "Definir estrategia de marketing para liquidar stock",
       "done": false,
-      "dueDate": "2026-06-26",
+      "dueDate": "2026-12-14",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:08.463Z"
     },
     {
       "id": "t19",

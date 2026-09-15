@@ -1306,12 +1306,13 @@
       "projectId": "p5",
       "text": "Proponer modelo de negocio",
       "done": false,
-      "dueDate": "2026-06-23",
+      "dueDate": "2026-12-25",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:36.863Z"
     },
     {
       "id": "t14",

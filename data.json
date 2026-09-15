@@ -1503,13 +1503,14 @@
       "projectId": "p1781624973627687",
       "text": "Bug: las tareas nuevas quedan como \"urgente\"; deberían quedar por defecto para mañana.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-05",
       "dueTime": "01:42",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:50:45.574Z"
     },
     {
       "id": "t1781582619084311",

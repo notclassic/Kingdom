@@ -1400,12 +1400,13 @@
       "projectId": "p8",
       "text": "Actualizar catálogo de productos",
       "done": false,
-      "dueDate": "2026-06-22",
+      "dueDate": "2026-12-16",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:15.781Z"
     },
     {
       "id": "t21",

@@ -1638,12 +1638,13 @@
       "projectId": "p4",
       "text": "Evaluar alertas de oportunidades.",
       "done": false,
-      "dueDate": null,
+      "dueDate": "2026-11-05",
       "dueTime": null,
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:22.360Z"
     },
     {
       "id": "t1781570314630499",

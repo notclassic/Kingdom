@@ -1809,12 +1809,13 @@
       "projectId": "p1781591737916310",
       "text": "Definir oferta B2C: Personal Shopper, Radar de Oportunidades Premium y Marketplace de preventa.",
       "done": false,
-      "dueDate": "2026-07-14",
+      "dueDate": "2026-10-22",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:42.638Z"
     },
     {
       "id": "t1781591737916896",

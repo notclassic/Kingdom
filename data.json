@@ -156,7 +156,7 @@
     {
       "id": "p9",
       "color": "#af52de",
-      "name": "Sal",
+      "name": "Grupo Arte",
       "area": "a3",
       "desc": "Cliente NotClassic: PPT, Ads, cobros.",
       "status": "active",
@@ -167,7 +167,7 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": "p6",
-      "userUpdatedAt": "2026-09-15T23:12:08.748Z"
+      "userUpdatedAt": "2026-09-15T23:12:11.656Z"
     },
     {
       "id": "p5",

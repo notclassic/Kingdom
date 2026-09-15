@@ -3031,6 +3031,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:48:15.229Z"
+    },
+    {
+      "id": "t1789516183239653",
+      "projectId": "p1",
+      "text": "🔴 Cambiar la clave de admin@demo.cl (sigue en admin1234, con el sitio publicado en internet). Entrar como admin → Cuentas y perfiles → resetear. Al inversionista pasarle pleno@demo.cl.",
+      "done": false,
+      "dueDate": "2026-09-16",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:43.239Z"
     }
   ],
   "leads": [

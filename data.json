@@ -2802,14 +2802,14 @@
       "id": "t1789513419278928",
       "projectId": "p1781592426198972",
       "text": "✅ HECHO (13-09) — El botón \"ver vendidos\" del modal de comparables ahora funciona para CUALQUIER usuario, no solo en la máquina de Eduardo. Antes la plantilla pedía los datos a un panel local en localhost:8777, que solo existe en el PC B: el cliente que entraba por el link se lo pedía a su propio localhost y el botón no hacía nada. Se replicaron /vendidos y /fichas_cache dentro de servidor.py leyendo los mismos archivos (estado_avisos.csv y especificaciones_full.json, este último cacheado por fecha de archivo) y armar_cliente.py deja CTL_URL vacío para que las llamadas caigan en el mismo origen. SOLO LECTURA: las rutas que escriben (marcar revisado, depurar aviso, guardar segmentos, lanzar corridas) NO se replicaron a propósito — un cliente llamándolas editaría la base de todos.",
-      "done": false,
+      "done": true,
       "dueDate": "",
       "dueTime": "",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-09-15T23:03:39.278Z"
+      "mcpUpdatedAt": "2026-09-15T23:03:52.924Z"
     },
     {
       "id": "t1789513428623947",

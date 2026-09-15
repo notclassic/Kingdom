@@ -1940,12 +1940,13 @@
       "projectId": "p1781592426198782",
       "text": "Clasificación \"Oportunidad de Oro\" (2+ perfiles o -20% de precio).",
       "done": false,
-      "dueDate": "2026-07-02",
+      "dueDate": "2026-10-19",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:28.292Z"
     },
     {
       "id": "t1781592426198976",

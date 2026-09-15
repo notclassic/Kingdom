@@ -2973,6 +2973,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:05:22.481Z"
+    },
+    {
+      "id": "t178951396991749",
+      "projectId": "p9",
+      "text": "Manual de marca , status",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

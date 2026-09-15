@@ -1680,13 +1680,14 @@
       "projectId": "p10",
       "text": "Mejora del sitio: limpieza y último catálogo.",
       "done": false,
-      "dueDate": "2026-06-19",
+      "dueDate": "2026-10-26",
       "dueTime": "12:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:50:41.725Z"
     },
     {
       "id": "t1781583565296156",

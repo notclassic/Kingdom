@@ -1116,7 +1116,11 @@
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "result": "BENCHMARK VANS ELÉCTRICAS CHILE — página: https://claude.ai/code/artifact/609c51c6-43ba-447e-bbf0-7df562310999\n\n22 configuraciones relevadas (14 chinas, 8 no chinas). Furgones 5-7 m³ chinos: DFSK EC35 $28,99 M + IVA; Maxus eDeliver 3 US$ 33-36 k + IVA; JAC Refine Cargo EV $26,2 M lista; Farizon V6E $26,99 M + IVA; JMC Touring EV $25,99 M + IVA; Farizon V7E 2027 $23,89 M; Peugeot e-Partner $33,39 M + IVA; Mercedes eVito US$ 71.990 + IVA. Pasajeros: Voltera M5 $30-32 M (GB/T), SuperVan Minibús $46 M, MIFA 9 US$ 60 k + IVA, eSprinter minibús US$ 82 k + IVA. Conector dominante Tipo 2/CCS2 (17 de 20); GB/T solo en versiones de entrada de Voltera. Piso de seguridad: 2 airbags, ABS, ESC, cámara y sensores, TPMS; ADAS solo Ford, Mercedes y Farizon 2027. Costo puesto en Chile C1 = FOB (16.130-19.000 USD) + RMB 3.054 puerto + flete + seguro (por cotizar) → IVA 19 % sobre CIF, arancel 0 % TLC, sin impuesto verde.",
+      "resultType": "report",
+      "resultAt": "2026-09-15T22:45:34.710Z",
+      "mcpUpdatedAt": "2026-09-15T22:45:34.710Z"
     },
     {
       "id": "t1789512267436876",

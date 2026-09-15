@@ -1465,12 +1465,13 @@
       "projectId": "p10",
       "text": "Arreglar y optimizar el sitio notclassic.com",
       "done": false,
-      "dueDate": "2026-06-23",
+      "dueDate": "2026-10-20",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:34.012Z"
     },
     {
       "id": "t1787843138174843",

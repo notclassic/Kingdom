@@ -1937,14 +1937,15 @@
     {
       "id": "t1781592426198148",
       "projectId": "p1781592426198972",
-      "text": "Pestaña de análisis comercial: estimación de precio de mercado, percentiles y comparativa con la competencia.",
-      "done": false,
+      "text": "✅ HECHO. Pestaña \"Análisis de mercado\" en el dashboard, más el modal de comparables que entrega mediana y rango p25–p75 por añada, precio justo con su nivel de certeza (alta/media/baja según dispersión y cantidad de comparables) y el descuento contra ese precio. La comparativa con la competencia sale de los comparables del mismo modelo normalizados a año y km.",
+      "done": true,
       "dueDate": "2026-07-15",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:02:39.837Z"
     },
     {
       "id": "t1781592426198469",

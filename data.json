@@ -1744,12 +1744,13 @@
       "projectId": "p1781591737916116",
       "text": "Dashboard de embudo (Iniciado → Validado → Enviado a financiera → Convertido) e integración con API CRM.",
       "done": false,
-      "dueDate": "2026-07-25",
+      "dueDate": "2026-11-05",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:27.899Z"
     },
     {
       "id": "t1781591737916248",

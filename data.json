@@ -1803,14 +1803,15 @@
     {
       "id": "t1781592426198192",
       "projectId": "p1781592426198283",
-      "text": "Captura base diaria (batch 03:00) sobre las ~3500 páginas: actualizar precios y marcar vendidos sin borrar histórico.",
-      "done": false,
+      "text": "✅ HECHO. Corre todas las noches por Programador de tareas (ChileautosNocturna, 02:30) vía NOCTURNA_B.bat → NOCTURNA.bat: baja el catálogo completo, no borra lo vendido y marca el estado en estado_avisos.csv. Al 13-09-2026 la base tiene 65.616 avisos analizados y el histórico conserva los dados de baja (120 vendidos y 364 activos en un modelo de muestra).",
+      "done": true,
       "dueDate": "2026-06-20",
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:02:43.468Z"
     },
     {
       "id": "t1781592426198114",

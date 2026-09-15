@@ -1835,12 +1835,13 @@
       "projectId": "p1781591737916310",
       "text": "Cerrar alianzas con proveedores (mecánicos, transferencias) para la capa transaccional.",
       "done": false,
-      "dueDate": "2026-07-25",
+      "dueDate": "2026-10-29",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:49.875Z"
     },
     {
       "id": "t1781592426198192",

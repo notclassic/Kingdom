@@ -187,6 +187,22 @@
       "parentId": null
     },
     {
+      "id": "p1781673306507675",
+      "name": "Autos",
+      "area": "pa3",
+      "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#cea427",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "personal",
+      "parentId": null,
+      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
+    },
+    {
       "id": "p10",
       "color": "#8e8e93",
       "name": "NotClassic",
@@ -213,22 +229,6 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": ""
-    },
-    {
-      "id": "p1781673306507675",
-      "name": "Autos",
-      "area": "pa3",
-      "desc": "Mantención y reparación de los autos; cada vehículo tiene su propio subproyecto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#cea427",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "personal",
-      "parentId": "inbox",
-      "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
     },
     {
       "id": "p7",

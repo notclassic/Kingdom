@@ -111,20 +111,6 @@
       "parentId": null
     },
     {
-      "id": "p3",
-      "color": "#34c759",
-      "name": "Aprendizaje Claude",
-      "area": "a1",
-      "desc": "I+D y capacitación continua en automatizaciones.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p4",
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
@@ -137,6 +123,21 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
+    },
+    {
+      "id": "p3",
+      "color": "#34c759",
+      "name": "Aprendizaje Claude",
+      "area": "a1",
+      "desc": "I+D y capacitación continua en automatizaciones.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
     },
     {
       "id": "p6",

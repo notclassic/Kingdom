@@ -1914,12 +1914,13 @@
       "projectId": "p1781592426198782",
       "text": "Clustering por Marca + Modelo + Año (y Versión si hay datos) y normalización de KM anual.",
       "done": false,
-      "dueDate": "2026-06-27",
+      "dueDate": "2026-10-12",
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:16.986Z"
     },
     {
       "id": "t1781592426198182",

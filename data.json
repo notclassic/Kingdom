@@ -231,6 +231,21 @@
       "driveFolderId": ""
     },
     {
+      "id": "p8",
+      "color": "#ff2d55",
+      "name": "Jibplaza",
+      "area": "a2",
+      "desc": "Módulos de snowpark, web y catálogo.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": "inbox"
+    },
+    {
       "id": "p7",
       "color": "#a2845e",
       "name": "Mankeleathers",
@@ -244,21 +259,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "parentId": "inbox"
-    },
-    {
-      "id": "p8",
-      "color": "#ff2d55",
-      "name": "Jibplaza",
-      "area": "a2",
-      "desc": "Módulos de snowpark, web y catálogo.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "parentId": "p7"
     },
     {
       "id": "p1783640334123",

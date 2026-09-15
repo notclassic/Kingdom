@@ -1228,12 +1228,13 @@
       "projectId": "p3",
       "text": "Pruebas e investigación de automatizaciones con Claude",
       "done": false,
-      "dueDate": "2026-06-20",
+      "dueDate": "2026-10-09",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:06.617Z"
     },
     {
       "id": "t8",

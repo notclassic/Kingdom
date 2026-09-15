@@ -2888,6 +2888,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:25.022Z"
+    },
+    {
+      "id": "t1789513470137536",
+      "projectId": "p1781592426198283",
+      "text": "Ventana diaria propia para el descargador por navegador (~100 minutos). Medición del 12-09: entran ~997 avisos nuevos por día; con pausas de 4 a 8 segundos el navegador hace ~10 avisos por minuto, así que hacen falta ~100 minutos diarios solo para lo nuevo. La ventana nocturna le deja ~23 minutos (~235 avisos), déficit de ~760 por noche. Consecuencia medida en la calidad del dato: los avisos de 0 a 1 día tienen comentario en el 23% de los casos contra 73% en los de más de 7 días. O sea que las oportunidades más frescas — las que importan — son las que llegan con menos información. Programarle su propia tanda fuera de la nocturna.",
+      "done": false,
+      "dueDate": "2026-09-19",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:30.137Z"
     }
   ],
   "leads": [

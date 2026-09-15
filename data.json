@@ -53,7 +53,7 @@
     {
       "id": "p1",
       "color": "#007aff",
-      "name": "Chileautos Databot",
+      "name": "IAMOTRIZ",
       "area": "a1",
       "desc": "Analítica interna con potencial SaaS futuro.",
       "status": "active",
@@ -62,7 +62,8 @@
       "icon": "",
       "contacts": [],
       "driveFolderId": "",
-      "context": "profesional"
+      "context": "profesional",
+      "userUpdatedAt": "2026-09-15T22:59:48.942Z"
     },
     {
       "id": "p2",
@@ -220,6 +221,22 @@
       "context": "personal",
       "parentId": "p1",
       "mcpUpdatedAt": "2026-07-10T00:11:30.178Z"
+    },
+    {
+      "id": "p178218303327465",
+      "name": "Venta de análisis de elasticidad de precio según demora de venta",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1783640334123",
+      "mcpUpdatedAt": "2026-07-07T05:42:18.800Z"
     },
     {
       "id": "p1781572037505287",
@@ -452,22 +469,6 @@
       "context": "profesional",
       "parentId": "p1781572037505287",
       "completedAt": 1781683698872
-    },
-    {
-      "id": "p178218303327465",
-      "name": "Venta de análisis de elasticidad de precio según demora de venta",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1781582993530486",
-      "mcpUpdatedAt": "2026-07-07T05:42:18.800Z"
     },
     {
       "id": "p178224152505955",

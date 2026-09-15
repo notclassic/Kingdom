@@ -1150,12 +1150,13 @@
       "projectId": "p1",
       "text": "Configurar alertas de oportunidades de compra (bajo km, baratos, único dueño, nicho)",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-26",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:48:36.392Z"
     },
     {
       "id": "t2",

@@ -2213,12 +2213,13 @@
       "projectId": "p7",
       "text": "Publicaciones en IG",
       "done": false,
-      "dueDate": "2026-06-20",
+      "dueDate": "2026-12-09",
       "dueTime": "01:26",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:50:00.286Z"
     },
     {
       "id": "t178184243013271",

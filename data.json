@@ -1332,12 +1332,13 @@
       "projectId": "p6",
       "text": "Hacer web scraping de competidores",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-11-12",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:44.355Z"
     },
     {
       "id": "t16",

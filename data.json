@@ -81,6 +81,21 @@
       "context": "profesional"
     },
     {
+      "id": "p1783642383558810",
+      "name": "Ia automotriz",
+      "area": "a1",
+      "desc": "",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
+    },
+    {
       "id": "p3",
       "color": "#34c759",
       "name": "Aprendizaje Claude",
@@ -121,21 +136,6 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
-    },
-    {
-      "id": "p1783642383558810",
-      "name": "Ia automotriz",
-      "area": "a1",
-      "desc": "",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p9",

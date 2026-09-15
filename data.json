@@ -1731,12 +1731,13 @@
       "projectId": "p1781591737916116",
       "text": "CPL Engine: clasificador de intención de financiamiento (Random Forest/XGBoost) + Lead Score 0-100.",
       "done": false,
-      "dueDate": "2026-07-22",
+      "dueDate": "2026-11-02",
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:24.166Z"
     },
     {
       "id": "t1781591737916309",

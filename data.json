@@ -2836,6 +2836,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:00.249Z"
+    },
+    {
+      "id": "t1789513445342281",
+      "projectId": "p1781591737916310",
+      "text": "Link profesional: dominio propio con Cloudflare Tunnel. El link actual (desktop-vn8q81l.tail201929.ts.net) lleva el nombre del PC adentro, es un subdominio de Tailscale y no admite dominio propio: sirve para demos e inversionistas, no para vender. Cloudflare Tunnel hace lo mismo — expone el servidor de B sin abrir puertos del router — pero permite app.iamotriz.cl con HTTPS, y el túnel es gratis. Cuatro pasos, ninguno automático: comprar el dominio en NIC Chile; crear cuenta en Cloudflare y apuntar ahí los servidores de nombres desde NIC (tarda horas en propagar); instalar cloudflared en B y crear el túnel hacia localhost:8010; dejarlo como servicio de Windows para que arranque solo después de cada reinicio.",
+      "done": false,
+      "dueDate": "2026-09-22",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:05.342Z"
     }
   ],
   "leads": [

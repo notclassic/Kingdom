@@ -2668,15 +2668,15 @@
     {
       "id": "t178457942158135",
       "projectId": "p1781592426198972",
-      "text": "Modal de comparables para el tasador (como el que ya existe en las ofertas del radar). Al tasar, poder abrir una vista que muestre: (a) los avisos base usados; (b) el algoritmo/cálculo con que se llegó al precio — precio justo original vs recalculado, ajuste por año y km, n comparables, chips de año/versión para filtrar; (c) mejor presentación general de la info del tasador. Reusar el patrón del modal de comparables del radar. BLOQUEADO hasta que Eduardo instale la plantilla v69 + motor nuevo: hoy sigue con v68 (tasador viejo: \"solo modelo\", años salteados, precio clavado sin proyección). Construir encima de la v69 una vez confirmada la instalación, o es trabajo sobre un archivo que no se ve.",
-      "done": false,
+      "text": "✅ HECHO (13-09-2026). Modal de comparables del tasador funcionando: muestra los avisos base por añada (n, mediana, rango p25-p75, km típico), la tasación original vs la recalculada con su diferencia, chips para filtrar por añada y por versión, y la columna de precio ajustado a tu año y km por fila. Verificado en el Honda Ridgeline 3.5 RTL AWD 2022. El bloqueo de la v69 se destrabó: la plantilla instalada es la nueva y el motor también.",
+      "done": true,
       "dueDate": "2026-07-18",
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-20T20:40:09.596Z"
+      "mcpUpdatedAt": "2026-09-15T23:02:26.221Z"
     },
     {
       "id": "t1784580236437468",

@@ -800,7 +800,11 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "result": "GUÍA COMPLETA DE IMPORTACIÓN Y HOMOLOGACIÓN — página: https://claude.ai/code/artifact/68a2caab-5d86-429c-972b-12fb1f3b9c48 · PLAN DE HOMOLOGACIÓN — https://claude.ai/code/artifact/e965cf12-3fe4-407b-97c0-b588618ca8a6\n\nExpediente C1 en el 3CV (Res. Ex. 81/2021): solicitud en mtt.gob.cl/portaldetramites con clave de empresa; vehículo representativo disponible a ≥30 días hábiles; Anexos H (reemplaza A, B, C) + D (elementos de seguridad, un certificado por elemento o certificado único) + E (antirrobo R116) + J (ruido por documentos extranjeros R51) + K (condiciones de presentación); 3CV responde en 3 + 4 + 10 días hábiles; arancel UF 61,6647 por modelo eléctrico (D.S. 33/2004); pago antes de presentar el vehículo, BancoEstado 902316-0, comprobante a servicios3cv@mtt.gob.cl; 3CV Vicente Reyes 198, Maipú, 9:00-14:00. Normas aceptadas: D.S. 26/2000 + Res. 48/2000 (Res. Ex. 816/2023) para seguridad; D.S. 145/2017 para REESS/conector/AVAS/cable de carga; D.S. 7/2015 ruido (R51/03); consumo en WLTP desde 1-10-2025. Tras aprobación: autorización CHI-e (Res. Ex. 3046/2019: software, firma electrónica avanzada, QR, integración SG CHI-e).",
+      "resultType": "report",
+      "resultAt": "2026-09-15T22:45:27.242Z",
+      "mcpUpdatedAt": "2026-09-15T22:45:27.242Z"
     },
     {
       "id": "t1789512267436904",

@@ -471,22 +471,6 @@
       "completedAt": 1781683698872
     },
     {
-      "id": "p178224152505955",
-      "name": "Festauto Logística",
-      "area": "a2",
-      "desc": "Ver la posibilidad de arrendar los autos",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#05081f",
-      "icon": "",
-      "driveUrl": "https://drive.google.com/drive/folders/10hTCIByAy31YvNAUnC1_t13iemY3dh0v",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null,
-      "mcpUpdatedAt": "2026-07-07T05:36:22.329Z"
-    },
-    {
       "id": "p1782523827555366",
       "name": "Configurar alertas de oportunidades de compra (bajo kilometraje, precio bajo, único dueño, nicho).",
       "area": "a1",
@@ -2756,7 +2740,8 @@
   ],
   "deletedTaskIds": [],
   "deletedProjectIds": [
-    "p1781582993530486"
+    "p1781582993530486",
+    "p178224152505955"
   ],
   "trash": [
     {
@@ -2776,6 +2761,27 @@
         "contacts": [],
         "context": "profesional",
         "parentId": "p1"
+      },
+      "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-09-15T23:02:20.578Z",
+      "item": {
+        "id": "p178224152505955",
+        "name": "Festauto Logística",
+        "area": "a2",
+        "desc": "Ver la posibilidad de arrendar los autos",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#05081f",
+        "icon": "",
+        "driveUrl": "https://drive.google.com/drive/folders/10hTCIByAy31YvNAUnC1_t13iemY3dh0v",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": null,
+        "mcpUpdatedAt": "2026-07-07T05:36:22.329Z"
       },
       "tasks": []
     }

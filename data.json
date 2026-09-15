@@ -2810,6 +2810,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:39.278Z"
+    },
+    {
+      "id": "t1789513428623947",
+      "projectId": "p1783640334123",
+      "text": "DISEÑO ACORDADO (14-09-2026) — Alertas por Telegram. Son DOS tipos sobre el mismo mecanismo (criterios guardados en base + comparación contra lo que entra en cada cosecha + registro de lo ya avisado para no repetir). (1) LISTA DE SEGUIMIENTO: autos concretos que se persiguen, marca + modelo + año exacto o rango chico, con precio máximo opcional. Ejemplos de Eduardo: BMW 530 de 2002, Camaro del 68. Aparecen cada varios meses y por eso la alerta vale. (2) JOYITAS: no un auto puntual sino una condición — Platino, descuento sobre 20%, particular con poco km publicado hace menos de dos días. LÍMITE IMPORTANTE para el tipo 1: el motor necesita 5 comparables del mismo modelo dentro de ±3 años para calcular precio justo, y un Camaro del 68 no los va a tener nunca; además la curva de depreciación de 6,5% anual no aplica a un clásico, que se aprecia. Para esos autos la alerta puede decir \"apareció uno\" con precio y link, pero NO si está barato. Para las joyitas el descuento sí funciona porque son modelos con volumen. ALCANCE: arrancar solo para Eduardo, con su chat de Telegram en un archivo de configuración. Extenderlo a clientes después es agregar una tabla y un flujo de vinculación (el usuario le escribe al bot, el bot le da un código, lo pega en su perfil) — eso es lo que lo vuelve vendible, pero no es el primer paso. NOTA COMERCIAL: esto es lo que más vale del producto. El dashboard es lo que mostrás; la alerta es lo que te compran.",
+      "done": false,
+      "dueDate": "2026-09-20",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:03:48.623Z"
     }
   ],
   "leads": [

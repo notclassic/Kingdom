@@ -2758,6 +2758,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:03:12.783Z"
+    },
+    {
+      "id": "t1789513398020182",
+      "projectId": "p1781592426198972",
+      "text": "Agregar los VENDIDOS al modal de comparables. Hoy el modal compara solo contra avisos publicados, que piden sistemáticamente más de lo que cobran. Sumar debajo de la tabla de añadas una línea con la mediana ajustada de los que salieron de publicación vs la de los que siguen publicados, y la brecha entre ambas; más abajo, tabla de los últimos vendidos con año, km, precio, precio ajustado y días que duraron. Los datos ya están: el endpoint /vendidos funciona y la plantilla tiene tsAjustar() para normalizar por año y km. OJO AL ROTULARLO: lo que se guarda de un vendido es el ÚLTIMO PRECIO PEDIDO antes de que el aviso desapareciera, no el precio de cierre. La brecha mide cuánto menos pedían los que se fueron, no el descuento de negociación.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:03:18.020Z"
     }
   ],
   "leads": [

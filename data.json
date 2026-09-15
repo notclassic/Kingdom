@@ -2005,12 +2005,13 @@
       "projectId": "p1781592426198972",
       "text": "Sección Mercado: volumen de publicaciones, ranking de modelos y mapa de calor geográfico.",
       "done": false,
-      "dueDate": "2026-07-18",
+      "dueDate": "2026-10-05",
       "dueTime": "13:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:53:12.215Z"
     },
     {
       "id": "t178159242619871",

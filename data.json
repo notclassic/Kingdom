@@ -203,6 +203,22 @@
       "context": "profesional"
     },
     {
+      "id": "p1783900232379",
+      "name": "Kingdom — Fechas inteligentes al crear tareas (voz/MCP)",
+      "area": "a1",
+      "desc": "Idea capturada por voz el 12/07 (rescatada tras fallo de interpretación del bot): (1) Que las tareas creadas por voz/MCP vengan SIEMPRE con fecha y hora asignadas inteligentemente — analizando la carga de todos los proyectos activos de Kingdom y el calendario ya establecido, repartiendo en huecos disponibles, sin tope de horario rígido. No es programar por programar: es que nada quede sin fecha. (2) Habilitar la creación de subproyectos vía MCP (hoy Claude puede crear tareas pero no proyectos/subproyectos — gap conocido). Transcripción original completa guardada en la tarea de diseño de este proyecto.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null,
+      "mcpUpdatedAt": "2026-07-12T23:55:35.275Z"
+    },
+    {
       "id": "inbox",
       "color": "#8a919e",
       "name": "💡 Ideas",
@@ -571,22 +587,6 @@
       "context": "profesional",
       "parentId": "p1",
       "mcpUpdatedAt": "2026-07-12T23:43:57.961Z"
-    },
-    {
-      "id": "p1783900232379",
-      "name": "Kingdom — Fechas inteligentes al crear tareas (voz/MCP)",
-      "area": "a1",
-      "desc": "Idea capturada por voz el 12/07 (rescatada tras fallo de interpretación del bot): (1) Que las tareas creadas por voz/MCP vengan SIEMPRE con fecha y hora asignadas inteligentemente — analizando la carga de todos los proyectos activos de Kingdom y el calendario ya establecido, repartiendo en huecos disponibles, sin tope de horario rígido. No es programar por programar: es que nada quede sin fecha. (2) Habilitar la creación de subproyectos vía MCP (hoy Claude puede crear tareas pero no proyectos/subproyectos — gap conocido). Transcripción original completa guardada en la tarea de diseño de este proyecto.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null,
-      "mcpUpdatedAt": "2026-07-12T23:55:35.275Z"
     },
     {
       "id": "p1789512267436991",

@@ -1796,12 +1796,13 @@
       "projectId": "p1781591737916310",
       "text": "Definir oferta B2B (SaaS): dashboard de pricing competitivo, monitor de stock estancado y API de valoración.",
       "done": false,
-      "dueDate": "2026-07-12",
+      "dueDate": "2026-10-19",
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:38.764Z"
     },
     {
       "id": "t1781591737916872",

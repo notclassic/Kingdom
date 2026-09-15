@@ -2862,6 +2862,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:08.787Z"
+    },
+    {
+      "id": "t1789513460604651",
+      "projectId": "p1781592426198305",
+      "text": "🔴 Revisión legal ANTES de facturar (no antes de mostrar). Mientras sea demo a un inversionista el riesgo es bajo; el día que se cobre deja de ser teórico. Tres frentes: (1) términos de uso del portal de origen — el sistema baja avisos con navegador automatizado y eso casi seguro está restringido en sus condiciones; (2) datos personales de los vendedores (Leyes 19.628 y 21.719): la base guarda teléfono y WhatsApp de particulares, que es justamente el dato sensible, y el producto B2B reduce el riesgo pero no lo elimina; (3) marca en INAPI. Conviene una consulta con abogado antes de la primera factura, no después. MITIGACIÓN YA HECHA: la versión que ve el cliente no menciona en ninguna parte el portal de origen (10 menciones detectadas y removidas por armar_cliente.py, 9 frases más un barrido general).",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:20.604Z"
     }
   ],
   "leads": [

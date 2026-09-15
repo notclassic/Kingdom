@@ -1241,12 +1241,13 @@
       "projectId": "p4",
       "text": "Evaluar alertas de oportunidades",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-26",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:10.586Z"
     },
     {
       "id": "t9",

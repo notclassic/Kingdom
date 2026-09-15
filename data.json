@@ -918,13 +918,14 @@
       "id": "t1787843138174843",
       "projectId": "p1",
       "text": "utilizar la busqeuda como humano para fb market place y linkedin",
-      "done": false,
+      "done": true,
       "dueDate": "2026-08-28",
       "dueTime": "11:05",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T22:30:44.150Z"
     },
     {
       "id": "t1781583152633291",

@@ -1953,12 +1953,13 @@
       "projectId": "p1781592426198782",
       "text": "Scoring de riesgo/fraude mediante NLP de la descripción del aviso.",
       "done": false,
-      "dueDate": "2026-07-04",
+      "dueDate": "2026-10-21",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:31.971Z"
     },
     {
       "id": "t1781592426198821",

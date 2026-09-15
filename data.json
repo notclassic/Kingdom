@@ -1163,12 +1163,13 @@
       "projectId": "p1",
       "text": "Configurar alertas de información de la industria",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-10-28",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:48:40.203Z"
     },
     {
       "id": "t3",

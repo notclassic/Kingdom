@@ -1358,12 +1358,13 @@
       "projectId": "p7",
       "text": "Reactivar web y plataforma ecommerce",
       "done": false,
-      "dueDate": "2026-06-24",
+      "dueDate": "2026-12-11",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:04.721Z"
     },
     {
       "id": "t18",

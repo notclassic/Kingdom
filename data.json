@@ -3114,6 +3114,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:50:02.437Z"
+    },
+    {
+      "id": "t1789516205648803",
+      "projectId": "p1",
+      "text": "Poner en git la plataforma, que hoy existe solo en el disco del PC B: servidor.py, armar_cliente.py, panel.html, medir_datos.py, pasar_lista.py, construir_marca.py y COSECHA_FICHAS.bat. Verificar además que el repo sea privado y si groq_key.txt fue commiteado alguna vez (si sí, rotar la clave). Respaldar capturas/ fuera de B.",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:50:05.648Z"
     }
   ],
   "leads": [

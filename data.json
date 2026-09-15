@@ -1532,13 +1532,14 @@
       "projectId": "p1781624973628909",
       "text": "Hacer más notorias las tareas vencidas y mandar más alertas por Telegram (vencidas y por vencer).",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-07",
       "dueTime": "01:43",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:50:54.440Z"
     },
     {
       "id": "t1781581649266956",

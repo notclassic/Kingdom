@@ -2976,6 +2976,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:48:01.084Z"
+    },
+    {
+      "id": "t1789516085204409",
+      "projectId": "p1781592426198283",
+      "text": "La captura diaria cubre 94,8%, no 99%. Medido el 15-09 sobre estado_avisos.csv: de 65.929 avisos activos, la captura de hoy vio 62.477. Quedaron 3.452 sin revisar, y 2.511 de ellos llevan TRES DÍAS O MÁS sin que nadie los toque. IMPACTO: el sistema los cuenta como publicados, pero lo más probable es que varios ya se vendieron y nadie los dio de baja. Entran como comparables fantasma en el precio justo e inflan el \"siguen publicados\" del modal de vendidos. CAUSA PROBABLE: el cupo CA_PAGINAS=3600 de NOCTURNA.bat se quedó corto para el tamaño actual del catálogo. Confirmar eso antes de subirlo, para descartar que sea un corte por bloqueo a mitad de recorrido.",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:48:05.204Z"
     }
   ],
   "leads": [

@@ -539,21 +539,6 @@
       "parentId": "p1"
     },
     {
-      "id": "p1783626658030",
-      "name": "CRM",
-      "area": "a2",
-      "desc": "Creado por voz desde Telegram.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#05081f",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": null
-    },
-    {
       "id": "p1783642550128383",
       "name": "Asistente IA de compra/venta (asesor B2C + tasador B2B para locatarios)",
       "area": "a1",
@@ -2400,18 +2385,6 @@
       "resultAt": "2026-07-08T13:23:43.876Z"
     },
     {
-      "id": "t1783626658030",
-      "projectId": "p1783626658030",
-      "text": "Llamar a Pepe",
-      "done": true,
-      "dueDate": "2026-07-10",
-      "dueTime": "16:00",
-      "priority": "medium",
-      "emailAlert": false,
-      "alertSent": false,
-      "driveUrl": ""
-    },
-    {
       "id": "t1783642728229842",
       "projectId": "p1783642550128383",
       "text": "Fase 0 — Validación: armar lista de 10 locatarios de la red y agendar 5-10 conversaciones (criterio de avance: 3 que digan \"lo quiero ya\")",
@@ -3061,6 +3034,39 @@
     {
       "type": "project",
       "deletedAt": "2026-09-15T23:02:23.351Z",
+      "item": {
+        "id": "p1783626658030",
+        "name": "CRM",
+        "area": "a2",
+        "desc": "Creado por voz desde Telegram.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#05081f",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1783626658030",
+          "projectId": "p1783626658030",
+          "text": "Llamar a Pepe",
+          "done": true,
+          "dueDate": "2026-07-10",
+          "dueTime": "16:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-09-15T23:13:39.135Z",
       "item": {
         "id": "p1783626658030",
         "name": "CRM",

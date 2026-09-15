@@ -82,6 +82,21 @@
       "mcpUpdatedAt": "2026-09-15T23:04:50.980Z"
     },
     {
+      "id": "p4",
+      "color": "#ff9f0a",
+      "name": "Compra y Venta de Autos",
+      "area": "a2",
+      "desc": "Operación de trading alimentada por el Databot.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": "p1"
+    },
+    {
       "id": "p1783642383558810",
       "name": "Ia automotriz",
       "area": "a1",
@@ -111,21 +126,6 @@
       "driveFolderId": "",
       "context": "profesional",
       "userUpdatedAt": "2026-09-15T23:30:18.890Z"
-    },
-    {
-      "id": "p4",
-      "color": "#ff9f0a",
-      "name": "Compra y Venta de Autos",
-      "area": "a2",
-      "desc": "Operación de trading alimentada por el Databot.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "parentId": null
     },
     {
       "id": "p9",

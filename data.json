@@ -3002,6 +3002,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:48:09.876Z"
+    },
+    {
+      "id": "t178951609522912",
+      "projectId": "p1781592426198283",
+      "text": "Los vendidos casi no tienen datos. Medido el 15-09: de los 38.311 avisos dados de baja, solo el 15,6% tiene comentario y el 9,4% tiene ficha técnica (contra 100% y 55,7% en los particulares activos). La cosecha prioriza lo nuevo, que está bien, pero significa que todo el análisis de \"a cuánto se cierra y en cuánto tiempo se vende\" se apoya en una muestra muy incompleta. ES EL LÍMITE REAL de la comparación publicados-contra-vendidos que se va a agregar al modal de comparables: no la va a frenar el código, la va a frenar que nueve de cada diez vendidos no tengan ficha para normalizar bien. Decidir si vale la pena una tanda dedicada a completar los dados de baja recientes (últimos 60 días, que son los que sirven para medir el mercado actual) antes de construir esa vista.",
+      "done": false,
+      "dueDate": "2026-09-20",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:48:15.229Z"
     }
   ],
   "leads": [

@@ -2720,6 +2720,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-08-18T11:55:07.147Z"
+    },
+    {
+      "id": "t1789513385236625",
+      "projectId": "p178158196081099",
+      "text": "cosnutlar por la info enviada de la caja",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

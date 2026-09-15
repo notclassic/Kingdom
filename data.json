@@ -1861,14 +1861,14 @@
       "projectId": "p1781592426198283",
       "text": "Captura continua de lo nuevo. ESTADO: implementado pero NO horario — COSECHA_AUTO.bat corre en bucle permanente alternando navegador (400 avisos) y cliente directo (500), con --por-fecha para que los avisos nuevos entren primero. Queda por resolver el déficit medido el 12-09: entran ~997 avisos nuevos por día que necesitan ~100 minutos de navegador, y la ventana nocturna solo da ~23 minutos (~235 avisos). El bucle diurno compensa en parte, pero conviene darle al descargador su propia ventana diaria dedicada.",
       "done": false,
-      "dueDate": "2026-06-19",
+      "dueDate": "2026-09-30",
       "dueTime": "13:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "overdueAlertSent": true,
-      "mcpUpdatedAt": "2026-09-15T23:02:51.120Z"
+      "mcpUpdatedAt": "2026-09-15T23:51:57.566Z"
     },
     {
       "id": "t1781592426198575",

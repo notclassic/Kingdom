@@ -1603,14 +1603,15 @@
       "projectId": "p1781583210289147",
       "text": "Mantención de la Captiva.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-09-21",
       "dueTime": "02:13",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:09.458Z"
     },
     {
       "id": "t1781583240720865",

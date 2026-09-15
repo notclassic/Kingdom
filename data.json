@@ -211,7 +211,7 @@
       "id": "p1783640334123",
       "name": "Alertas personalizadas por criterios de búsqueda",
       "area": "pa3",
-      "desc": "Que el Sistema Chileautos avise automáticamente cuando aparezca una publicación que cumpla criterios definidos por el usuario (ej.: Subaru Forester año 2008, con tope de kilometraje y rango de precio). Base: el radar de oportunidades existente. ⚠️ PENDIENTE: este subproyecto quedó por error dentro de \"Autos\" — borrarlo acá y recrearlo dentro de Chileautos.",
+      "desc": "Avisar automáticamente por Telegram cuando aparezca una publicación que cumpla criterios definidos por el usuario. Dos tipos sobre el mismo mecanismo: lista de seguimiento (autos concretos: marca, modelo, año exacto o rango chico, precio tope — ej. BMW 530 de 2002, Camaro del 68) y joyitas (condiciones: Platino, descuento sobre 20%, particular con poco km recién publicado). Base: el radar de oportunidades ya existente. Se construye sobre servidor.py y plataforma.db, evaluando los avisos nuevos después de cada cosecha y registrando lo ya avisado para no repetir. Arranca solo para Eduardo; extenderlo a clientes agrega una tabla y un flujo de vinculación con el bot. [Corregido 15-09: este subproyecto ya cuelga de IAMOTRIZ, la nota vieja sobre moverlo quedó sin efecto. Queda pendiente cambiarle el área desde el dashboard: figura en Hogar/personal y corresponde Inteligencia & Software/profesional.]",
       "status": "active",
       "hasLeads": false,
       "color": "#cea427",
@@ -221,7 +221,7 @@
       "contacts": [],
       "context": "personal",
       "parentId": "p1",
-      "mcpUpdatedAt": "2026-07-10T00:11:30.178Z"
+      "mcpUpdatedAt": "2026-09-15T23:04:56.920Z"
     },
     {
       "id": "p178218303327465",

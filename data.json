@@ -2875,6 +2875,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:20.604Z"
+    },
+    {
+      "id": "t1789513465022508",
+      "projectId": "p1781592426198283",
+      "text": "Investigar la desconexión del indicador de ficha técnica. Medición del 12-09: solo 37 avisos aparecen marcados como \"tiene ficha\" contra 25.124 fichas efectivamente descargadas en especificaciones_full.json (hoy 29,6 MB). O el motor no está leyendo la marca al armar datos.json, o la escribe con otra clave. Impacto: la columna y el filtro de ficha del dashboard son inútiles, y no se puede saber de qué avisos falta bajar especificaciones. Arrancar comparando los ids de especificaciones_full.json contra el campo que el motor exporta por aviso.",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:25.022Z"
     }
   ],
   "leads": [

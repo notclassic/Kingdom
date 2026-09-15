@@ -2642,15 +2642,15 @@
     {
       "id": "t1784147254077559",
       "projectId": "p1781592426198782",
-      "text": "Depreciación por marca en el PRECIO JUSTO (idea de Eduardo, alta prioridad). NOTA: ya está IMPLEMENTADA en el tasador (el motor calcula dep_marca de los datos propios y el tasador la usa). Falta llevarla al precio justo, que es donde más impacta. Hoy calcular_precio_justo usa DEP_ANIO_GLOBAL=0.065 para todas las marcas al normalizar comparables de otro año. El precio base ya captura la marca (comparables del mismo modelo); el error está en el AJUSTE cuando el auto tiene distinto año que sus comparables. El motor ya calcula y exporta dep_marca: falta usarlo dentro de _calc. OJO: mueve TODOS los números del dashboard, verificar antes/después, sesión propia.",
-      "done": false,
+      "text": "✅ HECHO. La depreciación por marca ya se usa DENTRO del precio justo, no solo en el tasador. Verificado leyendo motor.py: la función _calc llama a _dep_de(idx) para armar el ajuste por año de cada comparable, en vez del DEP_ANIO_GLOBAL fijo. Además hay piso comercial por marca (9% general, 11% para las 28 marcas chinas de la lista MARCAS_CHINAS) y primer año reforzado (15%, 17% chinas).",
+      "done": true,
       "dueDate": "2026-07-25",
       "dueTime": "12:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-07-20T20:43:41.412Z"
+      "mcpUpdatedAt": "2026-09-15T23:02:31.166Z"
     },
     {
       "id": "t1784148558839895",

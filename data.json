@@ -2738,10 +2738,13 @@
       "stage": "ganados"
     }
   ],
-  "deletedTaskIds": [],
+  "deletedTaskIds": [
+    "t1783626658030"
+  ],
   "deletedProjectIds": [
     "p1781582993530486",
-    "p178224152505955"
+    "p178224152505955",
+    "p1783626658030"
   ],
   "trash": [
     {
@@ -2784,6 +2787,39 @@
         "mcpUpdatedAt": "2026-07-07T05:36:22.329Z"
       },
       "tasks": []
+    },
+    {
+      "type": "project",
+      "deletedAt": "2026-09-15T23:02:23.351Z",
+      "item": {
+        "id": "p1783626658030",
+        "name": "CRM",
+        "area": "a2",
+        "desc": "Creado por voz desde Telegram.",
+        "status": "active",
+        "hasLeads": false,
+        "color": "#05081f",
+        "icon": "",
+        "driveUrl": "",
+        "driveFolderId": "",
+        "contacts": [],
+        "context": "profesional",
+        "parentId": null
+      },
+      "tasks": [
+        {
+          "id": "t1783626658030",
+          "projectId": "p1783626658030",
+          "text": "Llamar a Pepe",
+          "done": true,
+          "dueDate": "2026-07-10",
+          "dueTime": "16:00",
+          "priority": "medium",
+          "emailAlert": false,
+          "alertSent": false,
+          "driveUrl": ""
+        }
+      ]
     }
   ],
   "alertConfig": {

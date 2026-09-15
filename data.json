@@ -2409,14 +2409,14 @@
       "projectId": "p1781584127104452",
       "text": "Configurar aviso inmediato cuando un cliente responde (por WhatsApp o por correo, según el canal donde contestó)",
       "done": false,
-      "dueDate": "2026-07-16",
+      "dueDate": "2026-11-11",
       "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
       "userUpdatedAt": "2026-07-07T18:22:48.744Z",
-      "mcpUpdatedAt": "2026-07-07T18:26:55.339Z"
+      "mcpUpdatedAt": "2026-09-15T23:53:56.979Z"
     },
     {
       "id": "t178344815596589",

@@ -2849,6 +2849,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:04:05.342Z"
+    },
+    {
+      "id": "t1789513448787766",
+      "projectId": "p1781591737916310",
+      "text": "Mudar el servidor a un VPS ANTES de cobrarle al primer cliente. Hoy todo se sirve desde el PC de la casa: si B se apaga, si se corta la luz o el internet, el servicio se cae para todos los clientes al mismo tiempo. Además cada carga del dashboard son 12,7 MB comprimidos por la subida doméstica — con dos o tres personas mirando anda, con veinte no. Para demos está bien; para clientes pagando no. Hacerlo cuando aparezca el primero que paga, no antes: es un proyecto aparte y hasta entonces es costo sin retorno.",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:04:08.787Z"
     }
   ],
   "leads": [

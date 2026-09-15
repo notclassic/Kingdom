@@ -138,20 +138,6 @@
       "context": "profesional"
     },
     {
-      "id": "p8",
-      "color": "#ff2d55",
-      "name": "Jibplaza",
-      "area": "a2",
-      "desc": "Módulos de snowpark, web y catálogo.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional"
-    },
-    {
       "id": "p1783642383558810",
       "name": "Ia automotriz",
       "area": "a1",
@@ -214,6 +200,21 @@
       "name": "Mankeleathers",
       "area": "a2",
       "desc": "E-commerce de bolsos de cuero, reactivación.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null
+    },
+    {
+      "id": "p8",
+      "color": "#ff2d55",
+      "name": "Jibplaza",
+      "area": "a2",
+      "desc": "Módulos de snowpark, web y catálogo.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",

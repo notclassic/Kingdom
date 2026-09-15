@@ -2989,6 +2989,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:48:05.204Z"
+    },
+    {
+      "id": "t1789516089876132",
+      "projectId": "p1781592426198972",
+      "text": "Recalcular el dashboard durante el día, no solo de madrugada. Hoy datos.json se genera a las 03:16 y no se vuelve a tocar hasta la madrugada siguiente, así que el filtro \"Hoy\" del radar significa \"entre las 00:00 y las 03:16\" — las horas muertas. Verificado el 15-09: el radar mostraba 112 nuevos cuando en el día habían entrado 162 avisos de particulares. El usuario que mira a las ocho de la tarde está viendo una foto de diecisiete horas atrás y saca la conclusión equivocada de que entran pocos autos. OJO CON LA DIFERENCIA: armar.py y servidor.py --rearmar solo rehacen el HTML con el datos.json existente (segundos, cero datos nuevos); para que entren los avisos del día hay que correr el motor con ver_comentarios.py, que tarda minutos. Programar dos o tres recálculos diarios en horarios que no choquen con las tandas de navegador.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:48:09.876Z"
     }
   ],
   "leads": [

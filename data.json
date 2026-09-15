@@ -2044,12 +2044,13 @@
       "projectId": "p1781592426198305",
       "text": "Usar solo datos públicos; no almacenar ni redistribuir imágenes con derechos de autor.",
       "done": false,
-      "dueDate": "2026-06-30",
+      "dueDate": "2026-11-16",
       "dueTime": "15:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:53:23.317Z"
     },
     {
       "id": "t1781592426198982",

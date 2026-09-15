@@ -2999,13 +2999,13 @@
       "projectId": "p1781592426198782",
       "text": "Bug abierto: la tarjeta cuenta 1 y la tabla muestra 0. Las tarjetas del radar (_kpiBase) y la tabla (renderOps) no aplican exactamente los mismos filtros, así que a veces una tarjeta anuncia un aviso que después no aparece en la tabla. Se intentó alinear pasando _exclRow a _kpiBase y NO era la causa — esa hipótesis quedó descartada, la causa real sigue sin identificarse. Por ahora está tapado con la cascada, que salta a la tarjeta siguiente cuando la tabla sale vacía, pero es un parche: el número de la tarjeta sigue mintiendo. Para encontrarlo, comparar aviso por aviso qué deja pasar cada camino sobre un caso donde difieran.",
       "done": false,
-      "dueDate": "",
+      "dueDate": "2026-11-06",
       "dueTime": "",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": "",
-      "mcpUpdatedAt": "2026-09-15T23:05:22.481Z"
+      "mcpUpdatedAt": "2026-09-15T23:52:57.832Z"
     },
     {
       "id": "t178951396991749",

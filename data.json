@@ -3059,6 +3059,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:49:46.675Z"
+    },
+    {
+      "id": "t1789516189727621",
+      "projectId": "p1",
+      "text": "Recalcular el dashboard dos o tres veces durante el día. datos.json se genera a las 03:16 y no se vuelve a tocar, así que \"Nuevos hoy\" solo cuenta lo que entró entre las 00:00 y las 03:16 (112 de los 162 particulares que entraron el 15-09). Ojo: rearmar NO es recalcular — armar.py y --rearmar rehacen el HTML con los datos viejos; para traer los avisos del día hay que correr el motor.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:49.727Z"
     }
   ],
   "leads": [

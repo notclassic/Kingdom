@@ -1452,12 +1452,13 @@
       "projectId": "p9",
       "text": "Control y seguimiento de cobros",
       "done": false,
-      "dueDate": "2026-06-30",
+      "dueDate": "2026-10-19",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:50:30.214Z"
     },
     {
       "id": "t25",

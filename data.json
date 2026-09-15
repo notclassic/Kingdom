@@ -1546,14 +1546,15 @@
       "projectId": "p1781624973628909",
       "text": "Programar varios avisos mientras la tarea no esté completa.",
       "done": false,
-      "dueDate": "2026-06-18",
+      "dueDate": "2026-10-12",
       "dueTime": "09:00",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:05.372Z"
     },
     {
       "id": "t1781582349097863",

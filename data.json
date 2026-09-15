@@ -1189,12 +1189,13 @@
       "projectId": "p2",
       "text": "Armar listado de rubros",
       "done": false,
-      "dueDate": "2026-06-15",
+      "dueDate": "2026-11-18",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "13:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:48:51.215Z"
     },
     {
       "id": "t5",

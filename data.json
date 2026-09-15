@@ -171,22 +171,6 @@
       "context": "profesional"
     },
     {
-      "id": "p5",
-      "color": "#ff3b30",
-      "name": "Taller móvil",
-      "area": "a2",
-      "desc": "Servicio de pintura automotriz a domicilio (se va donde el cliente). La idea es asociarse con un taller establecido para ganar conocimiento del negocio.",
-      "status": "active",
-      "hasLeads": false,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "mcpUpdatedAt": "2026-06-24T20:22:21.258Z",
-      "parentId": null
-    },
-    {
       "id": "p1781673306507675",
       "name": "Autos",
       "area": "pa3",
@@ -201,6 +185,22 @@
       "context": "personal",
       "parentId": null,
       "mcpUpdatedAt": "2026-06-23T21:26:56.514Z"
+    },
+    {
+      "id": "p5",
+      "color": "#ff3b30",
+      "name": "Taller móvil",
+      "area": "a2",
+      "desc": "Servicio de pintura automotriz a domicilio (se va donde el cliente). La idea es asociarse con un taller establecido para ganar conocimiento del negocio.",
+      "status": "active",
+      "hasLeads": false,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "mcpUpdatedAt": "2026-06-24T20:22:21.258Z",
+      "parentId": null
     },
     {
       "id": "p10",

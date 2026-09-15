@@ -364,6 +364,21 @@
       "parentId": "p1"
     },
     {
+      "id": "p1781592426198782",
+      "name": "Motor de Precio Justo y Scoring",
+      "area": "a1",
+      "desc": "Algoritmos que valoran cada auto y detectan oportunidades: precio justo (mediana y percentiles), bajo kilometraje, urgencia de venta, único dueño y scoring de riesgo/fraude.",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": "p1"
+    },
+    {
       "id": "p1781591737916310",
       "name": "Modelo de Negocio y Monetización",
       "area": "a1",
@@ -383,21 +398,6 @@
       "name": "Infraestructura de Datos y Scraping",
       "area": "a1",
       "desc": "Captura y normalización de datos de Chileautos: scraping base diario e incremental horario, con histórico en base de datos (PostgreSQL + Redis) sin borrar lo vendido.",
-      "status": "active",
-      "hasLeads": false,
-      "color": "#007aff",
-      "icon": "",
-      "driveUrl": "",
-      "driveFolderId": "",
-      "contacts": [],
-      "context": "profesional",
-      "parentId": "p1"
-    },
-    {
-      "id": "p1781592426198782",
-      "name": "Motor de Precio Justo y Scoring",
-      "area": "a1",
-      "desc": "Algoritmos que valoran cada auto y detectan oportunidades: precio justo (mediana y percentiles), bajo kilometraje, urgencia de venta, único dueño y scoring de riesgo/fraude.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",

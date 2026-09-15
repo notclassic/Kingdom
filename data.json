@@ -1887,12 +1887,13 @@
       "projectId": "p1781592426198283",
       "text": "Normalizar la taxonomía del aviso: marca, modelo, versión, km, precio, región, tipo de vendedor, único dueño, teléfono.",
       "done": false,
-      "dueDate": "2026-06-22",
+      "dueDate": "2026-10-02",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:52:01.600Z"
     },
     {
       "id": "t1781592426198285",

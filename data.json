@@ -1215,12 +1215,13 @@
       "projectId": "p2",
       "text": "Preparar bot por rubro",
       "done": false,
-      "dueDate": "2026-06-19",
+      "dueDate": "2026-11-23",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:48:59.191Z"
     },
     {
       "id": "t7",

@@ -1633,14 +1633,15 @@
       "projectId": "p1781583210289147",
       "text": "Buscar lugares para hacer la mantención de la Captiva.",
       "done": false,
-      "dueDate": "2026-06-17",
+      "dueDate": "2026-09-25",
       "dueTime": "09:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
       "dueSoonAlertSent": true,
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:51:17.670Z"
     },
     {
       "id": "t1781571878665580",

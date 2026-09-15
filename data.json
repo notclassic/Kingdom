@@ -1267,12 +1267,13 @@
       "projectId": "p4",
       "text": "Preparar y vender vehículos",
       "done": false,
-      "dueDate": "2026-06-25",
+      "dueDate": "2026-11-02",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:18.544Z"
     },
     {
       "id": "t11",

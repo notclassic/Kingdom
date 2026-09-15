@@ -3045,6 +3045,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:49:43.239Z"
+    },
+    {
+      "id": "t1789516186675176",
+      "projectId": "p1",
+      "text": "🔴 Que arranquen solos al prender el PC: servidor.py, PANEL.bat y COSECHA_AUTO.bat. Hoy ninguno vuelve después de un reinicio. Por eso el link quedó caído con error 502 dos veces, y por eso la cosecha corre 3,4 horas al día en vez de todo el día. Es el arreglo que más rinde por hora invertida de toda la lista.",
+      "done": false,
+      "dueDate": "2026-09-16",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:46.675Z"
     }
   ],
   "leads": [

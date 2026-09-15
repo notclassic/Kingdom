@@ -1783,12 +1783,13 @@
       "projectId": "p1781591737916116",
       "text": "Capa transaccional: seguros, transferencia de dominio y tracker de monetización por transacción.",
       "done": false,
-      "dueDate": "2026-08-05",
+      "dueDate": "2026-11-12",
       "dueTime": "12:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:35.306Z"
     },
     {
       "id": "t1781591737916889",

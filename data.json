@@ -1319,12 +1319,13 @@
       "projectId": "p6",
       "text": "Crear/optimizar publicaciones",
       "done": false,
-      "dueDate": "2026-06-15",
+      "dueDate": "2026-11-09",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "14:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:49:39.962Z"
     },
     {
       "id": "t15",

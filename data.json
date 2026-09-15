@@ -55,7 +55,7 @@
       "color": "#007aff",
       "name": "IAMOTRIZ",
       "area": "a1",
-      "desc": "Analítica interna con potencial SaaS futuro.",
+      "desc": "IAMOTRIZ — Inteligencia del mercado automotriz chileno. Estado al 15-09-2026: sistema en producción corriendo 24/7 en el PC B (C:\\-chileautos-sistema). Base de ~65.600 avisos con histórico que conserva los vendidos; cosecha automática en bucle (navegador real con Playwright + cliente directo alternados) y nocturna programada a las 02:30; motor propio de precio justo que normaliza cada comparable al año y km del auto tasado con depreciación medida por marca; dashboard con radar de oportunidades, tasador con modal de comparables, análisis de mercado y buscador por características. Desde el 10-09 tiene plataforma multiusuario con login, tres perfiles, cuotas, bitácora y marca de agua, publicada en internet por Tailscale Funnel. PRÓXIMO SALTO COMERCIAL: alertas por Telegram — el dashboard es lo que se muestra, la alerta es lo que se compra. Antes de facturar: dominio propio, servidor fuera de la casa y revisión legal.",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -63,7 +63,8 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional",
-      "userUpdatedAt": "2026-09-15T22:59:48.942Z"
+      "userUpdatedAt": "2026-09-15T22:59:48.942Z",
+      "mcpUpdatedAt": "2026-09-15T23:04:50.980Z"
     },
     {
       "id": "p2",

@@ -1560,13 +1560,14 @@
       "projectId": "p1781624973628909",
       "text": "Mejorar los botones de respuesta de Telegram; las alertas se detienen al marcar la tarea como lista.",
       "done": false,
-      "dueDate": "2026-06-16",
+      "dueDate": "2026-10-08",
       "dueTime": "01:58",
       "priority": "high",
       "emailAlert": false,
       "alertSent": true,
       "driveUrl": "",
-      "overdueAlertSent": true
+      "overdueAlertSent": true,
+      "mcpUpdatedAt": "2026-09-15T23:50:57.601Z"
     },
     {
       "id": "t1781582365048355",

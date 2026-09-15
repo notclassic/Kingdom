@@ -1822,12 +1822,13 @@
       "projectId": "p1781591737916310",
       "text": "Validar la demanda del Personal Shopper con un grupo piloto de compradores.",
       "done": false,
-      "dueDate": "2026-07-20",
+      "dueDate": "2026-10-26",
       "dueTime": "13:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:51:46.264Z"
     },
     {
       "id": "t1781591737916701",

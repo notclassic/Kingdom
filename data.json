@@ -2057,12 +2057,13 @@
       "projectId": "p1781592426198305",
       "text": "Priorizar el modelo B2B y la analítica agregada para reducir la exposición a riesgos de privacidad.",
       "done": false,
-      "dueDate": "2026-07-05",
+      "dueDate": "2026-11-19",
       "dueTime": "13:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:53:26.712Z"
     },
     {
       "id": "t1781674712115694",

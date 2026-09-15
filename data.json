@@ -86,7 +86,7 @@
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
       "area": "a2",
-      "desc": "Operación de trading alimentada por el Databot.",
+      "desc": "Oportunidades Platinium",
       "status": "active",
       "hasLeads": false,
       "driveUrl": "",
@@ -94,7 +94,8 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional",
-      "parentId": "p1"
+      "parentId": "p1",
+      "userUpdatedAt": "2026-09-15T23:31:28.421Z"
     },
     {
       "id": "p1783642383558810",

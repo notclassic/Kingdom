@@ -111,6 +111,22 @@
       "parentId": null
     },
     {
+      "id": "p9",
+      "color": "#af52de",
+      "name": "Salvot",
+      "area": "a3",
+      "desc": "Cliente NotClassic: PPT, Ads, cobros.",
+      "status": "active",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "parentId": null,
+      "userUpdatedAt": "2026-09-15T23:12:58.059Z"
+    },
+    {
       "id": "p4",
       "color": "#ff9f0a",
       "name": "Compra y Venta de Autos",
@@ -152,22 +168,6 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
-    },
-    {
-      "id": "p9",
-      "color": "#af52de",
-      "name": "Salvot",
-      "area": "a3",
-      "desc": "Cliente NotClassic: PPT, Ads, cobros.",
-      "status": "active",
-      "hasLeads": true,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "parentId": "p6",
-      "userUpdatedAt": "2026-09-15T23:12:58.059Z"
     },
     {
       "id": "p5",

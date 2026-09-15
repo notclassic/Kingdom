@@ -3086,6 +3086,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:49:52.615Z"
+    },
+    {
+      "id": "t1789516199035374",
+      "projectId": "p1",
+      "text": "Alertas por Telegram: lista de seguimiento (autos concretos, tipo BMW 530 de 2002 o Camaro del 68) y joyitas (condiciones: Platino, descuento sobre 20%, particular con poco km recién publicado). Arranca solo para Eduardo, con el chat en un archivo de configuración. Es lo que más valor comercial tiene de todo lo pendiente: el dashboard es lo que se muestra, la alerta es lo que se compra. Diseño completo en el subproyecto \"Alertas personalizadas\".",
+      "done": false,
+      "dueDate": "2026-09-20",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:49:59.035Z"
     }
   ],
   "leads": [

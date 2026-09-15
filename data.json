@@ -2963,6 +2963,19 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1789516081084526",
+      "projectId": "p1781592426198283",
+      "text": "🔴 La cosecha corre 3,4 horas por día, no todo el día. Medido el 15-09: 25.124 fichas el 12-09 contra 27.485 el 15-09 = 787 por día. Al ritmo que declara COSECHA_AUTO.bat (~230/hora) eso son tres horas y media diarias de trabajo real. El bucle se cae con cada reinicio del PC y nadie lo relanza: el 14-09 se verificó con tasklist que no había ninguna cosecha viva, solo servidor.py y panel.py. IMPACTO: si corriera de verdad, las ~18.400 fichas que faltan en particulares se liquidarían en tres o cuatro días en vez de meses. ARREGLO: que COSECHA_AUTO.bat arranque solo al prender el PC (ya escribe un lanzador en la carpeta Inicio, pero COSECHA_FICHAS.bat lo pisa con el suyo — revisar cuál queda) y que alguien avise si se cae.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-15T23:48:01.084Z"
     }
   ],
   "leads": [

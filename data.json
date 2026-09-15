@@ -1176,12 +1176,13 @@
       "projectId": "p2",
       "text": "Generar email de salida",
       "done": false,
-      "dueDate": "2026-06-15",
+      "dueDate": "2026-11-16",
       "emailAlert": false,
       "alertSent": false,
       "dueTime": "12:00",
       "driveUrl": "",
-      "priority": "medium"
+      "priority": "medium",
+      "mcpUpdatedAt": "2026-09-15T23:48:47.324Z"
     },
     {
       "id": "t4",

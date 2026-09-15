@@ -274,7 +274,7 @@
       "name": "CRM",
       "area": "a1",
       "desc": "Mejoras a implemtar y tareas a realizar",
-      "status": "active",
+      "status": "paused",
       "hasLeads": false,
       "color": "#5856d6",
       "icon": "",

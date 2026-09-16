@@ -3211,6 +3211,18 @@
       "emailAlert": false,
       "alertSent": false,
       "driveUrl": ""
+    },
+    {
+      "id": "t1789517687494188",
+      "projectId": "p1789512267436781",
+      "text": "Llamar a empresa que Homologa",
+      "done": false,
+      "dueDate": "2026-09-18",
+      "dueTime": "09:00",
+      "priority": "medium",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

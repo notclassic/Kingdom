@@ -3218,11 +3218,13 @@
       "text": "Llamar a empresa que Homologa",
       "done": false,
       "dueDate": "2026-09-18",
-      "dueTime": "09:00",
+      "dueTime": "12:00",
       "priority": "medium",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "dueSoonAlertSent": false,
+      "overdueAlertSent": false
     }
   ],
   "leads": [

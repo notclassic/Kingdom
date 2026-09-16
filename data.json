@@ -3195,6 +3195,18 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-15T23:50:07.338Z"
+    },
+    {
+      "id": "t1789516966934520",
+      "projectId": "p1789516954675657",
+      "text": "COntactar contador",
+      "done": false,
+      "dueDate": "2026-09-19",
+      "dueTime": "12:00",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": ""
     }
   ],
   "leads": [

@@ -3238,6 +3238,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-16T00:33:46.341Z"
+    },
+    {
+      "id": "t1789519271029549",
+      "projectId": "p1781592426198283",
+      "text": "🔴 El bucle de COSECHA_AUTO.bat gira en vacío y no puede bajar las fichas que faltan. Diagnóstico del 16-09 leyendo descargador_navegador.py: la función pendientes() usa comentarios.json como memoria de \"ya visitado\", y en la línea 147 saltea cualquier aviso que YA TENGA COMENTARIO, salvo que le haya cambiado el precio. Como los comentarios de particulares están al 100% (41.492 de 41.499), el bucle no encuentra nada pendiente: imprime \"Nada pendiente. Todo descargado.\" cada 30 segundos indefinidamente. PERO el descargador hace cosecha DOBLE por visita (comentario + ficha en la misma carga), así que los ~18.400 particulares que tienen comentario y NO tienen ficha quedaron marcados como hechos y nunca se los vuelve a visitar. ARREGLO INMEDIATO: lanzar COSECHA_FICHAS.bat, que corre bajar_especificaciones.py en bucle y es el único camino hoy para esas fichas (ojo: ese .bat reescribe el lanzador de la carpeta Inicio y pisa el de COSECHA_AUTO). ARREGLO DE FONDO: que pendientes() marque como pendiente también al que tiene comentario pero le falta ficha, así una sola visita resuelve las dos cosas y un solo bucle alcanza.",
+      "done": false,
+      "dueDate": "2026-09-17",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-16T00:41:11.029Z"
     }
   ],
   "leads": [

@@ -3225,6 +3225,19 @@
       "driveUrl": "",
       "dueSoonAlertSent": false,
       "overdueAlertSent": false
+    },
+    {
+      "id": "t1789518826341656",
+      "projectId": "p1",
+      "text": "Recuperar contraseña en la plataforma. Hoy no existe: si un cliente olvida su clave, hay que resetearla a mano desde el panel de admin. El código está escrito y probado (tabla recuperaciones, rutas /api/olvide y /api/nueva-clave, 9 pruebas pasando) pero sin instalar — en panel.html quedaron solo los estilos huérfanos, sin el enlace ni los formularios. Falta un correo.json con un servicio de correo para enviar el enlace. Mientras tanto el servidor anuncia al arrancar que la recuperación existe, lo que confunde: o se instala completa o se saca ese mensaje. Es requisito para tener clientes de verdad.",
+      "done": false,
+      "dueDate": "2026-09-21",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-16T00:33:46.341Z"
     }
   ],
   "leads": [

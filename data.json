@@ -178,6 +178,21 @@
       "parentId": null
     },
     {
+      "id": "inbox",
+      "color": "#8a919e",
+      "name": "💡 Ideas",
+      "area": null,
+      "desc": "Ideas sueltas y recordatorios rápidos.",
+      "status": "active",
+      "hasLeads": false,
+      "context": "otro",
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "parentId": null
+    },
+    {
       "id": "p6",
       "color": "#00c7be",
       "name": "Venta Ecommerce",
@@ -220,20 +235,6 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
-    },
-    {
-      "id": "inbox",
-      "color": "#8a919e",
-      "name": "💡 Ideas",
-      "area": null,
-      "desc": "Ideas sueltas y recordatorios rápidos.",
-      "status": "active",
-      "hasLeads": false,
-      "context": "otro",
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": ""
     },
     {
       "id": "p5",

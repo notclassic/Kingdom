@@ -696,6 +696,21 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1789512267436781"
+    },
+    {
+      "id": "p1789516954675657",
+      "name": "Contador",
+      "area": "a1",
+      "desc": "Llamar /pagar SiI",
+      "status": "active",
+      "hasLeads": false,
+      "color": "#007aff",
+      "icon": "",
+      "driveUrl": "",
+      "driveFolderId": "",
+      "contacts": [],
+      "context": "profesional",
+      "parentId": null
     }
   ],
   "tasks": [

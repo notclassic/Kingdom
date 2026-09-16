@@ -114,21 +114,6 @@
       "userUpdatedAt": "2026-09-15T23:29:02.173Z"
     },
     {
-      "id": "p2",
-      "color": "#5856d6",
-      "name": "Agente IA Multinegocio",
-      "area": "a1",
-      "desc": "Desarrollo y prospección por rubro.",
-      "status": "paused",
-      "hasLeads": true,
-      "driveUrl": "",
-      "icon": "",
-      "contacts": [],
-      "driveFolderId": "",
-      "context": "profesional",
-      "userUpdatedAt": "2026-09-15T23:30:18.890Z"
-    },
-    {
       "id": "p9",
       "color": "#af52de",
       "name": "Salvot",
@@ -205,6 +190,22 @@
       "contacts": [],
       "driveFolderId": "",
       "context": "profesional"
+    },
+    {
+      "id": "p2",
+      "color": "#5856d6",
+      "name": "Agente IA Multinegocio",
+      "area": "a1",
+      "desc": "Desarrollo y prospección por rubro.",
+      "status": "paused",
+      "hasLeads": true,
+      "driveUrl": "",
+      "icon": "",
+      "contacts": [],
+      "driveFolderId": "",
+      "context": "profesional",
+      "userUpdatedAt": "2026-09-15T23:30:18.890Z",
+      "parentId": null
     },
     {
       "id": "p10",

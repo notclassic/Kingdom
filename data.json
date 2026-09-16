@@ -748,7 +748,11 @@
       "priority": "high",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "result": "BRECHA A HOMOLOGACIÓN CONFIRMADA (16-09-2026) — página: https://claude.ai/artifact/9FJfhNLKb2ph8tWVqJoncr\n\nEtapas: 1 Homologable (cruce documental, hecho) → 2 Verificado (certificados en mano, leídos, cubriendo variantes; ESTAMOS ACÁ, 0 ítems verificados) → 3 Expediente completo (Anexos H, D, E, J, K sin observaciones) → 4 Homologado (unidad en Maipú, certificado, CHI-e). El 100 % solo lo da el 3CV en la etapa 4.\n\nFURGÓN C1: falta copia de WVTA e5*2018/858*00544*00 con anexo de variantes (Plus/Max/50/66 kWh) + CoC; copias de los 14 certificados E49 (R100, R138, R10, R13-H, R140, R94, R95, R14, R16, R17, R43, R46, R48, R116, R51); tres \"NA\" sin responder: columna de dirección (R12), materiales del habitáculo, neumáticos; cable de carga (\"se compra aparte\") + autorización SEC; hoja de rescate independiente. Cargador monofásico: comercial, no regulatorio.\n\nLEFU 9 PLAZAS: copias de CCC, MIIT y 12 informes GB; tres vacíos reales: ESC (GB/T 30677 o equivalencia R140), ruido (R51 o GB 1495), apoyacabezas (GB 11550); parciales: recordatorio de cinturón en todas las plazas (liviano), ISOFIX GB 27887, inmovilizador. Conector GB/T legal pero débil comercialmente. Segunda fase.\n\nLADO CHILENO: descargar Anexos con clave de empresa antes de la ronda 2 a CAVAN; definir sociedad importadora = solicitante; consulta previa al 3CV (E49/WVTA formato, cobro por variante, unidades para conformidad); confirmar versión exacta de las 2 unidades de validación.",
+      "resultType": "report",
+      "resultAt": "2026-09-16T00:11:39.295Z",
+      "mcpUpdatedAt": "2026-09-16T00:11:39.295Z"
     },
     {
       "id": "t17895122674367",

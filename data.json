@@ -3251,6 +3251,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-16T00:41:11.029Z"
+    },
+    {
+      "id": "t1789654359968185",
+      "projectId": "p1781592426198782",
+      "text": "ANÁLISIS DE ELASTICIDAD — ya calculado sobre datos reales el 17-09, falta llevarlo a pantalla. Resultado principal, sobre los 38.311 vendidos: los que se vendieron SIN bajar nunca el precio duraron 8 días (mediana, n=27.574); los que bajaron duraron 22 días (n=10.737). Bajar no acelera la venta — bajar es lo que hace el que ya no vendió. Cuando se negocia se negocia poco: baja mediana entre 4% y 7%. POR MODELO cambia mucho: Chevrolet Traverse 46% de los vendidos baja, Peugeot 3008 43%, contra Toyota Corolla Cross 13% y Kia Soluto 14%. Hay 211 modelos con muestra suficiente (40+ ventas, 10+ con baja). MÉTRICA VENDIBLE que sale de esto y hoy nadie tiene: el margen de negociación esperado por modelo = (% que baja) x (cuánto baja). En el 3008 da ~2,3%, en el Corolla Cross ~0,5%. Le dice a la automotora cuánto tiene que contemplar en el precio de lista. DOS SALVEDADES A ROTULAR ANTES DE PUBLICARLO: (1) causalidad — los datos muestran correlación entre bajar y tardar, no que bajar cause tardar; presentarlo como causa es indefendible. (2) sesgo de censura — los avisos que llevan meses publicados y no se vendieron no están en la muestra porque siguen activos, así que los tiempos se ven más cortos de lo que son; corregir comparando contra la antigüedad de los activos. DATOS: todo sale de estado_avisos.csv (marca, modelo, precio_inicial, precio, bajas_precio, primera_vez, ultima_vez, activo). NO depende de las fichas técnicas que faltan.",
+      "done": false,
+      "dueDate": "2026-09-19",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-17T14:12:39.968Z"
     }
   ],
   "leads": [

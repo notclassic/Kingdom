@@ -152,6 +152,11 @@
   .chip.src-laborum{background:var(--lab);}
   .chip.date{background:transparent; color:var(--muted); padding-left:0;}
   .chip.reason{background:#fdeeee; color:var(--red);}
+  .chip.seen{background:#fff4d6; color:#8a5a00; border:1px solid #f0d28a;}
+  .estado-sel{font:inherit; font-size:12px; padding:5px 8px; border-radius:8px; border:1px solid var(--line,#ddd); background:#fff; margin-left:auto;}
+  .estado-sel.contacto,.estado-sel.entrevista,.estado-sel.oferta{border-color:#2e7d32; color:#2e7d32;}
+  .estado-sel.rechazo{border-color:var(--red); color:var(--red);}
+  .estado-sel.sin_respuesta{border-color:#8a5a00; color:#8a5a00;}
   .chip.applied{background:#e6f5ec; color:var(--tra);}
 
   /* ---------- Acciones ---------- */
@@ -874,6 +879,7 @@ function cardOferta(o){
     '</div></div>'+
     '<div class="meta">'+chipScore(o)+chipOrigen(o.origen)+
       (o.fecha?'<span class="chip date">'+escapar(o.fecha)+'</span>':'')+
+      (o.visto_antes?'<span class="chip seen" title="Misma empresa y mismo cargo ya estaban en tu lista (otro portal o republicación)">↻ '+escapar(o.visto_antes)+'</span>':'')+
     '</div>'+
     detalleOferta(o)+
     '<div class="actions">'+
@@ -900,13 +906,36 @@ function cardPostulada(o){
       (o.ubicacion?'<div class="loc">📍 '+escapar(o.ubicacion)+'</div>':'')+
     '</div></div>'+
     '<div class="meta">'+chipOrigen(o.origen)+
-      (o.fechaPostulacion?'<span class="chip applied">Postulado: '+escapar(o.fechaPostulacion)+'</span>':'')+
+      (o.fechaPostulacion?'<span class="chip applied">Postulado: '+escapar(String(o.fechaPostulacion).slice(0,10))+(o.dias!=null?' · hace '+o.dias+' d':'')+'</span>':'')+
       (o.fecha?'<span class="chip date">Oferta: '+escapar(o.fecha)+'</span>':'')+
+      (o.estado_fecha?'<span class="chip date">Estado: '+escapar(o.estado_fecha)+'</span>':'')+
     '</div>'+
     '<div class="actions">'+
       '<button class="btn rescue" onclick="accionDespostular(this,'+o._id+')">No postulé, devolver</button>'+
+      selectorEstado(o)+
     '</div>';
   return div;
+}
+
+// Seguimiento de postuladas (23-09-2026): el estado se guarda en la hoja Postuladas.
+const ESTADOS_POST = [['enviada','Enviada'],['contacto','Me contactaron'],['entrevista','Entrevista'],['oferta','Oferta recibida'],['rechazo','Rechazo'],['sin_respuesta','Sin respuesta']];
+function selectorEstado(o){
+  const cur = o.estado || 'enviada';
+  return '<select class="estado-sel '+escapar(cur)+'" onchange="accionEstado(this,'+o._id+')" title="Estado de la postulación">'+
+    ESTADOS_POST.map(([v,t])=>'<option value="'+v+'"'+(v===cur?' selected':'')+'>'+t+'</option>').join('')+'</select>';
+}
+async function accionEstado(sel, id){
+  const o = (estado.postuladas||[]).find(x=>x._id===id); if(!o) return;
+  const nuevo = sel.value, previo = o.estado || 'enviada';
+  sel.disabled = true;
+  try{
+    await puente(paramsDe(o, {action:'estadoPostulacion', estado:nuevo}));
+    o.estado = nuevo; o.estado_fecha = new Date().toISOString().slice(0,10);
+    sel.className = 'estado-sel '+nuevo;
+    toast('Estado guardado: '+(ESTADOS_POST.find(e=>e[0]===nuevo)||[,nuevo])[1]);
+  }catch(err){
+    sel.value = previo; toast('No se pudo guardar el estado: '+(err.message||err));
+  }finally{ sel.disabled = false; }
 }
 
 function cardDescartada(o){

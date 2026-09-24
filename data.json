@@ -3298,6 +3298,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-24T16:26:45.297Z"
+    },
+    {
+      "id": "t1790267211763408",
+      "projectId": "p178218303327465",
+      "text": "💡 Definir el formato del entregable del análisis de elasticidad (reporte por modelo con % que baja y cuánto baja) y a qué automotoras ofrecerlo primero",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-24T16:26:51.763Z"
     }
   ],
   "leads": [

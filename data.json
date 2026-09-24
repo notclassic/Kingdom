@@ -99,9 +99,9 @@
     },
     {
       "id": "p1783642383558810",
-      "name": "Ia automotriz",
+      "name": "IA automotriz",
       "area": "a1",
-      "desc": "generar un chatbot de atencion vistual por whastapp con la info de nuevos y/o Usados",
+      "desc": "Generar un chatbot de atención virtual por WhatsApp con la info de nuevos y/o usados",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -111,7 +111,8 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1",
-      "userUpdatedAt": "2026-09-15T23:29:02.173Z"
+      "userUpdatedAt": "2026-09-15T23:29:02.173Z",
+      "mcpUpdatedAt": "2026-09-24T16:26:08.432Z"
     },
     {
       "id": "p9",

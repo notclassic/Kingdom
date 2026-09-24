@@ -303,7 +303,7 @@
       "id": "p178218303327465",
       "name": "Venta de análisis de elasticidad de precio según demora de venta",
       "area": "a1",
-      "desc": "",
+      "desc": "Ofrecer a automotoras el análisis de elasticidad: cuánto y cada cuánto baja el precio de cada modelo según la demora de venta.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -313,7 +313,7 @@
       "contacts": [],
       "context": "profesional",
       "parentId": "p1783640334123",
-      "mcpUpdatedAt": "2026-07-07T05:42:18.800Z"
+      "mcpUpdatedAt": "2026-09-24T16:26:33.738Z"
     },
     {
       "id": "p1783453235785100",

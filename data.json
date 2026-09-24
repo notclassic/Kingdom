@@ -2789,14 +2789,15 @@
     {
       "id": "t1789513385236625",
       "projectId": "p178158196081099",
-      "text": "cosnutlar por la info enviada de la caja",
+      "text": "Consultar por la info enviada de la caja",
       "done": false,
       "dueDate": "2026-09-18",
       "dueTime": "12:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": "https://drive.google.com/drive/folders/1xY5fcQXYt4pK5hCaMVHZB97JPyP9oybn"
+      "driveUrl": "https://drive.google.com/drive/folders/1xY5fcQXYt4pK5hCaMVHZB97JPyP9oybn",
+      "mcpUpdatedAt": "2026-09-24T16:25:30.982Z"
     },
     {
       "id": "t1789513389720562",

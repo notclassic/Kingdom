@@ -3285,6 +3285,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-24T16:26:39.892Z"
+    },
+    {
+      "id": "t1790267205297862",
+      "projectId": "p1783642383558810",
+      "text": "💡 Elegir proveedor de WhatsApp Business API para el chatbot y estimar el costo mensual",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-24T16:26:45.297Z"
     }
   ],
   "leads": [

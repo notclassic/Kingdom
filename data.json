@@ -3311,6 +3311,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-24T16:26:51.763Z"
+    },
+    {
+      "id": "t1790267218171252",
+      "projectId": "p1783453235785100",
+      "text": "💡 Definir el mensaje, el canal (WhatsApp o correo) y el criterio de selección de avisos dados de baja a los que se les preguntará el precio final",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-24T16:26:58.171Z"
     }
   ],
   "leads": [

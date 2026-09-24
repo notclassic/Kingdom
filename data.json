@@ -3036,14 +3036,15 @@
     {
       "id": "t178951396991749",
       "projectId": "p9",
-      "text": "Manual de marca , status",
+      "text": "Manual de marca, status",
       "done": false,
       "dueDate": "2026-09-18",
       "dueTime": "12:00",
       "priority": "low",
       "emailAlert": false,
       "alertSent": false,
-      "driveUrl": ""
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-24T16:25:37.013Z"
     },
     {
       "id": "t1789516081084526",

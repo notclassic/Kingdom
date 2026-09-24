@@ -704,7 +704,7 @@
       "id": "p1789516954675657",
       "name": "Contador",
       "area": "a1",
-      "desc": "Llamar /pagar SiI",
+      "desc": "Llamar / pagar SII",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -713,7 +713,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": null
+      "parentId": null,
+      "mcpUpdatedAt": "2026-09-24T16:26:27.488Z"
     }
   ],
   "tasks": [

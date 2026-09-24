@@ -3272,6 +3272,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-17T14:12:39.968Z"
+    },
+    {
+      "id": "t1790267199892259",
+      "projectId": "p1783642383558810",
+      "text": "💡 Definir alcance del chatbot de WhatsApp: qué preguntas responde sobre nuevos y usados y de dónde saca la información",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-24T16:26:39.892Z"
     }
   ],
   "leads": [

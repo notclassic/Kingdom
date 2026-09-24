@@ -3218,7 +3218,7 @@
     {
       "id": "t1789517687494188",
       "projectId": "p1789512267436781",
-      "text": "Llamar a empresa que Homologa",
+      "text": "Llamar a empresa que homologa",
       "done": false,
       "dueDate": "2026-09-18",
       "dueTime": "11:01",
@@ -3227,7 +3227,8 @@
       "alertSent": false,
       "driveUrl": "",
       "dueSoonAlertSent": false,
-      "overdueAlertSent": false
+      "overdueAlertSent": false,
+      "mcpUpdatedAt": "2026-09-24T16:25:54.601Z"
     },
     {
       "id": "t1789518826341656",

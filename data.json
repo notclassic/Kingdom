@@ -553,7 +553,7 @@
       "id": "p1782523890480569",
       "name": "Configurar alertas de información de la industria.",
       "area": "a1",
-      "desc": "",
+      "desc": "Alertas automáticas de IAMOTRIZ con información y novedades de la industria automotriz.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -562,7 +562,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1"
+      "parentId": "p1",
+      "mcpUpdatedAt": "2026-09-25T15:21:21.854Z"
     },
     {
       "id": "p1783642550128383",

@@ -537,7 +537,7 @@
       "id": "p1782523827555366",
       "name": "Configurar alertas de oportunidades de compra (bajo kilometraje, precio bajo, único dueño, nicho).",
       "area": "a1",
-      "desc": "",
+      "desc": "Alertas automáticas de IAMOTRIZ para oportunidades de compra: bajo kilometraje, precio bajo, único dueño y nichos.",
       "status": "active",
       "hasLeads": false,
       "color": "#007aff",
@@ -546,7 +546,8 @@
       "driveFolderId": "",
       "contacts": [],
       "context": "profesional",
-      "parentId": "p1"
+      "parentId": "p1",
+      "mcpUpdatedAt": "2026-09-25T15:21:17.253Z"
     },
     {
       "id": "p1782523890480569",

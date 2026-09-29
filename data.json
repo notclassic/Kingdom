@@ -3339,6 +3339,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-29T15:37:37.956Z"
+    },
+    {
+      "id": "t1790696260771970",
+      "projectId": "p1782523890480569",
+      "text": "💡 Listar las fuentes de novedades de la industria automotriz a monitorear (medios especializados, gremios, portales) y con qué frecuencia avisar",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-29T15:37:40.771Z"
     }
   ],
   "leads": [

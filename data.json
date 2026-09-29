@@ -3326,6 +3326,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-24T16:26:58.171Z"
+    },
+    {
+      "id": "t179069625795627",
+      "projectId": "p1782523827555366",
+      "text": "💡 Definir los umbrales de cada criterio de alerta de compra (km máximo, % bajo el precio justo, único dueño, nichos) y el canal por el que se avisa",
+      "done": false,
+      "dueDate": "",
+      "dueTime": "",
+      "priority": "low",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-09-29T15:37:37.956Z"
     }
   ],
   "leads": [

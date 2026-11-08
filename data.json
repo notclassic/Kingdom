@@ -3352,6 +3352,19 @@
       "alertSent": false,
       "driveUrl": "",
       "mcpUpdatedAt": "2026-09-29T15:37:40.771Z"
+    },
+    {
+      "id": "t1794172022079213",
+      "projectId": "inbox",
+      "text": "Antumalal · Reunión con Chevalier (empresa de transporte): definir zonas de reparto y costos en Santiago, y reunión comercial",
+      "done": false,
+      "dueDate": "2026-11-13",
+      "dueTime": "",
+      "priority": "high",
+      "emailAlert": false,
+      "alertSent": false,
+      "driveUrl": "",
+      "mcpUpdatedAt": "2026-11-08T21:07:02.079Z"
     }
   ],
   "leads": [
